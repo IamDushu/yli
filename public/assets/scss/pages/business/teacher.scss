@@ -1,0 +1,206 @@
+.teaching-works-section .card-body,
+.testimonials .card-body {
+  @include media(down, $breakpoint-sm) {
+    padding-top: size(40) !important;
+    padding-bottom: size(40) !important;
+  }
+}
+
+.sharing-knowledge-section {
+  height: size(500);
+  // border-radius: size(12);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: size(72);
+  background-size: cover;
+  position: relative;
+  .people-image {
+    @include position(absolute, auto, 0, 0, 0);
+    margin: 0 auto;
+    text-align: center;
+  }
+  @include media(down, $breakpoint-md) {
+    padding: size(30);
+  }
+  @include media(down, $breakpoint-sm) {
+    padding: size(30) size(15);
+  }
+}
+.teaching-section {
+  height: size(312);
+  // border-radius: size(12);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: size(72);
+  background-size: cover;
+  @include media(down, $breakpoint-md) {
+    padding: size(30);
+  }
+}
+.teaching-works-section {
+  .card {
+    padding: size(40) size(9);
+  }
+  .card-body {
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-md) {
+    .card {
+      padding: 0;
+    }
+  }
+}
+.faq {
+  .card {
+    padding: size(60) size(12);
+    @include media(down, $breakpoint-md) {
+      padding: size(40) size(12);
+    }
+    .card-body {
+      padding-top: 0;
+    }
+  }
+}
+.testimonials {
+  .card-body {
+    margin: 0 auto;
+    padding: size(60) size(12);
+  }
+  .testimonial .user-comment {
+    font-size: size(18);
+    line-height: size(29);
+    height: size(80);
+  }
+  .icon-quotes {
+    &:before {
+      color: $primary;
+    }
+  }
+  .testimonial {
+    padding-bottom: size(20);
+  }
+  @include media(down, $breakpoint-md) {
+    .card-body {
+      padding: size(20) size(15);
+    }
+    .testimonial .user-comment {
+      font-size: size(16);
+      line-height: size(20);
+    }
+  }
+}
+.start-now-custom {
+  max-width: size(424);
+  width: 100%;
+}
+.form-submit-btn {
+  max-width: size(450);
+  margin: 0 auto;
+}
+
+.css-1insrsq-control {
+  background-color: $white !important;
+  border-radius: size(8) !important;
+  border-color: $blueberry-whip !important;
+  height: size(46) !important;
+  @include media(down, $breakpoint-md) {
+    height: size(35) !important;
+  }
+}
+
+.content-box {
+  padding: size(30) size(30) size(100);
+  @include media(down, $breakpoint-lg) {
+    padding: size(30) size(30) size(50);
+  }
+  @include media(down, $breakpoint-sm) {
+    padding: size(30) size(15);
+  }
+}
+.w-lg-40-100 {
+  width: 40%;
+  @include media(down, $breakpoint-lg) {
+    width: 100%;
+  }
+}
+.w-lg-75-100 {
+  width: 75%;
+  @include media(down, $breakpoint-lg) {
+    width: 100%;
+  }
+}
+.extra-space-bottom {
+  padding-bottom: size(150);
+  @include media(down, $breakpoint-lg) {
+    padding-bottom: size(100);
+  }
+  @include media(down, $breakpoint-md) {
+    padding-bottom: size(30);
+  }
+}
+.extra-space-bottom-sm {
+  padding-bottom: size(100);
+  @include media(down, $breakpoint-lg) {
+    padding-bottom: size(80);
+  }
+  @include media(down, $breakpoint-md) {
+    padding-bottom: size(30);
+  }
+}
+
+.h-105 {
+  height: size(105);
+}
+
+.mx-h-600 {
+  max-height: size(600) !important;
+  @include media(down, $breakpoint-md) {
+    max-height: size(400) !important;
+  }
+}
+
+.role-defination-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include media(down, $breakpoint-xl) {
+    @include position(absolute, 0, 0, auto, auto);
+    padding: size(15);
+  }
+}
+
+.main-heading-box {
+  text-align: center;
+  .role-heading {
+    font-size: size(26);
+    margin-bottom: 0;
+  }
+  .role-span {
+    font-size: size(28);
+  }
+  @include media(down, $breakpoint-xl) {
+    text-align: left;
+    padding-right: size(300);
+  }
+  @include media(down, $breakpoint-lg) {
+    padding-right: size(160);
+    .role-heading {
+      font-size: size(16);
+    }
+    .role-span {
+      font-size: size(18);
+    }
+  }
+  @include media(down, $breakpoint-sm) {
+    padding: size(50) size(15) size(30) size(15);
+    text-align: center;
+  }
+}
+.fullwidth-dropzone {
+  > label {
+    width: 100%;
+  }
+}

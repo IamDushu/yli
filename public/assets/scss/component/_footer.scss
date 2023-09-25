@@ -1,0 +1,149 @@
+/* footer css */
+footer {
+  .section-footer {
+    max-width: size(1550);
+    margin: 0 auto;
+    .social-links {
+      li {
+        a {
+          font-size: size(20);
+        }
+      }
+    }
+    ul {
+      padding: 0;
+      list-style: none;
+      li {
+        // margin-bottom: size(16);
+        a {
+          color: $white;
+          font-size: size(14);
+          line-height: size(16.94);
+          font-weight: $font-regular;
+          @include css3-prefix(transition, all 0.3s);
+          &:hover {
+            color: $paper-white;
+          }
+          &:active {
+            color: $navy;
+          }
+        }
+        a.active {
+          color: $navy;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      li.active {
+        a {
+          color: $primary;
+        }
+      }
+    }
+    .copyright-text {
+      font-size: size(14);
+      line-height: size(17);
+      font-weight: $font-medium;
+      margin-bottom: 0;
+      color: $dark;
+    }
+  }
+  @include media(down, $breakpoint-md) {
+    .section-footer {
+      .social-links {
+        li {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+.footer-top {
+  background: $secondary-lighter;
+  padding: size(40) 0 size(26) 0;
+  .footer-heading {
+    color: $white;
+    margin-bottom: size(24);
+    font-size: size(20);
+    line-height: size(20);
+    font-weight: $font-semibold;
+    letter-spacing: 0.25px;
+  }
+}
+.footer-bottom {
+  background: #6750a4;
+  padding: size(24) 0;
+  color: rgba($languid-lavender, 0.62);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+/* social icons */
+.social-links {
+  display: flex;
+  margin-bottom: 0;
+  li {
+    margin-left: size(16);
+    width: size(40);
+    height: size(40);
+    background-color: rgba($white, 0.16);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+/* slick slider css */
+.slick-dots li {
+  margin: 0;
+  button {
+    &:before {
+      font-size: size(10);
+      opacity: 1;
+      color: $dark;
+    }
+  }
+}
+.slick-dots li.slick-active {
+  button {
+    &:before {
+      color: $primary;
+    }
+  }
+}
+
+// New style 04-10-2022
+.footer-text {
+  // width: 70%;
+
+  @media only screen and (max-width: 767px) {
+    width: 100%;
+  }
+  ul {
+    flex-flow: wrap;
+    list-style: none;
+  }
+  a {
+    color: $gray;
+    font-size: 12px;
+
+    &:hover {
+      color: $secondary;
+    }
+  }
+  span {
+    color: $gray;
+  }
+}
+
+// .New styele 24-01-2023
+.footer-sticky-fix {
+  position: sticky;
+  top: 250px;
+}

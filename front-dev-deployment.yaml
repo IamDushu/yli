@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-dev
+spec:
+  selector:
+    matchLabels:
+      app: front-dev
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: front-dev
+    spec:
+      containers:
+        - name: front-dev
+          image: 943541068927.dkr.ecr.ap-south-1.amazonaws.com/front-dev:latest
+          ports:
+            - containerPort: 5001
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+#       successThreshold: 1
+#         resources:
+#          limits:
+#             cpu: "500m"
+#             memory: 256Mi
+#          requests:
+#             cpu: "200m"
+#             memory: 120Mi
+#         ports:
+#         - containerPort: 5001
+#         imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-dev
+  labels:
+    app: front-dev
+spec:
+  ports:
+    - name: https
+      port: 5001
+      protocol: TCP
+      targetPort: 5001
+  selector:
+    app: front-dev
+  type: NodePort

@@ -1,0 +1,16 @@
+.custom-welcomedate-select {
+    .react-datepicker {
+        border-color: $secondary;
+        .react-datepicker__header {
+            background-color: $secondary;
+            border-bottom-color: $secondary;
+            .react-datepicker__current-month, .react-datepicker__day-name {
+                color: $white;
+            }
+        }
+        .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+            width: size(30);
+            line-height: size(30);
+        }
+    }
+}

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-front
+spec:
+  selector:
+    matchLabels:
+      app: react-front
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: react-front
+    spec:
+      containers:
+        - name: react-front
+          image: 800048911811.dkr.ecr.eu-west-2.amazonaws.com/react-front:$shortCommit
+          ports:
+            - containerPort: 6001
+          imagePullPolicy: Always
+#       successThreshold: 1
+#         resources:
+#          limits:
+#             cpu: "500m"
+#             memory: 256Mi
+#          requests:
+#             cpu: "200m"
+#             memory: 120Mi
+#         ports:
+#         - containerPort: 6001
+#         imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-front
+  labels:
+    app: react-front
+spec:
+  ports:
+    - name: https
+      port: 6001
+      protocol: TCP
+      targetPort: 6001
+  selector:
+    app: react-front
+  type: NodePort

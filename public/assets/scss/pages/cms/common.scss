@@ -1,0 +1,129 @@
+
+
+/* custom input */
+.custom-input {
+    
+    border-radius: size(12);
+    &:focus {
+        outline: 1px solid $primary;
+    }
+}
+
+/* inner p tag content */
+.policy-content-box {    
+    .policy-inner-heading {
+        line-height: 1.625rem;
+        font-size: size(14);
+        margin-bottom: 0;
+        @include media(down, $breakpoint-sm){
+            margin-bottom: size(10);            
+            line-height: 1.3rem;
+        }
+    }
+    .policy-para {
+        color: rgba($secondary,0.75);
+        line-height: 1.625rem;
+        margin-bottom: size(25);
+        @include media(down, $breakpoint-sm){
+            line-height: 1.3rem;
+        }
+    }
+    p img {
+        padding: size(10);
+    }
+}
+
+.mb-25 {
+    margin-bottom: size(25)!important;
+}
+
+
+@include media(down, $breakpoint-lg){
+    // .left-profile-section {
+    //     width: size(250);
+    // }
+    // .slide-left-section {
+    //     width: calc(100% - 250px);
+    // }
+}
+@include media(down, $breakpoint-md){
+    .left-profile-section {
+        width: 100%;
+    }
+    .slide-left-section {
+        width: 100%;
+    }
+}    
+
+.back-containt {    
+    .back-icon {        
+        &::before {
+            color: $primary;                
+        }            
+    }
+    &:hover {                
+        .back-text {
+            color: $primary!important;
+        }
+    }    
+}
+
+.heading-text {
+    line-height: $line-height-base;
+}
+// Custom Searchbox
+.custom-search{
+    position: relative;
+    display: inline-block;
+    .icon {
+        @include position(absolute, 12px, auto, auto, 20px,);        
+        font-size: size(20);
+    }
+    .search-custom {
+        padding: size(13) size(20) size(13) size(54);
+        border: 1px solid $geyser;
+        border-radius: size(12);
+        outline: none;
+        width: 300px;
+    }  
+}
+
+.v-text-bottom {
+    vertical-align: text-bottom;
+}
+// Custom Switch
+.custom-switch{
+    padding: 0;
+    margin-left: size(36);  
+    z-index: 0;
+    .custom-control-label{
+        &::before{
+            width: 40px;
+            background-color: rgba($secondary,0.25) !important;
+            border: 0;   
+        }
+        &::after{
+            width: 23px;
+            height: 23px;
+            left: -37px;
+            border-radius: $rounded-pill; 
+            top: -2px;
+            background-color: $geyser;
+        }
+    }
+    .custom-control-input{
+        &:checked {
+            ~ {
+                .custom-control-label{
+                    &::before{
+                        border-color: $iceberg;
+                        background-color: $iceberg;
+                    }
+                    &::after{ 
+                        @include css3-prefix('transform', translate(20px));
+                    }
+                } 
+            }
+        }
+    }
+}

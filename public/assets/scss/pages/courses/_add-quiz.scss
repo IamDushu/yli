@@ -1,0 +1,21 @@
+.add-quiz{
+    .answer-option-wrap{
+        .form-control{
+            position: relative;
+            padding: size(16) size(45) size(16) size(16);
+        }
+        .form-group{
+            .bx{
+                position: absolute;
+                font-size: size(24);
+                top: 44px;
+                right: 33px;
+                color: rgba($info, 0.5); 
+                cursor: pointer;
+                @include media(down, $breakpoint-md){
+                    top: 40px;
+                } 
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+.inner-label-100 {
+    label {
+        width: 100%;
+    }
+}
+.w-inner-100 {
+    .css-b62m3t-container {
+        width: 100%;
+    }
+}
+.select__value-container {
+    width: 100%!important;
+}
+.select__indicators {
+    display: none!important;
+}
+.table-responsive-lg{
+    border-radius: size(0); 
+    border: 1px solid $geyser;
+    overflow: auto;
+}
+.table-responsive-xl{
+    overflow: auto;
+}
+
+
+@include media(down, $breakpoint-md) {
+    .add-first-post, .ask-for-follow {
+        .modal-body {
+            padding-bottom: size(50);
+        }
+    }
+    
+}
+.teacher-info-box .faq-content-box, .trainer-info-box .faq-content-box, .host-info-box .faq-content-box, .become-host-box .faq-content-box { 
+    @include media(down, $breakpoint-xl) {    
+        padding-right: 0;
+    }    
+}
+
+.highlight-box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: size(10);
+    padding: size(20) size(0);
+    background: $paper-white;
+    width: calc(100% - 30px);
+    margin: 0 auto;
+}
+
+.growth-conn-datepicker {
+    .rdtPicker {
+        bottom: 100%;
+        z-index: 99 !important;
+    }
+}
+
+.growth-con-table {
+    .prof-width {
+        max-width: 120px;
+    }
+    .note-col {
+        max-width: 140px;
+    }
+}

@@ -1,0 +1,129 @@
+.fixed-bottom-btn {
+    @include position(absolute, auto, auto, -26px, auto)
+}
+.plans-check-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $rounded-pill;
+  width: size(24);
+  height: size(24);
+  background-color: $geyser;
+  margin-top: size(-4);
+  position: relative;
+  margin-right: size(12);
+  .icon-fill-check {
+    position: absolute;
+    font-size: size(7);
+    padding-top: size(1);
+  }
+}
+
+.autocomplete-dropdown-container {
+  border: 1px solid #ccc;
+}
+
+.modal-body {
+  .autocomplete-dropdown-container {
+    position: absolute;
+    border: 1px solid #ccc;
+    padding: size(15);
+    width: calc(100% - 30px);
+    background: white;
+    z-index: 1;
+  }
+}
+
+
+// 09-06-2023
+.plan-btn-group {
+  border: 1px solid $blueberry-whip;
+  border-radius: size(50);
+  display: flex;
+  align-items: center;
+  height: 54px;
+
+  .btn-plan {
+    padding: size(2) size(12);
+    text-align: center;
+    color: $secondary;
+    font-size: size(12);
+    border-radius: size(50);
+    border: 1px solid transparent;
+    transition: $transition-base;
+    width: 100%;
+    height: 100%;
+    .plan-btn-discount {
+      color: $primary;
+    }
+    .plan-btn-small {
+      color: $gray-darker;
+      font-size: size(10);
+    }
+    &:hover, &:active {
+      transition: $transition-base;
+      background: $primary-lighter;
+    }
+    &.active {
+      transition: $transition-base;
+      border-color: $primary;
+      color: $primary;
+      background: $primary-lighter;
+    }
+  }
+}
+
+
+// Account setting plans
+.acc-plans-slider {
+  .react-multi-carousel-list {
+    .react-multi-carousel-item {
+      display: flex;
+    }
+    .react-multiple-carousel__arrow {
+      min-width: size(32);
+      min-height: size(32);
+      z-index: 1;
+      background-color: $secondary;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-top: size(16);
+      &--left {
+        left: 0%;
+        &::before {
+          right: 1px;
+        }
+      }
+      &--right {
+        right: 0%;
+        &::before {
+          left: 1px;
+        }
+      }
+      &::before {
+        font-size: size(12);
+        top: -1px;
+      }
+    }
+  }
+
+  .react-multi-carousel-dot-list {
+        position: relative;
+
+    .react-multi-carousel-dot{
+        button {
+        border: none;
+        background-color: $dark;
+      }
+      &--active button {
+        background-color: $info;
+      }
+    }
+   
+  }
+}
+
+.plan-fea-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}

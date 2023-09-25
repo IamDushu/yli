@@ -1,0 +1,340 @@
+.virtual-event-detail {
+  .btn-yliway-enroll {
+    background-color: $secondary-purple;
+    width: 120px;
+    border: 0;
+    &:hover {
+      background-color: $secondary-purple-hover;
+    }
+  }
+  .share-btn,
+  .add-to-gm-btn {
+    border: 2px solid $primary;
+    border-radius: 19px;
+    padding: 7px;
+    margin: auto 0;
+    display: flex;
+    cursor: pointer;
+    i {
+      color: $primary;
+    }
+  }
+
+  .room-fee {
+    margin: auto 0 auto auto;
+    li {
+      background-color: rgba(15, 107, 191, 0.12);
+      padding: 5px 0;
+      margin: 0 5px;
+      text-align: center;
+      width: 108px;
+      border-radius: 10px;
+      p {
+        color: $primary;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.my-learning-virtual-event-detail {
+  .room-title-row {
+    justify-content: center;
+    align-items: flex-start;
+    padding: 15px 26px;
+    height: 68px;
+    background-color: $secondary;
+    display: flex;
+    h3 {
+      color: #fff;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 44px;
+      margin-right: auto;
+    }
+
+    .btn-yliway-enroll {
+      background-color: $secondary-purple;
+      width: 120px;
+      border-radius: 10px;
+      border: 0;
+      // margin-right: 6rem;
+      &:hover {
+        background-color: $secondary-purple-hover;
+      }
+    }
+  }
+}
+
+.virtual-event-detail,
+.my-learning-virtual-event-detail {
+  .courses-banner-wrap .object-cover {
+    height: calc(100vh - 140px);
+  }
+
+  .speakers {
+    border: 1px solid $primary;
+    border-radius: 8px;
+    .connection-user-cover-img {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    .card-body {
+      border-bottom-left-radius: 8px !important;
+      border-bottom-right-radius: 8px !important;
+    }
+  }
+
+  .related-groups {
+    border: 1px solid $primary;
+    border-radius: 8px;
+    img {
+      height: 88px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    .card-body {
+      border-bottom-left-radius: 8px !important;
+      border-bottom-right-radius: 8px !important;
+      .group-type {
+        color: $gray;
+        font-weight: 400;
+        font-size: 12px;
+        text-transform: capitalize;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      .group-members {
+        color: $gray;
+        font-weight: 400;
+        font-size: 12px;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .add-participants {
+    .header {
+      font-size: 22px;
+      margin-top: 3px;
+    }
+    .close-icon {
+      font-size: 34px;
+      margin: 0;
+    }
+    .btn-addParticipents {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      height: 45px;
+      width: 180px;
+    }
+    .btn-icon {
+      font-size: 22px;
+      padding-top: 2px;
+    }
+    .btn-text {
+      font-size: 14px;
+    }
+    .text {
+      font-size: 14.5px;
+    }
+    border-radius: 8px;
+    background-color: white;
+    width: 430px;
+    height: 250px;
+    position: absolute;
+    left: 19px;
+    top: 39%;
+  }
+
+  @media (max-width: 1540px) {
+    .add-participants {
+      .header {
+        font-size: 22px;
+        margin-top: 3px;
+      }
+      .close-icon {
+        font-size: 34px;
+        margin: 0;
+      }
+      .btn-addParticipents {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        height: 45px;
+        width: 180px;
+      }
+      .btn-icon {
+        font-size: 22px;
+        padding-top: 2px;
+      }
+      .btn-text {
+        font-size: 14px;
+      }
+      .text {
+        font-size: 13px;
+      }
+      .p-3 {
+        padding-bottom: 0.5rem !important;
+      }
+      border-radius: 8px;
+      background-color: white;
+      width: 400px;
+      height: 230px;
+      position: absolute;
+      left: 19px;
+      top: 37%;
+    }
+  }
+
+  @media (max-width: 1440px) {
+    .add-participants {
+      .header {
+        font-size: 20px;
+        margin-top: 3px;
+      }
+      .close-icon {
+        font-size: 30px;
+      }
+      .btn-addParticipents {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        height: 40px;
+        width: 157px;
+      }
+      .btn-icon {
+        font-size: 18px;
+        padding-top: 2px;
+      }
+      .btn-text {
+        font-size: 12px;
+      }
+      .text {
+        font-size: 11px;
+      }
+      width: 350px;
+      height: 230px;
+      top: 40%;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .add-participants {
+      .header {
+        font-size: 18px;
+        margin-top: 3px;
+      }
+      .close-icon {
+        font-size: 30px;
+      }
+      .btn-addParticipents {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        height: 34px;
+        width: 138px;
+      }
+      .btn-icon {
+        font-size: 15px;
+        padding-top: 2px;
+      }
+      .btn-text {
+        font-size: 10px;
+      }
+      .text {
+        font-size: 11px;
+      }
+      width: 300px;
+      height: 215px;
+      top: 42%;
+    }
+  }
+
+  @media (max-width: 770px) {
+    .add-participants {
+      .header {
+        font-size: 16px;
+        margin-top: 3px;
+      }
+      .close-icon {
+        font-size: 25px;
+      }
+      .btn-addParticipents {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        height: 30px;
+        width: 128px;
+      }
+      .btn-icon {
+        font-size: 13px;
+        padding-top: 2px;
+      }
+      .btn-text {
+        font-size: 9px;
+      }
+      .text {
+        font-size: 10px;
+      }
+      width: 260px;
+      height: 200px;
+      top: 45%;
+    }
+  }
+
+  .expire-notification  {
+    .icon { 
+      font-size: 24px;
+    }
+    .notification {
+      font-size: 17px;
+    }
+    display: flex;
+    color: #ffffff;
+    background-color: #181818;
+    border-radius: 8px;
+    padding: 15px 15px;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 1024px) {
+    .expire-notification  {
+      .icon { 
+        font-size: 18px;
+        padding-top: 2px;
+      }
+      .notification {
+        font-size: 14px;
+        padding-bottom: 5px;
+      }
+      display: flex;
+      color: #ffffff;
+      background-color: #181818;
+      border-radius: 8px;
+      padding: 13px 13px;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .expire-notification  {
+      .icon { 
+        font-size: 15px;
+      }
+      .notification {
+        font-size: 10px;
+        padding-bottom: 5px;
+      }
+      display: flex;
+      color: #ffffff;
+      background-color: #181818;
+      border-radius: 8px;
+      padding: 10px 10px;
+      justify-content: space-between;
+    }
+  }
+}

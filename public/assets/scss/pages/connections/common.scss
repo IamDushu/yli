@@ -1,0 +1,81 @@
+.people-know-box .custom-selectpicker-xs {
+
+    .css-1s2u09g-control,
+    .css-1pahdxg-control {
+        background-color: rgba($secondary, .05);
+        border: none;
+        border-radius: size(25);
+    }
+
+    .css-319lph-ValueContainer {
+        height: size(45);
+        padding: 0 size(24);
+    }
+
+    @include media(down, $breakpoint-md) {
+
+        .css-319lph-ValueContainer,
+        .css-1pahdxg-control {
+            height: size(38);
+        }
+    }
+}
+
+.custom-col-box {
+    @include media(up, $breakpoint-xl) {
+        .custom-cols {
+            flex: 50%;
+            max-width: 50%;
+        }
+    }
+
+    @include media(up, $breakpoint-xxxl) {
+        .custom-cols {
+            flex: 0 0 33.33333333%;
+            max-width: 33.33333333%;
+        }
+    }
+
+}
+
+.people-know-box {
+    @include media(down, $breakpoint-sm) {
+        .row-col-10 {
+            [class*="col-"] {
+                padding: 0;
+            }
+        }
+    }
+}
+
+.people-you-may-know-filter {
+    position: absolute;
+    top: -70px;
+    right: 1px;
+
+    @include media(down, $breakpoint-sm) {
+        position: initial;
+    }
+}
+
+.people-may-know-card {
+    .cover-image {
+        height: 80px;
+    }
+
+    .user-profile-absolute {
+        position: absolute;
+        bottom: -35px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    .card-body {
+        margin-top: 24px;
+    }
+}
+
+.button-cancle-request {
+    background-color: #d1d5db;
+}

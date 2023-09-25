@@ -1,0 +1,16 @@
+.email-us-container {
+    max-width: size(790);
+    margin: 0 auto;
+}
+.email-submit-box {
+    max-width: size(500);
+    margin: 0 auto;    
+}
+.email-us-box {
+    .btn-info {
+        height: size(62);
+        @include media(down, $breakpoint-md){
+            height: auto;
+        }
+    }
+}

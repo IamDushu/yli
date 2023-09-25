@@ -1,0 +1,5 @@
+.m-0-auto-sm {    
+    @include media(down, $breakpoint-sm) {
+        margin: 0 auto;
+    }
+}

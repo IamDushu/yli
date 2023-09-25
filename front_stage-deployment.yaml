@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-stage
+spec:
+  selector:
+    matchLabels:
+      app: front-stage
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: front-stage
+    spec:
+      containers:
+        - name: front-stage
+          image: 800048911811.dkr.ecr.eu-west-2.amazonaws.com/front-yliway:latest
+          ports:
+            - containerPort: 7001
+          imagePullPolicy: Always
+#       successThreshold: 1
+#         resources:
+#          limits:
+#             cpu: "500m"
+#             memory: 256Mi
+#          requests:
+#             cpu: "200m"
+#             memory: 120Mi
+#         ports:
+#         - containerPort: 6001
+#         imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-stage
+  labels:
+    app: front-stage
+spec:
+  ports:
+    - name: https
+      port: 7001
+      protocol: TCP
+      targetPort: 7001
+  selector:
+    app: front-stage
+  type: NodePort

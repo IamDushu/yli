@@ -1,0 +1,510 @@
+.profile-left-bar {
+  // width: calc(100% - size(349));
+  width: calc(100% - 21.8125rem);
+
+  // @include media(down, $breakpoint-sd) {
+  //   width: calc(100% - 300px);
+  // }
+  @include media(down, $breakpoint-lg) {
+    width: 100%;
+  }
+
+  .accordion {
+    border-bottom: 1px solid $geyser;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.custom-inputwrap {
+  top: 15px;
+  right: 15px;
+  margin: 0;
+}
+
+.custom-inputwrap-center {
+  top: 58%;
+  left: 50%;
+  @include css3-prefix(transform, translate(-50%, -50%));
+}
+
+.profile-bg {
+  border-radius: 0;
+  overflow: hidden;
+  border-bottom: $border-width solid $dark;
+
+  @include media(down, $breakpoint-md) {
+    height: 120px;
+  }
+
+  img {
+    @include media(down, $breakpoint-md) {
+      // height: 130px;
+    }
+  }
+}
+
+.profile-wrap {
+  .profile-box {
+    @include position(absolute, size(-77));
+    border: $border-width-3 solid $white;
+
+    .custom-file-input-box {
+      opacity: 0;
+    }
+
+    &:hover,
+    &:active {
+      opacity: 1;
+    }
+  }
+
+  .custom-inputwrap {
+    top: auto;
+    right: -12px;
+    bottom: 8px;
+  }
+}
+
+.profile-summary {
+  li:not(:last-child) {
+    // border-right: 1px solid rgba($secondary, 0.25);
+  }
+}
+
+// Total Summary
+.total-info-wrap {
+  background-color: rgba($gary, 0.05);
+  border-radius: size(14);
+  width: 253px;
+  padding: size(25);
+  margin: 0 size(10);
+
+  @include media(down, $breakpoint-sd) {
+    padding: size(12);
+  }
+
+  @include media(down, $breakpoint-xl) {
+    margin: size(7) size(10);
+  }
+
+  @include media(down, $breakpoint-lg) {
+    width: 46%;
+  }
+
+  @include media(down, $breakpoint-md) {
+    width: 45%;
+  }
+
+  @include media(down, $breakpoint-sm) {
+    width: 100%;
+  }
+}
+
+.bg-malibu {
+  width: size(54);
+  height: size(54);
+  background-color: rgba($primary, 0.06);
+  @include flex-center;
+  color: $white;
+
+  @include media(down, $breakpoint-xxl) {
+    width: 45px;
+    height: 45px;
+  }
+
+  @include media(down, $breakpoint-xl) {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+// exp-list
+.exp-list {
+  li {
+    color: $gray;
+    font-size: size(14);
+  }
+}
+
+// Theme dropdown
+.theme-dropdown {
+  &.dropdown-secondary {
+    .dropdown-toggle {
+      border-radius: size(50);
+      color: $secondary;
+      font-size: size(14);
+
+      // background-color: rgba($gary, 0.05) !important;
+      // padding: size(10) size(15);
+      .icon {
+        font-size: size(20);
+        vertical-align: middle;
+        padding-right: size(10);
+        // &::before {
+        //   color: $gary;
+        // }
+      }
+    }
+
+    .dropdown-menu {
+      transform: translate(0px, 27px) !important;
+      right: 0 !important;
+      left: inherit !important;
+      @include media(up, $breakpoint-xl) {
+        min-width: 287px;
+      }
+
+      .dropdown-item {
+        // border-bottom: 1px solid $geyser;
+        font-size: size(14);
+        padding: size(8) size(20);
+
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}
+.left-align {
+  &.dropdown-secondary {
+    .dropdown-menu {
+      transform: translate(0px, 27px) !important;
+      left: 0px !important;
+      @include media(up, $breakpoint-xl) {
+        min-width: 287px;
+      }
+    }
+  }
+}
+.profile-wrapper {
+  .profile-right-bar {
+    width: size(325);
+    margin-left: size(24);
+
+    // @include media(down, $breakpoint-sd) {
+    //   width: 270px;
+    // }
+    @include media(down, $breakpoint-xl) {
+      width: size(325);
+    }
+
+    @include media(down, $breakpoint-lg) {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+.view-profile {
+  .theme-dropdown {
+    @include media(down, $breakpoint-sm) {
+      width: 100%;
+    }
+
+    &.dropdown-secondary {
+      .dropdown-toggle {
+        @include media(down, $breakpoint-sm) {
+          width: 100%;
+          justify-content: space-between;
+          display: flex;
+          padding: size(12) size(15);
+        }
+      }
+    }
+  }
+}
+
+// review-wrap
+.review-wrap {
+  .icon {
+    font-size: size(28);
+    margin-right: size(10);
+
+    @include media(down, $breakpoint-xxl) {
+      font-size: size(26);
+    }
+  }
+}
+
+// secondary-card
+.card {
+  &.secondary-card {
+    // border-radius: size(16);
+    border: 1px solid rgba(5, 31, 78, 0.25);
+    overflow: hidden !important;
+
+    .card-body {
+      padding: 0;
+    }
+  }
+}
+
+.online-status,
+.online-status-center {
+  position: absolute;
+  top: size(16);
+  left: auto;
+}
+
+.online-status-center {
+  right: auto;
+  left: size(16);
+  z-index: 1;
+}
+
+// edit-experience
+.bg-downriver {
+  background-color: rgba($secondary, 0.05);
+  border-radius: size(12);
+}
+
+// profile picture
+.profile-img-center {
+  margin: 0 auto;
+  top: size(30);
+  left: 0;
+  right: 0;
+}
+
+// Contact info modal
+.profile-contact-info {
+  li {
+    position: relative;
+    padding: size(15) 0 0 size(35);
+    font-weight: $font-medium;
+
+    .bx {
+      position: absolute;
+      left: 0;
+      font-size: size(24);
+    }
+
+    p {
+      margin: 0;
+      display: table;
+      font-size: size(14);
+      padding-top: size(5);
+      color: $basalt-grey;
+    }
+
+    a {
+      display: table;
+      color: $primary;
+      font-size: size(14);
+      padding-top: size(5);
+
+      &:hover {
+        @include media(up, $breakpoint-xl) {
+          color: $secondary;
+        }
+      }
+    }
+  }
+}
+
+// New profile
+.profile-block {
+  .profile-img-block {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  a {
+    color: $primary;
+    text-decoration: underline !important;
+  }
+}
+
+.button-group-row {
+  margin-top: 20px;
+
+  button {
+    margin-right: 10px;
+
+    @include media(up, $breakpoint-md) {
+      width: 32.2%;
+
+      &:nth-child(3n) {
+        margin-right: 0;
+      }
+    }
+
+    @include media(down, $breakpoint-md) {
+      width: 100%;
+    }
+  }
+}
+
+.h-100vh {
+  max-height: 100vh;
+}
+
+// New style 29-11-2022
+.room-detail-bg-padding {
+  padding-right: 60px;
+  padding-left: 60px;
+
+  @media only screen and (max-width: 767px) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+.profile-wrapper-bg {
+  background-color: $white !important;
+}
+
+.profile-post-poll {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+// New style 09-12-2022
+@media only screen and (min-width: 1200px) {
+  .profile-wrapper .profile-room-detail-right-bar {
+    width: 24.8125rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .profile-room-detail-left-bar {
+    width: calc(100% - 24.8125rem);
+  }
+}
+
+// New style 23-01-2023
+.view-profile-decription {
+  p {
+    margin-bottom: 0;
+  }
+}
+
+// New style 25-01-2023
+.hr-last-border {
+  &:last-child {
+    hr {
+      display: none;
+    }
+  }
+}
+
+// abstract card v2
+.card.abstract-card-v2 {
+  border-color: $primary;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  color: $secondary;
+
+  .card-footer {
+    background: none;
+  }
+}
+
+.text-green-dark {
+  color: $green-dark !important;
+}
+
+.chevron-right-icon-bg {
+  margin-top: 6px;
+  margin-left: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #051f4e;
+  cursor: pointer;
+}
+
+.chevron-right-icon {
+  margin-left: 5px;
+  margin-top: 3px;
+  font-size: 8px;
+  color: #ffffff;
+}
+
+.profile-tabs-title-text {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  letter-spacing: 0.25px;
+
+  /* Heading Color */
+
+  color: #051f4e;
+}
+
+.profile-pic-upload-icon {
+  position: absolute;
+  z-index: 9;
+  left: 87px;
+  top: -12px;
+}
+
+.list-group.card {
+  &:first-child {
+    padding-top: 0;
+  }
+
+  padding: size(12) 0;
+  border: none;
+  border-bottom: $border-width solid $geyser;
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.profile-action-top {
+  position: absolute;
+  right: 0;
+  top: -8px;
+  @include media(down, $breakpoint-md) {
+    top: 18px;
+    right: -4px;
+  }
+}
+.signup-heading {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #051f4e;
+}
+.signup-sub-heading {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #77838f;
+}
+
+.accordion-signup-header {
+  background: rgba(15, 107, 191, 0.08);
+  border: 1px solid #d1d5db;
+}
+.color-sky-blue {
+  color: #0f6bbf;
+}
+
+.accordion-security-header {
+  background: white;
+  border: 1px solid #d1d5db;
+}
+

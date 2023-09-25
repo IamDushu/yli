@@ -1,0 +1,696 @@
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  display: none;
+}
+
+.activity-plan-wrap {
+  .css-1s2u09g-control {
+    width: size(180);
+  }
+}
+
+// react selectpicker
+.css-6y1x9t-control,
+.css-6y1x9t-control:focus {
+  border-color: #b3b3b3 !important;
+  box-shadow: none !important;
+}
+
+[class*="custom-selectpicker"] {
+  .css-1s2u09g-control {
+    min-height: size(44);
+    border-radius: size(8);
+    border-color: $geyser;
+
+    @include media(down, $breakpoint-md) {
+      min-height: 44px;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: $info;
+    }
+  }
+
+  .css-1okebmr-indicatorSeparator {
+    display: none;
+  }
+
+  .css-tj5bde-Svg {
+    width: 26px;
+    height: 24px;
+    fill: $charcoal-grey;
+  }
+
+  .css-1pahdxg-control {
+    min-height: size(44) !important;
+    border-radius: size(8);
+    border-width: size(1);
+    box-shadow: none;
+
+    @include media(down, $breakpoint-md) {
+      min-height: 44px !important;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 0.2rem rgba($info, 0.15);
+      border-color: $info;
+    }
+  }
+
+  .css-319lph-ValueContainer {
+    min-height: size(44);
+
+    @include media(down, $breakpoint-md) {
+      min-height: 44px;
+    }
+  }
+
+  .css-1s2u09g-control,
+  .css-1pahdxg-control {
+    @extend .css-319lph-ValueContainer;
+  }
+
+  .activity-plan-wrap {
+    .css-6j8wv5-Input {
+      width: size(100);
+    }
+  }
+
+  .css-6j8wv5-Input {
+    color: $geyser;
+  }
+
+  .css-26l3qy-menu {
+    @include css3-prefix("box-shadow", 0px 4px 15px 0px rgba($black, 0.25));
+    @include border-radius(12px);
+    margin: 0;
+    overflow: hidden;
+    z-index: 9;
+  }
+
+  .css-1n7v3ny-option {
+    padding: size(18) size(20);
+    font-weight: $font-medium;
+    border-bottom: 1px solid $geyser;
+    background-color: $dawn-pink !important;
+    cursor: pointer;
+
+    &:active {
+      background-color: $dawn-pink;
+    }
+  }
+
+  .css-yt9ioa-option {
+    border-bottom: 1px solid $geyser;
+    font-size: size(16);
+    padding: size(18) size(20);
+    font-weight: $font-medium;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .css-9gakcf-option {
+    padding: size(18) size(20);
+    background-color: $dawn-pink !important;
+    color: $secondary;
+    font-weight: $font-medium;
+    height: 57px;
+  }
+
+  .css-4ljt47-MenuList {
+    padding: 0;
+  }
+}
+
+.custom-selectpicker-xs {
+  .css-1s2u09g-control {
+    height: size(46);
+
+    @include media(down, $breakpoint-md) {
+      height: size(40);
+    }
+  }
+
+  .css-1insrsq-control {
+    @extend .css-1s2u09g-control;
+  }
+
+  .css-1pahdxg-control {
+    min-height: 45px !important;
+
+    @include media(down, $breakpoint-md) {
+      min-height: 35px !important;
+    }
+  }
+
+  .css-319lph-ValueContainer {
+    height: 45px;
+    font-size: size(14);
+
+    @include media(down, $breakpoint-md) {
+      height: 35px;
+    }
+  }
+
+  .css-tj5bde-Svg {
+    fill: $gary;
+  }
+
+  .css-1n7v3ny-option,
+  .css-yt9ioa-option {
+    font-size: size(14);
+  }
+}
+
+[class*="custom-selectpicker-grey"] {
+  .css-1s2u09g-control {
+    background-color: $white;
+    border-color: $blueberry-whip;
+  }
+}
+
+// React multiselect
+.custom-selectpicker-multi {
+  .css-1rhbuit-multiValue {
+    background-color: rgba($info, 0.2);
+    border-radius: size(50);
+    height: 35px;
+    line-height: 30px;
+    padding: 0 size(12);
+  }
+
+  .select__multi-value__label {
+    color: $secondary;
+    font-size: size(16);
+  }
+
+  .css-xb97g8:hover {
+    background-color: rgba($info, 0.4);
+  }
+
+  .css-xb97g8 {
+    width: 20px;
+    height: 20px;
+    border-radius: $rounded-pill;
+    background-color: rgba($info, 0.4);
+    color: $white;
+    margin: size(8) 0 0 size(10);
+  }
+
+  .css-tj5bde-Svg {
+    fill: $white;
+  }
+}
+
+// react datepicker
+.calendar-wrap {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    font-size: size(24);
+    top: 12px;
+    right: 15px;
+
+    @include media(down, $breakpoint-md) {
+      font-size: size(18);
+      top: 15px;
+    }
+  }
+
+  .form-control {
+    background-color: $white;
+    border-color: $blueberry-whip;
+    height: size(46) !important;
+
+    @include media(down, $breakpoint-md) {
+      height: size(46) !important;
+    }
+  }
+}
+
+.calendar-xs-grey {
+  .rdt {
+    input[type="text"] {
+      height: size(45);
+      background-color: rgba($gary, 0.05);
+      border-color: $white;
+    }
+  }
+
+  .icon {
+    font-size: size(21);
+    top: 12px;
+  }
+}
+
+.calendar-wrap-xs {
+  position: relative;
+
+  .rdt {
+    input[type="text"] {
+      height: size(40);
+      border-radius: size(8);
+    }
+  }
+
+  .icon {
+    position: absolute;
+    font-size: size(18);
+    top: 12px;
+    right: 15px;
+  }
+}
+
+.rdtPicker {
+  border-radius: size(12);
+  min-width: 275px;
+
+  td {
+    height: 35px;
+
+    &.rdtActive,
+    &:hover {
+      border-radius: size(4);
+      background-color: $primary;
+
+      &:hover {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+
+    &.rdtToday {
+      &::before {
+        border-bottom: 7px solid $primary;
+      }
+    }
+  }
+
+  th {
+    height: 35px;
+  }
+}
+
+// Bootstrap progressbar
+.progress {
+  height: size(10);
+  margin-bottom: size(5);
+  border-radius: size(0);
+  background-color: $dark;
+
+  .progress-bar {
+    background-color: $secondary-purple;
+  }
+}
+
+.progress.sm {
+  height: size(6);
+}
+
+.custom-progressbar {
+  .progress {
+    height: size(8);
+    margin-bottom: size(5);
+    border-radius: size(10);
+    background-color: $blueberry-whip;
+
+    .progress-bar {
+      background-color: $primary;
+      border-radius: size(10);
+    }
+  }
+
+  .progress.sm {
+    height: size(6);
+  }
+}
+
+// custom-multiselectcheck
+.custom-multiselectcheck {
+  .css-1pcexqc-container {
+    @include css3-prefix("box-shadow", 0px 4px 15px 0px rgba($black, 0.25));
+    @include border-radius(10px);
+    min-width: auto !important;
+  }
+
+  .css-1v99tuv {
+    font-weight: $font-medium;
+  }
+
+  .css-1r4vtzz,
+  .css-48ayfv {
+    border-radius: size(50);
+    color: $secondary;
+    font-size: size(14);
+    background-color: rgba($gary, 0.05) !important;
+    padding: size(8) size(15);
+    box-shadow: none;
+    font-weight: $font-medium;
+    transition: $transition-base;
+
+    .icon {
+      font-size: size(20);
+      padding-left: size(10);
+      position: relative;
+      top: 4px;
+      // &::before{
+      //   color:$gary;
+      // }
+    }
+  }
+
+  .css-1vr111p-option {
+    font-weight: $font-regular;
+    position: relative;
+    padding: size(10);
+    padding-left: size(32);
+    // border-bottom: 1px solid $geyser;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:last-child {
+      border: 0;
+    }
+
+    &:nth-child(even) {
+      background-color: #fff;
+    }
+  }
+
+  .css-1qprcsu-option {
+    padding: size(10);
+    padding-left: size(32);
+    font-size: 14px;
+    font-weight: $font-regular;
+    background-color: #fff;
+
+    // border-bottom: 1px solid $geyser;
+    &:active {
+      background-color: #fff;
+    }
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    position: absolute;
+    right: 211px;
+    margin-top: size(3);
+  }
+
+  .css-1gpjby2 {
+    display: none;
+  }
+}
+
+// custom-multiselectcheck-courses
+.custom-multiselectcheck-courses {
+  .css-1r4vtzz {
+    border-radius: size(8);
+    border: 1px solid $geyser;
+  }
+
+  .css-48ayfv {
+    border-radius: size(8);
+    border: 1px solid $primary;
+  }
+
+  .css-1pcexqc-container {
+    padding: 8px;
+  }
+
+  .css-1hwfws3 {
+    border-radius: 50px;
+  }
+
+  .css-1pcexqc-container {
+    @include css3-prefix("box-shadow", 0px 4px 15px 0px rgba($black, 0.25));
+    @include border-radius(10px);
+    min-width: auto !important;
+  }
+
+  .css-1v99tuv {
+    font-weight: $font-medium;
+  }
+
+  // here
+  .css-1r4vtzz,
+  .css-48ayfv {
+    border-radius: size(8);
+    color: #71809b;
+    font-size: size(14);
+    width: 100%;
+    padding: size(15) size(24) size(15) size(8);
+    box-shadow: none;
+    font-weight: $font-weight-normal;
+    line-height: 1;
+
+    .icon {
+      font-size: size(10);
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-top: 1px;
+    }
+  }
+
+  .css-1vr111p-option {
+    font-weight: $font-regular;
+    position: relative;
+    padding: size(10) size(30) size(10) size(12);
+    font-size: size(13);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:last-child {
+      border: 0;
+    }
+
+    &:nth-child(even) {
+      background-color: #fff;
+    }
+  }
+
+  .css-1qprcsu-option {
+    padding: size(10) size(30) size(10) size(12);
+    font-size: size(13);
+    font-weight: $font-regular;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    &:active {
+      background-color: #fff;
+    }
+
+    &::after {
+      content: "\2714";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: $primary;
+      border-radius: 50%;
+    }
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .css-1gpjby2 {
+    display: none;
+  }
+
+  .css-ik6y5r {
+    box-shadow: none;
+  }
+}
+
+.text-decoration-underline {
+  text-decoration: underline !important;
+}
+
+.uploadOnlineVideo label {
+  width: 100%;
+}
+
+.dsf {
+  cursor: pointer !important;
+
+  &:hover {
+    background-color: $light !important;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* steps */
+
+.ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+  color: $primary;
+  font-weight: $font-semibold;
+  font-size: size(14);
+}
+
+.ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+  font-weight: $font-semibold;
+  font-size: size(14);
+}
+
+.ant-steps-item-process.ant-steps-item-finish {
+  .ant-steps-item-content {
+    .ant-steps-item-icon {
+      background-color: $step-green;
+    }
+  }
+
+  .ant-steps-item-icon {
+    background-color: $step-green;
+    border-color: $step-green;
+  }
+}
+
+.ant-steps {
+  counter-reset: section;
+  background-color: $step-gray;
+  padding: 12px 16px 12px 16px;
+  border-radius: size(8);
+
+  @include media(down, $breakpoint-sm) {
+    padding: 12px 16px 0 16px;
+  }
+
+  .ant-steps-item-finish {
+    .ant-steps-icon {
+      &:before {
+        counter-increment: section;
+        content: counter(section);
+      }
+    }
+
+    .ant-steps-item-icon {
+      background-color: $step-green;
+      border-color: $step-green;
+
+      >.ant-steps-icon {
+        color: $white;
+
+        >span {
+          display: none;
+        }
+      }
+    }
+
+    .ant-steps-item-title {
+      color: $primary;
+    }
+
+    >.ant-steps-item-container {
+      >.ant-steps-item-content {
+        >.ant-steps-item-title {
+          &::after {
+            background-color: $blueberry-whip;
+          }
+
+          color: $step-green;
+        }
+      }
+    }
+  }
+}
+
+.ant-steps-item-title {
+  font-size: size(14);
+
+  &::after {
+    background-color: $blueberry-whip;
+    height: 2px;
+  }
+}
+
+.ant-steps-item-wait {
+  .ant-steps-item-icon {
+    background-color: $blueberry-whip;
+    border-color: $blueberry-whip;
+
+    >.ant-steps-icon {
+      color: $secondary;
+    }
+  }
+}
+
+.ant-stepst-steps-horizontal.ant-steps-label-horizontal {
+  padding: 12px 16px 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.custom-selectfield {
+  .css-1pahdxg-control {
+    border: 1px solid $primary !important;
+    box-shadow: 0 0 0 1px $primary !important;
+  }
+}
+
+.form-desc-editor {
+  .ck-content {
+    p {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+.endorsed-me {
+  .css-1s2u09g-control {
+    border-radius: size(8);
+  }
+}
+
+.my-groups-dropdown {
+  .dropdown-menu.show {
+    inset: 0px 0px auto auto !important;
+  }
+}
+
+.ck.ck-sticky-panel {
+	.ck-sticky-panel__content_sticky {
+		position: absolute !important;
+		top: auto !important;
+		
+}
+.ck-sticky-panel__placeholder { 
+  display: block !important;
+ height: auto !important;
+}
+}
+
+//hashtag dropdown
+.mentions-box{
+  .mentions-box__suggestions{
+    width: auto !important;
+  }
+}

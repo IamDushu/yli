@@ -1,0 +1,160 @@
+/*Headings*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	font-weight: $font-medium;
+	font-family: $font-heading;
+}
+
+h2,
+.h2 {
+	font-weight: $font-semibold;
+}
+
+h3,
+.h3 {
+	font-weight: $font-bold;
+}
+
+h4,
+.h4 {
+	font-weight: $font-semibold;
+}
+
+h1,
+.h1 {
+	font-size: $font-size-base * 2.5;
+	line-height: $font-size-base * 3.025625;
+	font-weight: $font-bold;
+	color: $secondary;
+}
+
+h2,
+.h2 {
+	font-size: $font-size-base * 1.875;
+	line-height: $font-size-base * 2.269375;
+	font-weight: $font-bold;
+	color: $secondary;
+}
+
+h3,
+.h3 {
+	font-size: $font-size-base * 1.75;
+	line-height: $font-size-base * 2.118125;
+	font-weight: $font-bold;
+	color: $secondary;
+}
+
+h4,
+.h4 {
+	font-size: $font-size-base * 1.5;
+	line-height: $font-size-base * 1.815625;
+	font-weight: $font-semibold;
+	color: $secondary;
+}
+
+h5,
+.h5 {
+	font-size: $font-size-base * 1.25;
+	line-height: $font-size-base * 1.25;
+	font-weight: $font-semibold;
+	color: $secondary;
+	letter-spacing: 0.015625;
+}
+
+h5.sm {
+	font-size: $font-size-base * 1;
+	line-height: $font-size-base * 1.625;
+	font-weight: $font-lighter;
+	color: $secondary;
+	letter-spacing: 0.015625;
+}
+
+h6,
+.h6 {
+	font-size: $font-size-base * 1.125;
+	line-height: $font-size-base * 1.36125;
+	font-weight: $font-bold;
+	color: $secondary;
+}
+
+h5.text-body-16,
+.text-body-16 {
+	font-size: $font-size-base * 1 !important;
+	line-height: $font-size-base * 1.21;
+	font-weight: $font-semibold;
+	color: $secondary;
+	letter-spacing: 0.015625;
+}
+
+h6.text-body-14,
+.text-body-14 {
+	font-size: $font-size-base * 0.875 !important;
+	line-height: $font-size-base * 1.4;
+	font-weight: $font-semibold;
+	color: $secondary;
+}
+
+p.text-body-12,
+.text-body-12 {
+	font-size: $font-size-base * 0.75;
+	line-height: $font-size-base * 0.9075;
+	font-weight: $font-regular;
+	color: $gray;
+}
+
+@include media(down, $breakpoint-xl) {
+
+	h1,
+	.h1 {
+		font-size: $font-size-base * 2.25;
+	}
+
+	h2,
+	.h2 {
+		font-size: $font-size-base * 1.5;
+	}
+}
+
+@include media(down, $breakpoint-md) {
+
+	h1,
+	.h1 {
+		font-size: $font-size-base * 2;
+	}
+
+	h2,
+	.h2 {
+		font-size: $font-size-base * 1.25;
+	}
+
+	h4,
+	.h4 {
+		font-size: $font-size-base * 1;
+	}
+}
+
+.form-label {
+	font-weight: 400;
+	font-size: size(14);
+	line-height: $font-size-base * 1.05875;
+	display: inline-block;
+	margin-bottom: size(8);
+}
+
+.text-gray {
+	color: $gray;
+}
+
+.font-light {
+	font-weight: $font-light;
+}

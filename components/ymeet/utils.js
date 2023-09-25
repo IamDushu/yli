@@ -1,0 +1,1 @@
+export const getRoomName=(t,e)=>e?`${e}/${t}`:t;export const getAppId=t=>{let e=t.split("/");if(!(e.length<=1))return e[0]};let instancesCounter=0;export const generateComponentId=t=>`${t}-${instancesCounter++}`;

@@ -1,0 +1,26 @@
+
+
+  .skill-card {
+    position: relative;
+    transition: $transition-base;
+    &:hover  {
+      transition: $transition-base;
+      box-shadow: $box-shadow-sm;
+    }
+    &:before {
+        content:" ";
+        display: block;
+        width: size(3);
+        bottom: size(8);
+        top: size(8);
+        position: absolute;
+        left: 0;
+        background-color: $secondary;
+        border-radius: size(10);
+    }
+    .greenshield{
+      position: absolute;
+      top: size(4);
+      right: size(4);
+    }
+  }

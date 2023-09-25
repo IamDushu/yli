@@ -1,0 +1,11 @@
+.add-question-box {    
+    max-width: size(1120);
+    margin: 0 auto;
+}
+.question-submit-box {
+    max-width: size(458);
+    margin: size(100) auto 0 auto;
+    @include media(down, $breakpoint-lg){
+        margin: size(40) auto 0 auto;
+    }
+}

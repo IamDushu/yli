@@ -1,0 +1,92 @@
+.profession-box{
+    height: calc(100% - 20px);
+    border: 1px solid $geyser;
+    padding-bottom:size(80);
+    margin-bottom: size(20); 
+    @include media(down, $breakpoint-xl){
+        padding-bottom:size(15);
+    } 
+    .profession-title{ 
+        background-color: $info;
+        color: $white;
+        padding: size(15);
+        @include media(down, $breakpoint-md){
+            padding: size(12);
+        } 
+    }
+    .custom-radio{
+        label{
+            background-color: rgba($secondary, 0.05);    
+            border-radius: size(50); 
+            color: rgba($secondary, 0.50); 
+            font-weight: $font-semibold; 
+            padding: size(10); 
+            margin: size(10);
+            @include media(down, $breakpoint-xl){
+                margin: size(5);
+            } 
+        }  
+        &.custom-radio-outline{
+            input[type=radio]{
+                + span{
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        width: 100%;
+                        top: 0;
+                        height: 100%;
+                        background-color: rgba($secondary, 0.05); 
+                        width: 100%; 
+                        height: 100%;
+                        border: 0;
+                        transition: none; 
+                        border-radius: size(50);
+                        border: 1px solid rgba($secondary, 0.05);
+                    } 
+                    &:checked{ 
+                         ~ span{
+                             &::after{ 
+                                position: absolute;
+                                top: 5px; 
+                                right: 0;
+                                bottom: 0;  
+                                left: 5px;
+                                width: 100%; 
+                                height: 100%;
+                                background-color: transparent;
+                                border-radius: size(50); 
+                                border: 1px solid $info; 
+                             } 
+                         }
+                    } 
+            }
+        }
+    }
+}
+
+.no-show-dffd {
+    .css-1s2u09g-control, .css-1pahdxg-control {
+        border-radius: size(30);
+        border: 0;
+        background-color: $pattens-blue!important;
+        border-color: $pattens-blue;    
+        font-size: size(14);
+        padding: size(4) 0;
+        outline: 0;
+        &:hover {
+            background-color: $pattens-blue!important;
+        }
+    }    
+}
+
+.loader-view {
+    @include position(absolute, 0px, 0px, 0px, 0px,);
+    background-color: #fffc; 
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loader-img {
+        max-width: size(50);
+    }
+}

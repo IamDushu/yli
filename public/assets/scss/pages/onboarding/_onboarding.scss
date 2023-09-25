@@ -1,0 +1,105 @@
+.sign-in-modal{
+   .modal-headingtext{
+        @include media(down, $breakpoint-xl){
+            font-size: size(20);
+        }
+        // @include media(down, $breakpoint-md){
+        //     font-size: size(18);
+        // }
+        // @include media(down, $breakpoint-sm){
+        //     font-size: size(16);
+        // }
+    } 
+} 
+.thankyou-modal{
+    .bx-check-circle{
+        color: $info;
+        text-align: center;
+        display: block;
+        font-size: size(116); 
+    }
+    .modal-title{
+        margin: size(25) 0;
+        padding: 0;
+        @include media(down, $breakpoint-md){
+            margin: size(15) 0;
+        }
+    } 
+}
+// Sign Up
+.sign-up{
+    .profile-details-wrap{
+        margin-left: size(30);
+        @include media(down, $breakpoint-lg){
+            margin: size(30) 0 0;
+        }
+    }
+    .card{
+        padding: size(55) size(55);
+        @include media(down, $breakpoint-xxxl + 1){
+            padding: size(55) size(100);
+        } 
+        @include media(down, $breakpoint-xxl + 1){
+            padding: size(55);
+        }  
+        @include media(down, $breakpoint-md){
+            padding: size(30);
+        }  
+    }
+    .sign-up-picture{
+        @include media(down, $breakpoint-md){
+            margin: 0 auto;
+        } 
+    }
+} 
+.signup-progress{
+    margin: size(50) 0;
+    li{
+        width: 322px;
+        height: 10px;
+        background-color: $ghost;
+        border-radius: size(50);
+        margin: 0 size(10);
+        @include media(down, $breakpoint-md){
+            margin: 0 size(5);
+        } 
+        &.active{
+            background-color: $primary;
+        }
+    } 
+} 
+
+.file-area {
+  width: 100%;
+  position: relative;
+  input[type=file] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .file-dummy {
+    width: 100%;
+    padding: 30px;
+    border: 1px dashed $iron;
+    border-radius: size(12);
+    text-align: center;
+    height: 162px;
+    color: $geyser;
+    @include media(down, $breakpoint-md){
+        padding: size(15);
+    }
+    .default{
+        padding-top: size(25);
+    }
+    .icon{
+        font-size: size(60);
+    }
+  }
+}

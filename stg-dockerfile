@@ -1,0 +1,18 @@
+FROM docker.indianic.com/library/node:14.15.4
+
+WORKDIR /usr/src
+
+ENV PATH /usr/src/node_modules/.bin:$PATH
+
+COPY package.json  ./package.json
+
+COPY . ./
+
+RUN yarn install
+
+
+EXPOSE 7001
+
+RUN yarn build:stag
+
+CMD ["yarn","start:stag"]

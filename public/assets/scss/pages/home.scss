@@ -1,0 +1,905 @@
+/* home page all sections */
+
+/* banner seciton */
+.banner-seciton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  height: calc(100vh - 88px);
+  display: flex;
+  align-items: center;
+  padding: size(70) 0;
+
+  h1 {
+    font-size: size(52);
+    font-weight: $font-medium;
+    line-height: size(75);
+  }
+
+  .section-box {
+    max-width: size(1425);
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    height: auto;
+    max-height: 100%;
+  }
+}
+
+.banner-seciton,
+.social-concepts-section,
+.why-yliway-section {
+  .container {
+    max-width: size(1435);
+  }
+}
+
+.never-alone-section,
+.growth-system-section {
+  .container {
+    max-width: size(1360);
+  }
+}
+
+/* never alone section */
+.never-alone-section {
+  padding: size(115) 0 size(100);
+
+  .sub-heading {
+    padding-right: size(68);
+  }
+
+  .section-box {
+    max-width: size(1354);
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding-right: 0;
+    padding-bottom: size(40);
+
+    .sub-heading {
+      padding-right: 0;
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    padding-bottom: size(40);
+  }
+}
+
+/* growth system section */
+.growth-system-section {
+  background-color: $light-pink;
+  padding: size(100) 0 size(92);
+
+  .section-box {
+    max-width: size(1354);
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding-bottom: size(50);
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding-top: size(40);
+  }
+}
+
+/* growth area section */
+.growth-area-section {
+  background-color: $white;
+  padding: size(100) 0 size(142);
+
+  .text-subheading {
+    margin-bottom: size(80);
+  }
+
+  .section-box {
+    max-width: size(1264);
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding: size(50) 0 size(80);
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: size(60) 0 size(40);
+
+    .text-subheading {
+      margin-bottom: size(60);
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    padding: size(40) 0;
+
+    .text-subheading {
+      margin-bottom: size(40);
+    }
+  }
+}
+
+/* social concepts section */
+.social-concepts-section {
+  padding: size(140) 0 size(100);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+  .bullet-points {
+    padding-left: size(40);
+    font-size: size(22);
+  }
+
+  .section-box {
+    max-width: size(1854);
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding-bottom: size(60);
+
+    .bullet-points {
+      padding-left: size(25);
+    }
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: size(100) 0 size(40);
+
+    .bullet-points {
+      font-size: size(18);
+    }
+  }
+}
+
+/* help business section */
+.help-business-section {
+  padding: size(150) 0;
+
+  .heading-text {
+    margin-bottom: size(120);
+  }
+
+  .section-box {
+    max-width: size(1314);
+    margin: 0 auto;
+
+    .box-content {
+      z-index: 2;
+    }
+  }
+
+  .banner-overlay {
+    &:before {
+      z-index: 2;
+    }
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding: size(80) 0;
+
+    .heading-text {
+      margin-bottom: size(60);
+    }
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: size(60) 0;
+
+    .heading-text {
+      margin-bottom: size(60);
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    .heading-text {
+      margin-bottom: size(40);
+    }
+  }
+}
+
+/* people say section */
+.people-say-section {
+  background-color: $paper-white;
+  padding: size(60) 0 size(40);
+
+  .heading-text {
+    margin-bottom: size(70);
+  }
+
+  .section-box {
+    max-width: size(1354);
+    margin: 0 auto;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding-top: size(20);
+
+    .heading-text {
+      margin-bottom: size(50);
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    .heading-text {
+      margin-bottom: size(40);
+    }
+
+    .slick-dots {
+      bottom: size(-60);
+    }
+  }
+}
+
+/* why yliway section */
+.why-yliway-section {
+  background-color: $white;
+  padding: size(100) 0;
+
+  .heading-text {
+    margin-bottom: size(60);
+    padding-left: 0;
+  }
+
+  .bullet-points {
+    margin-bottom: size(70);
+  }
+
+  @include media(down, $breakpoint-lg) {
+    padding-top: size(40);
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: size(60) 0;
+  }
+
+  @include media(down, $breakpoint-sm) {
+    padding: size(40) 0;
+
+    .bullet-points {
+      margin-bottom: size(40);
+    }
+
+    .heading-text {
+      margin-bottom: size(40);
+    }
+  }
+}
+
+/**********/
+
+/* custom classes */
+/* testimonial */
+.testimonial {
+  padding: 0 size(24) size(24) size(24);
+
+  .user-comment {
+    height: size(135);
+    overflow: hidden;
+    display: -webkit-box;
+    font-size: size(24);
+    // -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: 0;
+
+    .user-comment {
+      font-size: size(20);
+      height: auto;
+    }
+  }
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+
+  .profile-img {
+    margin-left: size(10);
+
+    img {
+      width: size(40);
+      height: size(40);
+      background-color: $white;
+      object-fit: cover;
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    justify-content: center;
+  }
+}
+
+.grothareabox {
+  @include css3-prefix("box-shadow",
+    0px 4px 25px 0px rgba($languid-lavender, 0.29));
+  padding: size(30);
+  text-align: center;
+  background-color: $white;
+  @include border-radius(20px);
+  width: size(250);
+
+  img {
+    width: size(94);
+    height: size(94);
+    object-fit: contain;
+    margin-bottom: size(20);
+    @include border-radius($rounded-pill);
+  }
+
+  @include media(down, $breakpoint-xl) {
+    width: 23%;
+    height: 100%;
+  }
+
+  @include media(down, $breakpoint-lg) {
+    width: 48%;
+    margin-bottom: size(30);
+    padding: size(20);
+  }
+}
+
+.box-section {
+  position: relative;
+  color: $white;
+  display: inline-block;
+  width: size(450);
+  height: size(550);
+
+  &:after {
+    content: "";
+    width: size(187);
+    height: size(187);
+    background-color: $primary;
+    z-index: 0;
+    @include position(absolute, -20px, auto, auto, -20px);
+  }
+
+  p {
+    padding: size(30);
+    padding-bottom: size(20);
+    margin-bottom: 0;
+  }
+
+  img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .box-content {
+    @include position(absolute);
+    bottom: 0;
+    z-index: 1;
+    min-height: size(152);
+  }
+
+  @include media(down, $breakpoint-xl) {
+    &::before {
+      left: -15px;
+      top: -15px;
+    }
+  }
+
+  @include media(down, $breakpoint-lg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include media(down, $breakpoint-md) {
+    img {
+      width: 100%;
+    }
+  }
+
+  @include media(down, $breakpoint-sm) {
+    &:after {
+      @include position(absolute, -8px, auto, auto, -8px);
+    }
+
+    p {
+      padding: size(20);
+    }
+  }
+}
+
+/* banner overlay with colors */
+.profile-overlay-video {
+  @include position(absolute, 0, 0, 0, 0);
+  background-color: rgba($black, 0.85);
+  z-index: 1;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-overlay {
+  &:before {
+    content: "";
+    height: 100%;
+    @include position(absolute, 0, 0, 0, 0);
+  }
+}
+
+.overlay-purple {
+  &:before {
+    background-color: rgba($gondola, 0.85);
+  }
+}
+
+.overlay-grey {
+  &:before {
+    background: linear-gradient(180deg, #103556c9 60%, #496ca0b3 100%);
+  }
+}
+
+.overlay-half-purple {
+  &:before {
+    background: linear-gradient(180deg,
+        rgba(127, 135, 143, 0.08) 40.7%,
+        rgba(28, 2, 28, 0.81) 87.79%);
+  }
+}
+
+.overlay-half-darkblue {
+  &:before {
+    background: linear-gradient(180deg,
+        rgba(5, 31, 78, 0) 0%,
+        rgba(5, 31, 78, 1) 100%);
+  }
+}
+
+.overlay-half-lightblue {
+  &:before {
+    background: linear-gradient(180deg,
+        rgba(60, 94, 143, 0) 0%,
+        rgba(61, 74, 84, 1) 100%);
+  }
+}
+
+.overlay-lightblue {
+  &:before {
+    background-color: rgba(15, 107, 191, 0.08);
+  }
+}
+
+.overlay-ligh-purple {
+  &:before {
+    background-color: rgba(164, 0, 255, 0.04);
+  }
+}
+
+/* video-player */
+.video-player {
+  max-width: size(622);
+  position: relative;
+
+  .video-image {
+    img {
+      width: 100%;
+      height: size(372);
+      object-fit: cover;
+      @include border-radius(20px);
+    }
+  }
+
+  .play-icon {
+    @include position(absolute, 50%);
+    @include css3-prefix("transform", translateY(-50px));
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    picture {
+      width: size(100);
+    }
+  }
+
+  @include media(down, $breakpoint-lg) {
+    max-width: 100%;
+    width: 100%;
+
+    .play-icon {
+      picture {
+        width: size(60);
+      }
+    }
+  }
+
+  @include media(down, $breakpoint-md) {
+    .play-icon {
+      picture {
+        width: size(40);
+      }
+    }
+
+    .video-image {
+      img {
+        max-height: size(250);
+        height: auto;
+      }
+    }
+  }
+}
+
+/* arrow on heading */
+.arrow-box {
+  position: relative;
+  display: inline-block;
+
+  .icon {
+    position: absolute;
+  }
+
+  img,
+  picture {
+    position: absolute;
+  }
+
+  .right {
+    right: 0;
+    top: -50px;
+    font-size: size(24);
+  }
+
+  .left {
+    left: 0;
+    right: auto;
+    top: -50px;
+    font-size: size(24);
+  }
+}
+
+/* uderline-heading */
+.text-underline {
+  text-decoration: $link-hover-decoration;
+
+  &:hover {
+    text-decoration: $link-hover-decoration;
+  }
+}
+
+.underline-custom {
+  border-bottom: size(1) solid $fuchsia-pink;
+  padding: 0 size(20) size(16) size(20);
+  display: inline-block;
+}
+
+/* bullets points */
+.bullet-points {
+  li {
+    margin-bottom: size(30);
+    line-height: 145%;
+  }
+
+  ::marker {
+    color: $fuchsia-pink;
+  }
+
+  @include media(down, $breakpoint-md) {
+    li {
+      margin-bottom: size(20);
+      font-size: size(16);
+    }
+  }
+}
+
+/* common css */
+/* hover inner active classes */
+.active-inner {
+  li.active {
+    a {
+      color: $primary;
+
+      em.icon {
+        &:before {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  a.active {
+    color: $primary !important;
+
+    em.icon {
+      &:before {
+        color: $primary;
+      }
+    }
+  }
+}
+
+/* mark size */
+.mark-size-6 {
+  li {
+    &::marker {
+      font-size: size(20);
+      color: $secondary;
+    }
+  }
+}
+
+.active-dot {
+  width: size(6);
+  height: size(6);
+  border-radius: $rounded-pill;
+  background-color: $primary;
+}
+
+.z-index-1 {
+  position: relative;
+  z-index: 1;
+}
+
+.z-index-99 {
+  z-index: 99;
+}
+
+.mb-150 {
+  margin-bottom: size(150);
+}
+
+.pl-18 {
+  padding-left: size(18);
+}
+
+// object fit
+.object-cover {
+  object-fit: cover;
+}
+
+// object fit
+.object-contain {
+  object-fit: contain !important;
+}
+
+// modal popup
+.create-groups,
+.ask-for-follow,
+.profile-photo-view,
+.edit-your-public-profile,
+.links,
+.who-see-lastname,
+.visibility-option,
+.close-account,
+.account-suspention-confirms,
+.story-display-option,
+.blocking-other-profiles,
+.mentions-or-tags,
+.connection-status,
+.offer-helps {
+  .listing-section {
+    .custom-checkbox {
+      margin-top: size(-28);
+      margin-right: size(-15);
+    }
+  }
+}
+
+.add-check-position {
+  .custom-checkbox {
+    margin-top: size(-28);
+    margin-right: size(-15);
+  }
+}
+
+.add-post {
+  .modal-content {
+    background-color: $white;
+  }
+
+  .modal-body {
+    padding-bottom: 1rem;
+    padding: 0;
+  }
+
+  @include media(up, $breakpoint-sm) {
+    .reaction-icons-sections .reaction-icons-box {
+      padding: 0 15px !important;
+    }
+  }
+
+  .reaction-icons-sections .reaction-icons-box {
+    padding: 0;
+  }
+}
+
+.icon.text-white {
+  &:before {
+    color: $white !important;
+  }
+}
+
+.home-title {
+  span {
+    color: #a400ff;
+  }
+}
+
+.home-title-list {
+  &::before {
+    content: "";
+    background: url("/assets/images/homepage/arrow-up.svg");
+    width: 20px;
+    height: 13px;
+    margin-right: 10px;
+    display: block;
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #d1d5db;
+  backdrop-filter: blur(2px);
+}
+
+.banner-seciton {
+  .badge-banner {
+    font-weight: 400;
+    font-size: 16px;
+    padding: 24px;
+    margin-right: 20px;
+    border-radius: 100px;
+    margin-top: 20px;
+  }
+  .badge-container {
+    display: block;
+  }
+}
+
+.bg-light-grey {
+  background-color: #eff0f6;
+}
+
+.bg-purple {
+  background-color: rgba(164, 0, 255, 0.08);
+}
+
+
+// redesign
+.intro-section {
+  background-color: $primary-lighter;
+  padding: size(40) 0;
+  margin-top: size(76);
+
+  @include media(down, $breakpoint-xl) {
+    margin-top: size(58);
+  }
+
+  @include media(down, $breakpoint-md) {
+    padding: size(30) 0;
+    margin-top: size(48);
+  }
+
+  .intro-row {
+    min-height: calc(100vh - 232px);
+
+    @include media(down, $breakpoint-md) {
+      min-height: inherit;
+    }
+
+    h1 {
+      font-size: size(52);
+      line-height: 1.3;
+
+      @include media(down, $breakpoint-md) {
+        font-size: size(38);
+      }
+    }
+
+    .benefit-list {
+
+      li {
+        background: $white;
+        border: 1px solid $dark;
+        padding: $space12 $space16;
+        margin-bottom: $space16;
+
+        @include media(down, $breakpoint-md) {
+          font-size: size(14);
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .auth-tabs {
+    border: 1px solid $dark;
+
+    .card-header-tabs {
+      border-bottom: 1px solid $dark;
+      margin: 0;
+
+      .nav-link {
+        font-size: size(14);
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        transition: $transition-base;
+        border: none;
+        width: 50%;
+        text-align: center;
+        color: $secondary;
+        padding: size(12);
+        border-bottom: 3px solid transparent;
+
+        &:hover,
+        &:active {
+          color: $secondary-purple;
+          transition: $transition-base;
+          background: none;
+        }
+
+        &.active {
+          color: $secondary-purple;
+          background: none;
+          border-bottom-color: $secondary-purple;
+          transition: $transition-base;
+        }
+      }
+    }
+
+    .signin-with {
+      margin: 0 !important;
+      padding: 0;
+
+      .btn {
+        margin: 0 size(8) 0 0;
+        border: 1px solid $dark !important;
+        border-radius: size(8) !important;
+        font-size: size(12) !important;
+        color: $secondary;
+        &:last-child {
+          margin-right: 0;
+        }
+        @include media(down, $breakpoint-md) {
+          margin: 0 0 size(8);
+        }
+        .font-26 {
+          font-size: size(20);
+        }
+      }
+    }
+
+    .tab-content {
+      padding: size(16);
+    }
+  }
+}
+
+
+.teacher-pattern-bg {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.alert-mobile-view {
+  @include media(down, $breakpoint-md) {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    .alert-mobile-content {
+      order: 3;
+      margin-top: size(16);
+    }
+  }
+
+}

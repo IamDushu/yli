@@ -1,0 +1,66 @@
+.refresh-btn{
+    .bx{
+        color: $info;
+        font-size: size(24);
+        width: size(40);
+        height: size(40);
+        line-height: 45px;
+        border-radius: $rounded-pill;
+        text-align: center;  
+        margin: 0 0 0 size(18);  
+        background-color: $geyser;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+} 
+.table-responsive-sm{
+    border-radius: size(12); 
+    border: 1px solid $geyser;
+}
+.video-listed-item-table{ 
+    margin-bottom: 0;
+    thead{
+        th{
+            border: 0;
+            font-weight: $font-semibold;
+            vertical-align: middle;
+        }
+    }
+    th, td{
+        font-weight: $font-medium;
+        text-align: left;
+        vertical-align: middle;
+    }
+    td{
+        color: $gary;
+        border: 0;
+        @include media(down, $breakpoint-md){ 
+            font-size: size(14);
+        } 
+        .icon-upload-cloud{
+            font-size: size(22);
+            &::before{
+                color: $info;
+            }
+        }
+        .icon-delete{
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            display: inline-block;
+            background-color: rgba($danger, 0.2);
+            text-align: center;
+            border-radius: $rounded-pill;
+        } 
+    }
+} 
+.upload-onlinecourses{
+    .two-column-sidebar{
+        .left-profile-section{
+            @include media(down, $breakpoint-lg){
+                min-width: 100%;
+            } 
+        }
+    }
+}

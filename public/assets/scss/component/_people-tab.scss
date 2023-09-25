@@ -1,0 +1,116 @@
+.heading-followers {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #051f4e;
+}
+.filter-text-css {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #0f6bbf;
+}
+.clear-filter-text-css {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #0f6bbf;
+  cursor: pointer;
+  align-self: center;
+}
+.people-tab-follower-name-css {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: 0.25px;
+  color: #051f4e;
+}
+.people-tab-follower-position-css {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #595d61;
+}
+.people-tab-view-all-button {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.25px;
+  color: #0f6bbf;
+  text-align: center;
+}
+.people-tab-view-all-button-text {
+  cursor: pointer;
+  color: #0f6bbf;
+  
+}
+
+.people-tab-view-all-button-text a:hover{
+  color: black
+}
+
+.speaker-card {
+  //width: 250px;
+  height: 200px;
+  border: 1px solid $primary !important;
+  border-radius: 8px;
+  //cursor: pointer;
+}
+
+.speaker-card-bgimg {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.speaker-card-img {
+  position: relative;
+  top: -40px;
+  left: 50%;
+  background-color: white;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  z-index: 3;
+  transform: translateX(-50%);
+  flex: 0 0 auto;
+}
+
+.speaker-card-content {
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.execute-filter {
+  border: 1px solid #0f6bbf;
+  color: #0f6bbf;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.clear-filter {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #0f6bbf;
+  cursor: pointer;
+  align-self: center;
+}

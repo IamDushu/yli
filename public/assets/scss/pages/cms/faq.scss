@@ -1,0 +1,27 @@
+.faq-content-box {
+    
+    .faq-para {
+        padding-right: size(105);        
+    }
+    @include media(down, $breakpoint-sd){
+        .faq-para {
+            padding-right: size(60);
+        }        
+    }
+    @include media(down, $breakpoint-xl){
+        .faq-para {
+            padding-right: 0;
+        }        
+    }        
+    @include media(down, $breakpoint-lg){
+        padding-right: 0;
+    }
+    .text-para {        
+        color: rgba($secondary,0.75);
+        margin-bottom: 0;
+        line-height: 1.1875rem;
+            @include media(down, $breakpoint-lg){
+                line-height: 1.3;
+        }
+    }
+}

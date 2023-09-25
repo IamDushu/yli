@@ -1,0 +1,318 @@
+.courses-banner-wrap {
+  // width: calc(100% - size(359));
+  // height: 100%;
+  // max-height: size(360);
+  // @include media(down, $breakpoint-lg){
+  //     width: 100%;
+  // }
+  .profile-bg {
+    border-radius: size(14) 0 0 0;
+  }
+}
+
+@include media(down, $breakpoint-lg) {
+  .w-lg-down-100 {
+    width: 100%;
+  }
+}
+
+.courses-list-desc {
+  background-color: $white;
+  // border-top-right-radius: size(12);
+  // width: size(331);
+  height: 100%;
+  // max-height: size(360);
+  // overflow: auto;
+  // padding-right: size(20);
+  position: relative;
+
+  // &::after {
+  //     content: '';
+  //     height: size(3);
+  //     background: $dark;
+  //     @include position(absolute, auto, 20px, 0, 0);
+  //     z-index: 9;
+  // }
+  @include media(down, $breakpoint-lg) {
+    border-radius: 0 0 size(12) size(12);
+    width: 100%;
+    max-height: size(334);
+  }
+
+  .card {
+    background-color: $white;
+
+    .card-header,
+    .card-body {
+      background-color: $white !important;
+      color: $secondary;
+      padding-bottom: 1.125rem !important;
+    }
+  }
+}
+
+.courses-index {
+  li {
+    position: relative;
+
+    span {
+      padding-left: size(30);
+    }
+
+    .icon {
+      position: absolute;
+      left: 0;
+
+      &.icon-play {
+        top: -3px;
+      }
+    }
+  }
+}
+
+// .joinnow-modal{
+//     .modal-body{
+//         padding-top: 0;
+//     }
+// }
+.icon-checked {
+  &.gray-icon {
+    &::before {
+      color: rgba($secondary, 0.5);
+    }
+  }
+}
+
+.credit-list {
+  h6 {
+    padding-left: size(30);
+
+    .icon {
+      position: absolute;
+      left: 0;
+    }
+
+    @include media(down, $breakpoint-md) {
+      font-size: size(16);
+      padding-right: size(10);
+    }
+  }
+}
+
+.nosufficient-creadit-modal {
+  .bx-error-circle {
+    font-size: size(110);
+  }
+}
+
+.banner-buttons {
+  @include media(down, $breakpoint-sd) {
+    .btn {
+      margin: 0 size(15) size(15) 0 !important;
+    }
+  }
+}
+
+.quiz-list {
+  .modal-lg {
+    max-width: 1100px;
+  }
+}
+
+// New style 07-10-2022
+.course-card-hr {
+  width: 1px;
+  height: 34px;
+}
+
+// New style 18-11-2022
+.course-detail-banner-line {
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 60px;
+    background: $secondary;
+    top: 0;
+    right: 0;
+    opacity: 0.4;
+
+    @media only screen and (max-width: 991px) {
+      display: n;
+    }
+  }
+}
+
+//   New style 29-11-2022
+.organized-by-room-details {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.room-banner-img {
+  @media only screen and (max-width: 767px) {
+    height: 300px;
+  }
+}
+
+// Course detail page
+.courses-detail {
+  background-color: $subnautical !important;
+  .course-basic-details {
+    .card,
+    .card-body {
+      background-color: unset;
+    }
+    .card {
+      border: none;
+      .course-heading {
+           // height: 90px;
+        margin-bottom: 10px;
+        h4 {
+          color: $white;
+          font-size: 32px;
+        }
+      }
+      .course-misc-details {
+        display: flex;
+        span {
+          i {
+            margin-right: 5px;
+            position: relative;
+            top: 1px;
+          }
+          font-size: 13px;
+          color: $white;
+          text-transform: capitalize;
+          margin-right: 20px;
+        }
+      }
+      .preview-img-course {
+        max-height: 210px;
+      }
+    }
+  }
+
+  .course-peer-details {
+    background-color: $primary;
+    .btn-yliway-enroll {
+      background-color: $secondary-purple;
+      width: 120px;
+      &:hover {
+        background-color: $secondary-purple-hover;
+      }
+    }
+    .share-btn,
+    .add-to-gm-btn {
+      border: 2px solid $white;
+      border-radius: 19px;
+      width: 33px;
+      height: 33px;
+      margin: auto 0;
+      display: flex;
+      cursor: pointer;
+      i {
+        color: $white;
+      }
+    }
+
+    .peer-details {
+      border-right: 1px solid $subnautical;
+      padding-right: 15px;
+      @include media(down, $breakpoint-md) {
+        border-right: 0;
+     }
+      h5 {
+        color: $white;
+      }
+      .peer-rating {
+        float: right;
+        @include media(down, $breakpoint-lg) {
+          float:left;
+       }
+      }
+    }
+
+    .course-fee {
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 25px;
+      li {
+        background-color: rgba(5, 31, 78, 0.7);
+        padding: 5px 0;
+        margin: 0 5px;
+        text-align: center;
+        width: 108px;
+        border-radius: 10px;
+        p {
+          color: $white;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .courses-structure-list {
+    .courses-list-head {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 100%;
+      display: flex;
+    }
+
+    .card-header,
+    .course-test {
+      background-color: $doctor !important;
+      border: 1px solid $dark;
+    }
+
+    .course-test {
+      height: 57px;
+      h6 {
+        margin: auto 24px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .course-goal {
+    ul {
+      padding-left: 0px;
+      list-style: none;
+      display: inline-block;
+      width: 100%;
+      margin-top: 10px;
+      li {
+        &::before {
+          content: "";
+          font-size: 24px;
+          color: #a400ff;
+          margin-top: -12px;
+          position: relative;
+          top: 5px;
+          margin-right: 5px;
+          font-family: "boxicons" !important;
+        }
+
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: $secondary;
+        width: 100%;
+        align-items: baseline;
+        float: left;
+        margin-bottom: 12px;
+      }
+    }
+  }
+}
+
+.course-subtitle-detail{
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 20px;
+color: #FFFFFF;
+}

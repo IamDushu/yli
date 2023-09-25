@@ -1,0 +1,16 @@
+export const images = {
+    FbImage: require('./images/ic-facebook.svg'),
+    LinkedinImage: require('./images/ic-linkedin.svg'),
+    GoogleImage: require('./images/ic-google.svg'),
+    PasswordHide: require('./images/ic-password-hide.svg'),
+    StepDone: require('./images/ic-step-done.svg'),
+    upload: require('./images/ic-upload.svg'),
+    thumbImage: require('./images/thumb-image.svg'),
+    infoIcon: require('./images/ic-info.svg'),
+    nextIcon: require('./images/ic-next.svg'),
+    previousIcon: require('./images/ic-previous.svg'),
+    previousIconDark: require('./images/ic-previous-dark.svg'),
+    addIcon: require('./images/ic-add.svg'),
+    addIconWhite: require('./images/ic-add-white.svg'),
+    dropdwonIcon: require('./images/ic-dropdown.svg'),
+}

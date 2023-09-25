@@ -1,0 +1,13 @@
+.add-gm-button {
+    width: auto;
+    margin-bottom: 0;    
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    @include media(down, $breakpoint-lg) {
+        margin-bottom: size(16);
+    }
+    @include media(down, $breakpoint-md) {
+        width: 100%;
+    }
+}

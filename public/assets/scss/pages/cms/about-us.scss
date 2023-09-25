@@ -1,0 +1,24 @@
+.yliway-about {
+    margin-bottom: size(52);    
+    line-height: 2.625rem;
+    @include media(down, $breakpoint-lg){
+        line-height: 1.6;
+    }
+    @include media(down, $breakpoint-sm){
+        margin-bottom: size(40);
+    }    
+}
+.inner-heading {
+    margin-bottom: size(30);
+    @include media(down, $breakpoint-sm){
+        margin-bottom: size(15);
+    }
+}
+.seprator-h-5 {
+    margin: size(50) 0;
+    height: size(5);
+    background: $primary;
+    @include media(down, $breakpoint-sm){
+        margin: size(40) 0;
+    }
+}

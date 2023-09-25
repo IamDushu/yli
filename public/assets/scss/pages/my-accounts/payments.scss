@@ -1,0 +1,150 @@
+.accounts-box {
+    span.icon {
+        &:before {
+            color: $white;
+        }
+    }
+}
+.accounts-box {
+    .page-item.prev {
+        .icon {
+            transform: rotate(180deg);
+        }        
+    }
+}
+.accounts-box {
+    .video-listed-item-table {
+        td {
+            vertical-align: baseline;
+        }
+    }
+}
+.accounts-box {
+    .accounts-tabs .custom-tabs {
+        margin-left: 390px;
+        @include media(down, $breakpoint-xxl) {
+            margin-left: 320px;
+        }
+        @include media(down, $breakpoint-xl) {
+            margin: 0 auto size(30) auto;
+            justify-content: center;
+        }
+    }    
+}
+.accounts-box {
+    .custom-tabs.nav-tabs .nav-link {
+        padding: size(19) size(40);
+        font-weight: $font-medium;
+        @include media(down, $breakpoint-xxl) {
+            padding: size(18);
+        }
+        @include media(down, $breakpoint-lg) {
+            padding: size(14);
+        }
+    }
+    .custom-tabs.nav-tabs .nav-link.active {
+        font-weight: $font-semibold;
+    }
+}
+.accounts-box .video-listed-item-table thead th {
+    font-weight: 600;
+}
+
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: size(36);
+    height: size(15);    
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .switch-slider {
+    @include position(absolute, 0, 0, 0, 0);    
+    cursor: pointer;    
+    background-color: rgba($secondary, 0.25);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switch-slider {
+      &:before {
+        @include position(absolute, auto, auto, -3px, 0);    
+        content: "";
+        height: size(22);
+        width: size(22);    
+        background-color: $white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        box-shadow: 0px 0px 10px rgba($secondary, 0.3);
+    }
+  }
+  
+  input:checked + .switch-slider {
+    background-color: $info;
+  }
+  
+  input:focus + .switch-slider {
+    box-shadow: 0 0 1px $info;
+  }
+  
+  input:checked + .switch-slider {
+      &:before {
+        -webkit-transform: translateX(20px);
+        -ms-transform: translateX(20px);
+        transform: translateX(20px);
+    }
+  }
+  
+  /* Rounded sliders */
+  .switch-slider.round {
+    border-radius: size(34);
+  }
+  
+  .switch-slider.round {
+    &:before {
+        border-radius: $rounded-pill;
+    }
+  }
+
+  @include media(down, $breakpoint-md) {
+    .add-credit, .redeem, .profile-photo-view, .account-access, .account-suspention-confirms, .close-account, .visibility-option, .story-display-option, .edit-your-public-profile, .links, .who-see-lastname, .blocking-other-profiles, .connection-status, .mentions-or-tags {
+        .modal-body {
+            padding-bottom: size(50);
+        }
+    }
+}
+
+.enter-otp {
+    .enter-box {
+        padding-right: size(10);
+        &:last-child {
+            padding-right: 0;
+        }
+        .form-control {
+            text-align: center;
+        }
+    }
+}
+
+.inner-form-label-16 {
+    .form-group .form-label {
+        font-size: size(16);
+    }
+}
+
+.enter-box{
+    margin-right: size(4) !important;
+    margin-left: size(4) !important;
+    @include media(down, $breakpoint-sm) {
+    }
+    .form-control{
+        text-align: center;
+    }
+}

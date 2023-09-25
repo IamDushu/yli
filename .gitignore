@@ -1,0 +1,62 @@
+# next.js build output
+.next
+# Dependency directories
+node_modules/
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+.scannerwork
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# misc 
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+.env
+.env.local
+.env.dev
+.env.stag
+.env.prod
+.env.front
+.env.development.local 
+.env.test.local
+.env.production.local 
+
+# Logs
+npm-debug.log* 
+yarn-debug.log*
+yarn-error.log* 
+yarn.lock
+package-lock.json
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Only exists if Bazel was run
+/bazel-out
+dockerfile
+.gitlab-ci.yml

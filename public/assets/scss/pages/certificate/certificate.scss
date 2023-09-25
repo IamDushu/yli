@@ -1,0 +1,12 @@
+.certificate-badge{
+    position: absolute;
+    top: 0;
+    right:82px; 
+    @include media(down, $breakpoint-md) {
+     right: 40px
+    }
+    @include media(down, $breakpoint-sm) {
+      right: 2px;
+      width: 100px;
+     }
+  }
