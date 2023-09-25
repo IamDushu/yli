@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { slide as Menu } from 'react-burger-menu';
+import { slide as Menuu } from 'react-burger-menu';
 import { Container, Card } from '@mui/material';
 import { Form, FormControl, Button, Dropdown } from 'react-bootstrap';
 // import { FormControl, Dropdown, Button } from '@mui/base';
@@ -16,6 +16,14 @@ import { HeaderProfile } from 'components/header/header-profile-section';
 import { Logo } from 'components/header/logo';
 import { HeaderLabel } from 'components/header/main-menu-label';
 import { SearchBar } from 'components/header/search-bar';
+
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import {
   toggleModals,
@@ -395,6 +403,16 @@ const Header = (props) => {
   @purpose : Rander HTML/ React Components
   @Author : INIC
   ******************/
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <header>
       <Container>
@@ -1105,7 +1123,7 @@ const Header = (props) => {
           )}
           {router.pathname !== '/account/sign-up' &&
           userData?.showHeaderMenu !== false ? (
-            <Menu
+            <Menuu
               menuClassName={'header-menu'}
               customBurgerIcon={
                 <svg
@@ -1247,7 +1265,7 @@ const Header = (props) => {
                 <a
                   role='button'
                   className={
-                    props.router.pathname === '/groups'
+                    props.router.pathname === '/groups/groups'
                       ? 'menu-item active'
                       : 'menu-item'
                   }
@@ -1386,37 +1404,20 @@ const Header = (props) => {
                 {/* <span className='material-icons f\nt-18 ms-1'>expand_more</span> */}
               </a>
               {/* </Link> */}
-              <Dropdown className='theme-dropdown header-user-dropdown'>
-                <Dropdown.Toggle
+              <div className='theme-dropdown header-user-dropdown'>
+                <IconButton
+                  onClick={handleClick}
+                  size='small'
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup='true'
+                  aria-expanded={open ? 'true' : undefined}
                   className={
                     props.router.pathname === `/profile/[profileId]`
                       ? 'user-profile d-inline-flex align-items-center active'
                       : 'user-profile d-inline-flex align-items-center'
                   }
                 >
-                  {/* <span className="pic-wrap">
-                    <picture onContextMenu={(e) => e.preventDefault()}>
-                      <source
-                        srcSet={userData?.profilePicURL}
-                        type="image/png"
-                      />
-                      <img
-                        src={userData?.profilePicURL || ""}
-                        alt="Upload Profile Pic"
-                        onError={(e) => {
-                          onImageError(
-                            e,
-                            "profile",
-                            `${userData?.firstName} ${userData?.lastName}`
-                          );
-                        }}
-                        className="img-fluid h-100"
-                      />
-                    </picture>
-                  </span>
-                  <span className="material-icons font-18 user-down-icon">
-                    expand_more
-                  </span> */}
                   <HeaderProfile
                     onContextMenu={(e) => e.preventDefault()}
                     onError={(e) => {
@@ -1428,75 +1429,81 @@ const Header = (props) => {
                     }}
                     imageUrl={userData?.profilePicURL || ''}
                   />
-                  {/* My Profile */}
-                </Dropdown.Toggle>
-                {/* <List className="dropdown-inner-left">
-                  <ListItem
-                    href={`/profile/${userData?.profileId || "me"}`}
-                    className="d-flex align-items-center"
-                    disablePadding
-                  >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <img src={"assets/images/profile-icon.svg"} />
-                      </ListItemIcon>
-                      <ListItemText primary={lang("HEADER.VIEW_PROFILE")} />
-                    </ListItemButton>
-                  </ListItem>
-                  <Divider />
-                </List> */}
+                </IconButton>
 
-                <Dropdown.Menu className='dropdown-inner-left'>
-                  <Dropdown.Item
+                <Menu
+                  anchorEl={anchorEl}
+                  id='account-menu'
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  anchorOrigin={{ horizontal: 50, vertical: 'bottom' }}
+                  className='dropdown-inner-left'
+                >
+                  <MenuItem
                     href={`/profile/${userData?.profileId || 'me'}`}
                     className='d-flex align-items-center'
                   >
-                    <span className='material-icons mr-2 text-primary'>
-                      person
-                    </span>
-                    <span className='item-text'>
+                    <ListItemIcon>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+
+                    <span
+                      style={{
+                        'font-size': '12px',
+                        'font-weight': '400',
+                      }}
+                    >
                       {lang('HEADER.VIEW_PROFILE')}
                     </span>
-                  </Dropdown.Item>
-                  <Dropdown.Item
+                  </MenuItem>
+                  <Divider style={{ margin: '0' }} />
+                  <MenuItem
                     href={`/my-activities/`}
                     className='d-flex align-items-center'
                   >
-                    <span className='material-icons mr-2 text-primary'>
-                      school
-                    </span>{' '}
-                    <span className='item-text'>
+                    <ListItemIcon>
+                      <SchoolOutlinedIcon />
+                    </ListItemIcon>
+                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
                       {lang('HEADER.MY_LEARNING')}
                     </span>
-                  </Dropdown.Item>
-                  <Dropdown.Item
+                  </MenuItem>
+                  <Divider style={{ margin: '0' }} />
+
+                  <MenuItem
                     href={`/accounts/`}
                     className='d-flex align-items-center '
                   >
-                    <span className='material-icons mr-2 text-primary'>
-                      settings
-                    </span>{' '}
-                    <span className='item-text'>
+                    <ListItemIcon>
+                      <SettingsOutlinedIcon />
+                    </ListItemIcon>
+                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
                       {lang('HEADER.ACCOUNT_SETTINGS')}
                     </span>
-                  </Dropdown.Item>
-                  <Dropdown.Item
+                  </MenuItem>
+                  <Divider style={{ margin: '0' }} />
+
+                  <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(logout());
                     }}
                     className='d-flex align-items-center text-secondary'
                   >
-                    <span className='material-icons mr-2 text-danger'>
-                      logout
+                    <ListItemIcon>
+                      <LogoutOutlinedIcon />
+                    </ListItemIcon>
+                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
+                      {lang('COMMON.LOGOUT')}
                     </span>
-                    <span className='item-text'>{lang('COMMON.LOGOUT')}</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu>
+                  </MenuItem>
+                </Menu>
+              </div>
+            </Menuu>
           ) : (
-            <Menu
+            <Menuu
               menuClassName={'header-menu'}
               customBurgerIcon={
                 <svg
@@ -1543,7 +1550,7 @@ const Header = (props) => {
                 <em className='bx bx-log-out'></em>
                 Logout
               </a>
-            </Menu>
+            </Menuu>
           )}
         </div>
       </Container>
