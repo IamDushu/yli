@@ -1490,7 +1490,7 @@ const Header = (props) => {
                       e.preventDefault();
                       dispatch(logout());
                     }}
-                    className='d-flex align-items-center text-secondary'
+                    className='d-flex align-items-center'
                   >
                     <ListItemIcon>
                       <LogoutOutlinedIcon />
