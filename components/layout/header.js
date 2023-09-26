@@ -428,16 +428,16 @@ const Header = (props) => {
             <div className='header-logo'>
               <Link route={HOME}>
                 <a role='button' className='navbar-brand'>
-                  {/* <Image
+                  <Logo logoUrl={'assets/images/brand-logo.svg'} />
+                </a>
+              </Link>
+            </div>
+            {/* <Image
                     src={"/assets/images/brand-logo.svg"}
                     alt="Yliway"
                     width={170}
                     height={33.16}
                   /> */}
-                  <Logo />
-                </a>
-              </Link>
-            </div>
             <Form
               inline
               className='d-sm-none searchbar-wrap'
@@ -445,6 +445,18 @@ const Header = (props) => {
                 handleSubmit();
               }}
             >
+              {isSearchActive && (
+                <SearchBar
+                  handleInput={(e) => {
+                    setSearchText(e);
+                    getSearchedUserLists(e);
+                  }}
+                  handleClick={() => setIsSearchActive(!isSearchActive)}
+                  placeHolderText={lang(
+                    'HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER',
+                  )}
+                />
+              )}
               {/* {isSearchActive && (
                 <FormControl
                   type="text"
@@ -463,18 +475,6 @@ const Header = (props) => {
                 className="bx bx-search"
                 onClick={() => setIsSearchActive(!isSearchActive)}
               /> */}
-              {isSearchActive && (
-                <SearchBar
-                  handleInput={(e) => {
-                    setSearchText(e);
-                    getSearchedUserLists(e);
-                  }}
-                  handleClick={() => setIsSearchActive(!isSearchActive)}
-                  placeHolderText={lang(
-                    'HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER',
-                  )}
-                />
-              )}
               <div className={props.showSearchList}>
                 {searchText !== '' &&
                   searchedUserList &&
@@ -669,13 +669,7 @@ const Header = (props) => {
                 )}
               </div>
             </Form>
-            {userData?.showHeaderMenu !== false && (
-              <Form className='header-searchbar' onSubmit={handleSubmit}>
-                <Form.Group
-                  controlId='formSearch'
-                  className='position-relative m-0'
-                >
-                  {/* <Form.Control
+            {/* <Form.Control
                     type="text"
                     placeholder={lang("HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER")}
                     value={searchText}
@@ -688,12 +682,19 @@ const Header = (props) => {
                     className="input-shadow rounded-lg"
                   />
                   <em className="bx bx-search"></em> */}
+            {userData?.showHeaderMenu !== false && (
+              <Form className='header-searchbar' onSubmit={handleSubmit}>
+                <Form.Group
+                  controlId='formSearch'
+                  className='position-relative m-0'
+                >
                   <SearchBar
                     handleInput={(e) => {
                       setSearchText(e);
                       getSearchedUserLists(e);
                     }}
                     handleClick={() => setIsSearchActive(!isSearchActive)}
+                    searchLogoUrl={'assets/images/search-icon.svg'}
                     onFocus={() => props.setShowSearchList('mega-search')}
                     autoComplete='off'
                     placeHolderText={lang(
@@ -1160,21 +1161,6 @@ const Header = (props) => {
               }
             >
               <Link route={DASHBOARD}>
-                {/* <a
-                  role="button"
-                  className={
-                    props.router.pathname === DASHBOARD
-                      ? "menu-item active"
-                      : "menu-item"
-                  }
-                  onClick={() =>
-                    setCookie("postToken", postTokenUnix(new Date()))
-                  }
-                  target={props?.isJoinRoom ? "_blank" : undefined}
-                > */}
-                {/* <em className="icon icon-home"></em>
-                  {lang("HEADER.HOME")}
-                </a> */}
                 <a
                   role='button'
                   className={
@@ -1197,23 +1183,23 @@ const Header = (props) => {
                     labelText={lang('HEADER.HOME')}
                   />
                 </a>
-              </Link>
-              <Link route={MY_CONNECTIONS}>
                 {/* <a
                   role="button"
                   className={
-                    props.router.pathname === MY_CONNECTIONS
+                    props.router.pathname === DASHBOARD
                       ? "menu-item active"
                       : "menu-item"
                   }
+                  onClick={() =>
+                    setCookie("postToken", postTokenUnix(new Date()))
+                  }
                   target={props?.isJoinRoom ? "_blank" : undefined}
                 > */}
-                {/* <em className="icon icon-connections-h"></em> */}
-                {/* {lang("HEADER.CONNECTIONS")}
-                  {list && list?.total && (
-                    <span className="notif-icon-popup">{list?.total}</span>
-                  )} */}
-                {/* </a> */}
+                {/* <em className="icon icon-home"></em>
+                  {lang("HEADER.HOME")}
+                </a> */}
+              </Link>
+              <Link route={MY_CONNECTIONS}>
                 <a
                   role='button'
                   className={
@@ -1234,18 +1220,23 @@ const Header = (props) => {
                     <span className='notif-icon-popup'>{list?.total}</span>
                   )}{' '}
                 </a>
-              </Link>
-              <Link route={EVENTS}>
                 {/* <a
                   role="button"
                   className={
-                    props.router.pathname === EVENTS
+                    props.router.pathname === MY_CONNECTIONS
                       ? "menu-item active"
                       : "menu-item"
                   }
-                >
-                  {lang("HEADER.EVENTS")}
-                </a> */}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
+                > */}
+                {/* <em className="icon icon-connections-h"></em> */}
+                {/* {lang("HEADER.CONNECTIONS")}
+                  {list && list?.total && (
+                    <span className="notif-icon-popup">{list?.total}</span>
+                  )} */}
+                {/* </a> */}
+              </Link>
+              <Link route={EVENTS}>
                 <a
                   role='button'
                   className={
@@ -1260,6 +1251,16 @@ const Header = (props) => {
                     labelText={lang('HEADER.EVENTS')}
                   />
                 </a>
+                {/* <a
+                  role="button"
+                  className={
+                    props.router.pathname === EVENTS
+                      ? "menu-item active"
+                      : "menu-item"
+                  }
+                >
+                  {lang("HEADER.EVENTS")}
+                </a> */}
               </Link>
               <Link route={GROUPS}>
                 <a
@@ -1272,14 +1273,13 @@ const Header = (props) => {
                 >
                   <HeaderLabel
                     className={
-                      props.router.pathname === '/groups/groups' ||
-                      props.router.pathname === '/groups/create-groups' ||
-                      props.router.pathname === '/groups/edit-groups' ||
-                      props.router.pathname ===
-                        '/groups/group-members/[groupId]' ||
-                      props.router.pathname === '/groups/[...params]'
-                        ? 'active'
-                        : ''
+                      (props.router.pathname === '/groups/groups' ||
+                        props.router.pathname === '/groups/create-groups' ||
+                        props.router.pathname === '/groups/edit-groups' ||
+                        props.router.pathname ===
+                          '/groups/group-members/[groupId]' ||
+                        props.router.pathname === '/groups/[...params]') &&
+                      'active'
                     }
                     target={props?.isJoinRoom ? '_blank' : undefined}
                     labelText={lang('HEADER.GROUPS')}
@@ -1287,23 +1287,6 @@ const Header = (props) => {
                 </a>
               </Link>
               <Link route={MESSAGES}>
-                {/* <a
-                  role="button"
-                  className={
-                    props.router.pathname === "/messages"
-                      ? "menu-item cursor-pointer active"
-                      : "menu-item cursor-pointer"
-                  }
-                  target={props?.isJoinRoom ? "_blank" : undefined}
-                > */}
-                {/* <em className="icon icon-messages"></em> */}
-                {/* {lang("HEADER.MESSAGES")}
-                  {unreadMessageCountState > 0 && (
-                    <span className="notif-icon-popup">
-                      {unreadMessageCountState}
-                    </span>
-                  )}
-                </a> */}
                 <a
                   role='button'
                   className={
@@ -1326,25 +1309,25 @@ const Header = (props) => {
                     </span>
                   )}
                 </a>
-              </Link>
-              <Link route={NOTIFICATIONS}>
                 {/* <a
                   role="button"
                   className={
-                    props.router.pathname === "/notifications/notifications"
-                      ? "menu-item active"
-                      : "menu-item"
+                    props.router.pathname === "/messages"
+                      ? "menu-item cursor-pointer active"
+                      : "menu-item cursor-pointer"
                   }
                   target={props?.isJoinRoom ? "_blank" : undefined}
                 > */}
-                {/* <em className="icon icon-notification"></em> */}
-                {/* {lang("HEADER.NOTIFICATION")}
-                  {notificationData?.unseenNotiCount > 0 && (
+                {/* <em className="icon icon-messages"></em> */}
+                {/* {lang("HEADER.MESSAGES")}
+                  {unreadMessageCountState > 0 && (
                     <span className="notif-icon-popup">
-                      {notificationData?.unseenNotiCount}
+                      {unreadMessageCountState}
                     </span>
                   )}
                 </a> */}
+              </Link>
+              <Link route={NOTIFICATIONS}>
                 <a
                   role='button'
                   className={
@@ -1363,6 +1346,23 @@ const Header = (props) => {
                     labelText={lang('HEADER.NOTIFICATION')}
                   />
                 </a>
+                {/* <a
+                  role="button"
+                  className={
+                    props.router.pathname === "/notifications/notifications"
+                      ? "menu-item active"
+                      : "menu-item"
+                  }
+                  target={props?.isJoinRoom ? "_blank" : undefined}
+                > */}
+                {/* <em className="icon icon-notification"></em> */}
+                {/* {lang("HEADER.NOTIFICATION")}
+                  {notificationData?.unseenNotiCount > 0 && (
+                    <span className="notif-icon-popup">
+                      {notificationData?.unseenNotiCount}
+                    </span>
+                  )}
+                </a> */}
               </Link>
 
               {/* <Link route={NOTIFICATIONS}> */}
@@ -1404,6 +1404,7 @@ const Header = (props) => {
                 {/* <span className='material-icons f\nt-18 ms-1'>expand_more</span> */}
               </a>
               {/* </Link> */}
+
               <div className='theme-dropdown header-user-dropdown'>
                 <IconButton
                   onClick={handleClick}
@@ -1435,54 +1436,58 @@ const Header = (props) => {
                   anchorEl={anchorEl}
                   id='account-menu'
                   open={open}
+                  disableScrollLock={true}
                   onClose={handleClose}
                   onClick={handleClose}
                   transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 50, vertical: 'bottom' }}
                   className='dropdown-inner-left'
                 >
-                  <MenuItem
+                  <Link
                     href={`/profile/${userData?.profileId || 'me'}`}
                     className='d-flex align-items-center'
                   >
-                    <ListItemIcon>
-                      <AccountCircleIcon />
-                    </ListItemIcon>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <AccountCircleIcon />
+                      </ListItemIcon>
 
-                    <span
-                      style={{
-                        'font-size': '12px',
-                        'font-weight': '400',
-                      }}
-                    >
-                      {lang('HEADER.VIEW_PROFILE')}
-                    </span>
-                  </MenuItem>
+                      <span class='item-text'>
+                        {lang('HEADER.VIEW_PROFILE')}
+                      </span>
+                    </MenuItem>
+                  </Link>
+
                   <Divider style={{ margin: '0' }} />
-                  <MenuItem
+                  <Link
                     href={`/my-activities/`}
                     className='d-flex align-items-center'
                   >
-                    <ListItemIcon>
-                      <SchoolOutlinedIcon />
-                    </ListItemIcon>
-                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
-                      {lang('HEADER.MY_LEARNING')}
-                    </span>
-                  </MenuItem>
-                  <Divider style={{ margin: '0' }} />
+                    <MenuItem>
+                      <ListItemIcon>
+                        <SchoolOutlinedIcon />
+                      </ListItemIcon>
+                      <span class='item-text'>
+                        {lang('HEADER.MY_LEARNING')}
+                      </span>
+                    </MenuItem>
+                  </Link>
 
-                  <MenuItem
+                  <Divider style={{ margin: '0' }} />
+                  <Link
                     href={`/accounts/`}
                     className='d-flex align-items-center '
                   >
-                    <ListItemIcon>
-                      <SettingsOutlinedIcon />
-                    </ListItemIcon>
-                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
-                      {lang('HEADER.ACCOUNT_SETTINGS')}
-                    </span>
-                  </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <SettingsOutlinedIcon />
+                      </ListItemIcon>
+                      <span class='item-text'>
+                        {lang('HEADER.ACCOUNT_SETTINGS')}
+                      </span>
+                    </MenuItem>
+                  </Link>
+
                   <Divider style={{ margin: '0' }} />
 
                   <MenuItem
@@ -1495,9 +1500,7 @@ const Header = (props) => {
                     <ListItemIcon>
                       <LogoutOutlinedIcon />
                     </ListItemIcon>
-                    <span style={{ 'font-size': '12px', 'font-weight': '400' }}>
-                      {lang('COMMON.LOGOUT')}
-                    </span>
+                    <span class='item-text'>{lang('COMMON.LOGOUT')}</span>
                   </MenuItem>
                 </Menu>
               </div>

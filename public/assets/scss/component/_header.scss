@@ -438,12 +438,6 @@ header {
           top: 100% !important;
           transform: translate(0px, 16px) !important;
 
-          .item-text {
-            font-size: 12px;
-            color: #1c1b1e;
-            font-weight: 600;
-          }
-
           @include media(down, $breakpoint-xl) {
             width: 100%;
           }
@@ -654,4 +648,10 @@ header {
   &:hover {
     background-color: $paper-white;
   }
+}
+
+.item-text {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: $font-family-base;
 }
