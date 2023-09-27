@@ -1763,8 +1763,8 @@ export const en = {
     },
   },
   GLOBAL_SEARCH: {
-    NO_RESULT: "No Search Results Found",
-    NO_RESULT_DESC: "Try shortening or rephrasing your search",
+    NO_RESULT: "No results for the search",
+    NO_RESULT_DESC: "Try looking for other terms",
     FILTER_BY: "Filter by",
     FILTERS: "Filters",
     FILTER: {
