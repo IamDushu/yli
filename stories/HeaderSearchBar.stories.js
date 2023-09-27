@@ -11,7 +11,7 @@ export default {
 
 export const Search = {
   args: {
-    searchLogoUrl: "assets/images/search-icon.svg",
+    searchLogoUrl: "/assets/images/search-icon.svg",
     placeHolderText: "Search Text",
   },
 };

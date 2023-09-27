@@ -1,16 +1,100 @@
-.yliway-icon-button-regular{
-  width: 40px;
-  height: 40px;
-}
-.yliway-icon-button-circular{
-  border-radius: 50%;
-}
-.yliway-icon-button{
-  background-color: #F7F2F7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import "../../public/assets/scss/helpers/variable";
+
+.yliway-button {
+  font-family: $font-family-base;
+  font-weight: $font-bold;
+  border: none;
+  border-radius: $rounded-pill;
   cursor: pointer;
-  box-shadow: 0px 1px 3px 1px #00000026;
-  box-shadow: 0px 1px 2px 0px #0000004D;
+  font-size: $font-size-sm;
+  padding: $space10px $space24px;
+
+  &.yliway-button--primary {
+    color: $white;
+    background-color: $primary-violet;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border: none;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10px $space24px;
+    text-transform: none;
+
+    &:disabled {
+      background-color: $haiti-disable-bgcolor;
+      color: $violet-dark-disable-textcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    &:hover {
+      color: $white;
+      background-color: $primary-violet;
+      font-family: $font-family-base;
+      font-weight: $font-bold;
+      border: none;
+      border-radius: $rounded-pill;
+      cursor: pointer;
+      font-size: $font-size-sm;
+      padding: $space10px $space24px;
+    }
+
+    &.yliway-button-small {
+      font-size: 11px !important;
+      padding: 10px 16px;
+    }
+  }
+
+  &.yliway-button--primary-outlined {
+    color: $primary-violet;
+    background-color: transparent;
+    border: $border-width $border-solid $silver;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10px $space24px;
+    text-transform: none;
+
+    &:disabled {
+      background-color: transparent;
+      color: $violet-dark-disable-textcolor;
+      border: $border-width $border-solid $haiti-disable-bgcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+
+  &.yliway-button--textbutton {
+    color: $primary-violet;
+    background-color: transparent;
+    border: none;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10px $space24px;
+    text-transform: none;
+
+    &:disabled {
+      color: $violet-dark-disable-textcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.yliway-button-small {
+  font-size: 11px !important;
+  padding: 10px 16px;
+}
+.yliway-button-medium {
+  font-size: 14px;
+  padding: 11px 20px;
+}
+.yliway-button-large {
+  font-size: 16px;
+  padding: 12px 24px;
 }

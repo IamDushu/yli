@@ -1,0 +1,264 @@
+.post-detail {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 16px;
+    // max-width: 600px;
+    margin: 0 auto;
+    justify-content: space-between;
+    height: 608px;
+    width: 1025px;
+    display: flex;
+  
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+  
+      .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+  
+      .user-info {
+        .username {
+          font-weight: bold;
+          margin: 0;
+          // Customize font size, color, etc. here
+        }
+  
+        .location {
+            margin: 0;
+            color: #666;
+          // Customize location text style
+        }
+        .timestamp {
+            margin: 0;
+            color: #666;
+        }
+      }
+    }
+  
+    .post-image {
+        width: 60%;
+        height: 100%;
+        // border-right: 1px solid #666;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // Customize image styles
+      }
+    }
+    
+    .post-side{
+        width: 50%;
+        padding-left: 10px;
+    }
+
+    .post-actions {
+        height: 100%;
+        width: 100%;
+        .post-details-d{
+          // height: 100%;
+          width: 100%;
+        }
+      button {
+        // Customize like, comment, and share button styles
+        padding: 8px 12px;
+        background-color: #fff;
+        // border: 1px solid #ccc;
+        border: none;
+        align-items: center;
+        border-radius: 4px;
+        margin-right: 2px;
+        text-align: center;
+        // width: 100%;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #f0f0f0;
+          // Add hover styles
+        }
+        span{
+            font-size: 18px;
+        }
+      }
+      .like-button{        
+        // display: flex;
+        // flex-direction: row;
+    }
+    }
+  
+    .post-caption {
+      p {
+        .username {
+          font-weight: bold;
+          margin-right: 4px;
+          // Customize username styles in caption
+        }
+      }
+    }
+  
+    .comments {
+      .comment {
+        // Style individual comments
+        margin-bottom: 8px;
+        padding: 8px;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+  
+        .username {
+          font-weight: bold;
+          // Customize comment author's username
+        }
+      }
+    }
+  }
+
+  //NoImages-
+  .no-image{
+    height: 608px;
+    width: 1025px;
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .profile-picture {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .user-info {
+      .username {
+        font-weight: bold;
+        margin: 0;
+        // Customize font size, color, etc. here
+      }
+
+      .location {
+          margin: 0;
+          color: #666;
+        // Customize location text style
+      }
+      .timestamp {
+          margin: 0;
+          color: #666;
+      }
+    }
+  }
+    .post-side{
+      width: 100%;
+      padding-left: 10px;
+  }
+
+  .post-actions {
+      width: 100%;
+      .post-details{
+          width: 100%;
+      }
+    button {
+      // Customize like, comment, and share button styles
+      padding: 8px 12px;
+      background-color: #fff;
+      // border: 1px solid #ccc;
+      border: none;
+      align-items: center;
+      border-radius: 4px;
+      margin-right: 2px;
+      text-align: center;
+      // width: 100%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f0f0f0;
+        // Add hover styles
+      }
+      span{
+          font-size: 18px;
+      }
+    }
+    .like-button{        
+      // display: flex;
+      // flex-direction: row;
+  }
+  }
+
+  .post-caption {
+    p {
+      .username {
+        font-weight: bold;
+        margin-right: 4px;
+        // Customize username styles in caption
+      }
+    }
+  }
+
+  .comments {
+    .comment {
+      // Style individual comments
+      margin-bottom: 8px;
+      padding: 8px;
+      border: 1px solid #e1e1e1;
+      border-radius: 4px;
+
+      .username {
+        font-weight: bold;
+        // Customize comment author's username
+      }
+    }
+  }
+}
+// Example CSS for the custom dropdown
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  width: 80vw;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  // display: none;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  z-index: 1;
+  border-radius: 0.4rem;
+}
+
+.custom-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Style individual dropdown items as needed */
+.dropdown-content div {
+  padding: 16px;
+  cursor: pointer;
+}
+
+/* Add more styles as required */
+.p-m-option{
+  display:flex;
+  border-bottom:1px solid #CAC4CF;
+  
+  text-align: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  &:hover{
+    background-color: #1D1B2014;
+  }
+  span{
+    margin-left: 3%;
+  }
+}
+@media screen and (min-width:380px) {
+  .dropdown-content{
+    width:35vh;
+  }
+}

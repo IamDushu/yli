@@ -40,6 +40,8 @@ import TagsComponent from "components/courses/upload-course/tags-field";
 import { useFormik } from "formik";
 import { ARTICLE_VALIDATION } from "utils";
 import { TextField } from "components/form-fields";
+import { CustomInputField } from "components/add-post-ui/custom-text-field";
+import { CustomAutocomplete } from "components/add-post-ui/custom-autocomplete";
 
 /******************** 
   @purpose :  Article
@@ -319,33 +321,53 @@ function Article() {
                       <Row>
                         <Col sm={12}>
                           <Form.Group className="mb-4">
-                            <TextField
+                            {/* <TextField
                               label={lang("ATRICLE.TITLE")}
                               placeholder={lang("ATRICLE.TITLE_PLACEHOLDER")}
                               name="title"
                               count={220}
                               formik={formik}
                               required={true}
+                            /> */}
+                            <CustomInputField
+                              label={lang("ATRICLE.TITLE")}
+                              placeholder={lang("ATRICLE.TITLE_PLACEHOLDER")}
+                              required={true}
+                              defaultValue={formik?.values?.title || ""}
+                              formik={formik}
+                              formikKey={"title"}
+                              maxTextCount={220}
                             />
                           </Form.Group>
                           <Form.Group className="mb-4">
-                            <TextField
+                            {/* <TextField
                               label={lang("ATRICLE.SUB_TITLE")}
                               placeholder={lang("ATRICLE.SUBTITLE_PLACEHOLDER")}
                               name="subTitle"
                               count={220}
                               formik={formik}
                               required={true}
+                            /> */}
+
+                            <CustomInputField
+                              label={lang("ATRICLE.SUB_TITLE")}
+                              placeholder={lang("ATRICLE.SUBTITLE_PLACEHOLDER")}
+                              required={true}
+                              defaultValue={formik?.values?.subTitle || ""}
+                              formik={formik}
+                              formikKey={"subTitle"}
+                              maxTextCount={220}
                             />
-                            <Form.Group
-                              controlId="uploadTrainingAddTags"
-                              className="mb-4"
-                            >
-                              <Form.Label className="text-secondary">
+                          </Form.Group>
+                          <Form.Group
+                            controlId="uploadTrainingAddTags"
+                            className="mb-4"
+                          >
+                            {/* <Form.Label className="text-secondary">
                                 {lang("ATRICLE.MAX_3_TAGS")}
                                 <sup>*</sup>
-                              </Form.Label>
-
+                              </Form.Label> */}
+                            {false && (
                               <div className="custom-selectpicker-multi">
                                 <TagsComponent
                                   maxTags={3}
@@ -353,7 +375,13 @@ function Article() {
                                   formik={formik}
                                 />
                               </div>
-                            </Form.Group>
+                            )}
+                            <CustomAutocomplete
+                              formik={formik}
+                              formikKey={"tags"}
+                              placeholder={lang("ATRICLE.ENTER_TAG")}
+                              label={lang("ATRICLE.MAX_3_TAGS")}
+                            />
                           </Form.Group>
                           <Form.Group
                             controlId="createGroupUploadPhoto"
@@ -393,19 +421,33 @@ function Article() {
                             formik?.values?.description &&
                             formik?.values?.description?.length) ||
                             !formik.values.isEdit) && (
-                            <CustomCkEditor
-                              initData={formik?.values?.description || ""}
-                              onChange={(value) => {
-                                if (!value) {
-                                  return;
-                                }
-                                formik.setFieldValue(
-                                  "description",
-                                  value || ""
-                                );
-                              }}
-                              allowImageUpload={true}
-                            />
+                            <>
+                              <div className="article-form-label">
+                                {lang("COMMON.WRITE")}
+                                <sup>*</sup>
+                              </div>
+                              <div
+                                style={{
+                                  position: "relative",
+                                  zIndex: 0,
+                                }}
+                              >
+                                <CustomCkEditor
+                                  initData={formik?.values?.description || ""}
+                                  onChange={(value) => {
+                                    if (!value) {
+                                      return;
+                                    }
+                                    formik.setFieldValue(
+                                      "description",
+                                      value || ""
+                                    );
+                                  }}
+                                  className="article-form-ckeditor"
+                                  allowImageUpload={true}
+                                />
+                              </div>
+                            </>
                           )}
 
                           {formik?.touched?.description &&

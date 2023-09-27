@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ProfileImage } from "../../profileImage";
+import { ProfileImage } from "components/profile-image";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
@@ -13,7 +13,7 @@ export const HeaderProfile = ({
 }) => {
   const StyledBadge = styled(Badge)((theme) => ({
     "& .MuiBadge-badge": {
-      backgroundImage: "url('assets/images/settings-icon.svg')",
+      backgroundImage: "url('/assets/images/settings-icon.svg')",
       backgroundSize: "cover", // You can adjust the background image properties as needed
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -68,5 +68,5 @@ HeaderProfile.propTypes = {
 };
 
 HeaderProfile.defaultProps = {
-  imageUrl: "assets/images/homepage/user-1.png",
+  imageUrl: "/assets/images/homepage/user-1.png",
 };

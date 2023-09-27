@@ -1,4 +1,4 @@
-import { ProfileImage } from "../components/profileImage";
+import { ProfileImage } from "../components/profile-image";
 
 export default {
   title: "Components/profileImage",
@@ -11,6 +11,6 @@ export default {
 export const Image = {
   args: {
     imageUrl: "assets/images/homepage/user-1.png",
-    size: "medium",
+    size: "24px",
   },
 };

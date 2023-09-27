@@ -5,6 +5,7 @@ import React from "react";
 import { Col, Card } from "react-bootstrap";
 import { onImageError } from "utils";
 import moment from "moment";
+import { PEER_PRODUCER_URL } from "config";
 
 const FollowedGroupDetail = ({ members = 0, group, isSelfProfile, isLast }) => {
   const router = useRouter();
@@ -79,7 +80,7 @@ const FollowedGroupDetail = ({ members = 0, group, isSelfProfile, isLast }) => {
                 <span className="ml-1 text-primary pointer">
                   {group?.createdBy?.type === "Learning Institute" ? (
                     <a
-                      href={`https://peerproducer-dev.yliway.com/profile/institute-profile?instituteId=${group?.createdBy?.instituteId}`}
+                      href={`${PEER_PRODUCER_URL}profile/institute-profile?instituteId=${group?.createdBy?.instituteId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary"

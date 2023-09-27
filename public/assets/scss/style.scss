@@ -13,11 +13,14 @@
 @import "helpers/import.scss";
 @import "pages/import.scss";
 @import "component/_all";
-@import "/stories/storybookcompscss/sbcomponents.scss";
+
 
 // Third party CSS
 @import "../../../node_modules/react-datetime/css/react-datetime.css";
 @import "../../../node_modules/react-perfect-scrollbar/dist/css/styles.css";
+
+//storybook style
+// @import "../../../components/button/button.module.scss";
 
 body {
   background: $body-bg;
@@ -103,6 +106,10 @@ html {
   padding: size(24) 0 size(50);
   background-color: $paper-white;
 
+  @include media(down, $breakpoint-xl) {
+    margin-top: size(25);
+  }
+  
   .card {
     // overflow: initial;
     .card-header {

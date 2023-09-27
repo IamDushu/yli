@@ -13,8 +13,11 @@ import { APP_URL } from "config";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import PostFooterDropdown from "./PostFooterDropdown";
-import { AddToGmIcon, CommentIcon, ShareIcon } from "components/svg/dashboard";
 import { getSearchResults } from "store/actions/search-result";
+import PostComment from "./PostComment";
+import Share from "./Share";
+import AddToGM from "./AddToGM";
+import { Stack } from "@mui/material";
 
 /******************** 
 @purpose : Used for Post Footer 
@@ -224,104 +227,66 @@ const PostFooter = ({
 
   return (
     <Fragment>
-      <div className="d-flex align-items-center justify-content-between px-3 py-2 post-footer-container">
-        <div className="reaction-icons-sections post-reactions d-flex align-items-center p-0 mb-md-0 mb-0">
-          {/* Like Post Section */}
-          <Reactions
-            eventType={eventType}
-            handleClickEvent={handleClickEvent}
-          />
-          <a
-            className="text-body-12 font-weight-semibold"
-            onClick={() => {
-              dispatch(
-                postLikeReactionData({
-                  page: 1,
-                  pageSize: 10,
-                  postId: postId || postDetails?.id,
-                })
-              );
-              postLikesData?.rows &&
-                dispatch(toggleModals({ likelistcounter: true }));
-            }}
-          >
-            <span className="text-gray-darker font-14 font-weight-semibold">
-              {reactionCount}
-            </span>
-          </a>
-          {/* Comment Post Section */}
-          <div className="reaction-icons-box p-0 mr-4">
-            <div
-              className={
-                postDetails?.whoCanComment === "No one" ||
-                (postDetails?.whoCanComment === "Connections only" &&
-                  postDetails?.userDetails?.id !== currentUserInfo?.id &&
-                  !postDetails?.userDetails?.connectionData?.length) ||
-                  (postDetails?.whoCanComment === "Growth connections only" &&
-                  postDetails?.userDetails?.id !== currentUserInfo?.id &&
-                  !postDetails?.userDetails?.growthConnectionData?.isGrowthConnection)
-                  ? "d-flex align-items-center justify-content-center disableButton ml-4"
-                  : "d-flex align-items-center justify-content-center ml-4"
-              }
-              onClick={() =>
-                postDetails?.whoCanComment === "No one" ||
-                (postDetails?.whoCanComment === "Connections only" &&
-                  postDetails?.userDetails?.id !== currentUserInfo?.id &&
-                  !postDetails?.userDetails?.connectionData?.length) ||
-                (postDetails?.whoCanComment === "Growth connections only" &&
-                  postDetails?.userDetails?.id !== currentUserInfo?.id &&
-                  !postDetails?.userDetails?.growthConnectionData?.isGrowthConnection)
-                  ? null
-                  : handleUserComments(postId)
-              }
-            >
-              <div className="post-footer-social-icon">
-                <CommentIcon />
-              </div>
+      <div className="px-3 py-2 post-footer-container">
+        <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack direction="row" spacing={1}>
+            {/* Like Post Section */}
+            <div className="reaction-icons-sections post-reactions d-flex align-items-center p-0 mb-md-0 mb-0">
+              <Reactions
+                showCounter
+                eventType={eventType}
+                handleClickEvent={handleClickEvent}
+                totalCount={reactionCount}
+              />
+              <a
+                className="text-body-12 font-weight-semibold"
+                onClick={() => {
+                  dispatch(
+                    postLikeReactionData({
+                      page: 1,
+                      pageSize: 10,
+                      postId: postId || postDetails?.id,
+                    })
+                  );
+                  postLikesData?.rows &&
+                    dispatch(toggleModals({ likelistcounter: true }));
+                }}
+              >
+                <span className="text-gray-darker font-14 font-weight-semibold">
+                  {reactionCount}
+                </span>
+              </a>
+            </div>
 
-              <span className="ml-2 font-14 font-weight-semibold text-gray-darker">
-                {commentCount}
-                {/* {postData.postDetails.commentCount} */}
-              </span>
-            </div>
+            {/* Comment Post Section */}
+            <PostComment
+              showCounter
+              totalCount={commentCount}
+              postDetails={postDetails}
+              currentUserInfo={currentUserInfo}
+              handleUserComments={() => handleUserComments(postId)}
+            />
+
+            {/* Share Post Section */}
+            <Share handleClick={shareModalHandler} />
+
+            {/* Add to GM Post Section */}
+            {!isPostAddedGM && (
+              <AddToGM
+                handleClick={() => addToGMclickFunc(instituteId, postDetails)}
+              />
+            )}
+          </Stack>
+          <div className="d-flex align-items-center reaction-icons-sections">
+            {/* Post Dropdown Section */}
+            <PostFooterDropdown
+              postData={postData}
+              userInfo={currentUserInfo}
+              type={type}
+              getAllPost={getAllPost}
+            />
           </div>
-          {/* Share Post Section */}
-          <div
-            className="reaction-icons-box p-0 mr-4"
-            onClick={() => shareModalHandler()}
-          >
-            <a
-              title=""
-              className="d-xl-flex align-items-center justify-content-center"
-            >
-              <div className="post-footer-social-icon">
-                <ShareIcon />
-              </div>
-            </a>
-          </div>
-          {/* Add to GM Post Section */}
-          {!isPostAddedGM && (
-            <div
-              className="reaction-icons-box p-0 "
-              onClick={() => addToGMclickFunc(instituteId, postDetails)}
-            >
-              <div className="d-xl-flex align-items-center justify-content-center">
-                <div className="post-footer-social-icon">
-                  <AddToGmIcon />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="d-flex align-items-center reaction-icons-sections">
-          {/* Post Dropdown Section */}
-          <PostFooterDropdown
-            postData={postData}
-            userInfo={currentUserInfo}
-            type={type}
-            getAllPost={getAllPost}
-          />
-        </div>
+        </Stack>
       </div>
       {isDisplayCommentsPage ||
       activityType === "comment" ||

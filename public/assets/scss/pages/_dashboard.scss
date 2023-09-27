@@ -32,9 +32,9 @@
 
 /* left section */
 .left-profile-section {
-  padding-right: size(12);
-  width: size(237);
-  flex-shrink: 0;
+  // padding-right: size(12);
+  // width: size(290);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: size(271);
   // }
@@ -44,7 +44,7 @@
   }
 }
 .right-profile-section {
-  padding-left: size(12);
+  // padding-left: size(12);
   // width: calc(100% - size(237));
   width: calc(100% - 14.8125rem);
   @include media(down, $breakpoint-md) {
@@ -68,16 +68,17 @@
 
 /* center post section */
 .post-section {
-  padding: 0 size(12);
+  // padding: 0 size(12);
   // width: calc(100% - size(564));
-  width: calc(100% - 35.25rem);
-  flex-shrink: 0;
+  // width: calc(100% - 35.25rem);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: calc(100% - size(632.15));
   // }
+  
   @include media(down, $breakpoint-lg) {
     // width: calc(100% - size(237));
-    width: calc(100% - 14.8125rem);
+    // width: calc(100% - 14.8125rem);
     padding-right: 0;
   }
   @include media(down, $breakpoint-md) {
@@ -92,18 +93,19 @@
 
 /* right section */
 .right-blog-section {
-  padding-left: size(12);
-  width: size(327);
-  flex-shrink: 0;
+  // padding-left: size(12);
+  // width: size(327);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: size(360);
   // }
-  @include media(down, $breakpoint-md) {
-    width: 100%;
-    padding-left: size(249);
+  @include media(down, $breakpoint-xl) {
+    // width: 100% !important;
+    // padding-left: size(249);
   }
-  @include media(down, $breakpoint-md) {
-    padding-left: 0;
+  @include media(down, $breakpoint-lg) {
+    // width: 100% !important;
+   
   }
 }
 
@@ -219,8 +221,8 @@
   .listing-box {
     display: flex;
     align-items: center;
-    padding: size(12) 0;
-    border-top: 1px solid $geyser;
+    // padding: size(12) 0;
+    // border-top: 1px solid $geyser;
     font-weight: $font-semibold;
     // &:first-child {
     //   padding-top: 0;
@@ -353,12 +355,12 @@
 /* cover with profile pic */
 .user-cover-box {
   background-size: cover;
-  height: size(90);
+  height: size(114);
   margin-bottom: size(50);
   .user-profile-pic {
     @include position(absolute, auto, 0, -50px, 0);
     z-index: 9;
-    border: size(3) solid $white;
+    // border: size(3) solid $white;
     height: size(120);
     width: size(120);
     margin: 0 auto;

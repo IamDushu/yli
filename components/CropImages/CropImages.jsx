@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { uploadPostDocument } from "store/actions";
 import { useDispatch } from "react-redux";
 import noop from "lodash/noop";
+import { FileDropzoneUi } from "components/add-post-ui/file-dropzone-UI";
 
 /******************* 
 @Purpose : Used for custome modal desgin
@@ -28,6 +29,7 @@ const CropImagesProfile = ({
   type: type1,
   isEdit,
   name,
+  isNewUi = false,
   setError = noop,
   imgSizeError,
   handleChange,
@@ -430,19 +432,23 @@ const CropImagesProfile = ({
             <FileUploader
               handleChange={onSelectFile}
               children={
-                <div className="dropzone-wrap-xxl text-center pointer w-100">
-                  <em className="icon icon-upload-cloud font-44 pb-0"></em>
-                  <p className="m-0 font-16 text-geyser font-medium">
-                    {lang("DASHBOARD.UPLOAD_TITLE")}
-                  </p>
-                  <small className="m-0 body-text-14 text-geyser font-normal">
-                    {logoSize
-                      ? `(Size 200 x 200 or 400 x 400 / JPG, PNG)`
-                      : bannerSize
-                      ? `( Size 728 X 410 or 854 X 480 or 1280 x 720 or 1920 x 1080 / JPG, PNG)`
-                      : `( Size 870 X 344 or 1244 X 492 or 1617 X 640 / JPG, PNG)`}
-                  </small>
-                </div>
+                !isNewUi ? (
+                  <div className="dropzone-wrap-xxl text-center pointer w-100">
+                    <em className="icon icon-upload-cloud font-44 pb-0"></em>
+                    <p className="m-0 font-16 text-geyser font-medium">
+                      {lang("DASHBOARD.UPLOAD_TITLE")}
+                    </p>
+                    <small className="m-0 body-text-14 text-geyser font-normal">
+                      {logoSize
+                        ? `(Size 200 x 200 or 400 x 400 / JPG, PNG)`
+                        : bannerSize
+                        ? `( Size 728 X 410 or 854 X 480 or 1280 x 720 or 1920 x 1080 / JPG, PNG)`
+                        : `( Size 870 X 344 or 1244 X 492 or 1617 X 640 / JPG, PNG)`}
+                    </small>
+                  </div>
+                ) : (
+                  <FileDropzoneUi />
+                )
               }
               maxSize={5}
               onSizeError={() => {

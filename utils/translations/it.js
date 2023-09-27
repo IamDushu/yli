@@ -341,6 +341,8 @@ export const it = {
   COMMON: {
     LOADING: "Caricamento...",
     OK: "Ok",
+    WRITE: "Scrivere",
+    POST_TO: "Postare",
     NOT_PROVIDED: "Non fornito",
     NO_OPTIONS: "Nessuna opzione",
     SEARCH_FOR_PROFESSION: "Cerca professione",
@@ -1087,6 +1089,8 @@ export const it = {
     ADD_POST: {
       INPUT_PLACEHOLDER: "Pubblica un post",
       CREATE_POST: "Crea Post",
+      VIDEO_POST: "Trascina o carica un video",
+      PHOTO_POST: "Trascina o carica un'immagine",
       SHARE_POST: "Condividi il Post",
       EDIT_SHARED_POST: "Edita i Post condivisi",
       EDIT_POST: "Edita il Post",
@@ -1110,6 +1114,10 @@ export const it = {
       VIDEO: "Aggiungi Video",
       DOCUMENT: "Aggiungi documento",
       POLL: "Fai un sondaggio",
+      POST_PHOTO: "Foto",
+      POST_VIDEO: "video",
+      POST_POLL: "Sondaggio",
+      POST_ARTICLE: "Articolo",
     },
 
     SORT_BY: {
@@ -1128,8 +1136,10 @@ export const it = {
         EDIT_POST: "Edita il tuo Post",
         MUTE: "Mute",
         UNMUTE: "Unmute",
-        REPORT_POST: "Segnala questo post",
+        REPORT_POST: "Segnala post",
         SEE_POST: "Non voglio vedere questo post",
+        TURN_ON_NOTIFICATION: "Attiva le notifiche",
+        TURN_OFF_NOTIFICATION: "Spegni le notifiche",
       },
       POST_BODY: {
         POST_POLL: {
@@ -1237,6 +1247,14 @@ export const it = {
     PEOPLE_VIEWED: "Visite al mio profilo",
   },
   GROWTH_TOOL: {
+    LATEST_ARTILCE: "Ultimo Articolo",
+    TOOLTIP_1:
+      "Utilizza questa area per potenziare il tuo modello di business attraverso connessioni, apprendimenti ed eventi.",
+    TOOLTIP_2:
+      "Espandi questa sezione per accedere a tutte le principali funzioni di crescita della piattaforma.",
+    VIEW_ALL: "Vedi Tutti",
+    GROWTH_AREA: "Area di Crescita",
+    GROWTH_PROJECTS: "Progetti di Crescita",
     GROWTH_TOOL: "Growth Tool",
     GROWTH_MODEL: "Growth Model",
     GROWTH_PARTNERS: "Growth Partners",
@@ -1244,7 +1262,7 @@ export const it = {
     TRAINING_ROOMS: "Training Room",
     COACHING_ROOMS: "Coaching Room",
     WEBINAR: "Webinar",
-    MATERCLASS: "Masterclass",
+    MASTERCLASS: "Masterclass",
     BUSINESS_NETWORK_ROOMS: "Business Network Room",
     EVENTS: "Eventi",
     LAUNCH_ROOM: "Avvia una stanza",
@@ -2130,6 +2148,24 @@ export const it = {
     YLIWAY: "© YLIWAY",
     TITLE: "Il tuo sogno è più vicino di quanto pensi",
     YLIWAY_GUIDE: "GUIDA YLIWAY",
+    GET_STARTED: {
+      LINK: "Nuovo su Yliway?",
+      TITLE: "Iniziare",
+      INFO: "Scopri come ottenere facilmente il massimo dalla piattaforma",
+    },
+    SQUAD: {
+      TITLE: "Squadre",
+      CREATE: "Crea squadra",
+    },
+    MEETING: {
+      TITLE: "Avvia una riunione",
+      INSTANT_MEETING: "Avvia una riunione per ora",
+      SCHEDULED_MEETING: "Avvia una riunione per dopo",
+      ROOM_HOSTORY: "Cronologia delle conversazioni nella stanza",
+    },
+  },
+  CALENDAR_WIDGET: {
+    NO_EVENTS: "Nessun evento oggi",
   },
   COMPANY_FORM: {
     CREATE_YOUR_OWN_COMPANY_PAGE: "Crea la tua Pagina Aziendale",

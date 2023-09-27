@@ -4,7 +4,7 @@ import { Link } from "@routes";
 import { LinkPreviewGenerator } from "components/ui/link-preview";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import {  Dropdown, Form, Modal } from "react-bootstrap";
+import { Dropdown, Form, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Mention, MentionsInput } from "react-mentions";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,8 @@ import {
   postTokenUnix,
   setCookie,
 } from "utils";
-import { Button } from "components/button";
+import { YliwayButton } from "components/button";
+import { CustomSelectWithRadio } from "components/add-post-ui/custom-select-comment-right";
 import {
   clearAddPostData,
   createPoll,
@@ -30,13 +31,16 @@ import {
 } from "../../../store/actions";
 import AddPostSelected from "./add-post-selected";
 import reactMentionsStyle from "./react-mention-style";
-import { IconButton } from "components/icon-button";
+import { AssistChips } from "components/assist-chips";
+import { PostOwner } from "components/post-owner";
+import { ARTICLE } from "routes/urls";
 
 /*******************   
 @purpose : User Add post
 @Author : INIC
 ******************/
-const AddPost = () => {
+const AddPost = ({modelKey}) => {
+  
   /******************* 
 @purpose : Used for language translation
 @Parameter : {}
@@ -340,18 +344,35 @@ const AddPost = () => {
     description = description.split("$$$~~~").join("</a>");
 
     if (postTypes === "poll") {
-      let pollbody = {
-        status: true,
-        description: description,
-        whoCanComment: postData.whoCanComment,
-        privacy: postData.privacy,
-        postType: postTypes,
-        pollAnswers: createPolls.pollAnswers,
-        pollQuestion: createPolls.pollQuestion,
-        groupId,
-        tags: tags.length > 0 ? tags : null,
-        taggedId: mentions.length > 0 ? mentions : null,
-      };
+      let pollbody;
+      if (editPost && editPost.postDetails && editPost.postDetails.id) {
+        pollbody = {
+          id: editPost.postDetails.id,
+          status: true,
+          description: description,
+          whoCanComment: postData.whoCanComment,
+          privacy: postData.privacy,
+          postType: postTypes,
+          pollAnswers: createPolls.pollAnswers,
+          pollQuestion: createPolls.pollQuestion,
+          groupId,
+          tags: tags.length > 0 ? tags : null,
+          taggedId: mentions.length > 0 ? mentions : null,
+        };
+      } else {
+        pollbody = {
+          status: true,
+          description: description,
+          whoCanComment: postData.whoCanComment,
+          privacy: postData.privacy,
+          postType: postTypes,
+          pollAnswers: createPolls.pollAnswers,
+          pollQuestion: createPolls.pollQuestion,
+          groupId,
+          tags: tags.length > 0 ? tags : null,
+          taggedId: mentions.length > 0 ? mentions : null,
+        };
+      }
       setIsButtonDisabled(true);
       await dispatch(addPost(pollbody));
       setCookie("postToken", postTokenUnix(new Date()));
@@ -490,125 +511,161 @@ const AddPost = () => {
   ******************/
   return (
     <Fragment>
-      <div className="bg-white p-4">
-        <div className="d-flex align-items-center">
-          {
-            <div className="w-h-54 flex-shrink-0 rounded-pill overflow-hidden">
-              <Link route="/">
-                <picture
-                  className="user-profile-pic rounded-pill h-100 d-flex"
-                  onContextMenu={(e) => e.preventDefault()}
+      {false && (
+        <div className="bg-white p-4">
+          <div className="d-flex align-items-center">
+            {
+              <div className="w-h-54 flex-shrink-0 rounded-pill overflow-hidden">
+                <Link route="/">
+                  <picture
+                    className="user-profile-pic rounded-pill h-100 d-flex"
+                    onContextMenu={(e) => e.preventDefault()}
+                  >
+                    <source srcSet={userInfo.profilePicURL} type="image/jpg" />
+                    <img
+                      src={userInfo.profilePicURL || ""}
+                      onError={(e) => {
+                        onImageError(
+                          e,
+                          "profile",
+                          `${userInfo.firstName} ${userInfo.lastName}`
+                        );
+                      }}
+                      width="54"
+                      height="54"
+                      className="img-fluid flex-shirnk-0 overflow-hidden rounded-pill"
+                    />
+                  </picture>
+                </Link>
+              </div>
+            }
+            <div className="ml-3">
+              <div className="mb-0 algin-items-center">
+                <a
+                  title={`${
+                    userInfo && userInfo.firstName !== null
+                      ? userInfo.firstName
+                      : "john"
+                  } ${
+                    userInfo && userInfo.lastName !== null
+                      ? userInfo.lastName
+                      : "dev"
+                  }`}
                 >
-                  <source srcSet={userInfo.profilePicURL} type="image/jpg" />
-                  <img
-                    src={userInfo.profilePicURL || ""}
-                    onError={(e) => {
-                      onImageError(
-                        e,
-                        "profile",
-                        `${userInfo.firstName} ${userInfo.lastName}`
-                      );
-                    }}
-                    width="54"
-                    height="54"
-                    className="img-fluid flex-shirnk-0 overflow-hidden rounded-pill"
-                  />
-                </picture>
-              </Link>
-            </div>
-          }
-          <div className="ml-3">
-            <div className="mb-0 algin-items-center">
-              <a
-                title={`${
-                  userInfo && userInfo.firstName !== null
-                    ? userInfo.firstName
-                    : "john"
-                } ${
-                  userInfo && userInfo.lastName !== null
-                    ? userInfo.lastName
-                    : "dev"
-                }`}
-              >
-                <span className="font-weight-semibold">{`${
-                  userInfo && userInfo.firstName !== null
-                    ? userInfo.firstName
-                    : "john"
-                }
+                  <span className="font-weight-semibold">{`${
+                    userInfo && userInfo.firstName !== null
+                      ? userInfo.firstName
+                      : "john"
+                  }
                       ${
                         userInfo && userInfo.lastName !== null
                           ? userInfo.lastName
                           : "dev"
                       }
                       `}</span>
-              </a>
-              <p className="mb-2">
-                {`${
-                  userInfo && userInfo.currentPosition !== null
-                    ? userInfo.currentPosition
-                    : ""
-                }
+                </a>
+                <p className="mb-2">
+                  {`${
+                    userInfo && userInfo.currentPosition !== null
+                      ? userInfo.currentPosition
+                      : ""
+                  }
                       `}
-              </p>
-            </div>
-            <div className="reaction-icons-sections d-inline-block">
-              {!hasGroupsPath && (
-                <div className="py-1 px-2 reaction-icons-box border rounded-8 border-geyser mr-3">
-                  <Dropdown
-                    className="theme-dropdown"
-                    onSelect={selectUserMode}
-                  >
-                    <Dropdown.Toggle className="d-flex align-items-center">
-                      <em className="icon icon-web pr-2 text-charcoal-grey"></em>
-                      <h5 className="font-14 mb-0 text-secondary">
-                        {postData.privacy}
-                      </h5>
-                      <em className="icon icon-down-arrow text-charcoal-grey pl-2"></em>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu defaultValue={postData.privacy}>
-                      <Dropdown.Item
-                        eventKey={lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
-                      >
-                        {lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        eventKey={lang(
-                          "DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY"
-                        )}
-                      >
-                        {lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY")}
-                      </Dropdown.Item>
-                      {/* gc dropdown */}
-                      <Dropdown.Item
-                        eventKey={lang(
-                          "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
-                        )}
-                      >
-                        {lang(
-                          "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
-                        )}
-                      </Dropdown.Item>
-                      {/* no one dropdown */}
-                      <Dropdown.Item
-                        eventKey={lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
-                      >
-                        {lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-              )}
+                </p>
+              </div>
+              <div className="reaction-icons-sections d-inline-block">
+                {!hasGroupsPath && (
+                  <div className="py-1 px-2 reaction-icons-box border rounded-8 border-geyser mr-3">
+                    <Dropdown
+                      className="theme-dropdown"
+                      onSelect={selectUserMode}
+                    >
+                      <Dropdown.Toggle className="d-flex align-items-center">
+                        <em className="icon icon-web pr-2 text-charcoal-grey"></em>
+                        <h5 className="font-14 mb-0 text-secondary">
+                          {postData.privacy}
+                        </h5>
+                        <em className="icon icon-down-arrow text-charcoal-grey pl-2"></em>
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu defaultValue={postData.privacy}>
+                        <Dropdown.Item
+                          eventKey={lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
+                        >
+                          {lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          eventKey={lang(
+                            "DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY"
+                          )}
+                        >
+                          {lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY")}
+                        </Dropdown.Item>
+                        {/* gc dropdown */}
+                        <Dropdown.Item
+                          eventKey={lang(
+                            "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
+                          )}
+                        >
+                          {lang(
+                            "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
+                          )}
+                        </Dropdown.Item>
+                        {/* no one dropdown */}
+                        <Dropdown.Item
+                          eventKey={lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
+                        >
+                          {lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       <Modal.Body
         className={
           postData?.description?.includes("@")
-            ? "px-4 pb-4 pt-0 overflow-visible"
-            : "px-4 pb-4 pt-0"
+            ? "px-4 pb-0 pt-0 overflow-visible"
+            : "px-4 pb-0 pt-0"
         }
       >
+        {/* <div className="post-owner-with-cross"> */}
+        <PostOwner
+          photoLink={userInfo?.profilePicURL || ""}
+          name={`${userInfo?.firstName || ""} ${userInfo?.lastName || ""}`}
+          postData={postData}
+          privacyOptions={[
+            {
+              label: lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE"),
+              value: lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE"),
+            },
+            {
+              label: lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY"),
+              value: lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY"),
+            },
+            {
+              label: lang("DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"),
+              value: lang("DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"),
+            },
+            {
+              label: lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE"),
+              value: lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE"),
+            },
+          ]}
+          changePrivacy={selectUserMode}
+        />
+        {/* <div
+            className="add-post-cross"
+            onClick={() => {
+              dispatch(toggleModals({ [modelKey]: false }));
+            }}
+          >
+            <img src="assets/images/add-post/post-modal-close.svg" />
+          </div> */}
+        {/* </div> */}
         <div className="body">
           <Form.Group className="mb-0 position-relative">
             <Form.Label></Form.Label>
@@ -704,7 +761,7 @@ const AddPost = () => {
                     {`${lang("DASHBOARD.POSTS.COMMENT.MAX_CHAR_3000")} `}
                   </span>
                 )}
-                <span
+                {/* <span
                   className={
                     error.length < 3000
                       ? "text-muted ml-auto font-14"
@@ -715,9 +772,44 @@ const AddPost = () => {
                 >
                   {error.length}/
                 </span>
-                <span className="text-success">3000</span>
+                <span>3000</span> */}
               </p>
             )}
+            <div className="d-flex justify-content-between">
+              <div
+                className="pointer"
+                style={{
+                  display: "flex",
+                  marginRight: "15px",
+                  alignItems: "center",
+                }}
+              >
+                {/* <i
+                  onClick={() => setAddEmoji(!addEmoji)}
+                  className="bx bx-smile"
+                ></i> */}
+                <span
+                  className="pointer"
+                  onClick={() => setAddEmoji(!addEmoji)}
+                >
+                  <img src="assets/images/create-post-emoji-icon.svg" />
+                </span>
+              </div>
+              <div>
+                <span
+                  className={
+                    error.length < 3000
+                      ? "text-muted ml-auto font-12"
+                      : error.length > 3000
+                      ? "text-danger ml-auto font-12"
+                      : "text-muted ml-auto font-12"
+                  }
+                >
+                  {error.length}/
+                </span>
+                <span className="font-12">3000</span>
+              </div>
+            </div>
 
             {postPreviewUrl.length > 0 && (
               <LinkPreviewGenerator url={postPreviewUrl[0]} />
@@ -736,7 +828,7 @@ const AddPost = () => {
           </Form.Group>
           <div>
             <div style={{ display: "flex", marginBottom: "5px" }}>
-              <div
+              {false && <div
                 className="pointer"
                 style={{
                   display: "flex",
@@ -744,11 +836,17 @@ const AddPost = () => {
                   alignItems: "center",
                 }}
               >
-                <i
+                {/* <i
                   onClick={() => setAddEmoji(!addEmoji)}
                   className="bx bx-smile"
-                ></i>
-              </div>
+                ></i> */}
+                <span
+                  className="pointer"
+                  onClick={() => setAddEmoji(!addEmoji)}
+                >
+                  <img src="assets/images/create-post-emoji-icon.svg" />
+                </span>
+              </div>}
               <div>
                 {/* <Button
                   variant="btn text-uppercase text-info p-0"
@@ -777,7 +875,7 @@ const AddPost = () => {
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer className="footer border-top border-geyser p-md-4 p-3 d-flex">
+      <Modal.Footer className="footer d-flex p-3">
         {/* <div className="reaction-icons-sections d-lg-flex align-items-center mx-0 justify-content-between mb-lg-0 mb-3">
           <div className="d-flex w-100 justify-content-between">
             <div
@@ -848,69 +946,128 @@ const AddPost = () => {
             </div>
           </div>
         </div> */}
-        <div className="post-type-icons-box">
-          <IconButton
-            iconName="postPhoto"
-            title={lang("DASHBOARD.ADD_POST.PHOTO")}
-            handleClick={handlePostPhoto}
-          />
-          <IconButton
-            iconName="postVideo"
-            title={lang("DASHBOARD.ADD_POST.VIDEO")}
-            handleClick={handlePostVideo}
-          />
-          <IconButton
-            iconName="postArticle"
-            title={lang("DASHBOARD.ADD_POST.POLL")}
-          />
-          <IconButton
-            iconName="postPoll"
-            title={lang("DASHBOARD.ADD_POST.POLL")}
-            handleClick={handlePostPoll}
-          />
-        </div>
-        <div className="d-flex align-items-center ml-auto mr-0">
-          <div className="reaction-icons-sections d-lg-flex align-items-center justify-content-between">
-            {!hasGroupsPath && (
-              <div className="py-1 reaction-icons-box d-flex align-items-center border rounded-8 border-geyser mr-3">
-                <Dropdown
-                  className="theme-dropdown"
-                  onSelect={selectCommentMode}
-                >
-                  <Dropdown.Toggle className="d-flex align-items-center">
-                    <em className="icon icon-msg-square text-secondary font-20"></em>
-                    <h5 className="font-14 mb-0 pl-2 text-secondary text-left">
-                      {postData.whoCanComment}
-                    </h5>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item eventKey="Anyone">
-                      {lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="Connections only">
-                      {lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY")}
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="Growth connections only">
-                      {lang(
-                        "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
-                      )}
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="No one">
-                      {lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            )}
-          </div>
-          <div className="d-flex ml-auto pl-3 border-left-1">
-            <Button
-              backgroundColor="#6750A4"
-              label={lang("DASHBOARD.ADD_POST.BUTTON.POST")}
-              size="add-post-dashboard"
-              disabled={isButtonDisabled || error.error}
-              handleClick={postAdd}
+        <div className="d-flex justify-content-between w-100 flex-wrap footer-content">
+          <div className="d-flex align-items-center">
+            <YliwayButton
+              // backgroundColor="#6750A4"
+              label={lang("COMMON.BACK")}
+              size={"medium"}
+              fontWeight={500}
+              primaryOutlined={true}
+              // disabled={isButtonDisabled || error.error}
+              handleClick={() => {
+                dispatch(toggleModals({ [modelKey]: false }));
+              }}
             />
+          </div>
+          <div className="post-type-icons-box">
+            <AssistChips
+              border="none"
+              iconName="postPhoto"
+              tooltip={lang("DASHBOARD.ADD_POST.POST_PHOTO")}
+              paddingX="10px"
+              paddingY="16px"
+              handleClick={handlePostPhoto}
+            />
+            <AssistChips
+              border="none"
+              iconName="postVideo"
+              tooltip={lang("DASHBOARD.ADD_POST.POST_VIDEO")}
+              paddingX="10px"
+              paddingY="16px"
+              handleClick={handlePostVideo}
+            />
+            <AssistChips
+              border="none"
+              iconName="postPoll"
+              tooltip={lang("DASHBOARD.ADD_POST.POST_POLL")}
+              paddingX="10px"
+              paddingY="16px"
+              handleClick={handlePostPoll}
+            />
+            <AssistChips
+              border="none"
+              iconName="postArticle"
+              tooltip={lang("DASHBOARD.ADD_POST.POST_ARTICLE")}
+              paddingX="10px"
+              paddingY="16px"
+              handleClick={() => {
+                router.push(ARTICLE);
+              }}
+            />
+          </div>
+          {false && (
+            <div className="reaction-icons-sections d-lg-flex align-items-center justify-content-between">
+              {!hasGroupsPath && (
+                <div className="py-1 reaction-icons-box d-flex align-items-center border rounded-8 border-geyser mr-3">
+                  <Dropdown
+                    className="theme-dropdown"
+                    onSelect={selectCommentMode}
+                  >
+                    <Dropdown.Toggle className="d-flex align-items-center">
+                      <em className="icon icon-msg-square text-secondary font-20"></em>
+                      <h5 className="font-14 mb-0 pl-2 text-secondary text-left">
+                        {postData.whoCanComment}
+                      </h5>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item eventKey="Anyone">
+                        {lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE")}
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="Connections only">
+                        {lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY")}
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="Growth connections only">
+                        {lang(
+                          "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
+                        )}
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="No one">
+                        {lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE")}
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              )}
+            </div>
+          )}
+          <div className="mx-2">
+            <CustomSelectWithRadio
+              options={[
+                {
+                  label: lang("DASHBOARD.ADD_POST.PRIVACY.ANYONE"),
+                  value: "Anyone",
+                },
+                {
+                  label: lang("DASHBOARD.ADD_POST.PRIVACY.CONNECTION_ONLY"),
+                  value: "Connections only",
+                },
+                {
+                  label: lang(
+                    "DASHBOARD.ADD_POST.PRIVACY.GROWTH_CONNECTION_ONLY"
+                  ),
+                  value: "Growth connections only",
+                },
+                {
+                  label: lang("DASHBOARD.ADD_POST.PRIVACY.NO_ONE"),
+                  value: "No one",
+                },
+              ]}
+              defaultValue={postData.whoCanComment}
+              callback={selectCommentMode}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <div>
+              <YliwayButton
+                label={lang("DASHBOARD.ADD_POST.BUTTON.POST")}
+                size="medium"
+                primary={true}
+                fontWeight={500}
+                disabled={isButtonDisabled || error.error}
+                handleClick={postAdd}
+              />
+            </div>
           </div>
         </div>
       </Modal.Footer>

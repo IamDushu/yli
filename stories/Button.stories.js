@@ -1,43 +1,38 @@
-import { Button } from "../components/button";
+import { YliwayButton } from "../components/button";
 
 export default {
   title: "Components/Button",
-  component: Button,
+  component: YliwayButton,
   argTypes: {
     handleClick: { action: "handleClick" },
     backgroundColor: { control: "color" },
-  },
+  
+    },
 };
 
-export const Primary = {
+export const primary = {
   args: {
     primary: true,
     label: "Primary",
-    backgroundColor:"color"
+    backgroundColor:"color",
+    
   },
 };
 
-export const PrimaryOutlined = {
+
+export const primaryOutlined = {
   args: {
-    PrimaryOutlined: true,
+    primaryOutlined: true,
     label: "PrimaryOutlined",
     backgroundColor:"color",
   },
 };
 
-export const Secondary = {
+export const textButton = {
   args: {
-    Secondary: true,
-    label: "Secondary",
+    textbutton: true,
+    label: "Text Button",
     backgroundColor:"color",
   },
 };
 
-export const PostAddButton = {
-  args: {
-    primary: false,
-    backgroundColor:"#6750A4",
-    label: "Post",
-    size: "add-post-dashboard",
-  },
-};

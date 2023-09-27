@@ -1,0 +1,64 @@
+    
+   
+    .yliway-post-owner-container{
+        display: flex;
+        justify-content: space-between;
+        color: #1C1B1E;
+        gap: 16px;
+        user-select: none;
+        align-items: center;
+        border-radius: 13px;
+        padding-right: 10px;
+        cursor: pointer;
+
+
+        .post-owner-img-name-block{
+            display: flex;
+            gap: 16px;
+            align-items: center;
+
+        }
+        .yliway-post-owner-name {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: .15px;
+        }
+
+        .yliway-post-owner-img {
+            width: 46px;
+            height: 46px;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .yliway-post-owner-name-div {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            .yliway-post-post-privacy-block{
+                display: flex;
+                gap: 8px;
+                .yliway-post-owner-name-arrow {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+        }
+
+        .yliway-post-owner-right-block {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .yliway-post-owner-post-privacy {
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 16px;
+            }
+        }
+    
+    }

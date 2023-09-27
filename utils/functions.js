@@ -805,12 +805,16 @@ export function getValueByKey(object, value) {
  @Parameters : date,timezone
  @author: YLIWAY
  **************/
+
 export const convertToTargetTimezone = (inputDate, targetTimezone) => {
   const inputMoment = moment(inputDate);
 
+  if (targetTimezone === null || targetTimezone === undefined) {
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const userMoment = inputMoment.tz(userTimezone);
+    return userMoment.format(defaultDateFormat);
+  }
+
   const targetMoment = inputMoment.tz(targetTimezone);
-
-  const formattedDate = targetMoment.format(defaultDateFormat);
-
-  return formattedDate;
+  return targetMoment.format(defaultDateFormat);
 };

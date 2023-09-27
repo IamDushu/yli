@@ -621,3 +621,94 @@
   padding: 12px;
   gap: 16px;
 }
+
+.addpost {
+  .modal-content {
+    border-radius: 0px
+  }
+  .modal-header{
+    border: none;
+  }
+  .modal-footer{
+    border: none;
+    .footer-content {
+        border-top: 1px solid #E7E0EB;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+  }
+  .modal-body{
+    padding-bottom: 0px;
+  }
+}
+
+
+.add-poll-post {
+  .modal-content {
+    border-radius: 0px
+  }
+  .modal-header{
+    border: none;
+  }
+  .modal-footer{
+    border: none;
+    // .footer-content {
+    //     border-top: 1px solid #E7E0EB;
+    //     padding-top: 16px;
+    //     padding-bottom: 16px;
+    //   }
+  }
+  .modal-body{
+    border: none;
+    //padding-bottom: 0px;
+  }
+  .post-poll-description{
+    font-size: 12px;
+    text-align: center;
+    font-weight: 400;
+    line-height: 16px;
+  }
+}
+
+
+.PhotoPost{
+  .modal-content {
+    border-radius: 0px
+  }
+  .modal-header{
+    border: none;
+  }
+  .modal-footer{
+    border: none;
+    // .footer-content {
+    //     border-top: 1px solid #E7E0EB;
+    //     padding-top: 16px;
+    //     padding-bottom: 16px;
+    //   }
+  }
+  .modal-body{
+    border: none;
+    //padding-bottom: 0px;
+  }
+}
+
+.VideoPost{
+  .modal-content {
+    border-radius: 0px
+  }
+  .modal-header{
+    border: none;
+  }
+  .modal-footer{
+    border: none;
+    // .footer-content {
+    //     border-top: 1px solid #E7E0EB;
+    //     padding-top: 16px;
+    //     padding-bottom: 16px;
+    //   }
+  }
+  .modal-body{
+    border: none;
+    //padding-bottom: 0px;
+  }
+}

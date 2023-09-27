@@ -349,7 +349,9 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
         className="PhotoPost header-none-modal"
         show={photopost}
         keyModal="photopost"
+        closeIcon={false}
         body={<PhotoPost />}
+        header={<div className="photo-post-header m-0">{lang("DASHBOARD.ADD_POST.PHOTO_POST")}</div>}
         headerClassName="mb-50 block md-mb-30"
       />
 
@@ -368,7 +370,9 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
         className="VideoPost header-none-modal"
         show={videopost}
         keyModal="videopost"
+        closeIcon={false}
         body={<VideoPost />}
+        header={<div className="video-post-header m-0">{lang("DASHBOARD.ADD_POST.VIDEO_POST")}</div>}
         headerClassName="mb-50 block md-mb-30"
       />
 
@@ -388,7 +392,7 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
            @purpose : Dashboard page add post Modal
            @Author : INIC
            ******************/}
-      <MainModal
+      {/* <MainModal
         className="addpost img-view custom-modal-footer"
         show={addpost}
         keyModal="addpost"
@@ -402,7 +406,7 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
               : lang("DASHBOARD.ADD_POST.CREATE_POST")}
           </h2>
         }
-      />
+      /> */}
       {/******************* 
            @purpose : userpost voterList Modal
            @Author : INIC
@@ -526,12 +530,12 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
            @Author : INIC
            ******************/}
       <MainModal
-        className="create-poll custom-modal-footer"
+        className="create-poll custom-modal-footer add-poll-post"
         show={createpoll}
         keyModal="createpoll"
         body={<CreatePoll />}
         headerClassName="mb-50 block md-mb-30"
-        header={<h2 className="h6 m-0">{lang("DASHBOARD.POLL.SHARE_POLL")}</h2>}
+        header={<div className="share-poll-header m-0">{lang("DASHBOARD.POLL.SHARE_POLL")}</div>}
       />
 
       {/******************* 

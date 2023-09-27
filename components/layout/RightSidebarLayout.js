@@ -10,6 +10,7 @@ import {
   FollowedGroup,
   SiteLinks,
 } from "components/sidebar";
+import LatestArticle from "components/sidebar/latest-artcles";
 
 const RightSidebarLayout = ({ children, removeSidebar }) => {
   return (
@@ -27,6 +28,7 @@ const RightSidebarLayout = ({ children, removeSidebar }) => {
             {/* right blog section */}
             <div className="profile-right-bar">
               <MyProfile />
+              <LatestArticle />
               <GrowthModal />
               <GrowthPartners />
               <RecentAddedGM />

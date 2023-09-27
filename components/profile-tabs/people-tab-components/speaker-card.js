@@ -1,3 +1,4 @@
+import { APP_URL } from "config";
 import React from "react";
 import { onImageError } from "utils";
 const SpeakerCard = ({ data }) => {
@@ -40,7 +41,7 @@ const SpeakerCard = ({ data }) => {
           <div
             onClick={() => {
               window.open(
-                `https://front-dev.yliway.com/profile/${data?.userDetails?.profileId}`
+                `${APP_URL}/profile/${data?.userDetails?.profileId}`
               );
             }}
             style={{

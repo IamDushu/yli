@@ -182,7 +182,7 @@
 }
 .profile-wrapper {
   .profile-right-bar {
-    width: size(325);
+    width: size(350);
     margin-left: size(24);
 
     // @include media(down, $breakpoint-sd) {
@@ -197,6 +197,25 @@
       margin: 0;
     }
   }
+}
+
+.latest-article-heading {
+  padding: 8px 24px 8px 16px;
+}
+
+.latest-article-view-all {
+  color: var(--m-3-sys-light-primary, #6750a4);
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+}
+
+.list-spacing {
+  margin-bottom: size(60);
+  cursor: pointer;
 }
 
 .view-profile {
@@ -507,4 +526,3 @@
   background: white;
   border: 1px solid #d1d5db;
 }
-

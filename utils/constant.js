@@ -534,3 +534,10 @@ export const getFilters = (lang) => [
     name: lang("GLOBAL_SEARCH.FILTER.POSTS"),
   },
 ];
+
+export const PPAndCompanyNotificationType = [
+  "Peer Producer",
+  "Admin Peer Producer",
+  "Company",
+  "Admin Company",
+];

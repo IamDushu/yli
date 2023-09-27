@@ -1,5 +1,4 @@
-import React, { Fragment, useMemo, useCallback } from "react";
-import { Dropdown } from "react-bootstrap";
+import React, { Fragment, useMemo, useCallback, useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import {
@@ -19,11 +18,50 @@ import {
 import { followUser, unfollowUser } from "store/actions/connections";
 import { useRouter } from "next/router";
 import { showMessageNotification } from "utils";
+import { ListItem } from "components/list-item";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Box, Button, Container, IconButton, Tooltip } from "@mui/material";
+import Image from 'next/image'
 
-function PostFooterDropdown({ postData, userInfo, type, getAllPost }) {
+const PostFooterDropdown = ({ postData, userInfo, type, getAllPost }) => {
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Click occurred outside the dropdown; close the dropdown
+        setIsOpen(false);
+      }
+    };
+  
+    // Add the event listener when the component mounts
+    document.addEventListener('click', handleOutsideClick);
+  
+    // Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
   const dispatch = useDispatch();
   const [lang] = useTranslation("language");
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const followData =
     postData?.postDetails?.userDetails?.followData &&
     postData?.postDetails?.userDetails?.followData?.length > 0;
@@ -122,58 +160,76 @@ function PostFooterDropdown({ postData, userInfo, type, getAllPost }) {
       getAllPost();
     }
   };
-
   return (
-    <div>
-      <Dropdown className="theme-dropdown d-flex align-items-start">
-        <Dropdown.Toggle>
-          {/* !type && (
-            <em className="icon icon-ellipsis-h font-24 text-gray-darker"></em>
-          ) */}
-          <em className="icon icon-ellipsis-h font-24 text-secondary-purple"></em>
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-inner-left dropdown-scroll">
+    <Box className="custom-dropdown" ref={dropdownRef}>
+      <em
+        onClick={toggleDropdown}
+        className="pointer icon icon-ellipsis-h font-24"
+      ></em>
+
+      {isOpen && (
+        <Box id="simple-menu" className="dropdown-content">
+          {/* Dropdown options */}
           {/* SavePost Post Section */}
-          <Dropdown.Item
-            className="d-flex align-items-center"
+          <Box
             onClick={() =>
               hideAllPost(postData?.id, !postData?.savePost, "save")
             }
+            className={"p-m-option"}            
           >
             {postData?.savePost === true ? (
-              <em className="icon icon-save reaction-icons pr-2 font-24"></em>
+                <Image
+                className="p-m-icon"
+                width={30}
+                height={30}
+                src="/assets/images/posts/save.svg"
+              />
             ) : (
-              <em className="icon icon-save reaction-icons pr-2 font-24"></em>
+<Image
+                className="p-m-icon"
+                width={30}
+                height={30}
+                src="/assets/images/posts/unsave.svg"
+              />
             )}
             <span>
               {postData?.savePost
                 ? lang("DASHBOARD.POSTS.POST_HEADER.UNSAVE")
                 : lang("DASHBOARD.POSTS.POST_HEADER.SAVE")}
             </span>
-          </Dropdown.Item>
+          </Box>
+          {/* Turn on Notification Post Section */}
+          <Box className={"p-m-option"}>
+          <Image
+                className="p-m-icon"
+                width={30}
+                height={30}
+                src="/assets/images/posts/notification.svg"
+              />
+            <span>
+              {lang("DASHBOARD.POSTS.POST_HEADER.TURN_ON_NOTIFICATION")}
+            </span>
+          </Box>
           {/* Copy Link Post Section */}
-          <Dropdown.Item
-            onClick={handleCopyLinkToClipboard}
-            className="d-flex align-items-center"
-          >
-            <em className="icon icon-copy-link reaction-icons pr-2 font-24"></em>
+          <Box className={"p-m-option"} onClick={handleCopyLinkToClipboard}>
+          <Image className="p-m-icon" width={30} height={30} src="/assets/images/posts/copy.svg"/>
             <span>{lang("DASHBOARD.POSTS.POST_HEADER.COPY_LINK")}</span>
-          </Dropdown.Item>
-
+          </Box>
           {userInfo?.id === postData?.postDetails?.userDetails?.id && (
             <Fragment>
               {/* Delete Post Section */}
-              <Dropdown.Item
+              <Box
+                className={"p-m-option"}
                 onClick={() => deleteOwnPost(postData.postId)}
-                className="d-flex align-items-center"
               >
-                <em className="icon icon-delete-line reaction-icons pr-2 font-26"></em>
+                {" "}
+                <em className="p-m-icon icon icon-delete-line reaction-icons pr-2 font-26"></em>
                 <span>{lang("DASHBOARD.POSTS.POST_HEADER.DELETE_POST")}</span>
-              </Dropdown.Item>
-
+              </Box>
               {/* Edit Post Section */}
               {postData?.postDetails?.postType !== "virtualShare" && (
-                <Dropdown.Item
+                <Box
+                  className={"p-m-option"}
                   onClick={(e) =>
                     postData.postDetails.title
                       ? router.push({
@@ -182,91 +238,133 @@ function PostFooterDropdown({ postData, userInfo, type, getAllPost }) {
                         })
                       : handleEditDashboardPost(e, postData)
                   }
-                  className="d-flex align-items-center"
                 >
-                  <em className="icon icon-write reaction-icons pr-2 font-22"></em>
+                  <em className="icon p-m-icon icon-write reaction-icons pr-2 font-22"></em>
                   <span>{lang("DASHBOARD.POSTS.POST_HEADER.EDIT_POST")}</span>
-                </Dropdown.Item>
+                </Box>
               )}
             </Fragment>
           )}
-          {postData?.postDetails?.userDetails?.id !== userInfo?.id && (
-            <Fragment>
-              {/* Unfollow Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  if (followData) {
-                    dispatch(unfollowUser(postData?.postDetails?.userId));
-                  } else {
-                    dispatch(followUser(postData?.postDetails?.userId));
-                  }
-                }}
-              >
-                {followData ? (
-                  <em className="icon icon-unfollow reaction-icons pr-2 font-24" />
-                ) : (
-                  <i class="bx bx-user-plus bx-sm pr-2 pl-1" />
-                )}
-                <span className="pr-1 text-ellipsis">
-                  {followData ? lang("COMMON.UNFOLLOW") : lang("COMMON.FOLLOW")}
-                  {` ${firstName !== null ? firstName : ""} ${
-                    lastName !== null ? lastName : ""
-                  }`}
-                </span>
-              </Dropdown.Item>
-              {/* Mute Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  hideAllPost(postData?.id, !postData?.mutePost, "mute");
-                }}
-              >
-                <em className="icon icon-mute reaction-icons pr-2 font-24"></em>
-                <span className="pr-1">
-                  {postData?.mutePost
-                    ? lang("DASHBOARD.POSTS.POST_HEADER.UNMUTE")
-                    : lang("DASHBOARD.POSTS.POST_HEADER.MUTE")}
-                </span>
-                <span className="pr-1 text-ellipsis">
-                  {`${firstName !== null ? firstName : ""} ${
-                    lastName !== null ? lastName : ""
-                  }`}
-                </span>
-              </Dropdown.Item>
-              {/* Report Post Section */}
+          {isOpen &&
+            postData?.postDetails?.userDetails?.id !== userInfo?.id && (
+              <Fragment>
+                {/* Unfollow Post Section */}
+                <Box
+                  className={"p-m-option"}
+                  onClick={() => {
+                    if (followData) {
+                      dispatch(unfollowUser(postData?.postDetails?.userId));
+                    } else {
+                      dispatch(followUser(postData?.postDetails?.userId));
+                    }
+                  }}
+                >
+                  {followData ? (
+                    // <em className="icon icon-unfollow reaction-icons pr-2 font-24" />          
+                      <Image
+                      className="p-m-icon"
+                      width={30}
+                      height={30}
+                      src="/assets/images/posts/unfollow.svg"
+                    />
+                  ) : (
+                    // <i class="bx bx-user-plus bx-sm pr-2 pl-1" />                    
+                      <Image
+                      className="p-m-icon"
+                      width={30}
+                      height={30}
+                      src="/assets/images/posts/follow.svg"
+                    />
+                  )}
+                  <span className="pr-1 text-ellipsis">
+                    {followData
+                      ? lang("COMMON.UNFOLLOW")
+                      : lang("COMMON.FOLLOW")}
+                    {` ${firstName !== null ? firstName : ""} ${
+                      lastName !== null ? lastName : ""
+                    }`}
+                  </span>
+                </Box>
+              </Fragment>
+            )}
+          {/* Mute Post Section */}
+          <Box
+            className={"p-m-option"}
+            onClick={() => {
+              hideAllPost(postData?.id, !postData?.mutePost, "mute");
+            }}
+          >
+            {postData?.mutePost
+            ?(
+              <Image
+              className="p-m-icon"
+              width={30}
+              height={30}
+              src="/assets/images/posts/mute.svg"
+            />  
+            ):(
+              <Image
+              className="p-m-icon"
+              width={30}
+              height={30}
+              src="/assets/images/posts/unmute.svg"
+            />
+   
+            )
+            }
+              
+            <span className="pr-1">
+              {postData?.mutePost
+                ? lang("DASHBOARD.POSTS.POST_HEADER.UNMUTE")
+                : lang("DASHBOARD.POSTS.POST_HEADER.MUTE")}
+            </span>
+            <span className="pr-1 text-ellipsis">
+              {`${firstName !== null ? firstName : ""} ${
+                lastName !== null ? lastName : ""
+              }`}
+            </span>
+          </Box>
+          {/* Hide Post Section */}
+          <Box
+            className={"p-m-option"}
+            onClick={() =>
+              hideAllPost(postData?.id, !postData?.hidePost, "hide")
+            }
+          >
+           
+            <Image
+                      className="p-m-icon"
+                      width={30}
+                      height={30}
+                      src="/assets/images/posts/hide.svg"
+                    />
+            <span className="pr-1 text-ellipsis">
+              {lang("DASHBOARD.POSTS.POST_HEADER.SEE_POST")}
+            </span>
+          </Box>
+          {/* Report Post Section */}
+          <Box
+            className={"p-m-option"}
+            onClick={() => {
+              dispatch(toggleModals({ reportpost: true }));
+              dispatch(setReportPostId(postData?.postId));
+            }}
+          >
+                 <Image
+                      className="p-m-icon"
+                      width={30}
+                      height={30}
+                      src="/assets/images/posts/report.svg"
+                    />
 
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  dispatch(toggleModals({ reportpost: true }));
-                  dispatch(setReportPostId(postData?.postId));
-                }}
-              >
-                <em className="icon icon-report reaction-icons pr-2 font-24"></em>
-                <span className="pr-1 text-ellipsis">
-                  {lang("DASHBOARD.POSTS.POST_HEADER.REPORT_POST")}
-                </span>
-              </Dropdown.Item>
-
-              {/* Hide Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() =>
-                  hideAllPost(postData?.id, !postData?.hidePost, "hide")
-                }
-              >
-                <em className="icon icon-eye-close reaction-icons pr-2 font-24"></em>
-                <span className="pr-1 text-ellipsis">
-                  {lang("DASHBOARD.POSTS.POST_HEADER.SEE_POST")}
-                </span>
-              </Dropdown.Item>
-            </Fragment>
-          )}
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
+            <span className="pr-1 text-ellipsis">
+              {lang("DASHBOARD.POSTS.POST_HEADER.REPORT_POST")}
+            </span>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
-}
+};
 
 export default PostFooterDropdown;

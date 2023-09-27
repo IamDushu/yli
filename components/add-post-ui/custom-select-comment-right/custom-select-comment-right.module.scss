@@ -1,0 +1,23 @@
+.yliway-arrow-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .arrow-up {
+        transform: rotate(180deg);
+        width: 24px;
+        height: 24px;
+
+        img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}

@@ -340,9 +340,11 @@ export const en = {
   },
   COMMON: {
     LOADING: "Loading...",
+    WRITE: "Write",
     OK: "Ok",
     NOT_PROVIDED: "Not provided",
     NO_OPTIONS: "No options",
+    POST_TO: "Post to",
     MAX_5_PROFESSION_ALLOWED: "Max 5 professions allowed",
     UPLOAD_VIDEO_FORMAT: "Size 0.075 mb to 5000 mb/ MP4/MOV/WMV/AVI/MKV/AVCHD",
     SEARCH_FOR_PROFESSION: "Search for profession",
@@ -436,7 +438,7 @@ export const en = {
     TOTAL_REVIEWS: "Total Reviews",
     STUDENT_FEEDBACK: "Student Feedback",
     NO_STUDENT_FEEDBACK: "No Student Feedback",
-    UPGRADE_YOUR_PROFILE: "Ugrade your profile",
+    UPGRADE_YOUR_PROFILE: "Ugrade profile",
     FREE: "Free",
     LITE: "Lite",
     PREMIUM: "Premium",
@@ -1079,6 +1081,8 @@ export const en = {
   DASHBOARD: {
     ADD_POST: {
       INPUT_PLACEHOLDER: "Start a Post",
+      VIDEO_POST: "Drag or Upload a Video",
+      PHOTO_POST: "Drag or Upload an Image",
       CREATE_POST: "Create Post",
       SHARE_POST: "Share Post",
       EDIT_SHARED_POST: "Edit Shared Post",
@@ -1103,6 +1107,10 @@ export const en = {
       VIDEO: "Add Video",
       DOCUMENT: "Add Document",
       POLL: "Add Poll",
+      POST_PHOTO: "Photo",
+      POST_VIDEO: "Video",
+      POST_POLL: "Poll",
+      POST_ARTICLE: "Article",
     },
 
     SORT_BY: {
@@ -1114,15 +1122,17 @@ export const en = {
     POSTS: {
       LOAD_MORE: "Load more...",
       POST_HEADER: {
-        SAVE: "Save",
-        UNSAVE: "Unsave",
+        SAVE: "Save this Post",
+        UNSAVE: "Remove from Saved",
         COPY_LINK: "Copy link to clipboard",
         DELETE_POST: "Delete your own post",
         EDIT_POST: "Edit Post",
         MUTE: "Mute",
         UNMUTE: "Unmute",
-        REPORT_POST: "Report this post",
-        SEE_POST: "I don't want to see this post",
+        REPORT_POST: "Report",
+        SEE_POST: "Hide This Post",
+        TURN_ON_NOTIFICATION: "Turn on notifications",
+        TURN_OFF_NOTIFICATION: "Turn of notifications",
       },
       POST_BODY: {
         POST_POLL: {
@@ -1224,9 +1234,17 @@ export const en = {
   },
   MY_PROFILE: {
     MY_CONNECTIONS: "My Connections",
-    PEOPLE_VIEWED: "People Viewed",
+    PEOPLE_VIEWED: "Viewed Profile",
   },
   GROWTH_TOOL: {
+    LATEST_ARTILCE: "Latest Article",
+    TOOLTIP_1:
+      "Use this area to empower your business model through connections, learnings and events",
+    TOOLTIP_2:
+      "Expand this section to access all the main growth functions of the platform",
+    VIEW_ALL: "View All",
+    GROWTH_AREA: "Growth Area",
+    GROWTH_PROJECTS: "Growth Projects",
     GROWTH_TOOL: "Growth Tool",
     GROWTH_MODEL: "Growth Model (GM)",
     GROWTH_PARTNERS: "Growth Partners",
@@ -1234,7 +1252,7 @@ export const en = {
     TRAINING_ROOMS: "Training Rooms",
     COACHING_ROOMS: "Coaching Rooms",
     WEBINAR: "Webinar",
-    MATERCLASS: "Masterclass",
+    MASTERCLASS: "Masterclass",
     BUSINESS_NETWORK_ROOMS: "Business Network Rooms",
     EVENTS: "Events",
     LAUNCH_ROOM: "Launch a Room",
@@ -2150,6 +2168,24 @@ export const en = {
     YLIWAY: "© YLIWAY",
     TITLE: "Your Dream Job is Closer than you think",
     YLIWAY_GUIDE: "YLIWAY GUIDE",
+    GET_STARTED: {
+      LINK: "New to Yliway?",
+      TITLE: "Get Started",
+      INFO: "Learn how to easily make the most out of the platform",
+    },
+    SQUAD: {
+      TITLE: "Squads",
+      CREATE: "Create Squad",
+    },
+    MEETING: {
+      TITLE: "Launch a meeting",
+      INSTANT_MEETING: "Launch a Meeting for now",
+      SCHEDULED_MEETING: "Launch a Meeting for later",
+      ROOM_HOSTORY: "Room Conversation History",
+    },
+  },
+  CALENDAR_WIDGET: {
+    NO_EVENTS: "No events today",
   },
   LEARNING_INSTITUTE: {
     PRODUCTS_TAB: {
