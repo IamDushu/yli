@@ -14,7 +14,6 @@
 @import "pages/import.scss";
 @import "component/_all";
 
-
 // Third party CSS
 @import "../../../node_modules/react-datetime/css/react-datetime.css";
 @import "../../../node_modules/react-perfect-scrollbar/dist/css/styles.css";
@@ -109,7 +108,7 @@ html {
   @include media(down, $breakpoint-xl) {
     margin-top: size(25);
   }
-  
+
   .card {
     // overflow: initial;
     .card-header {
@@ -274,7 +273,6 @@ html {
 
   .model-common-listing {
     padding: 16px;
-    border-bottom: 1px solid $geyser;
 
     &:last-child {
       border-bottom: none;
@@ -402,7 +400,9 @@ html {
     }
   }
 }
-.ck {z-index: 9999 !important;}
+.ck {
+  z-index: 9999 !important;
+}
 :root {
   --star-size: 20px;
   --star-color: #ddd;
@@ -457,7 +457,7 @@ html {
 //   height: size(200);
 //   margin: 0 auto;
 // }
-.defualt-image{
+.defualt-image {
   max-height: size(400);
   overflow: hidden;
 }
@@ -541,55 +541,54 @@ html {
   background-color: #0f6bbf0f !important;
 }
 
-.group-bg-img-div{
+.group-bg-img-div {
   position: relative;
 }
-.group-small-img{
+.group-small-img {
   width: 80px;
   height: 80px;
 }
-.group-small-img-div{
+.group-small-img-div {
   position: absolute;
-  top:0px;
+  top: 0px;
   top: 110px;
 }
-.font-weight-600{
+.font-weight-600 {
   font-weight: 600;
 }
-.font-14px-primary{
+.font-14px-primary {
   font-size: 14px;
-  color:#0F6BBF;
+  color: #0f6bbf;
 }
-.count-ckeditor-css{
-  color: #051F4E;
+.count-ckeditor-css {
+  color: #051f4e;
   font-weight: 700;
-
 }
-.border-divider-color{
-  border: 1px solid  #D1D5DB;
+.border-divider-color {
+  border: 1px solid #d1d5db;
 }
-.border-divider-color-top{
-  border-top: 1px solid  #D1D5DB;
+.border-divider-color-top {
+  border-top: 1px solid #d1d5db;
 }
-.border-divider-color-bottom{
-  border-bottom: 1px solid  #D1D5DB;
+.border-divider-color-bottom {
+  border-bottom: 1px solid #d1d5db;
 }
-.border-divider-color-bottom-left-right{
-  border-bottom: 1px solid  #D1D5DB;
-  border-left: 1px solid  #D1D5DB;
-  border-right: 1px solid  #D1D5DB;
+.border-divider-color-bottom-left-right {
+  border-bottom: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
 }
-.skill-image-text{
+.skill-image-text {
   font-size: 14px;
-  color:#77838f;
+  color: #77838f;
   font-weight: 400;
 }
-.font-14-500{
+.font-14-500 {
   font-size: 0.875rem !important;
   font-weight: 500;
 }
-.color-divider{
-  color:#D1D5DB;
+.color-divider {
+  color: #d1d5db;
 }
 
 #sourceImage,
@@ -602,6 +601,6 @@ html {
   object-fit: contain;
 }
 
-input#formSearch::placeholder{
+input#formSearch::placeholder {
   color: #77838f;
 }

@@ -2,8 +2,15 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@components/layout";
 import WithAuth from "components/with-auth/with-auth";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Button, Modal, Form } from "react-bootstrap";
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { Container } from "react-bootstrap";
+import {
+  Card,
+  CardContent,
+  Grid,
+  FormControl,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import dynamic from "next/dynamic";
 import {
   sendConnectionRequest,
@@ -21,6 +28,8 @@ import { getSearchResults, saveSearchText } from "store/actions/search-result";
 import { useTranslation } from "react-i18next";
 import { postListing } from "store/actions";
 import { getFilters } from "../../utils/constant";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import SearchIcon from "@mui/icons-material/Search";
 
 //dynamic imports
 const People = dynamic(() => import("components/search-result/people"));
@@ -256,10 +265,73 @@ function SearchResult() {
         <Container>
           <div className="d-flex flex-xl-nowrap flex-wrap">
             {/* Left view */}
-            <div className="profile-left-bar">
-              {!searchResults && (
-                <div className="d-flex justify-content-end">
-                  <div
+            <div
+              className={`profile-right-bar px-4 ${
+                !searchResults ? "dimmed" : ""
+              }`}
+            >
+              <div>
+                <div className="common-searchbar">
+                  <FormControl className="mb-0 w-100 bg-white">
+                    <TextField
+                      type="text"
+                      placeholder={lang("COMMON.SEARCH")}
+                      onChange={(e) => handleSearchFilter(e)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      disabled={searchResults}
+                    />
+                  </FormControl>
+                </div>
+                {/* <PerfectScrollbar> */}
+                {filterList.length ? (
+                  <ul className="list-unstyled model-listing-box">
+                    {filterList.map((item, i) => {
+                      return (
+                        <li className="model-common-listing bg-white" key={i}>
+                          <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
+                            <div className=" d-flex justify-content-between align-items-center">
+                              <PermIdentityIcon />
+                              <div className="ml-2">
+                                <h5 className="text-body-14 mb-0">
+                                  {item.name}
+                                </h5>
+                              </div>
+                            </div>
+
+                            <div className="d-flex align-items-center">
+                              <span className="text-body-12 mr-2 mt-1">10</span>
+                              <label htmlFor={item.id} className="mb-3">
+                                <input
+                                  type="checkbox"
+                                  name="cssradio"
+                                  id={item.id}
+                                  value={item.name}
+                                  checked={filteredList.includes(item.name)}
+                                  onChange={(e) => {
+                                    handleFilterChange(e);
+                                  }}
+                                  disabled={searchResults}
+                                />
+                                <span></span>
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <div className="text-center mt-5 mb-5">
+                    {lang("COMMON.NO_RESULT_FOUND")}
+                  </div>
+                )}
+                {/* <div
                     className="bg-white border border-geyser font-weight-semibold rounded-8 font-12 px-2 py-12 d-inline-block text-gary mb-3"
                     onClick={() => setOpen(true)}
                   >
@@ -272,9 +344,12 @@ function SearchResult() {
                       {selectedFilters.length === 1 && selectedFilters}
                     </span>
                     <em className="icon icon-down-arrow text-charcoal-grey pl-3"></em>
-                  </div>
-                </div>
-              )}
+                  </div> */}
+              </div>
+            </div>
+
+            {/* right blog section */}
+            <div className="profile-left-bar">
               <People
                 lang={lang}
                 selectedFilters={selectedFilters}
@@ -389,12 +464,12 @@ function SearchResult() {
                   <Card
                     className="mb-10"
                     infinite-scroll-component__outerdiv
-                    style={{ backgroundColor: "transparent", border: "none" }}
+                    // style={{ backgroundColor: "transparent", border: "none" }}
                   >
-                    <Card.Body
+                    <CardContent
                       className="px-0"
                       infinite-scroll-component__outerdiv
-                      style={{ backgroundColor: "transparent", border: "none" }}
+                      // style={{ backgroundColor: "transparent", border: "none" }}
                     >
                       <h3
                         className="h6 mb-0 px-3 py-2"
@@ -410,7 +485,7 @@ function SearchResult() {
                         getAllPost={getAllPost}
                         searchText={searchText}
                       />
-                    </Card.Body>
+                    </CardContent>
                   </Card>
                 )}
               {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.POSTS")) &&
@@ -443,7 +518,7 @@ function SearchResult() {
                   </CardContent>
                 </Card>
               )}
-              <Modal
+              {/* <Modal
                 centered
                 show={open}
                 onHide={() => {
@@ -485,7 +560,6 @@ function SearchResult() {
                       </div>
                     </Form.Group>
                   </div>
-                  {/* <PerfectScrollbar> */}
                   {filterList.length ? (
                     <ul className="list-unstyled model-listing-box">
                       {filterList.map((item, i) => {
@@ -521,7 +595,6 @@ function SearchResult() {
                       {lang("COMMON.NO_RESULT_FOUND")}
                     </div>
                   )}
-                  {/* </PerfectScrollbar> */}
                 </Modal.Body>
                 <Modal.Footer className="rounded-b-16">
                   <Button
@@ -536,17 +609,13 @@ function SearchResult() {
                     {lang("COMMON.APPLY")}
                   </Button>
                 </Modal.Footer>
-              </Modal>
-            </div>
-
-            {/* right blog section */}
-            <div className="profile-right-bar">
+              </Modal> 
               <UpgradeYourProfile />
               <GrowthModal />
               <GrowthPartners />
               <RecentAddedGM />
               <FollowedGroup />
-              <MostFollowedContents />
+              <MostFollowedContents /> */}
             </div>
           </div>
         </Container>

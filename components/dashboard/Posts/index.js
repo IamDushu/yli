@@ -13,10 +13,10 @@ import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
 
 const AddToGMModal = dynamic(() =>
-  import("@components/modal").then((mod) => mod.AddToGMModal)
+  import("@components/modal").then((mod) => mod.AddToGMModal),
 );
 const MainModal = dynamic(() =>
-  import("@components/modal").then((mod) => mod.MainModal)
+  import("@components/modal").then((mod) => mod.MainModal),
 );
 const DashboardPost = ({
   postListData,
@@ -32,11 +32,11 @@ const DashboardPost = ({
   const { addtoGrowthModel } = useSelector(({ ui }) => ui.modals, shallowEqual);
   const { addtoGrowthModelLi } = useSelector(
     ({ ui }) => ui.modals,
-    shallowEqual
+    shallowEqual,
   );
   const { addtoGrowthModelArticle } = useSelector(
     ({ ui }) => ui.modals,
-    shallowEqual
+    shallowEqual,
   );
   const isLoading = useSelector(({ ui }) => ui.isLoading, shallowEqual);
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const DashboardPost = ({
     title = "",
     postLink,
     postDetails,
-    instituteId
+    instituteId,
   ) => {
     setInstid(instituteId);
     if (id !== "") {
@@ -106,7 +106,7 @@ const DashboardPost = ({
     postLink,
     postDetails,
     postTyp,
-    instituteId
+    instituteId,
   ) => {
     setpostTypeState(postTyp);
     if (id !== "") {
@@ -153,12 +153,12 @@ const DashboardPost = ({
             const imagePreference = postImageHandler(
               listData?.postDetails?.userDetails,
               listData?.postDetails?.instituteDetails,
-              userInfo
+              userInfo,
             );
             const lastNameFunction = postLastNameHandler(
               listData?.postDetails?.userDetails,
               listData?.postDetails?.instituteDetails,
-              userInfo
+              userInfo,
             );
             let type = listData?.postDetails?.postType;
             return (
@@ -175,7 +175,7 @@ const DashboardPost = ({
                       onClick={() => {
                         setCookie(
                           "postToken",
-                          moment(new Date()).utc().valueOf()
+                          moment(new Date()).utc().valueOf(),
                         );
                         setNewPostCount(0);
                       }}

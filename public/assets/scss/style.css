@@ -13473,7 +13473,7 @@ hr.hr-white {
   font-size: 0.875rem;
 }
 
-.common-searchbar .search-inner-icon {
+.search-inner-icon {
   position: absolute;
   top: 0.6875rem;
   right: auto;
