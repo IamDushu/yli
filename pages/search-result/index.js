@@ -11,6 +11,7 @@ import {
   InputAdornment,
   Chip,
   Stack,
+  Container,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import {
@@ -264,7 +265,7 @@ function SearchResult() {
   return (
     <Layout>
       <div className="inner-wrapper search-result-box inner-left-full-orsidebar">
-        <div>
+        <Container>
           <div className="d-flex flex-xl-nowrap flex-wrap">
             {/* Left view */}
             <Stack
@@ -632,7 +633,7 @@ function SearchResult() {
               <MostFollowedContents /> */}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     </Layout>
   );
