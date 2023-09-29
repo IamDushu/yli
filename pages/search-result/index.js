@@ -43,26 +43,26 @@ const SearchGroup = dynamic(() => import("components/search-result/group"));
 const Courses = dynamic(() => import("components/search-result/courses"));
 const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
-  import("components/search-result/learning-institute"),
+  import("components/search-result/learning-institute")
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 const RecentAddedGM = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.RecentAddedGM),
+  import("components/sidebar").then((mod) => mod.RecentAddedGM)
 );
 const UpgradeYourProfile = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.UpgradeYourProfile),
+  import("components/sidebar").then((mod) => mod.UpgradeYourProfile)
 );
 const GrowthModal = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthModal),
+  import("components/sidebar").then((mod) => mod.GrowthModal)
 );
 const GrowthPartners = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthPartners),
+  import("components/sidebar").then((mod) => mod.GrowthPartners)
 );
 const FollowedGroup = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.FollowedGroup),
+  import("components/sidebar").then((mod) => mod.FollowedGroup)
 );
 const MostFollowedContents = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.MostFollowedContents),
+  import("components/sidebar").then((mod) => mod.MostFollowedContents)
 );
 
 function SearchResult() {
@@ -133,7 +133,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "withdrawl",
-      }),
+      })
     );
     let body = {
       page: 1,
@@ -154,7 +154,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "",
-      }),
+      })
     );
     let body = {
       page: 1,
@@ -223,9 +223,13 @@ function SearchResult() {
     if (e.target.checked) {
       list.push(e.target.value);
       setFilteredList(list);
+      setSelectedFilters(list);
+      setFilterList(filters);
     } else {
       let temp = list.filter((item) => item !== e.target.value);
       setFilteredList(temp);
+      setSelectedFilters(temp);
+      setFilterList(filters);
     }
     setFilter(e.target.value);
   };
@@ -234,7 +238,7 @@ function SearchResult() {
     const searchValue = e.target.value;
     if (searchValue) {
       const filteredListData = filters.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase()),
+        item.name.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilterList(filteredListData);
     } else {
@@ -249,7 +253,7 @@ function SearchResult() {
   };
   useEffect(() => {
     const isAllEmpty = Object.values(searchData?.searchResults || {}).every(
-      (result) => result?.rows.length === 0,
+      (result) => result?.rows.length === 0
     );
     setSearchResults(isAllEmpty);
   }, [searchData?.searchResults]);
