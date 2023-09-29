@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@components/layout";
 import WithAuth from "components/with-auth/with-auth";
 import { useDispatch, useSelector } from "react-redux";
-import { Container } from "react-bootstrap";
 import {
   Card,
   CardContent,
@@ -10,6 +9,8 @@ import {
   FormControl,
   TextField,
   InputAdornment,
+  Chip,
+  Stack,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import {
@@ -30,6 +31,7 @@ import { postListing } from "store/actions";
 import { getFilters } from "../../utils/constant";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import SearchIcon from "@mui/icons-material/Search";
+import { SiteLinks } from "components/sidebar";
 
 //dynamic imports
 const People = dynamic(() => import("components/search-result/people"));
@@ -262,11 +264,21 @@ function SearchResult() {
   return (
     <Layout>
       <div className="inner-wrapper search-result-box inner-left-full-orsidebar">
-        <Container>
+        <div>
           <div className="d-flex flex-xl-nowrap flex-wrap">
             {/* Left view */}
+            <Stack
+              direction="row"
+              spacing={1}
+              style={{ overflow: "scroll" }}
+              className="d-lg-none d-xl-none mb-3 px-2"
+            >
+              {filterList.map((item, i) => {
+                return <Chip label={item.name} />;
+              })}
+            </Stack>
             <div
-              className={`profile-right-bar px-4 ${
+              className={`profile-right-bar px-4 d-none d-xl-block d-lg-block ${
                 !searchResults ? "dimmed" : ""
               }`}
             >
@@ -331,6 +343,9 @@ function SearchResult() {
                     {lang("COMMON.NO_RESULT_FOUND")}
                   </div>
                 )}
+                <div className="p-2">
+                  <SiteLinks />
+                </div>
                 {/* <div
                     className="bg-white border border-geyser font-weight-semibold rounded-8 font-12 px-2 py-12 d-inline-block text-gary mb-3"
                     onClick={() => setOpen(true)}
@@ -347,9 +362,8 @@ function SearchResult() {
                   </div> */}
               </div>
             </div>
-
             {/* right blog section */}
-            <div className="profile-left-bar">
+            <div className="profile-left-bar ">
               <People
                 lang={lang}
                 selectedFilters={selectedFilters}
@@ -618,7 +632,7 @@ function SearchResult() {
               <MostFollowedContents /> */}
             </div>
           </div>
-        </Container>
+        </div>
       </div>
     </Layout>
   );
