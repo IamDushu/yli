@@ -44,26 +44,26 @@ const SearchGroup = dynamic(() => import("components/search-result/group"));
 const Courses = dynamic(() => import("components/search-result/courses"));
 const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
-  import("components/search-result/learning-institute")
+  import("components/search-result/learning-institute"),
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 const RecentAddedGM = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.RecentAddedGM)
+  import("components/sidebar").then((mod) => mod.RecentAddedGM),
 );
 const UpgradeYourProfile = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.UpgradeYourProfile)
+  import("components/sidebar").then((mod) => mod.UpgradeYourProfile),
 );
 const GrowthModal = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthModal)
+  import("components/sidebar").then((mod) => mod.GrowthModal),
 );
 const GrowthPartners = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthPartners)
+  import("components/sidebar").then((mod) => mod.GrowthPartners),
 );
 const FollowedGroup = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.FollowedGroup)
+  import("components/sidebar").then((mod) => mod.FollowedGroup),
 );
 const MostFollowedContents = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.MostFollowedContents)
+  import("components/sidebar").then((mod) => mod.MostFollowedContents),
 );
 
 function SearchResult() {
@@ -134,7 +134,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "withdrawl",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -155,7 +155,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -239,7 +239,7 @@ function SearchResult() {
     const searchValue = e.target.value;
     if (searchValue) {
       const filteredListData = filters.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+        item.name.toLowerCase().includes(searchValue.toLowerCase()),
       );
       setFilterList(filteredListData);
     } else {
@@ -254,7 +254,7 @@ function SearchResult() {
   };
   useEffect(() => {
     const isAllEmpty = Object.values(searchData?.searchResults || {}).every(
-      (result) => result?.rows.length === 0
+      (result) => result?.rows.length === 0,
     );
     setSearchResults(isAllEmpty);
   }, [searchData?.searchResults]);
@@ -268,8 +268,8 @@ function SearchResult() {
 
   return (
     <Layout>
-      <div className="inner-wrapper search-result-box inner-left-full-orsidebar">
-        <Container>
+      <div className="inner-wrapper search-result-box inner-left-full-orsidebar search-results">
+        <Container className="p-0">
           <div className="d-flex flex-xl-nowrap flex-wrap">
             {/* Left view */}
             <Stack
@@ -283,7 +283,7 @@ function SearchResult() {
               })}
             </Stack>
             <div
-              className={`profile-right-bar px-4 d-none d-xl-block d-lg-block ${
+              className={`profile-right-bar d-none d-xl-block d-lg-block ${
                 !searchResults ? "dimmed" : ""
               }`}
             >
@@ -368,7 +368,7 @@ function SearchResult() {
               </div>
             </div>
             {/* right blog section */}
-            <div className="profile-left-bar ">
+            <div className="profile-left-bar m-0 mt-lg-4 ml-lg-5 ">
               <People
                 lang={lang}
                 selectedFilters={selectedFilters}
@@ -512,30 +512,32 @@ function SearchResult() {
                   <p>No Posts Found</p>
                 )}
               {searchResults && (
-                <Card>
-                  <CardContent className="py-5">
-                    <Grid container>
-                      <Grid item md={8} lg={8} className="mx-auto">
-                        <div className="mb-2 font-weight-normal">
-                          <p className="font-22 mb-0">
-                            {lang("GLOBAL_SEARCH.NO_RESULT")}
-                            <span className="font-italic "> Abracadabra</span>
-                          </p>
+                <div style={{ height: "200vh" }}>
+                  <Card>
+                    <CardContent className="py-5">
+                      <Grid container>
+                        <Grid item md={8} lg={8} className="mx-auto">
+                          <div className="mb-2 font-weight-normal">
+                            <p className="font-22 mb-0">
+                              {lang("GLOBAL_SEARCH.NO_RESULT")}
+                              <span className="font-italic "> Abracadabra</span>
+                            </p>
 
-                          <p className="font-22">
-                            {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
-                          </p>
-                        </div>
+                            <p className="font-22">
+                              {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
+                            </p>
+                          </div>
 
-                        <img
-                          src="/assets/images/no-result-new.svg"
-                          alt="No result found"
-                          className="mb-5"
-                        />
+                          <img
+                            src="/assets/images/no-result-new.svg"
+                            alt="No result found"
+                            className="mb-5"
+                          />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               )}
               {/* <Modal
                 centered
