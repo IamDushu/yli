@@ -60,3 +60,6 @@ package-lock.json
 /bazel-out
 dockerfile
 .gitlab-ci.yml
+
+bun.lockb
+/storybook-static
