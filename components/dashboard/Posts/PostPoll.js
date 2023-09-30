@@ -140,7 +140,7 @@ const PostPoll = ({ poll, getAllPost, postUserId }) => {
                   poll?.pollHistoryDetails?.length;
                 const num = roundOfNumbers(averageVote);
                 return (
-                  <div className="poll-box mb-2">
+                  <div key={index} className="poll-box mb-2">
                     <div
                       className="d-flex position-relative justify-space-bw"
                       key={index}

@@ -1,0 +1,101 @@
+.reporting-post {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+    width: 300px;
+    padding-top: -30px;
+  }
+  
+  .reasons {
+    width: 100%;
+  }
+  
+//   .contents {
+//     width: 60%;
+//     padding-left: 20px;
+//   }
+  
+  .reasons ul,
+  .contents ul {    
+    list-style: none;
+    padding: 0;
+  }
+  
+  .reasons h3,
+  .contents h4,
+  .contents h5 {
+    font-weight: bold;
+  }
+  
+  .reasons li,
+  .contents li {
+    cursor: pointer;
+    margin-bottom: 1px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .reasons li:hover,
+  .contents li:hover {
+    // transform: scale(1.02); /* Add a hover scale effect */
+    background-color: #6750A414;
+  }
+  
+  .reasons li.active {
+    background-color: #007bff;
+    width: 20%;
+    color: white;
+  }
+  
+  .contents li.active {
+    background-color: #f0f0f0;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    margin-top: 10px;
+    transition: border-color 0.3s;
+  }
+  
+  textarea:focus {
+    border-color: #007bff; /* Add focus effect */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .active-content {
+    display: block;
+    animation: fadeIn 1s ease-in-out; /* Add a fade-in effect */
+  }
+  
+  .inactive-content {
+    display: none;
+  }
+  .report-post-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    .report-post-icon{
+        cursor: pointer;
+    }
+  }
+  @media screen and (min-width:707px) {
+    .reporting-post{
+        width: 600px;
+    }
+    
+  }

@@ -1,6 +1,8 @@
 import MyProfile from "./my-profile";
 import RecentAddedGM from "./recent-added-gm";
 import MostFollowedContents from "./most-followed-contents";
+import MostFollowedTopics from "./most-followed-topics";
+import MostFollowedCircles from "./most-followed-circles";
 import Add from "./add";
 import GrowthModal from "./growth-modal";
 import UpgradeYourProfile from "./upgrade-your-profile";
@@ -20,6 +22,8 @@ export {
   MyProfile,
   RecentAddedGM,
   MostFollowedContents,
+  MostFollowedCircles,
+  MostFollowedTopics,
   Add,
   GrowthModal,
   UpgradeYourProfile,

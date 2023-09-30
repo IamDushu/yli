@@ -12,7 +12,7 @@ import {
 	addUpdateEvents,
 	searchConnections,
 	updateEvents,
-} from "../../store/actions";
+} from "store/actions";
 import InputError from './input-error'
 
 const { RangePicker } = DatePicker;

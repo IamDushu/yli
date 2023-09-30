@@ -26,6 +26,9 @@ const initialState = {
   recentAddedGM: {},
   jobTypeStepOne: "",
   mostFollowedContents: [],
+  latestArticles: [],
+  mostFollowedTopics: [],
+  mostFollowedCircles: [],
   blockFlag: [],
   growthProject: {
     id: "",
@@ -141,6 +144,22 @@ const growth = (state = initialState, action = {}) => {
     case types.MOST_FOLLOWED_CONTENT: {
       return Object.assign({}, state, {
         mostFollowedContents: action.data,
+      });
+    }
+
+    case types.LATEST_ARTICLES: {
+      return Object.assign({}, state, {
+        latestArticles: action.data,
+      });
+    }
+    case types.MOST_FOLLOWED_TOPICS: {
+      return Object.assign({}, state, {
+        mostFollowedTopics: action.data,
+      });
+    }
+    case types.MOST_FOLLOWED_CIRCLES: {
+      return Object.assign({}, state, {
+        mostFollowedCircles: action.data,
       });
     }
     case types.SAVE_ACTIVITY_CLEAR: {

@@ -20,7 +20,7 @@ function SiteLinks() {
     <div className="section-footer footer-sticky-fix">
       <Container className="px-0">
         <div className="footer-text">
-          <ul className="d-flex align-items-center justify-content-start mb-0 pl-0">
+          <ul className="d-flex align-items-center justify-content-start mb-0  px-2 py-3">
             <li>
               <Link route={ABOUT_US} title={lang("SIDE_BAR.ABOUT")}>
                 {lang("SIDE_BAR.ABOUT")}

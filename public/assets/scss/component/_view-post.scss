@@ -1,0 +1,303 @@
+.post-detail {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 16px;
+    // max-width: 600px;
+    margin: 0 auto;
+    justify-content: space-between;
+    height: 608px;
+    width: 100%;
+    display: flex;
+  
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+  
+      .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+  
+      .user-info {
+        .username {
+          font-weight: bold;
+          margin: 0;
+          // Customize font size, color, etc. here
+        }
+  
+        .location {
+            margin: 0;
+            color: #666;
+          // Customize location text style
+        }
+        .timestamp {
+            margin: 0;
+            color: #666;
+        }
+      }
+    }
+  
+    .post-image {
+        width: 60%;
+        height: 100%;
+        // border-right: 1px solid #666;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // Customize image styles
+      }
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // Customize image styles
+      }
+    }
+    
+    .post-side{
+        width: 50%;
+        padding-left: 10px;
+    }
+
+    .post-actions {
+        height: 32vh;
+        width: 100%;
+        .post-details-d{
+        max-height:40%;
+        overflow-wrap: break-word;  
+        word-wrap: break-word; 
+        word-break: break-word;
+        width: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+        }
+      button {
+        // Customize like, comment, and share button styles
+        padding: 8px 12px;
+        background-color: #fff;
+        // border: 1px solid #ccc;
+        border: none;
+        align-items: center;
+        border-radius: 4px;
+        margin-right: 2px;
+        text-align: center;
+        // width: 100%;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #f0f0f0;
+          // Add hover styles
+        }
+        span{
+            font-size: 18px;
+        }
+      }
+      .like-button{        
+        // display: flex;
+        // flex-direction: row;
+    }
+    }
+  
+    .post-caption {
+      p {
+        .username {
+          font-weight: bold;
+          margin-right: 4px;
+          // Customize username styles in caption
+        }
+      }
+    }
+  
+    .comments {
+      .comment {
+        // Style individual comments
+        margin-bottom: 8px;
+        padding: 8px;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+  
+        .username {
+          font-weight: bold;
+          // Customize comment author's username
+        }
+      }
+    }
+  }
+
+  //NoImages-
+  .no-image{
+    height: 608px;
+    width: 1025px;
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .profile-picture {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .user-info {
+      .username {
+        font-weight: bold;
+        margin: 0;
+        // Customize font size, color, etc. here
+      }
+
+      .location {
+          margin: 0;
+          color: #666;
+        // Customize location text style
+      }
+      .timestamp {
+          margin: 0;
+          color: #666;
+      }
+    }
+  }
+    .post-side{
+      width: 100%;
+      padding-left: 10px;
+  }
+
+  .post-actions {
+    height: 32vh;
+      width: 100%;
+      .post-details-d{
+          max-height:40%;
+          width: 100%;
+          overflow-wrap: break-word;  
+          word-wrap: break-word; 
+          word-break: break-word;
+          overflow: hidden;
+          overflow-y: auto;
+      }
+    button {
+      // Customize like, comment, and share button styles
+      padding: 8px 12px;
+      background-color: #fff;
+      // border: 1px solid #ccc;
+      border: none;
+      align-items: center;
+      border-radius: 4px;
+      margin-right: 2px;
+      text-align: center;
+      // width: 100%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f0f0f0;
+        // Add hover styles
+      }
+      span{
+          font-size: 18px;
+      }
+    }
+    .like-button{        
+      // display: flex;
+      // flex-direction: row;
+  }
+  }
+
+  .post-caption {
+    p {
+      .username {
+        font-weight: bold;
+        margin-right: 4px;
+        // Customize username styles in caption
+      }
+    }
+  }
+
+  .comments {
+    .comment {
+      // Style individual comments
+      margin-bottom: 8px;
+      padding: 8px;
+      border: 1px solid #e1e1e1;
+      border-radius: 4px;
+
+      .username {
+        font-weight: bold;
+        // Customize comment author's username
+      }
+    }
+  }
+}
+// Example CSS for the custom dropdown
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  width: 80vw;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  // display: none;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  z-index: 999;
+  border-radius: 0.4rem;
+}
+
+.custom-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Style individual dropdown items as needed */
+.dropdown-content div {
+  padding: 16px;
+  cursor: pointer;
+}
+
+/* Add more styles as required */
+.p-m-option{
+  display:flex;
+  border-bottom:1px solid #CAC4CF;
+  
+  text-align: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  &:hover{
+    background-color: #1D1B2014;
+  }
+  span{
+    margin-left: 3%;
+  }
+}
+@media screen and (min-width:380px) {
+  .dropdown-content{
+    width:45vh;
+  }
+}
+@media screen and (min-width:1031px) {
+  .post-detail {
+    width: 1025px;
+  }
+}
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #6d6d6d; 
+}

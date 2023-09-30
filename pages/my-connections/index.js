@@ -8,7 +8,7 @@ import {
 import { getGrowthPartnerList } from "store/actions";
 import { useTranslation } from "react-i18next";
 import { RightSidebarLayout } from "components/layout";
-import { Card, Tabs, Tab, Badge } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import {
   SentConnectionRequest,
   PendingConnectionRequest,
@@ -18,13 +18,23 @@ import {
 } from "components/my-connections";
 import WithAuth from "components/with-auth/with-auth";
 import { useRouter } from "next/router";
+import Tabs, { Tab } from "components/Tabs";
+
+const CONNECTIONS_TAB_TYPES = {
+  MY_GROWTH_CONNECTION: "my_growth_connection",
+  MY_CONNECTION: "my-connection",
+  PENDING_CONNECTION: "pending_connection",
+  SENT_CONNECTION: "sent_connection",
+};
 
 const MyConnection = () => {
   const [lang] = useTranslation("language");
   const dispatch = useDispatch();
   const router = useRouter();
   const { tab } = router.query;
-  const [tabKey, setTabKey] = useState(tab || "pending_connection");
+  const [tabKey, setTabKey] = useState(
+    tab || CONNECTIONS_TAB_TYPES.PENDING_CONNECTION
+  );
   const [showPeopleYouMayKnow, setShowPeopleYouMayKnow] = useState(true);
   const pendingList = useSelector(
     (state) => state.connections.pendingConnectionList
@@ -39,7 +49,10 @@ const MyConnection = () => {
     if (!tab) {
       router.push({
         pathname: router.pathname,
-        query: { ...router.query, tab: "pending_connection" },
+        query: {
+          ...router.query,
+          tab: CONNECTIONS_TAB_TYPES.PENDING_CONNECTION,
+        },
       });
     } else if (tab) {
       setTabKey(tab);
@@ -47,29 +60,29 @@ const MyConnection = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (tab === "pending_connection") {
+    if (tab === CONNECTIONS_TAB_TYPES.PENDING_CONNECTION) {
       setShowPeopleYouMayKnow(true);
       dispatch(
         getPendingConnectionsList({
           page: 1,
-          pagesize: 8,
+          pagesize: 10,
           search: "",
         })
       );
-    } else if (tab === "sent_connection") {
+    } else if (tab === CONNECTIONS_TAB_TYPES.SENT_CONNECTION) {
       setShowPeopleYouMayKnow(true);
       dispatch(
         getSentConnectionsList({
           page: 1,
-          pagesize: 8,
+          pagesize: 10,
           search: "",
         })
       );
-    } else if (tab === "my_growth_connection") {
+    } else if (tab === CONNECTIONS_TAB_TYPES.MY_GROWTH_CONNECTION) {
       dispatch(
         getGrowthPartnerList({
           page: 1,
-          pagesize: 8,
+          pagesize: 10,
           search: "",
         })
       );
@@ -77,117 +90,103 @@ const MyConnection = () => {
       dispatch(
         getMyConnectionsList({
           page: 1,
-          pagesize: 20,
+          pagesize: 10,
           search: "",
         })
       );
     }
   }, [tab]);
 
+  const getTabBody = (currentTab) => {
+    switch (currentTab) {
+      case CONNECTIONS_TAB_TYPES.MY_CONNECTION:
+        return <MyConnections tabKey={currentTab} />;
+      case CONNECTIONS_TAB_TYPES.MY_GROWTH_CONNECTION:
+        return (
+          <MyGrowthConnections
+            tabKey={tabKey}
+            setShowPYMK={setShowPeopleYouMayKnow}
+          />
+        );
+      case CONNECTIONS_TAB_TYPES.PENDING_CONNECTION:
+        return <PendingConnectionRequest tabKey={currentTab} />;
+      case CONNECTIONS_TAB_TYPES.SENT_CONNECTION:
+        return <SentConnectionRequest tabKey={currentTab} />;
+    }
+  };
+
   return (
     <RightSidebarLayout removeSidebar="footer">
-      <Card className=" mb-2 mb-md-3">
-        <Card.Body className="p-0">
-          <Tabs
-            activeKey={tabKey}
-            id="groups-tabs-section"
-            className="custom-tabs custom-group-tabs px-12 mb-2 border-bottom border-geyser group-nav-tabs"
-            onSelect={(e) => {
-              setTabKey(e);
-              router.push({
-                pathname: router.pathname,
-                query: { tab: e },
-              });
-            }}
-          >
-            <Tab
-              eventKey="pending_connection"
-              title={
-                <>
-                  {lang("CONNECTIONS.PENDING_CONNECTION")}
-                  <Badge
-                    pill
-                    variant="primary"
-                    className="badge-custom badge-sm"
-                  >
-                    {pendingList.total}
-                  </Badge>
-                </>
+      <Card
+        className="mb-4"
+        style={{
+          boxShadow:
+            "0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)",
+          border: "none",
+        }}
+      >
+        <Tabs
+          value={tabKey}
+          onClick={(tabVal) => {
+            setTabKey(tabVal);
+            router.push({
+              pathname: router.pathname,
+              query: { tab: tabVal },
+            });
+          }}
+        >
+          <Tab tabKey={CONNECTIONS_TAB_TYPES.MY_GROWTH_CONNECTION}>
+            <span
+              className={
+                tabKey === CONNECTIONS_TAB_TYPES.MY_GROWTH_CONNECTION
+                  ? "tab-badge active"
+                  : "tab-badge"
               }
             >
-              {tabKey === "pending_connection" && (
-                <PendingConnectionRequest tabKey={tabKey} />
-              )}
-            </Tab>
-
-            <Tab
-              eventKey="sent_connection"
-              title={
-                <>
-                  {lang("CONNECTIONS.SENT_CONNECTIONS")}
-                  <Badge
-                    pill
-                    variant="primary"
-                    className="badge-custom badge-sm"
-                  >
-                    {sentList.total}
-                  </Badge>
-                </>
+              {growthPartners?.data?.total || 0}
+            </span>
+            {lang("CONNECTIONS.MY_GROWTH_CONNECTIONS")}
+          </Tab>
+          <Tab tabKey={CONNECTIONS_TAB_TYPES.MY_CONNECTION}>
+            <span
+              className={
+                tabKey === CONNECTIONS_TAB_TYPES.MY_CONNECTION
+                  ? "tab-badge active"
+                  : "tab-badge"
               }
             >
-              {tabKey === "sent_connection" && (
-                <SentConnectionRequest tabKey={tabKey} />
-              )}
-            </Tab>
-
-            <Tab
-              eventKey="my_growth_connection"
-              title={
-                <>
-                  {lang("CONNECTIONS.MY_GROWTH_CONNECTIONS")}
-                  {growthPartners?.data?.total > 0 && (
-                    <Badge
-                      pill
-                      variant="primary"
-                      className="badge-custom badge-sm"
-                    >
-                      {growthPartners?.data?.total}
-                    </Badge>
-                  )}
-                </>
+              {totalConnection || 0}
+            </span>
+            {lang("CONNECTIONS.MY_CONNECTIONS")}
+          </Tab>
+          <Tab tabKey={CONNECTIONS_TAB_TYPES.PENDING_CONNECTION}>
+            <span
+              className={
+                tabKey === CONNECTIONS_TAB_TYPES.PENDING_CONNECTION
+                  ? "tab-badge active"
+                  : "tab-badge"
               }
             >
-              {tabKey === "my_growth_connection" && (
-                <MyGrowthConnections
-                  tabKey={tabKey}
-                  setShowPYMK={setShowPeopleYouMayKnow}
-                />
-              )}
-            </Tab>
-
-            <Tab
-              eventKey="my-connection"
-              title={
-                <>
-                  {lang("CONNECTIONS.MY_CONNECTIONS")}
-                  {totalConnection > 0 && (
-                    <Badge
-                      pill
-                      variant="primary"
-                      className="badge-custom badge-sm"
-                    >
-                      {totalConnection}
-                    </Badge>
-                  )}
-                </>
+              {pendingList.total || 0}
+            </span>
+            {lang("CONNECTIONS.PENDING_CONNECTION")}
+          </Tab>
+          <Tab tabKey={CONNECTIONS_TAB_TYPES.SENT_CONNECTION}>
+            <span
+              className={
+                tabKey === CONNECTIONS_TAB_TYPES.SENT_CONNECTION
+                  ? "tab-badge active"
+                  : "tab-badge"
               }
             >
-              {tabKey === "my-connection" && <MyConnections tabKey={tabKey} />}
-            </Tab>
-          </Tabs>
-
-          {/* Sent connection request */}
-        </Card.Body>
+              {sentList.total || 0}
+            </span>
+            {lang("CONNECTIONS.SENT_CONNECTIONS")}
+          </Tab>
+        </Tabs>
+        <div className="tab-body" style={{ padding: "0 1.5rem 1.5rem" }}>
+          {getTabBody(tabKey)}
+        </div>
       </Card>
       {showPeopleYouMayKnow && <PeopleYouMayKnow />}
     </RightSidebarLayout>

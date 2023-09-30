@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@routes";
 import { Card } from "react-bootstrap";
 import { onImageError, timeAgo } from "utils";
-import { Tooltip, } from 'antd';
+import Tooltip from '@mui/material/Tooltip';
 
 const PostHeader = ({
   listData,

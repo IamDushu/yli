@@ -122,7 +122,7 @@ export const en = {
     MY_GROWTH_CONNECTIONS: "Growth Connections",
     NO_REQUEST_THERE: "No requests are there",
     NO_CONNECTIONS_AVAILABLE: "No connections are available",
-    PEOPLE_YOU_MAY_KNOW: "People You May Know:",
+    PEOPLE_YOU_MAY_KNOW: "People You May Know",
     NO_POSTION: "No Position Added",
     MUTUAL_CONTACTS: "Mutual Contacts",
     FOLLOW: "Follow",
@@ -140,12 +140,14 @@ export const en = {
     REMOVE_TO_GC: "Remove",
     CONNECTED_ON: "Connected on",
     CONNECTION_DELETE_MESSAGE:
-      "Are you sure you want to remove this connection",
+      "Are you sure you want to remove this connection?",
     PENDING_CONNECTION: "Pending Connection",
     SENT_CONNECTIONS: "Sent Connections",
     PENDING_CONNECTION: "Pending Connection",
     RECORDS_FOUND: "records found",
     NO_SUGGESTIONS_CURRENTLY: "No suggestions currently.",
+    ADD_TO_GROWTH_CONNECTIONS: "Add to Growth Connections",
+    REMOVE_FROM_GROWTH_CONNECTIONS: "Remove from Growth Connections",
   },
   GROWTH_CONNECTIONS: {
     GROWTH_CONNECTIONS: "Growth connections",
@@ -340,9 +342,13 @@ export const en = {
   },
   COMMON: {
     LOADING: "Loading...",
+    DELETE: "Delete",
+    UPLOAD_COVER_IMAGE: "Upload Cover Picture",
+    WRITE: "Write",
     OK: "Ok",
     NOT_PROVIDED: "Not provided",
     NO_OPTIONS: "No options",
+    POST_TO: "Post to",
     MAX_5_PROFESSION_ALLOWED: "Max 5 professions allowed",
     UPLOAD_VIDEO_FORMAT: "Size 0.075 mb to 5000 mb/ MP4/MOV/WMV/AVI/MKV/AVCHD",
     SEARCH_FOR_PROFESSION: "Search for profession",
@@ -374,6 +380,8 @@ export const en = {
     SIGN_UP: "Sign Up",
     SUBMIT: "Submit",
     VERIFY: "VERIFY",
+    EDIT_INFO: "Edit Info",
+    SEARCH_TEXT: "Search Text",
     ADD_ACTIVITY: "Add Activity",
     CHANGE_PASSWORD: "Change Password",
     SIGN_UP_TITLE: "Accelerate your success!",
@@ -436,7 +444,7 @@ export const en = {
     TOTAL_REVIEWS: "Total Reviews",
     STUDENT_FEEDBACK: "Student Feedback",
     NO_STUDENT_FEEDBACK: "No Student Feedback",
-    UPGRADE_YOUR_PROFILE: "Ugrade your profile",
+    UPGRADE_YOUR_PROFILE: "Ugrade Profile",
     FREE: "Free",
     LITE: "Lite",
     PREMIUM: "Premium",
@@ -836,6 +844,7 @@ export const en = {
       CONTACT_INFO: "Contact Info",
       CONTACT_INFO_YOUR_PROFILE: "Your Profile",
       CONTACT_INFO_PHONE: "Phone",
+      ALTERNATE_CONTACT_INFO_PHONE: "Alternate Phone No",
       CONTACT_INFO_ADDRESS: "Address",
       CONTACT_INFO_EMAIL_ID: "Email",
       CONTACT_INFO_BIRTHDAY: "Birthday",
@@ -865,6 +874,8 @@ export const en = {
       ENDORSE: "Endorse",
       ENDORSED: "Endorsed",
       ENDORSING: "Endorsing",
+      UPDATE_SUCCESS: "Details updated successfully",
+      UPDATE_FAILURE: "Not Updated",
       PRIVACY_UPDATE_SUCCESS: "Privacy updated successfully",
       PRIVACY_UPDATE_FAILURE: "Not Updated",
     },
@@ -1079,6 +1090,8 @@ export const en = {
   DASHBOARD: {
     ADD_POST: {
       INPUT_PLACEHOLDER: "Start a Post",
+      VIDEO_POST: "Drag or Upload a Video",
+      PHOTO_POST: "Drag or Upload an Image",
       CREATE_POST: "Create Post",
       SHARE_POST: "Share Post",
       EDIT_SHARED_POST: "Edit Shared Post",
@@ -1103,6 +1116,10 @@ export const en = {
       VIDEO: "Add Video",
       DOCUMENT: "Add Document",
       POLL: "Add Poll",
+      POST_PHOTO: "Photo",
+      POST_VIDEO: "Video",
+      POST_POLL: "Poll",
+      POST_ARTICLE: "Article",
     },
 
     SORT_BY: {
@@ -1114,15 +1131,17 @@ export const en = {
     POSTS: {
       LOAD_MORE: "Load more...",
       POST_HEADER: {
-        SAVE: "Save",
-        UNSAVE: "Unsave",
+        SAVE: "Save this Post",
+        UNSAVE: "Remove from Saved",
         COPY_LINK: "Copy link to clipboard",
         DELETE_POST: "Delete your own post",
         EDIT_POST: "Edit Post",
         MUTE: "Mute",
         UNMUTE: "Unmute",
-        REPORT_POST: "Report this post",
-        SEE_POST: "I don't want to see this post",
+        REPORT_POST: "Report",
+        SEE_POST: "Hide This Post",
+        TURN_ON_NOTIFICATION: "Turn on notifications",
+        TURN_OFF_NOTIFICATION: "Turn of notifications",
       },
       POST_BODY: {
         POST_POLL: {
@@ -1150,7 +1169,7 @@ export const en = {
         CURIOUS: "Curious",
       },
       COMMENT: {
-        INPUT_PLACEHOLDER: "Add a comment...",
+        INPUT_PLACEHOLDER: "Write a comment",
         LENGTH_ERROR: "You have exceeded the maximum character limit",
         REPLY_COMMENT: "Reply",
         POST_COMMENT: "Post",
@@ -1162,6 +1181,7 @@ export const en = {
         LOAD_PREVIOUS_REPLY: "Load previous replies",
         MAX_CHAR_3000: "Maximum character limit is 3000",
         CHARACTERS: "characters",
+        REPORT_COMMENT: "Report Comment",
       },
       LIKES_MODAL: {
         HEADER_NAME: "Reactions",
@@ -1224,9 +1244,17 @@ export const en = {
   },
   MY_PROFILE: {
     MY_CONNECTIONS: "My Connections",
-    PEOPLE_VIEWED: "People Viewed",
+    PEOPLE_VIEWED: "Viewed Profile",
   },
   GROWTH_TOOL: {
+    LATEST_ARTILCE: "Latest Articles",
+    TOOLTIP_1:
+      "Use this area to empower your business model through connections, learnings and events",
+    TOOLTIP_2:
+      "Expand this section to access all the main growth functions of the platform",
+    VIEW_ALL: "View All",
+    GROWTH_AREA: "Growth Area",
+    GROWTH_PROJECTS: "Growth Projects",
     GROWTH_TOOL: "Growth Tool",
     GROWTH_MODEL: "Growth Model (GM)",
     GROWTH_PARTNERS: "Growth Partners",
@@ -1234,7 +1262,7 @@ export const en = {
     TRAINING_ROOMS: "Training Rooms",
     COACHING_ROOMS: "Coaching Rooms",
     WEBINAR: "Webinar",
-    MATERCLASS: "Masterclass",
+    MASTERCLASS: "Masterclass",
     BUSINESS_NETWORK_ROOMS: "Business Network Rooms",
     EVENTS: "Events",
     LAUNCH_ROOM: "Launch a Room",
@@ -1249,13 +1277,15 @@ export const en = {
   RIGHT_SIDEBAR: {
     OTHER_VIEWS: {
       HOW_OTHER_VIEW_MY_PROFILE: "How other view my profile",
-      ADD_CREDITS: "Add Credits",
+      ADD_CREDITS: "Add Credit",
     },
     RECENTLY_ADDED_TO_GM: "Recently Added to GM",
     NO_RECORDS: "No Records",
     JOINED_GROUPS: "Joined Groups",
     NO_JOINED_GROUPS: "No Joined Groups",
     MOST_FOLLOWED_CONTENTS: "Most Followed Contents",
+    MOST_FOLLOWED_TOPICS: "Most Followed Topics",
+    MOST_FOLLOWED_CIRCLES: "Most Followed Circles",
     GROWTH_PARTNERS: "Growth Partners",
   },
   GROUP: {
@@ -1609,6 +1639,7 @@ export const en = {
       CERTIFICATIONS: "Certification",
       LANGUAGES: "Languages",
       ACTIVITY: "Activity",
+      LOAD_MORE: "Load More",
     },
     TITLE: {
       ACCOUNT_SETTINGS: "Account Settings",
@@ -1745,8 +1776,8 @@ export const en = {
     },
   },
   GLOBAL_SEARCH: {
-    NO_RESULT: "No Search Results Found",
-    NO_RESULT_DESC: "Try shortening or rephrasing your search",
+    NO_RESULT: "No results for the search",
+    NO_RESULT_DESC: "Try looking for other terms",
     FILTER_BY: "Filter by",
     FILTERS: "Filters",
     FILTER: {
@@ -1761,6 +1792,7 @@ export const en = {
       ARTICLES: "Articles",
       POSTS: "Posts",
       COURSES: "Courses",
+      ROOMS: "Rooms",
     },
   },
   COURSES: {
@@ -2095,8 +2127,12 @@ export const en = {
     MAX_CHAR_220: "Maximum character limit is 220",
     DESCRIPTION_IS_REQUIRED: "Description is required",
     ARTICLE: "Article",
+    PUBLISHED: "Published",
+    WRITE: "Write",
+    DRAFTS: "Drafts",
+    DELETED: "Deleted",
     ADD_NEW_ARTICLE: "Add New Article",
-    WRITE_AN_ARTICLE: "Write an Article",
+    WRITE_AN_ARTICLE: "Write New Article",
     PUBLISHING_MENU: "Publishing Menu",
     TITLE: "Title",
     TITLE_PLACEHOLDER: "Enter Title",
@@ -2150,6 +2186,24 @@ export const en = {
     YLIWAY: "© YLIWAY",
     TITLE: "Your Dream Job is Closer than you think",
     YLIWAY_GUIDE: "YLIWAY GUIDE",
+    GET_STARTED: {
+      LINK: "New to Yliway?",
+      TITLE: "Get Started",
+      INFO: "Learn how to easily make the most out of the platform",
+    },
+    SQUAD: {
+      TITLE: "Squads",
+      CREATE: "Create Squad",
+    },
+    MEETING: {
+      TITLE: "Launch a meeting",
+      INSTANT_MEETING: "Launch a Meeting for now",
+      SCHEDULED_MEETING: "Launch a Meeting for later",
+      ROOM_HOSTORY: "Room Conversation History",
+    },
+  },
+  CALENDAR_WIDGET: {
+    NO_EVENTS: "No events today",
   },
   LEARNING_INSTITUTE: {
     PRODUCTS_TAB: {

@@ -20,13 +20,13 @@ module.exports = {
   CHANGE_PASSWORD: "/users/changePassword",
   RESET_PASSWORD: "resetPassword",
   SET_PASSWORD: "/users/setPassword",
-  PASSWORD_VERIFICATION:"verifyPassword",
+  PASSWORD_VERIFICATION: "verifyPassword",
   //Users
   USER_DETAILS: "/user/details",
   TESTIMONIAL_DETAILS: "/testimonials/list",
   MY_PROFILE: "myProfile",
-  SECURITY_ACTIVITIES:"recentSecurityActivities",
-  NEW_LOGINS:"recentNewLogins",
+  SECURITY_ACTIVITIES: "recentSecurityActivities",
+  NEW_LOGINS: "recentNewLogins",
   PROFILE_COUNT: "profileCounts/",
   PROFILE_VIEWED: "viewProfile/",
   PROFILE_SEARCH: "saveRecentVisitor",
@@ -46,7 +46,8 @@ module.exports = {
   ADD_UPDATE_CERTIFICATION: "addUpdateUserCertification",
   DELETE_EXPERIENCE: "userExperience/",
   MONETISATION_FEATURE_LIST: "monetization/list",
-  MONETISATION_FEATURE_LIST_MODULE_AND_CATEGORY: "monetization/listByModuleAndCategory",
+  MONETISATION_FEATURE_LIST_MODULE_AND_CATEGORY:
+    "monetization/listByModuleAndCategory",
   MONETISATION_PLAN_LIST: "plan/list",
   MONETISATION_PLAN_DETAILS: "plan/details",
   LAST_PURCHASED_PLAN_DETAILS: "userFeatures/lastPurchasePlan",
@@ -107,6 +108,7 @@ module.exports = {
   ARTICLE_LIST: "article/list",
   DELETE_ARTICLE: "article/delete/",
   GET_ARTICLE: "article/",
+  GET_DELETED_ARTICLE:"article/deleted/list",
 
   // Connections
   PEOPLE_YOU_MAY_KNOW_LIST: "connections/peopleYouMayKnow",
@@ -126,6 +128,9 @@ module.exports = {
   // Dashboard Right Side
   RECENTLY_ADDED_TO_GM: "recentActivities",
   MOST_FOLLOWED_CONTENT: "mostFollowedContent",
+  LATEST_ARTICLES: "/article/latest/list",
+  MOST_FOLLOWED_CIRCLES: "Topics/mostActive/list",
+  MOST_FOLLOWED_TOPICS: "Circles/mostActive/list",
   GROWTH_PARTNERS: "growthConnections/peopleYouKnow",
   GROWTH_PARTNERS_LIST: "growthConnections/list",
   GROWTH_PARTNERS_ACTIVITY_LIST:
@@ -201,7 +206,8 @@ module.exports = {
   UPDATE_GROWTH_MODEL_ACTIVITIES: "update_growth_model_activity",
   DELETE_GROWTH_MODEL_ACTIVITIES: "delete_growth_model_activity",
   GET_GROWTH_MODEL_ACTIVITIES_STATUS: "get_growthmodel_activities_stats",
-  DELETE_GROWTH_MODEL_USER_ACTIVITIES: "growthModel/deleteGrowthModelActivities",
+  DELETE_GROWTH_MODEL_USER_ACTIVITIES:
+    "growthModel/deleteGrowthModelActivities",
   GROWTH_MODEL_PRINT: "get_growthmodel_activities_pdf",
   GET_PROFESSIONAL_FIELD: "professionField/list",
   GET_PROFESSIONS: "profession/list",
@@ -385,7 +391,7 @@ module.exports = {
   LEARNING_INSTITUTE_LIST: "learningInstitute/list",
   USER_COMPANY_LIST: "company/list",
   ORGANIZATION_LIST: "organisation/list",
-  ADD_ORGANISATION:"organisation/add",
+  ADD_ORGANISATION: "organisation/add",
   EXPERIENCE_LIST: "userExperience/list",
   EDUCATION_LIST: "userEducation/list",
   CERTIFICATION_LIST: "userCertification/list",

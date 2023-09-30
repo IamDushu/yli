@@ -522,6 +522,14 @@ export const getFilters = (lang) => [
     name: lang("GLOBAL_SEARCH.FILTER.COACH"),
   },
   {
+    id: "courses",
+    name: lang("GLOBAL_SEARCH.FILTER.COURSES"),
+  },
+  {
+    id: "rooms",
+    name: lang("GLOBAL_SEARCH.FILTER.ROOMS"),
+  },
+  {
     id: "learningInstitute",
     name: lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE"),
   },
@@ -533,4 +541,11 @@ export const getFilters = (lang) => [
     id: "posts",
     name: lang("GLOBAL_SEARCH.FILTER.POSTS"),
   },
+];
+
+export const PPAndCompanyNotificationType = [
+  "Peer Producer",
+  "Admin Peer Producer",
+  "Company",
+  "Admin Company",
 ];

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Grid from "@mui/material/Grid";
 import { Layout } from "@components/layout";
 import { Container, Card, Spinner } from "react-bootstrap";
 import {
@@ -73,8 +74,14 @@ const BlogsListing = () => {
   return (
     <Layout removeSidebar="footer">
       <div className="inner-wrapper notifications-box">
-        <Container>
-          <div className="d-flex flex-xl-nowrap flex-wrap">
+        <Grid
+          container
+          maxWidth="1160px"
+          marginLeft={"auto"}
+          marginRight={"auto"}
+          paddingLeft={{ md: 2, xs: 1 }}
+          paddingRight={{ md: 2, xs: 1 }}>
+           <Grid item md={3} sm={12} paddingRight={{ md: "18px", sm: 0 }}>
             {/* left profile section */}
             <div className="left-profile-section">
               {/* profile section */}
@@ -86,7 +93,13 @@ const BlogsListing = () => {
                 <SiteLinks />
               </div>
             </div>
-
+            </Grid>
+            <Grid
+            item
+            md={5}
+            sm={12}
+            paddingLeft={{ md: "6px", sm: 0 }}
+            paddingRight={{ md: "8px", sm: 0 }}>
             {/* Middle section view */}
             <div className="post-section">
               {/* Notifications : START */}
@@ -96,8 +109,7 @@ const BlogsListing = () => {
                   {notificationData?.rows?.length > 0 && (
                     <div
                       className="mb-0 cursor-pointer"
-                      onClick={() => dispatch(markasallRead())}
-                    >
+                      onClick={() => dispatch(markasallRead())}>
                       <h6 className="text-body-14 text-primary">
                         {lang("NOTIFICATION.MARK_ALL_AS_READ")}
                       </h6>
@@ -116,8 +128,7 @@ const BlogsListing = () => {
                     hasMore={
                       notificationData?.count !== notificationData?.rows.length
                     }
-                    loader={<SkeletonLoader />}
-                  >
+                    loader={<SkeletonLoader />}>
                     <ul className="listing-section border-first-0 pt-first-0">
                       {notificationData?.rows.length > 0 ? (
                         notificationData?.rows?.map((s, index) => {
@@ -145,22 +156,24 @@ const BlogsListing = () => {
                 </Card.Body>
               </Card>
             </div>
-
+            </Grid>
+            <Grid item md={4} sm={12} paddingLeft={{ md: "16px", sm: 0 }}>
             {/* right blog section */}
             <div className="right-blog-section">
               {/* <OtherViews /> */}
 
               <GrowthPartners />
-              <RecentAddedGM />
+              {/* <RecentAddedGM />
               <FollowedGroup />
               <div className="sticky-fix">
                 <MostFollowedContents />
-              </div>
+              </div> */}
 
               {/* Top Activities */}
             </div>
-          </div>
-        </Container>
+            </Grid>
+          </Grid>
+      
       </div>
     </Layout>
   );

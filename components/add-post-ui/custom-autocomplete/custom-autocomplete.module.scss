@@ -1,0 +1,11 @@
+.custom-autocomplete{
+    .info-container{
+        display: flex;
+        margin-top: 4px;
+        justify-content: space-between;
+        .formik-validation-error{
+            color: red;
+            font-size: 12px;
+        }
+    }
+}

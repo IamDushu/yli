@@ -1,0 +1,254 @@
+@import "../../public/assets/scss/helpers/variable";
+
+.yliway-colors {
+  .yliway-bg-area {
+    height: 60px;
+    width: 100%;
+    margin-bottom: $space8;
+    border: $border-width solid $geyser;
+
+    // Primary
+    &.p-0-color {
+      background-color: $black;
+    }
+    &.p-10-color {
+      background-color: $primary-violet-10;
+    }
+    &.p-20-color {
+      background-color: $primary-violet-20;
+    }
+    &.p-30-color {
+      background-color: $primary-violet-30;
+    }
+    &.p-40-color {
+      background-color: $primary-violet;
+    }
+    &.p-50-color {
+      background-color: $primary-violet-50;
+    }
+    &.p-60-color {
+      background-color: $primary-violet-60;
+    }
+    &.p-70-color {
+      background-color: $primary-violet-70;
+    }
+    &.p-80-color {
+      background-color: $primary-violet-80;
+    }
+    &.p-90-color {
+      background-color: $primary-violet-90;
+    }
+    &.p-95-color {
+      background-color: $primary-violet-95;
+    }
+    &.p-99-color {
+      background-color: $primary-violet-99;
+    }
+    &.p-100-color {
+      background-color: $white;
+    }
+
+    // Secondary
+    &.s-0-color {
+      background-color: $black;
+    }
+    &.s-10-color {
+      background-color: $secondary-blue-10;
+    }
+    &.s-20-color {
+      background-color: $secondary-blue-20;
+    }
+    &.s-30-color {
+      background-color: $secondary-blue-30;
+    }
+    &.s-40-color {
+      background-color: $secondary-blue-40;
+    }
+    &.s-50-color {
+      background-color: $secondary-blue-50;
+    }
+    &.s-60-color {
+      background-color: $secondary-blue-60;
+    }
+    &.s-70-color {
+      background-color: $secondary-blue-70;
+    }
+    &.s-80-color {
+      background-color: $secondary-blue-80;
+    }
+    &.s-90-color {
+      background-color: $secondary-blue-90;
+    }
+    &.s-95-color {
+      background-color: $secondary-blue-95;
+    }
+    &.s-99-color {
+      background-color: $secondary-blue-99;
+    }
+    &.s-100-color {
+      background-color: $white;
+    }
+
+    // Tertiary
+    &.t-0-color {
+      background-color: $black;
+    }
+    &.t-10-color {
+      background-color:$tertiary-green-10;
+    }
+    &.t-20-color {
+      background-color:$tertiary-green-20;
+    }
+    &.t-30-color {
+      background-color:$tertiary-green-30;
+    }
+    &.t-40-color {
+      background-color:$tertiary-green-40;
+    }
+    &.t-50-color {
+      background-color:$tertiary-green-50;
+    }
+    &.t-60-color {
+      background-color:$tertiary-green-60;
+    }
+    &.t-70-color {
+      background-color:$tertiary-green-70;
+    }
+    &.t-80-color {
+      background-color:$tertiary-green-80;
+    }
+    &.t-90-color {
+      background-color:$tertiary-green-90;
+    }
+    &.t-95-color {
+      background-color:$tertiary-green-95;
+    }
+    &.t-99-color {
+      background-color:$tertiary-green-99;
+    }
+    &.t-100-color {
+      background-color: $white;
+    }
+    // Error
+    &.e-0-color {
+      background-color: $black;
+    }
+    &.e-10-color {
+      background-color:$error-red-10;
+    }
+    &.e-20-color {
+      background-color:$error-red-20;
+    }
+    &.e-30-color {
+      background-color:$error-red-30;
+    }
+    &.e-40-color {
+      background-color:$error-red-40;
+    }
+    &.e-50-color {
+      background-color:$error-red-50;
+    }
+    &.e-60-color {
+      background-color:$error-red-60;
+    }
+    &.e-70-color {
+      background-color:$error-red-70;
+    }
+    &.e-80-color {
+      background-color:$error-red-80;
+    }
+    &.e-90-color {
+      background-color:$error-red-90;
+    }
+    &.e-95-color {
+      background-color:$error-red-95;
+    }
+    &.e-99-color {
+      background-color:$error-red-99;
+    }
+    &.e-100-color {
+      background-color: $white;
+    }
+    // Neutral
+    &.n-0-color {
+      background-color: $black;
+    }
+    &.n-10-color {
+      background-color:$neutral-dark-10;
+    }
+    &.n-20-color {
+      background-color:$neutral-dark-20;
+    }
+    &.n-30-color {
+      background-color:$neutral-dark-30;
+    }
+    &.n-40-color {
+      background-color:$neutral-dark-40;
+    }
+    &.n-50-color {
+      background-color:$neutral-dark-50;
+    }
+    &.n-60-color {
+      background-color:$neutral-dark-60;
+    }
+    &.n-70-color {
+      background-color:$neutral-dark-70;
+    }
+    &.n-80-color {
+      background-color:$neutral-dark-80;
+    }
+    &.n-90-color {
+      background-color:$neutral-dark-90;
+    }
+    &.n-95-color {
+      background-color:$neutral-dark-95;
+    }
+    &.n-99-color {
+      background-color:$neutral-dark-99;
+    }
+    &.n-100-color {
+      background-color: $white;
+    }
+    // Neutral Variant
+
+    &.nv-0-color {
+      background-color: $black;
+    }
+    &.nv-10-color {
+      background-color:$neutralvariant-dark-10;
+    }
+    &.nv-20-color {
+      background-color:$neutralvariant-dark-20;
+    }
+    &.nv-30-color {
+      background-color:$neutralvariant-dark-30;
+    }
+    &.nv-40-color {
+      background-color:$neutralvariant-dark-40;
+    }
+    &.nv-50-color {
+      background-color:$neutralvariant-dark-50;
+    }
+    &.nv-60-color {
+      background-color:$neutralvariant-dark-60;
+    }
+    &.nv-70-color {
+      background-color:$neutralvariant-dark-70;
+    }
+    &.nv-80-color {
+      background-color:$neutralvariant-dark-80;
+    }
+    &.nv-90-color {
+      background-color:$neutralvariant-dark-90;
+    }
+    &.nv-95-color {
+      background-color:$neutralvariant-dark-95;
+    }
+    &.nv-99-color {
+      background-color:$neutralvariant-dark-99;
+    }
+    &.nv-100-color {
+      background-color: $white;
+    }
+  }
+}

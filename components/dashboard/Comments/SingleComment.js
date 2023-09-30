@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link } from "@routes";
 import { UPDATE_COMMENT_COUNT } from "store/actions";
-import { Card, Dropdown } from "react-bootstrap";
+// import { Card, Dropdown } from "react-bootstrap";
 import Reactions from "../Posts/Reactions";
 import ReplyComment from "./ReplyComment";
 import CommentInput from "./CommentInput";
@@ -23,6 +23,21 @@ import {
   editDashboardPost,
   postGroupId,
 } from "store/actions";
+import {
+  Avatar,
+  Stack,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+  CardHeader,
+  IconButton,
+  Tooltip,
+  Box,
+} from "@mui/material";
+import CommentMenu from "./CommentMenu";
+import ProfileCard from "./profile-card";
 const SingleComment = ({
   comment,
   handleEditComments,
@@ -436,24 +451,40 @@ const SingleComment = ({
   ******************/
 
   return (
-    <div className="d-flex px-3 pb-3" key={comment.id}>
-      <div className="mr-2 rounded-pill overflow-hidden flex-shrink-0 border border-geyser w-h-40">
+    <Box px={3} mt={2}>
+      <Stack direction={"row"} gap={2}>
         <Link route={profileRoute}>
           <a>
-            <picture onContextMenu={(e) => e.preventDefault()}>
-              <source
-                srcSet={
-                  imagePreference
-                    ? comment.userDetails?.profilePicURL || ""
-                    : comment?.companyDetails !== null
-                    ? comment?.companyDetails?.logo
-                    : comment?.instituteDetails !== null
-                    ? comment?.instituteDetails?.logo
-                    : ""
-                }
-                type=""
-              />
-              <img
+            <Avatar
+              sx={{ width: 56, height: 56 }}
+              src={
+                imagePreference
+                  ? comment.userDetails?.profilePicURL || ""
+                  : comment?.companyDetails !== null
+                  ? comment?.companyDetails?.logo
+                  : comment?.instituteDetails !== null
+                  ? comment?.instituteDetails?.logo
+                  : ""
+              }
+            />
+          </a>
+        </Link>
+
+        <Card
+          sx={{
+            width: "100%",
+            bgcolor: "#ECE7EB",
+            borderRadius: "3px",
+            px: "20px",
+            py: "10px",
+          }}
+          elevation={0}
+        >
+          <CardHeader
+            sx={{ p: 0 }}
+            title={
+              <ProfileCard
+                profileRoute={profileRoute}
                 src={
                   imagePreference
                     ? comment.userDetails?.profilePicURL || ""
@@ -463,77 +494,50 @@ const SingleComment = ({
                     ? comment?.instituteDetails?.logo
                     : ""
                 }
-                onError={(e) => {
-                  onImageError(
-                    e,
-                    "profile",
-                    `${firstName} ${
-                      lastNameHandler(comment?.userDetails, comment?.userId)
-                        ? lastName
-                        : ""
-                    }`
-                  );
-                }}
-                width="40"
-                height="40"
-                className="img-fluid h-40"
-              />
-            </picture>
-          </a>
-        </Link>
-      </div>
-      <div className="w-100">
-        <div className="mb-0">
-          <div className="bg-doctor rounded p-2">
-            <div className="d-flex justify-content-between">
-              <div>
-                <Link route={profileRoute}>
-                  <a>
-                    <Card.Title className="cursor-pointer font-14 font-600 text-secondary mb-1">
-                      <h5 className="font-14 mb-0">
-                        {firstName}{" "}
-                        {lastNameHandler(comment?.userDetails, comment?.userId)
-                          ? lastName
-                          : ""}
-                      </h5>
-                    </Card.Title>
-                  </a>
-                </Link>
-                <Card.Text className="font-12 mb-2 text-gray-darker break-word">
-                  {comment.userDetails !== null
+                firstName={firstName}
+                lastName={
+                  lastNameHandler(comment?.userDetails, comment?.userId)
+                    ? lastName
+                    : ""
+                }
+                currentPosition={
+                  comment.userDetails !== null
                     ? comment.userDetails.currentPosition
-                    : ""}
-                </Card.Text>
-              </div>
-              {currentUserInfo?.id === comment.userId && (
-                <Dropdown className="theme-dropdown pl-3 d-flex  align-items-center">
-                  <Dropdown.Toggle>
-                    <em className="icon icon-ellipsis-h font-24 text-gray-darker"></em>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-inner-left ml-3">
-                    <Dropdown.Item
-                      onClick={(e) => handleDeleteComments(e, comment)}
-                      className="d-flex align-items-center"
-                    >
-                      <em className="icon icon-delete-line reaction-icons pr-2 font-24"></em>
-                      <span>
-                        {lang("DASHBOARD.POSTS.COMMENT.DELETE_COMMENT")}
-                      </span>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={(e) => handleEditComments(e, comment)}
-                      className="d-flex align-items-center"
-                    >
-                      <em className="icon icon-write reaction-icons pr-2 font-20"></em>
-                      <span>
-                        {lang("DASHBOARD.POSTS.COMMENT.EDIT_COMMENT")}
-                      </span>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </div>
-            <Card.Text className="font-14 font-600 text-secondary mb-1">
+                    : ""
+                }
+              />
+            }
+            subheader={
+              <Typography
+                color={"#49454E"}
+                lineHeight={"20px"}
+                fontWeight={400}
+                fontSize={"14px"}
+              >
+                {comment.userDetails !== null
+                  ? comment.userDetails.currentPosition
+                  : ""}
+              </Typography>
+            }
+            action={
+              currentUserInfo?.id === comment.userId && (
+                <CommentMenu
+                  deleteLabel={lang("DASHBOARD.POSTS.COMMENT.DELETE_COMMENT")}
+                  editLabel={lang("DASHBOARD.POSTS.COMMENT.EDIT_COMMENT")}
+                  handleDelete={(e) => handleDeleteComments(e, comment)}
+                  handleEdit={(e) => handleEditComments(e, comment)}
+                />
+              )
+            }
+          />
+
+          <CardContent sx={{ p: 0, mt: 1 }}>
+            <Typography
+              color={"#49454E"}
+              lineHeight={"20px"}
+              fontWeight={400}
+              fontSize={"14px"}
+            >
               {ReactHtmlParser(
                 urlify(comment.title)?.replaceAll("\n", "<br />")
               )}
@@ -542,98 +546,78 @@ const SingleComment = ({
                   <img src={comment.imageURL} className="img-fluid" />
                 </div>
               )}
-            </Card.Text>
-          </div>
-          <div className="mb-4 reaction-icons-sections icons-reply-box pt-2 d-flex justify-content-start">
-            <div className="rection-outer-box d-flex align-items-center">
-              <div className="reaction-icons-box hover-likes-reactions p-0 d-flex">
-                <div
-                  title=""
-                  className="d-xl-flex align-items-center justify-content-center"
-                >
-                  {/* Reaction Comment Post Section */}
-                  <Reactions
-                    eventType={eventTypeComment}
-                    handleClickEvent={handleLikeComments}
-                    counter={true}
-                    totalCount={comment.reactionCount}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="rection-outer-box d-flex align-items-center">
-              <div className="reaction-icons-box hover-likes-reactions p-0 align-items-center d-flex">
-                <div
-                  title=""
-                  className="d-xl-flex icons-reply-box align-items-center justify-content-center "
-                >
-                  <h5
-                    className="font-12 ml-1 mt-0 text-gary reaction-icon-text"
-                    onClick={(e) => handleOpenReplyPage(e)}
-                  >
-                    {lang("DASHBOARD.POSTS.COMMENT.REPLY_COMMENT")}
-                  </h5>
-                </div>
-              </div>
-              <p className="font-12 mb-0 text-gary reaction-icon-text pl-2">
-                {comment?.commentReplys?.length}
-              </p>
-            </div>
-          </div>
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ px: 0, pb: 0 }}>
+            <Button>{lang("DASHBOARD.POSTS.POST_FOOTER.LIKE")}</Button>
+            <Button onClick={(e) => handleOpenReplyPage(e)}>Reply</Button>
+            <Typography
+              fontSize={"11px"}
+              lineHeight={"16px"}
+              fontWeight={500}
+              color={"#79767A"}
+              flex={1}
+              display={"flex"}
+              justifyContent={"flex-end"}
+            >
+              3h
+            </Typography>
+          </CardActions>
+        </Card>
+      </Stack>
 
-          {commentReplyLists?.data?.map((replyComment, index) => (
-            <Fragment key={replyComment.id}>
-              <ReplyComment
-                currentUserInfo={currentUserInfo}
-                commentReplyListAPiCall={commentListApiCall}
-                replyComment={replyComment}
-                index={index}
-                postId={postId}
-                handleEditReplyComments={handleEditReplyComments}
-                userInfo={userInfo}
-              />
-            </Fragment>
-          ))}
-          {isDisplayReplyPage ? (
-            <CommentInput
-              reply={true}
-              currentUserInfo={currentUserInfo}
-              setStartComments={setStartReply}
-              startComments={startReply}
-              handleMakeComments={handleMakeReply}
-              handlePostComments={ReplyPost}
-              addEmoji={addEmoji}
-              setAddEmoji={setAddEmoji}
-              handleEmoji={handleEmoji}
-              error={error}
-              isButtonDisabled={isButtonDisabled}
-              commentRef={commentRef}
-              setMentions={setMentions}
-              setTags={setTags}
-              setCommentImage={setCommentReplyImage}
-              commentImage={commentReplyImage}
-              isEditCmnts={isEditReplyCmnts}
-            />
-          ) : null}
-          {commentReplyLists?.total !== commentReplyLists?.data?.length && (
-            <div className="mt-2 mb-3 text-center">
-              <a onClick={loadPreviousReply}>
-                <span
-                  className="font-weight-bold"
-                  style={{
-                    fontsize: "bold",
-                    color: "#0f6bbf",
-                    fontSize: 14,
-                  }}
-                >
-                  {lang("DASHBOARD.POSTS.COMMENT.LOAD_PREVIOUS_REPLY")}
-                </span>
-              </a>
-            </div>
-          )}
+      {isDisplayReplyPage ? (
+        <CommentInput
+          reply={true}
+          currentUserInfo={currentUserInfo}
+          setStartComments={setStartReply}
+          startComments={startReply}
+          handleMakeComments={handleMakeReply}
+          handlePostComments={ReplyPost}
+          addEmoji={addEmoji}
+          setAddEmoji={setAddEmoji}
+          handleEmoji={handleEmoji}
+          error={error}
+          isButtonDisabled={isButtonDisabled}
+          commentRef={commentRef}
+          setMentions={setMentions}
+          setTags={setTags}
+          setCommentImage={setCommentReplyImage}
+          commentImage={commentReplyImage}
+          isEditCmnts={isEditReplyCmnts}
+        />
+      ) : null}
+      {commentReplyLists?.data?.map((replyComment, index) => (
+        <Fragment key={replyComment.id}>
+          <ReplyComment
+            currentUserInfo={currentUserInfo}
+            commentReplyListAPiCall={commentListApiCall}
+            replyComment={replyComment}
+            index={index}
+            postId={postId}
+            handleEditReplyComments={handleEditReplyComments}
+            userInfo={userInfo}
+          />
+        </Fragment>
+      ))}
+
+      {commentReplyLists?.total !== commentReplyLists?.data?.length && (
+        <div className="mt-2 mb-3 text-center">
+          <a onClick={loadPreviousReply}>
+            <span
+              className="font-weight-bold"
+              style={{
+                fontsize: "bold",
+                color: "#0f6bbf",
+                fontSize: 14,
+              }}
+            >
+              {lang("DASHBOARD.POSTS.COMMENT.LOAD_PREVIOUS_REPLY")}
+            </span>
+          </a>
         </div>
-      </div>
-    </div>
+      )}
+    </Box>
   );
 };
 

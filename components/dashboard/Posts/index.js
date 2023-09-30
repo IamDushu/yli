@@ -11,6 +11,7 @@ import moment from "moment";
 import { Loader } from "components/ui";
 import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
+import ViewPost from "components/modal/viewPost";
 
 const AddToGMModal = dynamic(() =>
   import("@components/modal").then((mod) => mod.AddToGMModal)
@@ -28,6 +29,16 @@ const DashboardPost = ({
   searchText,
   page,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [viewpostData, setViewpostData] = useState([]);
+  const handleClose = () => {
+    setOpen(false);
+  };  
+  React.useEffect(()=>{
+    if(open === true){
+      setOpen(false);
+    }
+  },[])
   const [lang] = useTranslation("language");
   const { addtoGrowthModel } = useSelector(({ ui }) => ui.modals, shallowEqual);
   const { addtoGrowthModelLi } = useSelector(
@@ -163,8 +174,19 @@ const DashboardPost = ({
             let type = listData?.postDetails?.postType;
             return (
               <Card
-                className="mb-2 post-views border-0 border-bottom-dark-2 rounded-0"
+                className="mb-2 post-views border-0 border-bottom-dark-2 rounded-0 pointer"
                 key={listData.id}
+                onClick={(event) => {
+                  setViewpostData(listData);
+                  // Check if the click did not occur on the like button
+                  console.log(event.target.classList);
+                  if (!event.target.classList.contains('like-tsp')) {
+                    // console.log("I'm not there")
+                    // Your action when clicking on the card (excluding the like button)
+                    setOpen(true)
+                  }
+                }
+              }
               >
                 <div className="post-load-more">
                   {newPostCount === 10 && (
@@ -217,6 +239,19 @@ const DashboardPost = ({
             );
           })}
       </InfiniteScroll>
+         {/******************* 
+           @purpose : View Post Modal
+           @Author : YLIWAY
+          ******************/}
+          {viewpostData && (
+          <ViewPost getAllPost={getAllPost}
+          // toggleGMModal={addToGModalToggle}
+          // toggleGMModalLI={addToGModalToggleLi}
+          // toggleGMModalArticle={addToGModalToggleArticle}          
+          searchText={searchText}
+          userInfo={userInfo} 
+          viewpostData={viewpostData} open={open} onClose={handleClose}/>  
+          )}
 
       {/******************* 
            @purpose : Add To Gm Modal

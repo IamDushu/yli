@@ -9,6 +9,7 @@ import { Card } from "react-bootstrap";
 import ReactHtmlParser from "react-html-parser";
 import { urlify } from "utils";
 import { LinkPreviewGenerator } from "components/ui/link-preview";
+import { APP_URL } from "config";
 
 const PostBody = ({ listData, getAllPost, isEdit, type }) => {
   /******************* 
@@ -37,7 +38,7 @@ const PostBody = ({ listData, getAllPost, isEdit, type }) => {
             url={
               listData?.postDetails?.eventExternalLink
                 ? listData?.postDetails?.eventExternalLink
-                : `https://front-dev.yliway.com/${
+                : `${APP_URL}/${
                     listData?.postDetails?.postType === "courseShare"
                       ? `course-detail/${listData?.postDetails?.courseId}`
                       : `virtual-events/${listData?.postDetails?.virtualEventId}/false`

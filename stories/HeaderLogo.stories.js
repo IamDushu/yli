@@ -10,6 +10,6 @@ export default {
 
 export const Image = {
   args: {
-    logoUrl: "assets/images/brand-logo.svg",
+    logoUrl: "/assets/images/brand-logo.svg",
   },
 };

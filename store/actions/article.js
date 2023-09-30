@@ -7,6 +7,7 @@ import {
   DELETE_ARTICLE,
   GET_ARTICLE,
   POST_LIST,
+  GET_DELETED_ARTICLE,
 } from "api/routes.js";
 import { showMessageNotification } from "utils";
 import { SET_ARTICLE_DATA } from "./types";
@@ -63,7 +64,8 @@ export const articleListing = (data) => async (dispatch) => {
       true
     );
     if (response.status === 1) {
-      return dispatch({ type: types.SET_ARTICLE_LIST, payload: response.data });
+      dispatch({ type: types.SET_ARTICLE_LIST, payload: response.data });
+      return Promise.resolve(response?.data);
     }
     return Promise.reject(response);
   } catch (error) {
@@ -154,3 +156,24 @@ export const setPublishedArticles = (payload) => ({
   type: types.SET_PUBLISHED_ARTICLE_DATA,
   payload,
 });
+
+
+/****
+ * @author YLIWAY
+ * @purpose : to get all deleted articles
+ * @param {Object} payload {page,pagesize...}
+ * 
+ */
+export const getDeletedArticles = async (payload) => {
+  const response = await post(
+    { serviceURL: USER_API_URL },
+    GET_DELETED_ARTICLE,
+    false,
+    payload,
+    true
+  );
+  if (response.status === 1) {
+    return Promise.resolve(response.data);
+  } else return Promise.reject(response);
+};
+

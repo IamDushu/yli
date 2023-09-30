@@ -20,3 +20,16 @@ export const sampleAssistChips = {
     arrow:"assets/images/assist-chip-down-arrow.svg"
   },
 };
+
+export const postTypeAssistChips = {
+  args: {
+    backgroundColor: "white",
+    color: "#48464A",
+    border: "none",
+    iconName: "postPhoto",
+    paddingX: "10px",
+    label:"checking",
+    paddingY: "16px",
+    arrow:""
+  },
+};

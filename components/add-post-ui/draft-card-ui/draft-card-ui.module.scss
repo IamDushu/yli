@@ -1,0 +1,106 @@
+.draft-card-ui-container {
+    display: flex;
+    gap: 16px;
+
+    .created-on-block {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border-right: 1px solid #D1D5DB;
+        padding-right: 70px;
+
+        .created-on-value {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 15px;
+            letter-spacing: 0em;
+            color: #595D61;
+        }
+
+        .created-on-label {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 17px;
+            letter-spacing: 0.25px;
+            text-align: left;
+            color: #051F4E;
+
+        }
+    }
+
+    .article-subtitle-block {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-bottom: 5px;
+
+        .article-title {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16.94px;
+            letter-spacing: 0.25;
+            color: #051F4E;
+        }
+
+        .article-subtitle {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16.94px;
+            letter-spacing: 0.25;
+            color: #051F4E;
+        }
+    }
+
+    .article-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 95.14px;
+        height: 54px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #D1D5DB;
+    }
+
+    .right-block {
+        display: flex;
+        gap: 4px;
+
+        .right-article-footer {
+            display: flex;
+            gap: 12px;
+
+            .article-footer-action {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+                cursor: pointer;
+
+                .icon-style{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .edit-text {
+
+                    color: #6750A4;
+                    font-size: 12px;
+                    font-weight: 500;
+                    line-height: 16px;
+                    letter-spacing: 0.5px;
+
+
+                }
+
+                .delete-text {
+                    color: #7A757F;
+                    font-size: 12px;
+                    font-weight: 500;
+                    line-height: 16px;
+                    letter-spacing: 0.5px;
+                }
+            }
+        }
+    }
+}

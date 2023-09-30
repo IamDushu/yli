@@ -59,17 +59,15 @@ const connections = (state = initialState, action = {}) => {
                 ],
               },
       });
-    case types.GET_MY_CONNECTIONS_LIST:
+    case types.GET_MY_CONNECTIONS_LIST: {
       return Object.assign({}, state, {
         myConnectionList:
           action?.page == 1
             ? action.payload
-            : {
-                ...action.payload,
-                data: [...state.myConnectionList.data, ...action.payload.data],
-              },
+            : [...state.myConnectionList, ...action.payload],
         totalConnection: action.totalConnection,
       });
+    }
     case types.GET_PEOPLE_VIEWED_LIST:
       return Object.assign({}, state, {
         peopleViewedList: action.payload,

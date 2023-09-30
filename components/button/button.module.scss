@@ -1,16 +1,89 @@
-.yliway-icon-button-regular{
-  width: 40px;
-  height: 40px;
-}
-.yliway-icon-button-circular{
-  border-radius: 50%;
-}
-.yliway-icon-button{
-  background-color: #F7F2F7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import "../../public/assets/scss/helpers/variable";
+
+.yliway-button {
+  font-family: $font-family-base;
+  font-weight: $font-bold;
+  border: none;
+  border-radius: $rounded-pill;
   cursor: pointer;
-  box-shadow: 0px 1px 3px 1px #00000026;
-  box-shadow: 0px 1px 2px 0px #0000004D;
+  font-size: $font-size-sm;
+  padding: $space10 $space24;
+
+  &.yliway-button--primary {
+    color: $white;
+    background-color: $primary-violet;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border: none;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10 $space24;
+    text-transform: none;
+
+    &:disabled {
+      background-color: $haiti-disable-bgcolor;
+      color: $violet-dark-disable-textcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+
+  &.yliway-button--primary-outlined {
+    color: $primary-violet;
+    background-color: transparent;
+    border: $border-width $border-solid $silver;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10 $space24;
+    text-transform: none;
+
+    &:disabled {
+      background-color: transparent;
+      color: $violet-dark-disable-textcolor;
+      border: $border-width $border-solid $haiti-disable-bgcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+
+  &.yliway-button--textbutton {
+    color: $primary-violet;
+    background-color: transparent;
+    border: none;
+    font-family: $font-family-base;
+    font-weight: $font-bold;
+    border-radius: $rounded-pill;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    padding: $space10 $space24;
+    text-transform: none;
+
+    &:disabled {
+      color: $violet-dark-disable-textcolor;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+
+  &.yliway-button-extra-small {
+    font-size: $font-size-11 !important;
+    padding: 16px;
+    font-weight: $font-medium !important;
+    line-height: 16px !important;
+    letter-spacing: 0.5px !important;
+  }
+  &.yliway-button-small {
+    font-size: $font-size-sm;
+    padding: $space10 $space16;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+  }
+  &.yliway-button-large {
+    font-size: $font-size-base;
+  }
 }

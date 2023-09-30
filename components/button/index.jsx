@@ -1,65 +1,72 @@
 import React from "react";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import buttonStyles from "./button.module.scss";
 
-/**
- * Primary UI component for user interaction
- */
-export const Button = ({
+export const YliwayButton = ({
   primary,
-  backgroundColor,
+  textbutton,
+  primaryOutlined,
+  disabled,
   size,
+  fontWeight,
   label,
   handleClick,
+  style: _style,
 }) => {
-  const mode = primary
-    ? buttonStyles["yliway-button-primary"]
-    : buttonStyles["yliway-button-secondary"];
+  let mode;
 
   const style = {
-    backgroundColor,
+    ...(_style || {}),
+    textTransform: "none",
   };
+  if (fontWeight) style.fontWeight = fontWeight;
+  if (primary) {
+    mode = buttonStyles["yliway-button--primary"];
+  } else if (textbutton) {
+    mode = buttonStyles["yliway-button--textbutton"];
+  } else if (primaryOutlined) {
+    mode = buttonStyles["yliway-button--primary-outlined"];
+  } else {
+  }
 
   return (
-    <button
-      type="button"
-      className={[
-        buttonStyles["yliway-button"],
-        buttonStyles[`yliway-button-${size}`],
-        mode,
-      ].join(" ")}
-      onClick={handleClick}
-      style={style}>
-      {label}
-    </button>
+    <>
+      <Button
+        type="button"
+        className={[
+          "yliway-button",
+          buttonStyles["yliway-button"],
+          buttonStyles[`yliway-button-${size}`],
+          mode,
+        ].join(" ")}
+        onClick={handleClick}
+        style={style}
+        disabled={disabled}
+      >
+        {label}
+      </Button>
+    </>
   );
 };
 
-Button.propTypes = {
+YliwayButton.propTypes = {
+  // primary: PropTypes.bool,
   /**
-   * Is this the principal call to action on the page?
    */
-  primary: PropTypes.bool,
-  /**
-   * What background color to use
-   */
+  disabled: PropTypes.bool,
+
   backgroundColor: PropTypes.string,
-  /**
-   * How large should the button be?
-   */
-  size: PropTypes.string,
-  /**
-   * Button contents
-   */
+
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+
   label: PropTypes.string.isRequired,
-  /**
-   * Optional click handler
-   */
+
   handleClick: PropTypes.func,
 };
 
-Button.defaultProps = {
-  primary: false,
-  // size: "common",
+YliwayButton.defaultProps = {
   handleClick: PropTypes.func,
+  disabled: false,
+  size: "medium",
 };

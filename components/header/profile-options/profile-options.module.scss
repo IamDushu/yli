@@ -1,0 +1,20 @@
+@import '../../../public/assets/scss/helpers/variable';
+
+.yliway-profile-dropdown-box {
+  .yliway-profile-dropdown-list {
+    box-shadow: $dropdown-v4-box-shadow;
+    padding: 0;
+
+    li {
+      border-bottom: $border-width solid $border-v4-color;
+      &:last-child {
+        border-bottom: none;
+      }
+      .yliway-list-item-text {
+        span {
+          font-size: $font-size-sm;
+        }
+      }
+    }
+  }
+}

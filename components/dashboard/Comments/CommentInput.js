@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { onImageError } from "utils";
+import React, { useRef } from "react";
+import Button from "@mui/material/Button";
 import { useTranslation } from "react-i18next";
 import Picker from "@emoji-mart/react";
-import { Mention, MentionsInput } from "react-mentions";
 import { tagFunctionality, tagSearch, uploadPostImage } from "store/actions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import reactMentionsStyle from "../../modal/add-your-post/react-mention-style";
-
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import YliwayMention from "components/yliway-mention";
 const CommentInput = ({
   currentUserInfo,
   startComments,
@@ -27,10 +28,10 @@ const CommentInput = ({
   setCommentImage,
   isEditCmnts,
 }) => {
+  const inputFileRef = useRef();
   const router = useRouter();
   const [lang] = useTranslation("language");
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
 
   let postDescription = startComments;
   if (postDescription.includes("#")) {
@@ -87,176 +88,165 @@ const CommentInput = ({
       setCommentImage(res?.fileUrl);
     }
   };
+
   /******************* 
   @purpose : Rander HTML/ React Components
   @Author : INIC
   ******************/
   return (
-    <div className="d-flex my-3  px-2">
-      <div
-        className="mr-2 rounded-pill overflow-hidden flex-shrink-0 border border-geyser w-h-40"
-        onClick={() => router.push(`/profile/${currentUserInfo.profileId}`)}
+    <Stack direction={"row"} my={2} px={3} gap={2}>
+      <Avatar
+        sx={{ width: 56, height: 56 }}
+        src={currentUserInfo.profilePicURL || ""}
       >
-        <picture onContextMenu={(e) => e.preventDefault()}>
-          <source srcSet={currentUserInfo.profilePicURL} type="image/jpg" />
-          <img
-            src={currentUserInfo.profilePicURL || ""}
-            onError={(e) => {
-              onImageError(
-                e,
-                "profile",
-                `${currentUserInfo.firstName} ${currentUserInfo.lastName}`
+        {currentUserInfo.firstName} {currentUserInfo.lastName}
+      </Avatar>
+
+      <Box width={"100%"} position={"relative"}>
+        <YliwayMention
+          multiline
+          allowSpaceInQuery={true}
+          inputRef={commentRef}
+          spellCheck="false"
+          placeholder={lang("DASHBOARD.POSTS.COMMENT.INPUT_PLACEHOLDER")}
+          value={postDescription}
+          onChange={(event, newValue, newPlainTextValue, mentions) => {
+            if (postDescription.includes("#")) {
+              setTags(
+                mentions?.map((mention) => mention?.id?.replace("#", ""))
               );
-            }}
-            width="40"
-            height="40"
-            className="img-fluid h-40 "
-          />
-        </picture>
-      </div>
-      <div className="w-100">
-        <Form.Group controlId="" className="mb-0">
-          <div className="position-relative comment-post-box">
-            <MentionsInput
-              allowSpaceInQuery={true}
-              className="py-2 px-12 font-14 comment-post input-shadow form-control h1-magic  bg-paper-white rounded-8 comment-input"
-              inputRef={commentRef}
-              style={reactMentionsStyle}
-              spellCheck="false"
-              placeholder={lang("DASHBOARD.POSTS.COMMENT.INPUT_PLACEHOLDER")}
-              value={postDescription}
-              onChange={(event, newValue, newPlainTextValue, mentions) => {
-                if (postDescription.includes("#")) {
-                  setTags(
-                    mentions?.map((mention) => mention?.id?.replace("#", ""))
-                  );
-                } else {
-                  setMentions(mentions?.map((mention) => mention?.id));
-                }
+            } else {
+              setMentions(mentions?.map((mention) => mention?.id));
+            }
 
-                handleMakeComments(event);
-              }}
-            >
-              <Mention
-                trigger="@"
-                data={fetchTagUsers}
-                markup="$$$____id__~~~____display__$$$~~~"
-                style={{
-                  backgroundColor: "#daf4fa",
-                }}
-                renderSuggestion={(suggestion) => (
-                  <div className="d-flex mt-2">
-                    <img
-                      className="user-profile-pic rounded-pill "
-                      src={
-                        loaded
-                          ? suggestion.display.split("~+~")[1]
-                          : "/assets/images/user-no-img.jpg"
-                      }
-                      onError={(e) =>
-                        onImageError(
-                          e,
-                          "profile",
-                          suggestion.display.split("~+~")[0]
-                        )
-                      }
-                      onLoad={() => {
-                        setLoaded(true);
-                      }}
-                      height={50}
-                      width={50}
-                    />
-                    <div className="d-flex pl-2 pt-3">
-                      {suggestion.display.split("~+~")[0]}
-                    </div>
-                  </div>
-                )}
-              />
-              <Mention
-                trigger="#"
-                data={fetchUsers}
-                markup="$$$$____id__~~~____display__$$$~~~"
-                style={{
-                  backgroundColor: "#daf4fa",
-                }}
-              />
-            </MentionsInput>
-
-            {commentImage !== null && commentImage?.length > 0 && (
-              <div className="uploaded-image-preview">
-                <div className="uploaded-img">
-                  <em
-                    className="bx custom-bx bx-x pointer close-icon"
-                    onClick={() => setCommentImage(null)}
-                  ></em>
-                  <img src={commentImage} className="img-fluid" />
-                </div>
-              </div>
-            )}
-            <div className="comment-emojy pointer">
-              <i
-                onClick={() => setAddEmoji(!addEmoji)}
-                className="bx bx-smile text-gray-darker"
-              ></i>
-              {commentImage === null && (
-                <label className="upload-image-comment">
-                  <input
-                    type="file"
-                    className="d-none"
-                    onChange={(e) => commentImageHandler(e)}
-                  />
-                  <em className="icon icon-gallery-gray-darker font-18 pl-2 pointer"></em>
-                </label>
-              )}
-            </div>
-            <div className="emoji-mart">
-              {addEmoji && (
-                <Picker
-                  onEmojiSelect={(e) => handleEmoji(e, commentRef)}
-                  onClickOutside={() => setAddEmoji(false)}
-                  theme="light"
-                  previewPosition="none"
-                />
-              )}
-            </div>
-
-            {error && (
-              <p className="text-right d-flex align-items-center mb-0">
-                {error.error && (
+            handleMakeComments(event);
+          }}
+          trigger="@"
+          data={fetchTagUsers}
+          helperText={
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <Typography
+                component={"span"}
+                color={"#79767A"}
+                fontSize={"11px"}
+                fontWeight={500}
+                lineHeight={"16px"}
+              >
+                {error.error ? (
                   <span className="text-danger font-14">
                     {`${lang("DASHBOARD.POSTS.COMMENT.MAX_CHAR_3000")} `}
                   </span>
+                ) : (
+                  "Press enter to post"
                 )}
-                <span
-                  className={
-                    error.length < 3000
-                      ? "text-muted ml-auto font-14"
-                      : error.length > 3000
-                        ? "text-danger ml-auto font-14"
-                        : "text-muted ml-auto font-14"
-                  }
+              </Typography>
+
+              <div>
+                <Typography
+                  component={"span"}
+                  color={"#79767A"}
+                  fontSize={"11px"}
+                  fontWeight={500}
+                  lineHeight={"16px"}
                 >
                   {error.length}/
-                </span>
-                <span className="text-success">3000</span>
-              </p>
-            )}
-            {(commentImage !== null && commentImage?.length > 0) ||
-              startComments?.length > 0 ? (
-              <Button
-                className="button-post mt-2 btn-sm btn-primary py-1 px-3"
-                onClick={handlePostComments}
-                disabled={isButtonDisabled || error.error}
-              >
-                {reply === true
-                  ? lang("DASHBOARD.POSTS.COMMENT.REPLY_COMMENT")
-                  : lang("DASHBOARD.POSTS.COMMENT.POST_COMMENT")}
-              </Button>
-            ) : null}
+                </Typography>
+                <Typography
+                  component={"span"}
+                  color={"#79767A"}
+                  fontSize={"11px"}
+                  fontWeight={500}
+                  lineHeight={"16px"}
+                >
+                  3000
+                </Typography>
+              </div>
+            </Stack>
+          }
+          markup="$$$____id__~~~____display__$$$~~~"
+          renderSuggestion={(suggestion) => (
+            <Stack direction={"row"} alignItems={"center"} gap={2}>
+              <Avatar
+                src={
+                  suggestion.display.split("~+~")[1] ||
+                  "/assets/images/user-no-img.jpg"
+                }
+                height={50}
+                width={50}
+              ></Avatar>
+              <Typography variant="body2">
+                {suggestion.display.split("~+~")[0]}
+              </Typography>
+            </Stack>
+          )}
+        />
+
+        {commentImage !== null && commentImage?.length > 0 && (
+          <div className="uploaded-image-preview">
+            <div className="uploaded-img">
+              <em
+                className="bx custom-bx bx-x pointer close-icon"
+                onClick={() => setCommentImage(null)}
+              ></em>
+              <img src={commentImage} className="img-fluid" />
+            </div>
           </div>
-        </Form.Group>
-      </div>
-    </div>
+        )}
+
+        <Stack
+          direction={"row"}
+          gap={0}
+          position={"absolute"}
+          right={16}
+          top={10}
+        >
+          <IconButton onClick={() => setAddEmoji(!addEmoji)}>
+            <AddReactionOutlinedIcon />
+          </IconButton>
+          {!commentImage && (
+            <>
+              <IconButton onClick={() => inputFileRef.current.click()}>
+                <AddPhotoAlternateOutlinedIcon />
+              </IconButton>
+
+              <input
+                ref={inputFileRef}
+                type="file"
+                hidden
+                onChange={(e) => commentImageHandler(e)}
+              />
+            </>
+          )}
+        </Stack>
+        <div className="emoji-mart">
+          {addEmoji && (
+            <Picker
+              onEmojiSelect={(e) => handleEmoji(e, commentRef)}
+              onClickOutside={() => setAddEmoji(false)}
+              theme="light"
+              previewPosition="none"
+            />
+          )}
+        </div>
+
+        {(commentImage !== null && commentImage?.length > 0) ||
+        startComments?.length > 0 ? (
+          <Stack direction={"row"} justifyContent={"flex-end"} mt={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ borderRadius: "100px" }}
+              onClick={handlePostComments}
+              disabled={isButtonDisabled || error.error}
+            >
+              {reply === true
+                ? lang("DASHBOARD.POSTS.COMMENT.REPLY_COMMENT")
+                : lang("DASHBOARD.POSTS.COMMENT.POST_COMMENT")}
+            </Button>
+          </Stack>
+        ) : null}
+      </Box>
+    </Stack>
   );
 };
 

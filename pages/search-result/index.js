@@ -3,14 +3,16 @@ import { Layout } from "@components/layout";
 import WithAuth from "components/with-auth/with-auth";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Container,
   Card,
-  Button,
-  Modal,
-  Form,
-  Row,
-  Col,
-} from "react-bootstrap";
+  CardContent,
+  Grid,
+  FormControl,
+  TextField,
+  InputAdornment,
+  Chip,
+  Stack,
+  Container,
+} from "@mui/material";
 import dynamic from "next/dynamic";
 import {
   sendConnectionRequest,
@@ -28,6 +30,9 @@ import { getSearchResults, saveSearchText } from "store/actions/search-result";
 import { useTranslation } from "react-i18next";
 import { postListing } from "store/actions";
 import { getFilters } from "../../utils/constant";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import SearchIcon from "@mui/icons-material/Search";
+import { SiteLinks } from "components/sidebar";
 
 //dynamic imports
 const People = dynamic(() => import("components/search-result/people"));
@@ -42,24 +47,6 @@ const LearningInstitute = dynamic(() =>
   import("components/search-result/learning-institute")
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
-const RecentAddedGM = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.RecentAddedGM)
-);
-const UpgradeYourProfile = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.UpgradeYourProfile)
-);
-const GrowthModal = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthModal)
-);
-const GrowthPartners = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.GrowthPartners)
-);
-const FollowedGroup = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.FollowedGroup)
-);
-const MostFollowedContents = dynamic(() =>
-  import("components/sidebar").then((mod) => mod.MostFollowedContents)
-);
 
 function SearchResult() {
   const [lang] = useTranslation("language");
@@ -219,9 +206,13 @@ function SearchResult() {
     if (e.target.checked) {
       list.push(e.target.value);
       setFilteredList(list);
+      setSelectedFilters(list);
+      setFilterList(filters);
     } else {
       let temp = list.filter((item) => item !== e.target.value);
       setFilteredList(temp);
+      setSelectedFilters(temp);
+      setFilterList(filters);
     }
     setFilter(e.target.value);
   };
@@ -235,6 +226,23 @@ function SearchResult() {
       setFilterList(filteredListData);
     } else {
       setFilterList(filters);
+    }
+  };
+
+  const getCount = (i) => {
+    if (i === "people") {
+      return searchData?.searchResults["users"]?.count;
+    }
+    if (i === "learning institute") {
+      return searchData?.searchResults["institute"]?.count;
+    }
+    if (i === "articles") {
+      return searchData?.searchResults["blogs"]?.count;
+    }
+    if (i === "posts") {
+      return searchData?.searchResults["posts"]?.total;
+    } else {
+      return searchData?.searchResults[i]?.count;
     }
   };
 
@@ -260,13 +268,96 @@ function SearchResult() {
   return (
     <Layout>
       <div className="inner-wrapper search-result-box inner-left-full-orsidebar">
-        <Container>
-          <div className="d-flex flex-xl-nowrap flex-wrap">
+        <Grid
+          container
+          maxWidth="1160px"
+          marginLeft={"auto"}
+          marginRight={"auto"}
+          paddingLeft={{ sm: 2, xs: 1 }}
+          paddingRight={{ sm: 2, xs: 1 }}
+        >
+          <Grid item md={3} xs={12} paddingRight={{ md: "10px", sm: 0 }}>
             {/* Left view */}
-            <div className="profile-left-bar">
-              {!searchResults && (
-                <div className="d-flex justify-content-end">
-                  <div
+            <Stack
+              direction="row"
+              spacing={1}
+              style={{ overflow: "scroll" }}
+              className="d-lg-none d-xl-none mb-3 px-2"
+            >
+              {filterList.map((item, i) => {
+                return <Chip label={item.name} />;
+              })}
+            </Stack>
+            <div
+              className={`profile-right-bar common-searchbar px-6 d-none d-xl-block d-lg-block ${
+                !searchResults ? "dimmed" : ""
+              }`}
+            >
+              <FormControl className="mb-0 w-100 bg-white">
+                <TextField
+                  type="text"
+                  placeholder={lang("COMMON.SEARCH")}
+                  onChange={(e) => handleSearchFilter(e)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  disabled={searchResults}
+                />
+              </FormControl>
+            </div>
+            {/* <PerfectScrollbar> */}
+            {filterList.length ? (
+              <ul className="list-unstyled model-listing-box">
+                {filterList.map((item, i) => {
+                  return (
+                    <li className="model-common-listing bg-white" key={i}>
+                      <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
+                        <div className=" d-flex justify-content-between align-items-center">
+                          <PermIdentityIcon />
+                          <div className="ml-2">
+                            <h5 className="text-body-14 mb-0">{item.name}</h5>
+                          </div>
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                          <span className="text-body-12 mr-2 mt-1">
+                            {getCount(item.name.toLowerCase()) || 0}
+                          </span>
+                          <label htmlFor={item.id} className="mb-3">
+                            <input
+                              type="checkbox"
+                              name="cssradio"
+                              id={item.id}
+                              value={item.name}
+                              checked={filteredList.includes(item.name)}
+                              onChange={(e) => {
+                                handleFilterChange(e);
+                              }}
+                              disabled={searchResults}
+                            />
+                            <span></span>
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="text-center mt-5 mb-5">
+                {lang("COMMON.NO_RESULT_FOUND")}
+              </div>
+            )}
+
+            <div className="footer-relative">
+              <SiteLinks />
+            </div>
+
+            {/* <div
                     className="bg-white border border-geyser font-weight-semibold rounded-8 font-12 px-2 py-12 d-inline-block text-gary mb-3"
                     onClick={() => setOpen(true)}
                   >
@@ -279,9 +370,11 @@ function SearchResult() {
                       {selectedFilters.length === 1 && selectedFilters}
                     </span>
                     <em className="icon icon-down-arrow text-charcoal-grey pl-3"></em>
-                  </div>
-                </div>
-              )}
+                  </div> */}
+          </Grid>
+          {/* right blog section */}
+          <Grid item md={9} xs={12} paddingLeft={{ md: "6px", sm: 0 }}>
+            <div className="profile-right-bar">
               <People
                 lang={lang}
                 selectedFilters={selectedFilters}
@@ -396,12 +489,12 @@ function SearchResult() {
                   <Card
                     className="mb-10"
                     infinite-scroll-component__outerdiv
-                    style={{ backgroundColor: "transparent", border: "none" }}
+                    // style={{ backgroundColor: "transparent", border: "none" }}
                   >
-                    <Card.Body
+                    <CardContent
                       className="px-0"
                       infinite-scroll-component__outerdiv
-                      style={{ backgroundColor: "transparent", border: "none" }}
+                      // style={{ backgroundColor: "transparent", border: "none" }}
                     >
                       <h3
                         className="h6 mb-0 px-3 py-2"
@@ -417,7 +510,7 @@ function SearchResult() {
                         getAllPost={getAllPost}
                         searchText={searchText}
                       />
-                    </Card.Body>
+                    </CardContent>
                   </Card>
                 )}
               {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.POSTS")) &&
@@ -426,132 +519,33 @@ function SearchResult() {
                 )}
               {searchResults && (
                 <Card>
-                  <Card.Body className="py-5">
-                    <Row>
-                      <Col md={8} lg={6} className="mx-auto text-center">
+                  <CardContent className="py-5">
+                    <Grid container>
+                      <Grid item md={8} lg={8} className="mx-auto">
+                        <div className="mb-2 font-weight-normal">
+                          <p className="font-22 mb-0">
+                            {lang("GLOBAL_SEARCH.NO_RESULT")}
+                            <span className="font-italic "> Abracadabra</span>
+                          </p>
+
+                          <p className="font-22">
+                            {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
+                          </p>
+                        </div>
+
                         <img
-                          src="/assets/images/no-permission-img.svg"
-                          alt=""
+                          src="/assets/images/no-result-new.svg"
+                          alt="No result found"
                           className="mb-5"
                         />
-                        <h4 className="mb-1 font-weight-bold font-18">
-                          {lang("GLOBAL_SEARCH.NO_RESULT")}
-                        </h4>
-                        <p className="mb-0 font-14 text-gray-darker">
-                          {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
-                        </p>
-                      </Col>
-                    </Row>
-                  </Card.Body>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
                 </Card>
               )}
-              <Modal
-                centered
-                show={open}
-                onHide={() => {
-                  closeModalHandler();
-                }}
-                contentLabel="Example Modal"
-                backdrop="static"
-                className="custom-modal-box"
-              >
-                <Modal.Header>
-                  <h2 className="h6 m-0 Heading">
-                    {lang("GLOBAL_SEARCH.FILTERS")}
-                  </h2>
-                  <button
-                    type="button"
-                    className="close mt-1"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    onClick={() => {
-                      closeModalHandler();
-                    }}
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="common-searchbar mb-3">
-                    <Form.Group
-                      controlId="formSearch"
-                      className="position-relative mb-0"
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder={lang("COMMON.SEARCH")}
-                        onChange={(e) => handleSearchFilter(e)}
-                      />
-                      <div className="search-inner-icon">
-                        <em className="bx bx-search"></em>
-                      </div>
-                    </Form.Group>
-                  </div>
-                  {/* <PerfectScrollbar> */}
-                  {filterList.length ? (
-                    <ul className="list-unstyled model-listing-box">
-                      {filterList.map((item, i) => {
-                        return (
-                          <li className="model-common-listing" key={i}>
-                            <div className="custom-checkbox checkbox-blue d-flex justify-content-between">
-                              <div>
-                                <h5 className="text-body-14 mb-0">
-                                  {item.name}
-                                </h5>
-                              </div>
-                              <label
-                                htmlFor={item.id}
-                                className="mb-0 mr-0 pr-0 ml-3"
-                              >
-                                <input
-                                  type="checkbox"
-                                  name="cssradio"
-                                  id={item.id}
-                                  value={item.name}
-                                  checked={filteredList.includes(item.name)}
-                                  onChange={(e) => handleFilterChange(e)}
-                                />
-                                <span></span>
-                              </label>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <div className="text-center mt-5 mb-5">
-                      {lang("COMMON.NO_RESULT_FOUND")}
-                    </div>
-                  )}
-                  {/* </PerfectScrollbar> */}
-                </Modal.Body>
-                <Modal.Footer className="rounded-b-16">
-                  <Button
-                    onClick={() => {
-                      closeModalHandler();
-                    }}
-                    className="m-0 btn btn-dark"
-                  >
-                    {lang("COMMON.CANCEL")}
-                  </Button>
-                  <Button onClick={applyFilter} className="m-0 px-5">
-                    {lang("COMMON.APPLY")}
-                  </Button>
-                </Modal.Footer>
-              </Modal>
             </div>
-
-            {/* right blog section */}
-            <div className="profile-right-bar">
-              <UpgradeYourProfile />
-              <GrowthModal />
-              <GrowthPartners />
-              <RecentAddedGM />
-              <FollowedGroup />
-              <MostFollowedContents />
-            </div>
-          </div>
-        </Container>
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   );

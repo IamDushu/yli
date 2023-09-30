@@ -10,6 +10,6 @@ export default {
 
 export const Image = {
   args: {
-    imageUrl: "assets/images/homepage/user-1.png",
+    imageUrl: "/assets/images/homepage/user-1.png",
   },
 };

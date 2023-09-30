@@ -14,6 +14,7 @@ import {
   PROFILE_CONTACT_INFO,
   setCookie,
   websiteTypeOptions,
+  showMessageNotification,
 } from "../../../utils";
 import { updateUserInfo } from "../../../store/actions";
 import { APP_URL, PUBLIC_PROFILE_URL } from "../../../config";
@@ -132,7 +133,7 @@ const ProfileSummaryForm = ({
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: () => PROFILE_CONTACT_INFO(lang),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       let newDOB = null;
       if (birthDay && birthMonth) {
         newDOB = moment()
@@ -142,7 +143,19 @@ const ProfileSummaryForm = ({
 
       values.dateOfBirth = newDOB;
 
-      dispatch(updateUserInfo(values, () => closePopupHandler()));
+      const res = await dispatch(
+        updateUserInfo(values, () => closePopupHandler())
+      );
+      if (res.status !== 1) {
+        showMessageNotification(
+          lang("USER_PROFILE_SUMMARY.TEXT.UPDATE_FAILURE")
+        );
+      } else {
+        showMessageNotification(
+          lang("USER_PROFILE_SUMMARY.TEXT.UPDATE_SUCCESS")
+        );
+      }
+
       let user = JSON.parse(getCookie("userInfo"));
       user["phone"] = data.phone;
       setCookie("userInfo", user);
@@ -359,8 +372,9 @@ const ProfileSummaryForm = ({
               <Col lg={4} sm={7}>
                 <Form.Group controlId="contactEditPhone">
                   <Form.Label>
-                    {/* {lang("USER_PROFILE_SUMMARY.TEXT.CONTACT_INFO_PHONE")} */}
-                    Alternate Phone No
+                    {lang(
+                      "USER_PROFILE_SUMMARY.TEXT.ALTERNATE_CONTACT_INFO_PHONE"
+                    )}
                   </Form.Label>
                   <PhoneInput2
                     className="react-phone-input"

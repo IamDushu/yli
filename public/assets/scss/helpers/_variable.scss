@@ -7,7 +7,7 @@ $assetPath: "/assets/images";
 $white: #ffffff;
 $black: #000000;
 $primary: #0f6bbf;
-$green-dark:#248E12;
+$green-dark: #248e12;
 $secondary: #051f4e;
 $success: #7ccf6e;
 $info: #0f6bbf;
@@ -20,8 +20,10 @@ $darkSecondary: #004f97;
 $secondary-purple: #a400ff;
 $secondary-purple-hover: darken($secondary-purple, 15%);
 $secondary-lighter: rgba($secondary-purple, 0.08);
+$secondary-blue: #001551;
 
 // custom colors
+$solitude:#f4f6fa;
 $paper-white: #eff0f6;
 $blue-grey: #67758f;
 $mist-blue: #687078;
@@ -31,6 +33,11 @@ $concord: #7b7b7b;
 $blue-zodiac: #1b2850;
 $butterfly-blue: #23a3ff;
 $artyclick-blue: #00bbf9;
+$silver: #7a757f;
+$haiti: #1d1b20;
+$haiti-disable-bgcolor: rgba($haiti, 0.12);
+$violet-dark: #1c1b1e;
+$violet-dark-disable-textcolor: rgba($violet-dark, 0.5);
 $geyser: #d6e1ec;
 // $navy: #03173c;
 $navy: #002333;
@@ -100,7 +107,7 @@ $indian-saffron: #ff9933;
 $scorpion-venom: #9dee1a;
 $wicked-green: #9cce4c;
 $greenery: #89af4b;
-$dark-blue: #051F4E;
+$dark-blue: #051f4e;
 
 $step-green: #6fcf97;
 
@@ -110,9 +117,85 @@ $gray: #77838f;
 $gray-light: #e5e5e5;
 $black2: #303439;
 
+// Primary
+$primary-violet-10: #23005c;
+$primary-violet-20: #381e72;
+$primary-violet-30: #4f378a;
+$primary-violet: #6750a4;
+$primary-violet-50: #8169bf;
+$primary-violet-60: #9b82db;
+$primary-violet-70: #b69df7;
+$primary-violet-80: #d0bcff;
+$primary-violet-90: #e9ddff;
+$primary-violet-95: #f6edff;
+$primary-violet-99: #fffbff;
+
+// Secondary
+$secondary-blue-10: #001551;
+$secondary-blue-20: #002780;
+$secondary-blue-30: #0039b3;
+$secondary-blue-40: #004dea;
+$secondary-blue-50: #3a6aff;
+$secondary-blue-60: #6889ff;
+$secondary-blue-70: #90a7ff;
+$secondary-blue-80: #b6c4ff;
+$secondary-blue-90: #dce1ff;
+$secondary-blue-95: #eff0ff;
+$secondary-blue-99: #fffbff;
+// Tertiary
+$tertiary-green-10: #171e00;
+$tertiary-green-20: #2a3400;
+$tertiary-green-30: #3e4c00;
+$tertiary-green-40: #536500;
+$tertiary-green-50: #698000;
+$tertiary-green-60: #809b02;
+$tertiary-green-70: #9ab729;
+$tertiary-green-80: #b5d344;
+$tertiary-green-90: #d1ef5e;
+$tertiary-green-95: #dffe6b;
+$tertiary-green-99: #fbffe0;
+
+// Error
+$error-red-10: #410002;
+$error-red-20: #690005;
+$error-red-30: #93000a;
+$error-red-40: #ba1a1a;
+$error-red-50: #de3730;
+$error-red-60: #ff5449;
+$error-red-70: #ff897d;
+$error-red-80: #ffb4ab;
+$error-red-90: #ffdad6;
+$error-red-95: #ffedea;
+$error-red-99: #fffbff;
+
+// Neutral
+$neutral-dark-10: #1c1b1e;
+$neutral-dark-20: #48464a;
+$neutral-dark-30: #48464a;
+$neutral-dark-40: #605d62;
+$neutral-dark-50: #79767a;
+$neutral-dark-60: #938f94;
+$neutral-dark-70: #aeaaae;
+$neutral-dark-80: #cac5ca;
+$neutral-dark-90: #e6e1e6;
+$neutral-dark-95: #f4eff4;
+$neutral-dark-99: #fffbff;
+
+// Neutral Variant
+$neutralvariant-dark-10: #1d1a22;
+$neutralvariant-dark-20: #322f37;
+$neutralvariant-dark-30: #49454e;
+$neutralvariant-dark-40: #615d66;
+$neutralvariant-dark-50: #7a757f;
+$neutralvariant-dark-60: #948f99;
+$neutralvariant-dark-70: #afa9b4;
+$neutralvariant-dark-80: #cac4cf;
+$neutralvariant-dark-90: #e7e0eb;
+$neutralvariant-dark-95: #f5eefa;
+$neutralvariant-dark-99: #fffbff;
 // Body
 // Settings for the `<body>` element.
-$body-bg: $paper-white;
+$body-bg: $solitude;
 $body-color: $secondary;
 
 // Links
@@ -130,6 +213,7 @@ $font-size-base: 1rem; // Assumes the browser default, typically `16px`
 $font-custom: 16;
 $font-size-lg: $font-size-base * 1.25; //20px
 $font-size-sm: $font-size-base * 0.875; //14px
+$font-size-11: 0.688rem; //11px
 $font-lighter: lighter;
 $font-light: 300;
 $font-regular: 400;
@@ -159,6 +243,8 @@ $border-width: 1px;
 $border-width-2: 2px;
 $border-width-3: 3px;
 $border-color: #6c757d;
+$border-v4-color: #cac4cf;
+$border-solid: solid;
 
 $border-radius: 0.25rem;
 $border-radius-lg: 0.3rem;
@@ -174,6 +260,8 @@ $box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
 $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
 $box-shadow-0: none;
 $modal-box-shadow: 0 0.5rem 1.5rem rgba($black, 0.08);
+
+$dropdown-v4-box-shadow: 0px 8px 12px 6px #00000026;
 
 $caret-width: 0.3em;
 $caret-vertical-align: $caret-width * 0.85;
@@ -263,6 +351,7 @@ $spacers: map-merge(
 );
 
 $space8: 0.5rem;
+$space10: 0.625rem;
 $space12: 0.75rem;
 $space16: 1rem;
 $space24: 1.5rem;

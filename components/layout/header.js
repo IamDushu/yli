@@ -1,29 +1,32 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { useRouter, withRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { slide as Menuu } from 'react-burger-menu';
-import { Container, Card } from '@mui/material';
-import { Form, FormControl, Button, Dropdown } from 'react-bootstrap';
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useRouter, withRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { slide as Menuu } from "react-burger-menu";
+import { Container, Avatar, Card, Link as MuiLink } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { Form, FormControl, Button, Dropdown } from "react-bootstrap";
 // import { FormControl, Dropdown, Button } from '@mui/base';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { Link } from '../../routes';
-import { HeaderProfile } from 'components/header/header-profile-section';
-import { Logo } from 'components/header/logo';
-import { HeaderLabel } from 'components/header/main-menu-label';
-import { SearchBar } from 'components/header/search-bar';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import SearchIcon from "@mui/icons-material/Search";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import { Link } from "../../routes";
+import { HeaderProfile } from "components/header/header-profile-section";
+import { Logo } from "components/header/logo";
+import { HeaderLabel } from "components/header/main-menu-label";
+import { SearchBar } from "components/header/search-bar";
 
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import {
   toggleModals,
@@ -35,8 +38,8 @@ import {
   updateEvents,
   removeEvents,
   // setEntityDetails,
-} from '../../store/actions';
-import { getCommunication } from 'store/actions/communication';
+} from "../../store/actions";
+import { getCommunication } from "store/actions/communication";
 import {
   // getSearchResults,
   getRecentSearchList,
@@ -45,7 +48,7 @@ import {
   saveSearchText,
   getSearchedUsersList,
   _getSearchedUsersList,
-} from '../../store/actions/search-result';
+} from "../../store/actions/search-result";
 import {
   HOME,
   GROUPS,
@@ -54,7 +57,7 @@ import {
   MESSAGES,
   NOTIFICATIONS,
   EVENTS,
-} from '../../routes/urls'; // Link Urls
+} from "../../routes/urls"; // Link Urls
 import {
   getCookie,
   setCookie,
@@ -66,31 +69,31 @@ import {
   setSession,
   getSession,
   removeSession,
-} from 'utils';
+} from "utils";
 import {
   searchedUsersList,
   selectRecentSearchData,
   selectSearchText,
-} from 'store/selectors/searchResult';
-import socketIOClient from 'socket.io-client';
-import { SOCKET_END_POINT } from '../../config';
-import { getNotificationsList } from 'store/actions/notifications';
-import i18next from 'i18next';
-import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
-import { ChatContext } from 'context/ChatContext';
-import { useYchat } from 'hooks/useYchat';
-import dynamic from 'next/dynamic';
-const ChatList = dynamic(() => import('components/messagesV2/ChatList'));
+} from "store/selectors/searchResult";
+import socketIOClient from "socket.io-client";
+import { SOCKET_END_POINT } from "../../config";
+import { getNotificationsList } from "store/actions/notifications";
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+import Image from "next/image";
+import { ChatContext } from "context/ChatContext";
+import { useYchat } from "hooks/useYchat";
+import dynamic from "next/dynamic";
+const ChatList = dynamic(() => import("components/messagesV2/ChatList"));
 const CurrentChannel = dynamic(() =>
-  import('components/messages/CurrentChannel'),
+  import("components/messages/CurrentChannel")
 );
 const Header = (props) => {
-  const [lang] = useTranslation('language');
-  const globalSearchName = getSession('globalSearchName');
+  const [lang] = useTranslation("language");
+  const globalSearchName = getSession("globalSearchName");
   const dispatch = useDispatch();
   const router = useRouter();
-  const token = getCookie('token');
+  const token = getCookie("token");
   /***** MM Ychat ******/
   const { connectYchat } = useYchat();
   const { currentChannel, unreadMessageCount } = useContext(ChatContext);
@@ -98,7 +101,7 @@ const Header = (props) => {
   const user = useSelector(({ user }) => user);
   const entityData = useSelector((state) => state?.user?.userEntityDetails);
   const entityDetails =
-    entityData.length && typeof entityData === 'string'
+    entityData.length && typeof entityData === "string"
       ? JSON.parse(entityData)
       : entityData;
 
@@ -106,11 +109,11 @@ const Header = (props) => {
   const searchData = useSelector(selectRecentSearchData);
   const recentVisitorDetails = useMemo(
     () => searchData.filter((obj) => obj.recentVisitorDetails !== null),
-    [searchData],
+    [searchData]
   );
   const globalSearchText = useSelector(selectSearchText);
   const notificationData = useSelector(
-    ({ notifications }) => notifications.notifications,
+    ({ notifications }) => notifications.notifications
   );
   const searchedUserList = useSelector(searchedUsersList);
   useEffect(() => {
@@ -121,18 +124,18 @@ const Header = (props) => {
         getPendingConnectionsList({
           page: 1,
           pagesize: 8,
-          search: '',
-        }),
+          search: "",
+        })
       );
       dispatch(
         getNotificationsList({
           isBadgeClicked:
-            props.router.pathname === '/notifications/notifications'
+            props.router.pathname === "/notifications/notifications"
               ? true
               : false,
           page: 1,
           pagesize: 20,
-        }),
+        })
       );
       connectYchat();
     }
@@ -156,7 +159,7 @@ const Header = (props) => {
 ******************/
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [searchList, setSearchList] = useState([]);
 
   const [close, setClose] = useState(true);
@@ -169,7 +172,7 @@ const Header = (props) => {
 @Author : INIC
 ******************/
   let userData = user?.userInfo || {};
-  if (user?.userInfo && typeof user.userInfo === 'string')
+  if (user?.userInfo && typeof user.userInfo === "string")
     userData = JSON.parse(user.userInfo);
 
   /******************** 
@@ -198,7 +201,7 @@ const Header = (props) => {
       dispatch(setSocketDetails(socket));
 
       socket.on(SOCKET_EVENTS.ONLINE_USER_SAVED, (data) => {
-        console.log(data, 'from socket onlineUserSaved');
+        console.log(data, "from socket onlineUserSaved");
       });
 
       socket.emit(SOCKET_EVENTS.NEW_USER, data);
@@ -214,20 +217,20 @@ const Header = (props) => {
           getNotificationsList({
             page: 1,
             pagesize: 20,
-          }),
+          })
         );
         if (
-          data.type !== 'Peer Producer' &&
-          data.type !== 'Admin Peer Producer'
+          data.type !== "Peer Producer" &&
+          data.type !== "Admin Peer Producer"
         ) {
           showToast({ message: data?.message });
         }
 
         if (data.notificationData && data.notificationData.mType) {
-          if (data.notificationData.mType == 'calendarEventUpdate') {
+          if (data.notificationData.mType == "calendarEventUpdate") {
             const event = JSON.parse(data.notificationData.event);
             dispatch(updateEvents(event));
-          } else if (data.notificationData.mType == 'calendarEventDelete') {
+          } else if (data.notificationData.mType == "calendarEventDelete") {
             dispatch(removeEvents(data.notificationData.eventId));
           }
         }
@@ -259,13 +262,13 @@ const Header = (props) => {
     }
 
     if (
-      userData?.['otherSettings'] !== undefined &&
-      userData?.['otherSettings'] !== null &&
-      userData?.['otherSettings']['language'] !== undefined
+      userData?.["otherSettings"] !== undefined &&
+      userData?.["otherSettings"] !== null &&
+      userData?.["otherSettings"]["language"] !== undefined
     ) {
-      changeLanguage(userData['otherSettings']['language']);
+      changeLanguage(userData["otherSettings"]["language"]);
     }
-  }, [userData]);
+  }, [userData?.id, userData?.otherSettings?.language]);
 
   /******************* 
   @purpose : Used to set preferred language
@@ -274,7 +277,7 @@ const Header = (props) => {
   ******************/
   const changeLanguage = async (lang) => {
     await i18next.changeLanguage(lang);
-    setCookie('language', lang);
+    setCookie("language", lang);
   };
 
   /******************** 
@@ -289,7 +292,7 @@ const Header = (props) => {
   }, [userData?.isDeleted, userData?.status]);
 
   useEffect(async () => {
-    let token = getCookie('token');
+    let token = getCookie("token");
     token && (await dispatch(getRecentSearchList()));
   }, []);
 
@@ -299,7 +302,7 @@ const Header = (props) => {
         page: 1,
         pagesize: 10,
         searchText: text,
-      }),
+      })
     );
   };
 
@@ -311,19 +314,19 @@ const Header = (props) => {
       searchText: text ? text : searchText,
     };
 
-    if (body.searchText !== '') {
+    if (body.searchText !== "") {
       dispatch(saveSearchText(body.searchText));
       // dispatch(getSearchResults(body));
-      router.push('/search-result');
+      router.push("/search-result");
     }
-    props.setShowSearchList('mega-search d-none');
+    props.setShowSearchList("mega-search d-none");
   };
 
   const clearRecentSearchResult = () => {
     dispatch(clearRecentSearchList(lang));
     dispatch(clearSearchList());
     setSearchList([]);
-    props.setShowSearchList('mega-search d-none');
+    props.setShowSearchList("mega-search d-none");
   };
 
   /******************* 
@@ -365,10 +368,10 @@ const Header = (props) => {
         item?.growthConnectionData?.isGrowthConnection &&
         profilePicShowData?.myGrowthConnections) ||
       (userData.role &&
-        ((userData.role.includes('Teacher') && profilePicShowData.teachers) ||
-          (userData.role.includes('Trainer') && profilePicShowData.trainer) ||
-          (userData.role.includes('Coach') && profilePicShowData.coach) ||
-          (userData.role.includes('Host') && profilePicShowData.hosts)))
+        ((userData.role.includes("Teacher") && profilePicShowData.teachers) ||
+          (userData.role.includes("Trainer") && profilePicShowData.trainer) ||
+          (userData.role.includes("Coach") && profilePicShowData.coach) ||
+          (userData.role.includes("Host") && profilePicShowData.hosts)))
     ) {
       return true;
     }
@@ -378,23 +381,23 @@ const Header = (props) => {
   @Author : YLIWAY
   *************************************/
   useEffect(() => {
-    if (globalSearchName && router.pathname === '/search-result') {
+    if (globalSearchName && router.pathname === "/search-result") {
       setSearchText(globalSearchName);
-    } else if (router.pathname !== '/search-result') {
-      removeSession('globalSearchName');
-      setSearchText('');
+    } else if (router.pathname !== "/search-result") {
+      removeSession("globalSearchName");
+      setSearchText("");
     }
   }, [globalSearchName, router]);
   useEffect(() => {
-    if (router.pathname === '/search-result' && globalSearchText) {
-      setSession('globalSearchName', globalSearchText);
+    if (router.pathname === "/search-result" && globalSearchText) {
+      setSession("globalSearchName", globalSearchText);
     } else if (
-      router.pathname === '/search-result' &&
-      router.asPath.startsWith('/search-result#')
+      router.pathname === "/search-result" &&
+      router.asPath.startsWith("/search-result#")
     ) {
       setSession(
-        'globalSearchName',
-        router.asPath.replace('/search-result', ''),
+        "globalSearchName",
+        router.asPath.replace("/search-result", "")
       );
     }
   }, [globalSearchText, router.pathname]);
@@ -415,20 +418,27 @@ const Header = (props) => {
 
   return (
     <header>
-      <Container>
+      <Grid
+        container
+        maxWidth="1160px"
+        marginLeft={"auto"}
+        marginRight={"auto"}
+        paddingLeft={{ md: 2, xs: 1 }}
+        paddingRight={{ md: 2, xs: 1 }}
+      >
         <div
           className={
             isLoggedIn
-              ? 'd-flex justify-content-between'
-              : 'd-flex justify-content-between signup-option'
+              ? "d-flex justify-content-between w-100"
+              : "d-flex justify-content-between w-100 signup-option"
           }
         >
           {/* signup-option this class add condition base when user not logged */}
-          <div className='header-left-wrap d-flex justify-content-between align-items-sm-center flex-shrink-0'>
-            <div className='header-logo'>
+          <div className="header-left-wrap d-flex justify-content-between align-items-sm-center flex-shrink-0">
+            <div className="header-logo">
               <Link route={HOME}>
-                <a role='button' className='navbar-brand'>
-                  <Logo logoUrl={'assets/images/brand-logo.svg'} />
+                <a role="button" className="navbar-brand">
+                  <Logo logoUrl={"/assets/images/brand-logo.svg"} />
                 </a>
               </Link>
             </div>
@@ -440,7 +450,7 @@ const Header = (props) => {
                   /> */}
             <Form
               inline
-              className='d-sm-none searchbar-wrap'
+              className="d-sm-none searchbar-wrap"
               onSubmit={() => {
                 handleSubmit();
               }}
@@ -451,9 +461,10 @@ const Header = (props) => {
                     setSearchText(e);
                     getSearchedUserLists(e);
                   }}
+                  searchLogoUrl={"/assets/images/search-icon.svg"}
                   handleClick={() => setIsSearchActive(!isSearchActive)}
                   placeHolderText={lang(
-                    'HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER',
+                    "HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER"
                   )}
                 />
               )}
@@ -476,53 +487,53 @@ const Header = (props) => {
                 onClick={() => setIsSearchActive(!isSearchActive)}
               /> */}
               <div className={props.showSearchList}>
-                {searchText !== '' &&
+                {searchText !== "" &&
                   searchedUserList &&
                   searchedUserList.rows?.length > 0 && (
-                    <Card className='p-0'>
-                      <ul className='list-unstyled mb-0'>
+                    <Card className="p-0">
+                      <ul className="list-unstyled mb-0">
                         {searchedUserList.rows.map((itm, index) => (
                           <li
-                            className='py-2 px-3 d-flex align-items-center bg-hover'
+                            className="py-2 px-3 d-flex align-items-center bg-hover"
                             key={index}
                           >
-                            <em className='icon icon-search reaction-icons'></em>
+                            <em className="icon icon-search reaction-icons"></em>
                             <Link route={`/profile/${itm?.profileId}`}>
                               <a
-                                role='button'
-                                className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
+                                role="button"
+                                className="text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100"
                               >
-                                {itm.firstName}{' '}
+                                {itm.firstName}{" "}
                                 {lastNameHandler(itm, itm.lastNameVisibility)
                                   ? itm.lastName
-                                  : ''}{' '}
+                                  : ""}{" "}
                                 {itm?.role}
                                 <img
                                   src={
                                     imagePreferencHandler(
                                       itm,
-                                      itm.profilePicShowData,
+                                      itm.profilePicShowData
                                     )
-                                      ? itm.profilePicURL || ''
-                                      : ''
+                                      ? itm.profilePicURL || ""
+                                      : ""
                                   }
                                   onError={(e) => {
                                     onImageError(
                                       e,
-                                      'profile',
+                                      "profile",
                                       `${itm.firstName} ${
                                         lastNameHandler(
                                           itm,
-                                          itm.lastNameVisibility,
+                                          itm.lastNameVisibility
                                         )
                                           ? itm.lastName
-                                          : ''
-                                      }`,
+                                          : ""
+                                      }`
                                     );
                                   }}
-                                  width='32'
-                                  height='32'
-                                  className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
+                                  width="32"
+                                  height="32"
+                                  className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
                                   alt={itm.firstName}
                                 />
                               </a>
@@ -530,36 +541,36 @@ const Header = (props) => {
                           </li>
                         ))}
                       </ul>
-                      <div className='border-top border-geyser text-center px-3 py-2'>
+                      <div className="border-top border-geyser text-center px-3 py-2">
                         <a
-                          role='button'
-                          className='text-body-12 text-primary font-weight-semibold pointer'
+                          role="button"
+                          className="text-body-12 text-primary font-weight-semibold pointer"
                           onClick={(e) => handleSubmit(e, searchText)}
                         >
-                          {lang('HEADER.GLOBAL_SEARCH.SEE_ALL')}
+                          {lang("HEADER.GLOBAL_SEARCH.SEE_ALL")}
                         </a>
                       </div>
                     </Card>
                   )}
               </div>
               <div className={props.showSearchList}>
-                {searchText == '' && searchList && searchList.length > 0 && (
-                  <Card className='p-0'>
-                    <div className='border-bottom border-geyser d-flex align-items-center justify-content-between p-3'>
-                      <h4 className='text-body-16 mb-0'>
-                        {lang('HEADER.GLOBAL_SEARCH.RECENT_SEARCHES')}
-                      </h4>{' '}
+                {searchText == "" && searchList && searchList.length > 0 && (
+                  <Card className="p-0">
+                    <div className="border-bottom border-geyser d-flex align-items-center justify-content-between p-3">
+                      <h4 className="text-body-16 mb-0">
+                        {lang("HEADER.GLOBAL_SEARCH.RECENT_SEARCHES")}
+                      </h4>{" "}
                       <a
-                        role='button'
-                        className='text-body-12 text-secondary font-weight-semibold pointer'
+                        role="button"
+                        className="text-body-12 text-secondary font-weight-semibold pointer"
                         onClick={clearRecentSearchResult}
                       >
-                        {lang('HEADER.GLOBAL_SEARCH.CLEAR_ALL')}
+                        {lang("HEADER.GLOBAL_SEARCH.CLEAR_ALL")}
                       </a>
                     </div>
                     {recentVisitorDetails &&
                       recentVisitorDetails?.length > 0 && (
-                        <div className='header-search-box'>
+                        <div className="header-search-box">
                           {searchList &&
                             searchList.map((item, i) => {
                               return (
@@ -568,11 +579,11 @@ const Header = (props) => {
                                   0 && (
                                   <Card
                                     key={i}
-                                    className='flex-shrink-0 header-search-list cursor-pointer'
+                                    className="flex-shrink-0 header-search-list cursor-pointer"
                                     onClick={() =>
                                       window.open(
                                         `/profile/${item?.recentVisitorDetails?.profileId}`,
-                                        '_self',
+                                        "_self"
                                       )
                                     }
                                   >
@@ -583,24 +594,24 @@ const Header = (props) => {
                                             item?.recentVisitorDetails,
                                           item?.recentVisitorDetails &&
                                             item?.recentVisitorDetails
-                                              ?.profilePicShowData,
+                                              ?.profilePicShowData
                                         )
                                           ? item.recentVisitorDetails
-                                              ?.profilePicURL || ''
-                                          : ''
+                                              ?.profilePicURL || ""
+                                          : ""
                                       }
-                                      className='m-auto rounded-pill overflow-hidden w-h-40 img-fluid object-cover'
+                                      className="m-auto rounded-pill overflow-hidden w-h-40 img-fluid object-cover"
                                       alt={
                                         item.recentVisitorDetails.firstName +
-                                        ' ' +
+                                        " " +
                                         item.recentVisitorDetails.lastName
                                       }
-                                      width='40'
-                                      hegiht='40'
+                                      width="40"
+                                      hegiht="40"
                                       onError={(e) =>
                                         onImageError(
                                           e,
-                                          'profile',
+                                          "profile",
                                           `${
                                             item.recentVisitorDetails.firstName
                                           } ${
@@ -609,26 +620,26 @@ const Header = (props) => {
                                                 item.recentVisitorDetails,
                                               item.recentVisitorDetails &&
                                                 item.recentVisitorDetails
-                                                  .lastNameVisibility,
+                                                  .lastNameVisibility
                                             )
                                               ? item.recentVisitorDetails
                                                   .lastName
-                                              : ''
-                                          }`,
+                                              : ""
+                                          }`
                                         )
                                       }
                                     />
-                                    <h6 className='text-body-12 font-weight-semibold text-secondary mt-2 mb-0'>
-                                      {item.recentVisitorDetails.firstName}{' '}
+                                    <h6 className="text-body-12 font-weight-semibold text-secondary mt-2 mb-0">
+                                      {item.recentVisitorDetails.firstName}{" "}
                                       {lastNameHandler(
                                         item.recentVisitorDetails &&
                                           item.recentVisitorDetails,
                                         item.recentVisitorDetails &&
                                           item.recentVisitorDetails
-                                            .lastNameVisibility,
+                                            .lastNameVisibility
                                       )
                                         ? item.recentVisitorDetails.lastName
-                                        : ''}
+                                        : ""}
                                     </h6>
                                   </Card>
                                 )
@@ -636,28 +647,28 @@ const Header = (props) => {
                             })}
                         </div>
                       )}
-                    <ul className='list-unstyled mb-0'>
+                    <ul className="list-unstyled mb-0">
                       {searchList &&
                         searchList.map((item, i) => {
                           return (
                             item.recentVisitorDetails === null && (
                               <li
                                 key={i}
-                                className='py-12 px-3 d-flex bg-hover'
+                                className="py-12 px-3 d-flex bg-hover"
                                 onClick={(e) => {
                                   setSearchText(item.searchText);
                                   handleSubmit(e, item.searchText);
-                                  props.setShowSearchList('mega-search d-none');
+                                  props.setShowSearchList("mega-search d-none");
                                 }}
                               >
-                                <em className='icon icon-time reaction-icons'></em>
+                                <em className="icon icon-time reaction-icons"></em>
                                 <a
-                                  role='button'
+                                  role="button"
                                   // href="javascript(0);"
-                                  className='text-body-14 pl-2'
+                                  className="text-body-14 pl-2"
                                 >
                                   {item.searchText &&
-                                    item.searchText.trim() !== '' &&
+                                    item.searchText.trim() !== "" &&
                                     item.searchText}
                                 </a>
                               </li>
@@ -683,10 +694,10 @@ const Header = (props) => {
                   />
                   <em className="bx bx-search"></em> */}
             {userData?.showHeaderMenu !== false && (
-              <Form className='header-searchbar' onSubmit={handleSubmit}>
+              <Form className="header-searchbar" onSubmit={handleSubmit}>
                 <Form.Group
-                  controlId='formSearch'
-                  className='position-relative m-0'
+                  controlId="formSearch"
+                  className="position-relative m-0"
                 >
                   <SearchBar
                     handleInput={(e) => {
@@ -694,161 +705,181 @@ const Header = (props) => {
                       getSearchedUserLists(e);
                     }}
                     handleClick={() => setIsSearchActive(!isSearchActive)}
-                    searchLogoUrl={'assets/images/search-icon.svg'}
-                    onFocus={() => props.setShowSearchList('mega-search')}
-                    autoComplete='off'
+                    searchLogoUrl={"/assets/images/search-icon.svg"}
+                    onFocus={() => props.setShowSearchList("mega-search")}
+                    autoComplete="off"
                     placeHolderText={lang(
-                      'HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER',
+                      "HEADER.GLOBAL_SEARCH.INPUT_PLACEHOLDER"
                     )}
                   />
                   <div className={props.showSearchList}>
-                    {searchText !== '' && searchedUserList && (
-                      <Card className='p-0'>
-                        <ul className='list-unstyled mb-0'>
+                    {searchText !== "" && searchedUserList && (
+                      <Card className="p-0">
+                        <ul className="list-unstyled mb-0">
                           {[
                             ...(searchedUserList?.users?.rows || []),
                             ...(searchedUserList?.teacher?.rows || []),
                             ...(searchedUserList?.trainer?.rows || []),
                             ...(searchedUserList?.coach?.rows || []),
                             ...(searchedUserList?.host?.rows || []),
-                          ].map((itm, index) => (
-                            <li
-                              className='py-2 px-3 d-flex align-items-center bg-hover'
-                              key={itm?.id}
-                            >
-                              <em className='icon icon-search reaction-icons'></em>
-                              <Link route={`/profile/${itm?.profileId}`}>
-                                <a
-                                  role='button'
-                                  className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
+                          ].map(
+                            (itm, index) =>
+                              itm.firstName !== null && (
+                                <ListItem
+                                  className="py-2 px-3 d-flex align-items-center bg-hover"
+                                  key={index}
                                 >
-                                  {itm.firstName}{' '}
-                                  {lastNameHandler(itm, itm.lastNameVisibility)
-                                    ? itm.lastName
-                                    : ''}{' '}
-                                  {itm?.role}
-                                  <img
+                                  <ListItemIcon style={{ minWidth: 0 }}>
+                                    <SearchIcon className="icon icon-search reaction-icons" />
+                                  </ListItemIcon>
+                                  <MuiLink
+                                    href={`/profile/${itm?.profileId}`}
+                                    underline="none"
+                                  >
+                                    <ListItemText
+                                      primary={
+                                        <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                          {itm.firstName}{" "}
+                                          {lastNameHandler(
+                                            itm,
+                                            itm.lastNameVisibility
+                                          )
+                                            ? itm.lastName
+                                            : ""}{" "}
+                                          {itm?.role}
+                                        </div>
+                                      }
+                                    />
+                                  </MuiLink>
+                                  <Avatar
                                     src={
                                       imagePreferencHandler(
                                         itm,
-                                        itm.profilePicShowData,
+                                        itm.profilePicShowData
                                       )
-                                        ? itm.profilePicURL || ''
-                                        : ''
+                                        ? itm.profilePicURL || ""
+                                        : ""
                                     }
                                     onError={(e) => {
                                       onImageError(
                                         e,
-                                        'profile',
+                                        "profile",
                                         `${itm.firstName} ${
                                           lastNameHandler(
                                             itm,
-                                            itm.lastNameVisibility,
+                                            itm.lastNameVisibility
                                           )
                                             ? itm.lastName
-                                            : ''
-                                        }`,
+                                            : ""
+                                        }`
                                       );
                                     }}
-                                    width='32'
-                                    height='32'
-                                    className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
+                                    width="32"
+                                    height="32"
+                                    className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
                                     alt={itm.firstName}
                                   />
-                                </a>
-                              </Link>
-                            </li>
-                          ))}
+                                </ListItem>
+                              )
+                          )}
                           {searchedUserList?.institute?.rows?.length
                             ? searchedUserList?.institute?.rows?.map(
                                 (itm, index) => {
                                   return (
-                                    <li
-                                      className='py-2 px-3 d-flex align-items-center bg-hover'
+                                    <ListItem
+                                      className="py-2 px-3 d-flex align-items-center bg-hover"
                                       key={itm?.id}
                                     >
-                                      <em className='icon icon-search reaction-icons'></em>
-                                      <Link
-                                        route={`/profile/institute-profile?instituteId=${itm?.id}`}
+                                      <ListItemIcon style={{ minWidth: 0 }}>
+                                        <SearchIcon className="icon icon-search reaction-icons" />
+                                      </ListItemIcon>
+                                      <MuiLink
+                                        href={`/profile/institute-profile?instituteId=${itm?.id}`}
+                                        underline="none"
                                       >
-                                        <a
-                                          role='button'
-                                          className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
-                                        >
-                                          {itm.name} {itm?.orgType}
-                                          <img
-                                            src={
-                                              itm.logo === null
-                                                ? createImageFromInitials(
-                                                    500,
-                                                    itm.name,
-                                                    '#FFFFFF',
-                                                  )
-                                                : itm.logo
-                                            }
-                                            onError={(e) => {
-                                              onImageError(
-                                                e,
-                                                'instituteprofile',
+                                        <ListItemText
+                                          primary={
+                                            <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                              {itm.name} {itm?.orgType}
+                                            </div>
+                                          }
+                                        />
+                                      </MuiLink>
+                                      <Avatar
+                                        src={
+                                          itm.logo === null
+                                            ? createImageFromInitials(
+                                                500,
                                                 itm.name,
-                                              );
-                                            }}
-                                            width='32'
-                                            height='32'
-                                            className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
-                                            alt={itm.name}
-                                          />
-                                        </a>
-                                      </Link>
-                                    </li>
+                                                "#FFFFFF"
+                                              )
+                                            : itm.logo
+                                        }
+                                        onError={(e) => {
+                                          onImageError(
+                                            e,
+                                            "instituteprofile",
+                                            itm.name
+                                          );
+                                        }}
+                                        width="32"
+                                        height="32"
+                                        className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
+                                        alt={itm.name}
+                                      />
+                                    </ListItem>
                                   );
-                                },
+                                }
                               )
                             : null}
                           {searchedUserList?.companies?.rows?.length
                             ? searchedUserList?.companies?.rows?.map(
                                 (itm, index) => {
                                   return (
-                                    <li
-                                      className='py-2 px-3 d-flex align-items-center bg-hover'
+                                    <ListItem
+                                      className="py-2 px-3 d-flex align-items-center bg-hover"
                                       key={itm?.id}
                                     >
-                                      <em className='icon icon-search reaction-icons'></em>
-                                      <Link
-                                        route={`/profile/company-profile?companyId=${itm?.id}`}
+                                      <ListItemIcon style={{ minWidth: 0 }}>
+                                        <SearchIcon className="icon icon-search reaction-icons" />
+                                      </ListItemIcon>
+                                      <MuiLink
+                                        href={`/profile/company-profile?companyId=${itm?.id}`}
+                                        underline="none"
                                       >
-                                        <a
-                                          role='button'
-                                          className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
-                                        >
-                                          {itm.companyName} {itm?.industry}
-                                          <img
-                                            src={
-                                              itm.logo === null
-                                                ? createImageFromInitials(
-                                                    500,
-                                                    itm.companyName,
-                                                    '#FFFFFF',
-                                                  )
-                                                : itm.logo
-                                            }
-                                            onError={(e) => {
-                                              onImageError(
-                                                e,
-                                                'companies',
+                                        <ListItemText
+                                          primary={
+                                            <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                              {itm.companyName} {itm?.industry}
+                                            </div>
+                                          }
+                                        />
+                                      </MuiLink>
+                                      <Avatar
+                                        src={
+                                          itm.logo === null
+                                            ? createImageFromInitials(
+                                                500,
                                                 itm.companyName,
-                                              );
-                                            }}
-                                            width='32'
-                                            height='32'
-                                            className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
-                                            alt={itm.companyName}
-                                          />
-                                        </a>
-                                      </Link>
-                                    </li>
+                                                "#FFFFFF"
+                                              )
+                                            : itm.logo
+                                        }
+                                        onError={(e) => {
+                                          onImageError(
+                                            e,
+                                            "companies",
+                                            itm.companyName
+                                          );
+                                        }}
+                                        width="32"
+                                        height="32"
+                                        className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
+                                        alt={itm.name}
+                                      />
+                                    </ListItem>
                                   );
-                                },
+                                }
                               )
                             : null}
 
@@ -856,44 +887,46 @@ const Header = (props) => {
                             ? searchedUserList?.courses?.rows?.map(
                                 (itm, index) => {
                                   return (
-                                    <li
-                                      className='py-2 px-3 d-flex align-items-center bg-hover'
+                                    <ListItem
+                                      className="py-2 px-3 d-flex align-items-center bg-hover"
                                       key={itm?.id}
                                     >
-                                      <em className='icon icon-search reaction-icons'></em>
-                                      <Link route={`/course-detail/${itm?.id}`}>
-                                        <a
-                                          role='button'
-                                          className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
-                                        >
-                                          {itm.title} {itm?.courseType}
-                                          <img
-                                            src={
-                                              itm.imageURL === null
-                                                ? createImageFromInitials(
-                                                    500,
-                                                    itm.title,
-                                                    '#FFFFFF',
-                                                  )
-                                                : itm.imageURL
-                                            }
-                                            onError={(e) => {
-                                              onImageError(
-                                                e,
-                                                'courses',
-                                                itm.name,
-                                              );
-                                            }}
-                                            width='32'
-                                            height='32'
-                                            className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
-                                            alt={itm.title}
-                                          />
-                                        </a>
-                                      </Link>
-                                    </li>
+                                      <ListItemIcon style={{ minWidth: 0 }}>
+                                        <SearchIcon className="icon icon-search reaction-icons" />
+                                      </ListItemIcon>
+                                      <MuiLink
+                                        href={`/course-detail/${itm?.id}`}
+                                        underline="none"
+                                      >
+                                        <ListItemText
+                                          primary={
+                                            <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                              {itm.title} {itm?.courseType}
+                                            </div>
+                                          }
+                                        />
+                                      </MuiLink>
+                                      <Avatar
+                                        src={
+                                          itm.imageURL === null
+                                            ? createImageFromInitials(
+                                                500,
+                                                itm.title,
+                                                "#FFFFFF"
+                                              )
+                                            : itm.imageURL
+                                        }
+                                        onError={(e) => {
+                                          onImageError(e, "courses", itm.name);
+                                        }}
+                                        width="32"
+                                        height="32"
+                                        className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
+                                        alt={itm.name}
+                                      />
+                                    </ListItem>
                                   );
-                                },
+                                }
                               )
                             : null}
 
@@ -901,83 +934,87 @@ const Header = (props) => {
                             ? searchedUserList?.groups?.rows?.map(
                                 (itm, index) => {
                                   return (
-                                    <li
-                                      className='py-2 px-3 d-flex align-items-center bg-hover'
+                                    <ListItem
+                                      className="py-2 px-3 d-flex align-items-center bg-hover"
                                       key={itm?.id}
                                     >
-                                      <em className='icon icon-search reaction-icons'></em>
-                                      <Link
-                                        route={`/groups/${encodeURIComponent(
-                                          itm.name,
+                                      <ListItemIcon style={{ minWidth: 0 }}>
+                                        <SearchIcon className="icon icon-search reaction-icons" />
+                                      </ListItemIcon>
+                                      <MuiLink
+                                        href={`/groups/${encodeURIComponent(
+                                          itm.name
                                         )}/${itm?.id}`}
+                                        underline="none"
                                       >
-                                        <a
-                                          role='button'
-                                          className='text-body-14 pl-2 d-flex jusitify-content-center align-items-center w-100'
-                                        >
-                                          {itm.name}{' '}
-                                          <img
-                                            src={
-                                              itm.imageURL === null
-                                                ? createImageFromInitials(
-                                                    500,
-                                                    itm.name,
-                                                    '#FFFFFF',
-                                                  )
-                                                : itm.imageURL
-                                            }
-                                            onError={(e) => {
-                                              onImageError(
-                                                e,
-                                                'instituteprofile',
+                                        <ListItemText
+                                          primary={
+                                            <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                              {itm.name}{" "}
+                                            </div>
+                                          }
+                                        />
+                                      </MuiLink>
+                                      <Avatar
+                                        src={
+                                          itm.imageURL === null
+                                            ? createImageFromInitials(
+                                                500,
                                                 itm.name,
-                                              );
-                                            }}
-                                            width='32'
-                                            height='32'
-                                            className='border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover'
-                                            alt={itm.name}
-                                          />
-                                        </a>
-                                      </Link>
-                                    </li>
+                                                "#FFFFFF"
+                                              )
+                                            : itm.imageURL
+                                        }
+                                        onError={(e) => {
+                                          onImageError(
+                                            e,
+                                            "instituteprofile",
+                                            itm.name
+                                          );
+                                        }}
+                                        width="32"
+                                        height="32"
+                                        className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
+                                        alt={itm.name}
+                                      />
+                                    </ListItem>
                                   );
-                                },
+                                }
                               )
                             : null}
                         </ul>
-                        <div className='border-top border-geyser text-center px-3 py-2'>
+                        <div className="border-top border-geyser text-center px-3 py-2">
                           <a
-                            role='button'
-                            className='text-body-12 text-primary font-weight-semibold pointer'
+                            role="button"
+                            className="text-body-12 text-primary font-weight-semibold pointer"
                             onClick={(e) => handleSubmit(e, searchText)}
                           >
-                            {lang('HEADER.GLOBAL_SEARCH.SEE_ALL')}
+                            {lang("HEADER.GLOBAL_SEARCH.SEE_ALL")}
                           </a>
                         </div>
                       </Card>
                     )}
                   </div>
                   <div className={props.showSearchList}>
-                    {searchText == '' &&
+                    {searchText == "" &&
                       searchList &&
                       searchList.length > 0 && (
-                        <Card className='p-0'>
-                          <div className='border-bottom border-geyser d-flex align-items-center justify-content-between p-3'>
-                            <h4 className='text-body-16 mb-0'>
-                              {lang('HEADER.GLOBAL_SEARCH.RECENT_SEARCHES')}
-                            </h4>{' '}
+                        <Card className="p-0">
+                          <div className=" border-geyser d-flex align-items-center justify-content-between p-3">
+                            <h4 className="text-body-16 mb-0">
+                              {lang("HEADER.GLOBAL_SEARCH.RECENT_SEARCHES")}
+                            </h4>{" "}
                             <a
-                              role='button'
-                              className='text-body-12 text-secondary font-weight-semibold pointer'
+                              role="button"
+                              className="text-body-12 text-secondary font-weight-semibold pointer"
                               onClick={clearRecentSearchResult}
                             >
-                              {lang('HEADER.GLOBAL_SEARCH.CLEAR_ALL')}
+                              {lang("HEADER.GLOBAL_SEARCH.CLEAR_ALL")}
                             </a>
                           </div>
                           {recentVisitorDetails &&
                             recentVisitorDetails.length > 0 && (
-                              <div className='header-search-box'>
+                              <div className="header-search-box">
                                 {searchList &&
                                   searchList.length &&
                                   searchList.map((item, i) => {
@@ -987,11 +1024,11 @@ const Header = (props) => {
                                         .length > 0 && (
                                         <Card
                                           key={i}
-                                          className='flex-shrink-0 header-search-list cursor-pointer'
+                                          className="flex-shrink-0 header-search-list cursor-pointer"
                                           onClick={() =>
                                             window.open(
                                               `/profile/${item?.recentVisitorDetails?.profileId}`,
-                                              '_self',
+                                              "_self"
                                             )
                                           }
                                         >
@@ -1002,25 +1039,25 @@ const Header = (props) => {
                                                   item?.recentVisitorDetails,
                                                 item?.recentVisitorDetails &&
                                                   item?.recentVisitorDetails
-                                                    ?.profilePicShowData,
+                                                    ?.profilePicShowData
                                               )
                                                 ? item.recentVisitorDetails
-                                                    ?.profilePicURL || ''
-                                                : ''
+                                                    ?.profilePicURL || ""
+                                                : ""
                                             }
-                                            className='m-auto rounded-pill overflow-hidden w-h-40 img-fluid object-cover'
+                                            className="m-auto rounded-pill overflow-hidden w-h-40 img-fluid object-cover"
                                             alt={
                                               item.recentVisitorDetails
                                                 .firstName +
-                                              ' ' +
+                                              " " +
                                               item.recentVisitorDetails.lastName
                                             }
-                                            width='40'
-                                            hegiht='40'
+                                            width="40"
+                                            hegiht="40"
                                             onError={(e) =>
                                               onImageError(
                                                 e,
-                                                'profile',
+                                                "profile",
                                                 `${
                                                   item.recentVisitorDetails
                                                     .firstName
@@ -1030,30 +1067,30 @@ const Header = (props) => {
                                                       item.recentVisitorDetails,
                                                     item.recentVisitorDetails &&
                                                       item.recentVisitorDetails
-                                                        .lastNameVisibility,
+                                                        .lastNameVisibility
                                                   )
                                                     ? item.recentVisitorDetails
                                                         .lastName
-                                                    : ''
-                                                }`,
+                                                    : ""
+                                                }`
                                               )
                                             }
                                           />
-                                          <h6 className='text-body-12 font-weight-semibold text-secondary mt-2 mb-0'>
+                                          <h6 className="text-body-12 font-weight-semibold text-secondary mt-3 mb-0">
                                             {
                                               item.recentVisitorDetails
                                                 .firstName
-                                            }{' '}
+                                            }{" "}
                                             {lastNameHandler(
                                               item.recentVisitorDetails &&
                                                 item.recentVisitorDetails,
                                               item.recentVisitorDetails &&
                                                 item.recentVisitorDetails
-                                                  .lastNameVisibility,
+                                                  .lastNameVisibility
                                             )
                                               ? item.recentVisitorDetails
                                                   .lastName
-                                              : ''}
+                                              : ""}
                                           </h6>
                                         </Card>
                                       )
@@ -1061,33 +1098,32 @@ const Header = (props) => {
                                   })}
                               </div>
                             )}
-                          <ul className='list-unstyled mb-0'>
+                          <ul className="list-unstyled mb-0">
                             {searchList &&
                               searchList.map((item, i) => {
                                 return (
                                   item.recentVisitorDetails === null && (
-                                    <li
+                                    <ListItem
                                       key={i}
-                                      className='py-12 px-3 d-flex bg-hover'
+                                      className="py-12 px-3 d-flex bg-hover"
                                       onClick={(e) => {
                                         setSearchText(item.searchText);
                                         handleSubmit(e, item.searchText);
                                         props.setShowSearchList(
-                                          'mega-search d-none',
+                                          "mega-search d-none"
                                         );
                                       }}
                                     >
-                                      <em className='icon icon-time reaction-icons'></em>
-                                      <a
-                                        role='button'
-                                        // href="javascript(0);"
-                                        className='text-body-14 pl-2'
-                                      >
-                                        {item.searchText &&
-                                          item.searchText.trim() !== '' &&
-                                          item.searchText}
-                                      </a>
-                                    </li>
+                                      <AccessTimeIcon className="reaction-icons" />
+                                      <ListItemText
+                                        className="text-body-14 pl-2"
+                                        primary={
+                                          item.searchText &&
+                                          item.searchText.trim() !== "" &&
+                                          item.searchText
+                                        }
+                                      />
+                                    </ListItem>
                                   )
                                 );
                               })}
@@ -1099,61 +1135,61 @@ const Header = (props) => {
               </Form>
             )}
           </div>
-          {router.pathname !== '/account/sign-up' && (
-            <div className='login-buttons d-none'>
+          {router.pathname !== "/account/sign-up" && (
+            <div className="login-buttons d-none">
               <Button
-                variant='outline-primary'
-                type='button'
-                className='font-14'
+                variant="outline-primary"
+                type="button"
+                className="font-14"
                 onClick={() => dispatch(toggleModals({ login: true }))}
               >
-                <span className='font-medium'>{lang('COMMON.SIGN_IN')}</span>
+                <span className="font-medium">{lang("COMMON.SIGN_IN")}</span>
               </Button>
               {showSignup && (
                 <Button
-                  variant='primary'
-                  type='button'
+                  variant="primary"
+                  type="button"
                   onClick={() => dispatch(toggleModals({ register: true }))}
-                  className='px-md-3 font-14 ml-3'
+                  className="px-md-3 font-14 ml-3"
                 >
                   {/* className="signup-btn" */}
-                  {lang('COMMON.SIGN_UP')}
+                  {lang("COMMON.SIGN_UP")}
                 </Button>
               )}
             </div>
           )}
-          {router.pathname !== '/account/sign-up' &&
+          {router.pathname !== "/account/sign-up" &&
           userData?.showHeaderMenu !== false ? (
             <Menuu
-              menuClassName={'header-menu'}
+              menuClassName={"header-menu"}
               customBurgerIcon={
                 <svg
-                  width='18px'
-                  height='14px'
-                  viewBox='0 0 18 14'
-                  version='1.1'
-                  xmlns='http://www.w3.org/2000/svg'
+                  width="18px"
+                  height="14px"
+                  viewBox="0 0 18 14"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <title>mobile-menu</title>
                   <desc>Created with Sketch.</desc>
                   <g
-                    id='Page-1'
-                    stroke='none'
-                    strokeWidth='1'
-                    fill='none'
-                    fillRule='evenodd'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="1"
+                    fill="none"
+                    fillRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <g
-                      id='mobile-menu'
-                      transform='translate(9.000000, 7.000000) scale(-1, 1) translate(-9.000000, -7.000000) translate(1.000000, 0.000000)'
-                      stroke='#a400ff'
-                      strokeWidth='2'
+                      id="mobile-menu"
+                      transform="translate(9.000000, 7.000000) scale(-1, 1) translate(-9.000000, -7.000000) translate(1.000000, 0.000000)"
+                      stroke="#a400ff"
+                      strokeWidth="2"
                     >
                       <path
-                        d='M0,1 L16,1 M0,7 L16,7 M0,13 L7,13'
-                        id='Shape'
+                        d="M0,1 L16,1 M0,7 L16,7 M0,13 L7,13"
+                        id="Shape"
                       ></path>
                     </g>
                   </g>
@@ -1162,25 +1198,25 @@ const Header = (props) => {
             >
               <Link route={DASHBOARD}>
                 <a
-                  role='button'
+                  role="button"
                   className={
                     props.router.pathname === DASHBOARD
-                      ? 'menu-item active'
-                      : 'menu-item'
+                      ? "menu-item active"
+                      : "menu-item"
                   }
                   onClick={() =>
-                    setCookie('postToken', postTokenUnix(new Date()))
+                    setCookie("postToken", postTokenUnix(new Date()))
                   }
-                  target={props?.isJoinRoom ? '_blank' : undefined}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
                 >
                   <HeaderLabel
-                    role='button'
-                    className={props.router.pathname === DASHBOARD && 'active'}
+                    role="button"
+                    className={props.router.pathname === DASHBOARD && "active"}
                     handleClick={() =>
-                      setCookie('postToken', postTokenUnix(new Date()))
+                      setCookie("postToken", postTokenUnix(new Date()))
                     }
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.HOME')}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.HOME")}
                   />
                 </a>
                 {/* <a
@@ -1201,24 +1237,24 @@ const Header = (props) => {
               </Link>
               <Link route={MY_CONNECTIONS}>
                 <a
-                  role='button'
+                  role="button"
                   className={
                     props.router.pathname === MY_CONNECTIONS
-                      ? 'menu-item active'
-                      : 'menu-item'
+                      ? "menu-item active"
+                      : "menu-item"
                   }
-                  target={props?.isJoinRoom ? '_blank' : undefined}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
                 >
                   <HeaderLabel
                     className={
-                      props.router.pathname === MY_CONNECTIONS && 'active'
+                      props.router.pathname === MY_CONNECTIONS && "active"
                     }
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.CONNECTIONS')}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.CONNECTIONS")}
                   />
                   {list && list?.total && (
-                    <span className='notif-icon-popup'>{list?.total}</span>
-                  )}{' '}
+                    <span className="notif-icon-popup">{list?.total}</span>
+                  )}{" "}
                 </a>
                 {/* <a
                   role="button"
@@ -1238,17 +1274,17 @@ const Header = (props) => {
               </Link>
               <Link route={EVENTS}>
                 <a
-                  role='button'
+                  role="button"
                   className={
                     props.router.pathname === EVENTS
-                      ? 'menu-item active'
-                      : 'menu-item'
+                      ? "menu-item active"
+                      : "menu-item"
                   }
                 >
                   <HeaderLabel
-                    className={props.router.pathname === EVENTS && 'active'}
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.EVENTS')}
+                    className={props.router.pathname === EVENTS && "active"}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.EVENTS")}
                   />
                 </a>
                 {/* <a
@@ -1264,47 +1300,47 @@ const Header = (props) => {
               </Link>
               <Link route={GROUPS}>
                 <a
-                  role='button'
+                  role="button"
                   className={
-                    props.router.pathname === '/groups/groups'
-                      ? 'menu-item active'
-                      : 'menu-item'
+                    props.router.pathname === "/groups/groups"
+                      ? "menu-item active"
+                      : "menu-item"
                   }
                 >
                   <HeaderLabel
                     className={
-                      (props.router.pathname === '/groups/groups' ||
-                        props.router.pathname === '/groups/create-groups' ||
-                        props.router.pathname === '/groups/edit-groups' ||
+                      (props.router.pathname === "/groups/groups" ||
+                        props.router.pathname === "/groups/create-groups" ||
+                        props.router.pathname === "/groups/edit-groups" ||
                         props.router.pathname ===
-                          '/groups/group-members/[groupId]' ||
-                        props.router.pathname === '/groups/[...params]') &&
-                      'active'
+                          "/groups/group-members/[groupId]" ||
+                        props.router.pathname === "/groups/[...params]") &&
+                      "active"
                     }
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.GROUPS')}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.GROUPS")}
                   />
                 </a>
               </Link>
               <Link route={MESSAGES}>
                 <a
-                  role='button'
+                  role="button"
                   className={
-                    props.router.pathname === '/messages'
-                      ? 'menu-item cursor-pointer active'
-                      : 'menu-item cursor-pointer'
+                    props.router.pathname === "/messages"
+                      ? "menu-item cursor-pointer active"
+                      : "menu-item cursor-pointer"
                   }
-                  target={props?.isJoinRoom ? '_blank' : undefined}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
                 >
                   <HeaderLabel
                     className={
-                      props.router.pathname === '/messages' && 'active'
+                      props.router.pathname === "/messages" && "active"
                     }
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.MESSAGES')}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.MESSAGES")}
                   />
                   {unreadMessageCountState > 0 && (
-                    <span className='notif-icon-popup'>
+                    <span className="notif-icon-popup">
                       {unreadMessageCountState}
                     </span>
                   )}
@@ -1329,21 +1365,21 @@ const Header = (props) => {
               </Link>
               <Link route={NOTIFICATIONS}>
                 <a
-                  role='button'
+                  role="button"
                   className={
-                    props.router.pathname === '/notifications/notifications'
-                      ? 'menu-item active'
-                      : 'menu-item'
+                    props.router.pathname === "/notifications/notifications"
+                      ? "menu-item active"
+                      : "menu-item"
                   }
-                  target={props?.isJoinRoom ? '_blank' : undefined}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
                 >
                   <HeaderLabel
                     className={
                       props.router.pathname ===
-                        '/notifications/notifications' && 'active'
+                        "/notifications/notifications" && "active"
                     }
-                    target={props?.isJoinRoom ? '_blank' : undefined}
-                    labelText={lang('HEADER.NOTIFICATION')}
+                    target={props?.isJoinRoom ? "_blank" : undefined}
+                    labelText={lang("HEADER.NOTIFICATION")}
                   />
                 </a>
                 {/* <a
@@ -1381,42 +1417,42 @@ const Header = (props) => {
                 <span className="material-icons font-18 ms-1">expand_more</span>
               </a> */}
               <a
-                role='button'
+                role="button"
                 className={
-                  props.router.pathname === '/notifications/business'
-                    ? 'menu-item active d-inline-flex align-items-center '
-                    : 'menu-item d-inline-flex align-items-center '
+                  props.router.pathname === "/notifications/business"
+                    ? "menu-item active d-inline-flex align-items-center "
+                    : "menu-item d-inline-flex align-items-center "
                 }
                 onClick={() => dispatch(toggleModals({ teacheroption: true }))}
-                target={props?.isJoinRoom ? '_blank' : undefined}
+                target={props?.isJoinRoom ? "_blank" : undefined}
               >
                 <HeaderLabel
                   className={
-                    props.router.pathname === '/notifications/business' &&
-                    'active'
+                    props.router.pathname === "/notifications/business" &&
+                    "active"
                   }
                   handleClick={() =>
                     dispatch(toggleModals({ teacheroption: true }))
                   }
-                  target={props?.isJoinRoom ? '_blank' : undefined}
-                  labelText={lang('HEADER.BUSINESS')}
+                  target={props?.isJoinRoom ? "_blank" : undefined}
+                  labelText={lang("HEADER.BUSINESS")}
                 />
                 {/* <span className='material-icons f\nt-18 ms-1'>expand_more</span> */}
               </a>
               {/* </Link> */}
 
-              <div className='theme-dropdown header-user-dropdown'>
+              <div className="theme-dropdown header-user-dropdown">
                 <IconButton
                   onClick={handleClick}
-                  size='small'
+                  size="small"
                   sx={{ ml: 2 }}
-                  aria-controls={open ? 'account-menu' : undefined}
-                  aria-haspopup='true'
-                  aria-expanded={open ? 'true' : undefined}
+                  aria-controls={open ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
                   className={
                     props.router.pathname === `/profile/[profileId]`
-                      ? 'user-profile d-inline-flex align-items-center active'
-                      : 'user-profile d-inline-flex align-items-center'
+                      ? "user-profile d-inline-flex align-items-center active"
+                      : "user-profile d-inline-flex align-items-center"
                   }
                 >
                   <HeaderProfile
@@ -1424,118 +1460,118 @@ const Header = (props) => {
                     onError={(e) => {
                       onImageError(
                         e,
-                        'profile',
-                        `${userData?.firstName} ${userData?.lastName}`,
+                        "profile",
+                        `${userData?.firstName} ${userData?.lastName}`
                       );
                     }}
-                    imageUrl={userData?.profilePicURL || ''}
+                    imageUrl={userData?.profilePicURL || ""}
                   />
                 </IconButton>
 
                 <Menu
                   anchorEl={anchorEl}
-                  id='account-menu'
+                  id="account-menu"
                   open={open}
                   disableScrollLock={true}
                   onClose={handleClose}
                   onClick={handleClose}
-                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  anchorOrigin={{ horizontal: 50, vertical: 'bottom' }}
-                  className='dropdown-inner-left'
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: 50, vertical: "bottom" }}
+                  className="dropdown-inner-left"
                 >
                   <Link
-                    href={`/profile/${userData?.profileId || 'me'}`}
-                    className='d-flex align-items-center'
+                    href={`/profile/${userData?.profileId || "me"}`}
+                    className="d-flex align-items-center"
                   >
                     <MenuItem>
                       <ListItemIcon>
                         <AccountCircleIcon />
                       </ListItemIcon>
 
-                      <span class='item-text'>
-                        {lang('HEADER.VIEW_PROFILE')}
+                      <span class="item-text">
+                        {lang("HEADER.VIEW_PROFILE")}
                       </span>
                     </MenuItem>
                   </Link>
 
-                  <Divider style={{ margin: '0' }} />
+                  <Divider style={{ margin: "0" }} />
                   <Link
                     href={`/my-activities/`}
-                    className='d-flex align-items-center'
+                    className="d-flex align-items-center"
                   >
                     <MenuItem>
                       <ListItemIcon>
                         <SchoolOutlinedIcon />
                       </ListItemIcon>
-                      <span class='item-text'>
-                        {lang('HEADER.MY_LEARNING')}
+                      <span class="item-text">
+                        {lang("HEADER.MY_LEARNING")}
                       </span>
                     </MenuItem>
                   </Link>
 
-                  <Divider style={{ margin: '0' }} />
+                  <Divider style={{ margin: "0" }} />
                   <Link
                     href={`/accounts/`}
-                    className='d-flex align-items-center '
+                    className="d-flex align-items-center "
                   >
                     <MenuItem>
                       <ListItemIcon>
                         <SettingsOutlinedIcon />
                       </ListItemIcon>
-                      <span class='item-text'>
-                        {lang('HEADER.ACCOUNT_SETTINGS')}
+                      <span class="item-text">
+                        {lang("HEADER.ACCOUNT_SETTINGS")}
                       </span>
                     </MenuItem>
                   </Link>
 
-                  <Divider style={{ margin: '0' }} />
+                  <Divider style={{ margin: "0" }} />
 
                   <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(logout());
                     }}
-                    className='d-flex align-items-center'
+                    className="d-flex align-items-center"
                   >
                     <ListItemIcon>
                       <LogoutOutlinedIcon />
                     </ListItemIcon>
-                    <span class='item-text'>{lang('COMMON.LOGOUT')}</span>
+                    <span class="item-text">{lang("COMMON.LOGOUT")}</span>
                   </MenuItem>
                 </Menu>
               </div>
             </Menuu>
           ) : (
             <Menuu
-              menuClassName={'header-menu'}
+              menuClassName={"header-menu"}
               customBurgerIcon={
                 <svg
-                  width='18px'
-                  height='14px'
-                  viewBox='0 0 18 14'
-                  version='1.1'
-                  xmlns='http://www.w3.org/2000/svg'
+                  width="18px"
+                  height="14px"
+                  viewBox="0 0 18 14"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <title>mobile-menu</title>
                   <desc>Created with Sketch.</desc>
                   <g
-                    id='Page-1'
-                    stroke='none'
-                    strokeWidth='1'
-                    fill='none'
-                    fillRule='evenodd'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="1"
+                    fill="none"
+                    fillRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <g
-                      id='mobile-menu'
-                      transform='translate(9.000000, 7.000000) scale(-1, 1) translate(-9.000000, -7.000000) translate(1.000000, 0.000000)'
-                      stroke='#CC00CC'
-                      strokeWidth='2'
+                      id="mobile-menu"
+                      transform="translate(9.000000, 7.000000) scale(-1, 1) translate(-9.000000, -7.000000) translate(1.000000, 0.000000)"
+                      stroke="#CC00CC"
+                      strokeWidth="2"
                     >
                       <path
-                        d='M0,1 L16,1 M0,7 L16,7 M0,13 L7,13'
-                        id='Shape'
+                        d="M0,1 L16,1 M0,7 L16,7 M0,13 L7,13"
+                        id="Shape"
                       ></path>
                     </g>
                   </g>
@@ -1543,24 +1579,24 @@ const Header = (props) => {
               }
             >
               <a
-                role='button'
-                className='menu-item'
+                role="button"
+                className="menu-item"
                 onClick={(e) => {
                   e.preventDefault();
                   dispatch(logout());
                 }}
               >
-                <em className='bx bx-log-out'></em>
+                <em className="bx bx-log-out"></em>
                 Logout
               </a>
             </Menuu>
           )}
         </div>
-      </Container>
-      {router.pathname !== '/account/sign-up' &&
+      </Grid>
+      {router.pathname !== "/account/sign-up" &&
         userData?.isSignUpDetailsCompleted === true &&
         isLoggedIn &&
-        router.pathname !== '/messages' && (
+        router.pathname !== "/messages" && (
           <>
             <ChatList isFloatMessage={true} />
             {!close && currentChannel && (

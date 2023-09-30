@@ -28,7 +28,12 @@ const WithAuth = (Component) => (props) => {
         pathname: "/",
         query: { from: router.asPath },
       });
-      router.push("/").then(() => removeCookie("isLogout"));
+      router.push("/").then(() => {
+        router.replace({
+          pathname: "/",
+        });
+        removeCookie("isLogout");
+      });
     }
   }, [isSignUpDetailsCompleted, router.pathname]);
   return !email ? <Fragment></Fragment> : <Component {...props} />;

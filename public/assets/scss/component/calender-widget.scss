@@ -1,5 +1,28 @@
 .calendar-widget-wrapper {
 	background-color: white;
+	
+	.no-event-ui {
+		display: flex;
+		height: Hug(28.41px);
+		padding: 6.7px;
+		border-radius: 3.35px;
+		border: 0.84px;
+
+		border: 0.84px solid rgba(209, 213, 219, 1);
+
+		background: rgba(125, 82, 96, 0.12);
+
+		span {
+			font-family: "Inter", sans-serif;
+			font-size: 10px;
+			font-style: italic;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+
+		}
+	}
 
 	.fc-timeGridWeek-view tbody {
 		display: none;
@@ -8,13 +31,28 @@
 	.ant-divider-horizontal {
 		margin: 12px 0 0 0;
 	}
-
+	
 	.calendar-widget-header {
-		padding: 16px 16px 0 16px;
-
+		padding: 14px 14px 0px 14px;
+         
 		.calendar-header-title {
-			font-weight: 700;
-			font-size: 14px;
+			font-family: "Inter", sans-serif;
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+
+		}
+
+		.calendar-widget-month {
+			font-family: "Inter", sans-serif;
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+
 		}
 
 		.ant-select-selector {
@@ -71,7 +109,7 @@
 	}
 
 	.calendar-widget-body {
-		padding: 16px;
+		padding: 14px;
 		max-height: 300px;
     overflow-y: auto;
 		scrollbar-width: thin;
@@ -101,4 +139,13 @@
 			}
 		}
 	}
+}
+
+.calendar-widget-month-option {
+	font-family: "Inter", sans-serif;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 15px;
+	letter-spacing: 0.07353759557008743px;
+	text-align: left;
 }
