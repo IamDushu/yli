@@ -14,7 +14,6 @@
 @import "pages/import.scss";
 @import "component/_all";
 
-
 // Third party CSS
 @import "../../../node_modules/react-datetime/css/react-datetime.css";
 @import "../../../node_modules/react-perfect-scrollbar/dist/css/styles.css";
@@ -104,12 +103,12 @@ html {
 
 .inner-wrapper {
   padding: size(24) 0 size(50);
-  background-color:$body-bg;
+  background-color: $body-bg;
 
   @include media(down, $breakpoint-xl) {
     margin-top: size(25);
   }
-  
+
   .card {
     // overflow: initial;
     .card-header {
@@ -240,9 +239,9 @@ html {
   .profile-left-bar {
     width: size(265);
     @include media(down, $breakpoint-xl) {
-      width:100%;
+      width: 100%;
     }
-   
+
     // margin-left: size(24);
 
     // @include media(down, $breakpoint-sd) {
@@ -251,7 +250,6 @@ html {
     @include media(down, $breakpoint-lg) {
       width: 100%;
       margin: 0;
-
     }
   }
 }
@@ -297,6 +295,10 @@ html {
       border-bottom: none;
     }
   }
+}
+
+.model-common-listing input[type="checkbox"]:checked + label {
+  background-color: lightgreen;
 }
 
 .compilation-table .calendar-wrap-xs .rdt input[type="text"] {
@@ -546,11 +548,11 @@ html {
 
 .people-tab-view-all-button {
   font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
   letter-spacing: 0.25px;
-  color: #0f6bbf;
+  color: #48464a;
   text-align: center;
 }
 .people-tab-view-all-button-text {

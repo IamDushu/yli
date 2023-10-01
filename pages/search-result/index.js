@@ -44,7 +44,7 @@ const SearchGroup = dynamic(() => import("components/search-result/group"));
 const Courses = dynamic(() => import("components/search-result/courses"));
 const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
-  import("components/search-result/learning-institute")
+  import("components/search-result/learning-institute"),
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 
@@ -116,7 +116,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "withdrawl",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -137,7 +137,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -221,7 +221,7 @@ function SearchResult() {
     const searchValue = e.target.value;
     if (searchValue) {
       const filteredListData = filters.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+        item.name.toLowerCase().includes(searchValue.toLowerCase()),
       );
       setFilterList(filteredListData);
     } else {
@@ -253,7 +253,7 @@ function SearchResult() {
   };
   useEffect(() => {
     const isAllEmpty = Object.values(searchData?.searchResults || {}).every(
-      (result) => result?.rows.length === 0
+      (result) => result?.rows.length === 0,
     );
     setSearchResults(isAllEmpty);
   }, [searchData?.searchResults]);
@@ -292,6 +292,7 @@ function SearchResult() {
               className={`profile-right-bar common-searchbar px-6 d-none d-xl-block d-lg-block ${
                 !searchResults ? "dimmed" : ""
               }`}
+              style={{ width: "264px" }}
             >
               <FormControl className="mb-0 w-100 bg-white">
                 <TextField
@@ -301,60 +302,69 @@ function SearchResult() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SearchIcon />
+                        <SearchIcon style={{ color: "black" }} />
                       </InputAdornment>
                     ),
                   }}
                   disabled={searchResults}
                 />
               </FormControl>
-            </div>
-            {/* <PerfectScrollbar> */}
-            {filterList.length ? (
-              <ul className="list-unstyled model-listing-box">
-                {filterList.map((item, i) => {
-                  return (
-                    <li className="model-common-listing bg-white" key={i}>
-                      <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
-                        <div className=" d-flex justify-content-between align-items-center">
-                          <PermIdentityIcon />
-                          <div className="ml-2">
-                            <h5 className="text-body-14 mb-0">{item.name}</h5>
+              {/* <PerfectScrollbar> */}
+              {filterList.length ? (
+                <ul
+                  className="list-unstyled model-listing-box"
+                  style={{ borderRadius: "0px" }}
+                >
+                  {filterList.map((item, i) => {
+                    return (
+                      <li className="model-common-listing bg-white" key={i}>
+                        <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
+                          <div className=" d-flex justify-content-between align-items-center">
+                            <PermIdentityIcon style={{ color: "#49454E" }} />
+                            <div className="ml-2">
+                              <h5
+                                className="text-body-14 mb-0"
+                                style={{ color: "#49454E" }}
+                              >
+                                {" "}
+                                {item.name}
+                              </h5>
+                            </div>
+                          </div>
+
+                          <div className="d-flex align-items-center">
+                            <span className="text-body-12 mr-2 mt-1">
+                              {getCount(item.name.toLowerCase()) || 0}
+                            </span>
+                            <label htmlFor={item.id} className="mb-3">
+                              <input
+                                type="checkbox"
+                                name="cssradio"
+                                id={item.id}
+                                value={item.name}
+                                checked={filteredList.includes(item.name)}
+                                onChange={(e) => {
+                                  handleFilterChange(e);
+                                }}
+                                disabled={searchResults}
+                              />
+                              <span></span>
+                            </label>
                           </div>
                         </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <div className="text-center mt-5 mb-5">
+                  {lang("COMMON.NO_RESULT_FOUND")}
+                </div>
+              )}
 
-                        <div className="d-flex align-items-center">
-                          <span className="text-body-12 mr-2 mt-1">
-                            {getCount(item.name.toLowerCase()) || 0}
-                          </span>
-                          <label htmlFor={item.id} className="mb-3">
-                            <input
-                              type="checkbox"
-                              name="cssradio"
-                              id={item.id}
-                              value={item.name}
-                              checked={filteredList.includes(item.name)}
-                              onChange={(e) => {
-                                handleFilterChange(e);
-                              }}
-                              disabled={searchResults}
-                            />
-                            <span></span>
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <div className="text-center mt-5 mb-5">
-                {lang("COMMON.NO_RESULT_FOUND")}
+              <div className="footer-relative">
+                <SiteLinks />
               </div>
-            )}
-
-            <div className="footer-relative">
-              <SiteLinks />
             </div>
 
             {/* <div
@@ -518,30 +528,32 @@ function SearchResult() {
                   <p>No Posts Found</p>
                 )}
               {searchResults && (
-                <Card>
-                  <CardContent className="py-5">
-                    <Grid container>
-                      <Grid item md={8} lg={8} className="mx-auto">
-                        <div className="mb-2 font-weight-normal">
-                          <p className="font-22 mb-0">
-                            {lang("GLOBAL_SEARCH.NO_RESULT")}
-                            <span className="font-italic "> Abracadabra</span>
-                          </p>
+                <div style={{ height: "200vh" }}>
+                  <Card>
+                    <CardContent className="py-5">
+                      <Grid container>
+                        <Grid item md={8} lg={8} className="mx-auto">
+                          <div className="mb-2 font-weight-normal">
+                            <p className="font-22 mb-0">
+                              {lang("GLOBAL_SEARCH.NO_RESULT")}
+                              <span className="font-italic "> Abracadabra</span>
+                            </p>
 
-                          <p className="font-22">
-                            {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
-                          </p>
-                        </div>
+                            <p className="font-22">
+                              {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
+                            </p>
+                          </div>
 
-                        <img
-                          src="/assets/images/no-result-new.svg"
-                          alt="No result found"
-                          className="mb-5"
-                        />
+                          <img
+                            src="/assets/images/no-result-new.svg"
+                            alt="No result found"
+                            className="mb-5"
+                          />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               )}
             </div>
           </Grid>

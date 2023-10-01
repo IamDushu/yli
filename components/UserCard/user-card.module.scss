@@ -1,7 +1,7 @@
 .user-card-wrapper {
   box-shadow: 0px 1px 3px 1px #00000026;
   box-shadow: 0px 1px 2px 0px #0000004d;
-  min-width: 134px;
+  min-width: 124px;
   min-height: 182px;
   max-width: 142px;
   display: flex;
@@ -70,11 +70,11 @@
     }
   }
   .footer {
-    margin: 0.5rem 0;
     display: flex;
-    flex-wrap: wrap;
+    padding-bottom: 5px;
+    // flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
   }
 }
