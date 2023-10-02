@@ -44,7 +44,7 @@ const SearchGroup = dynamic(() => import("components/search-result/group"));
 const Courses = dynamic(() => import("components/search-result/courses"));
 const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
-  import("components/search-result/learning-institute"),
+  import("components/search-result/learning-institute")
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 
@@ -68,6 +68,7 @@ function SearchResult() {
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const [showAll, setShowAll] = useState({
+    all: false,
     people: false,
     companies: false,
     groups: false,
@@ -116,7 +117,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "withdrawl",
-      }),
+      })
     );
     let body = {
       page: 1,
@@ -137,7 +138,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "",
-      }),
+      })
     );
     let body = {
       page: 1,
@@ -203,7 +204,11 @@ function SearchResult() {
 
   const handleFilterChange = (e) => {
     let list = [...filteredList];
-    if (e.target.checked) {
+    if (e.target.checked && e.target.value === "All") {
+      setFilteredList(["All"]);
+      setSelectedFilters([]);
+      setFilterList(filters);
+    } else if (e.target.checked) {
       list.push(e.target.value);
       setFilteredList(list);
       setSelectedFilters(list);
@@ -221,7 +226,7 @@ function SearchResult() {
     const searchValue = e.target.value;
     if (searchValue) {
       const filteredListData = filters.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase()),
+        item.name.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilterList(filteredListData);
     } else {
@@ -230,6 +235,17 @@ function SearchResult() {
   };
 
   const getCount = (i) => {
+    if (i === "all") {
+      let totalCount = 0;
+      const data = searchData?.searchResults;
+      for (const key in data) {
+        if (data.hasOwnProperty(key) && data[key].hasOwnProperty("count")) {
+          totalCount += data[key].count;
+        }
+      }
+      totalCount += searchData?.searchResults["posts"]?.total;
+      return totalCount;
+    }
     if (i === "people") {
       return searchData?.searchResults["users"]?.count;
     }
@@ -246,6 +262,12 @@ function SearchResult() {
     }
   };
 
+  const toggleClass = (item) => {
+    if (filteredList.includes(item)) {
+      return "model-common-listing bg-dark-list";
+    }
+    return "model-common-listing bg-white";
+  };
   const applyFilter = () => {
     setOpen(false);
     setSelectedFilters(filteredList);
@@ -253,7 +275,7 @@ function SearchResult() {
   };
   useEffect(() => {
     const isAllEmpty = Object.values(searchData?.searchResults || {}).every(
-      (result) => result?.rows.length === 0,
+      (result) => result?.rows.length === 0
     );
     setSearchResults(isAllEmpty);
   }, [searchData?.searchResults]);
@@ -317,7 +339,7 @@ function SearchResult() {
                 >
                   {filterList.map((item, i) => {
                     return (
-                      <li className="model-common-listing bg-white" key={i}>
+                      <li className={toggleClass(item.name)} key={i}>
                         <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
                           <div className=" d-flex justify-content-between align-items-center">
                             <PermIdentityIcon style={{ color: "#49454E" }} />
@@ -524,9 +546,7 @@ function SearchResult() {
                   </Card>
                 )}
               {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.POSTS")) &&
-                searchData?.searchResults?.posts?.rows.length === 0 && (
-                  <p>No Posts Found</p>
-                )}
+                searchData?.searchResults?.posts?.rows.length === 0 && <></>}
               {searchResults && (
                 <div style={{ height: "200vh" }}>
                   <Card>

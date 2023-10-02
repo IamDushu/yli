@@ -56,7 +56,7 @@ const People = ({
                           key <= 5 &&
                           !showAll.people && (
                             <Col
-                              xs={6}
+                              xs={4}
                               md={4}
                               lg={2}
                               key={user?.id}
@@ -71,7 +71,7 @@ const People = ({
                                   user?.currentPosition || "No Position Added"
                                 }
                                 mutualCountText={`${user?.mutualCount} ${lang(
-                                  "CONNECTIONS.MUTUAL_CONTACTS",
+                                  "CONNECTIONS.MUTUAL_CONTACTS"
                                 )}`}
                                 profileurl={`/profile/${user?.profileId}`}
                                 renderFooter={() => (
@@ -104,7 +104,7 @@ const People = ({
                                           primary
                                           handleClick={() => {
                                             withdrawRequest(
-                                              user?.connectionDetails?.id,
+                                              user?.connectionDetails?.id
                                             );
                                           }}
                                           label={lang("CONNECTIONS.WITHDRAW")}
@@ -148,14 +148,14 @@ const People = ({
                             </Col>
                           )
                         );
-                      },
+                      }
                     )}
                     {searchData?.searchResults?.users?.rows?.map(
                       (user, key) => {
                         return (
                           showAll.people && (
                             <Col
-                              xs={6}
+                              xs={4}
                               md={4}
                               lg={2}
                               key={user?.id}
@@ -170,7 +170,7 @@ const People = ({
                                   user?.currentPosition || "No Position Added"
                                 }
                                 mutualCountText={`${user?.mutualCount} ${lang(
-                                  "CONNECTIONS.MUTUAL_CONTACTS",
+                                  "CONNECTIONS.MUTUAL_CONTACTS"
                                 )}`}
                                 profileurl={`/profile/${user?.profileId}`}
                                 renderFooter={() => (
@@ -203,7 +203,7 @@ const People = ({
                                           primary
                                           handleClick={() => {
                                             withdrawRequest(
-                                              user?.connectionDetails?.id,
+                                              user?.connectionDetails?.id
                                             );
                                           }}
                                           label={lang("CONNECTIONS.WITHDRAW")}
@@ -253,7 +253,7 @@ const People = ({
                             </Col>
                           )
                         );
-                      },
+                      }
                     )}
                   </Row>
                 </Container>
@@ -289,9 +289,7 @@ const People = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.PEOPLE")) &&
-        searchData?.searchResults?.users?.rows.length === 0 && (
-          <p>No People Found</p>
-        )}
+        searchData?.searchResults?.users?.rows.length === 0 && <></>}
     </div>
   );
 };

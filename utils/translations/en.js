@@ -1781,6 +1781,7 @@ export const en = {
     FILTER_BY: "Filter by",
     FILTERS: "Filters",
     FILTER: {
+      ALL: "All",
       PEOPLE: "People",
       COMPANIES: "Companies",
       GROUPS: "Groups",

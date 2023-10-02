@@ -8215,6 +8215,9 @@ button.bg-dark:focus {
 .bg-white {
   background-color: #ffffff !important;
 }
+.bg-dark-list {
+  background-color: #e4e3e8 !important;
+}
 
 .bg-transparent {
   background-color: transparent !important;
@@ -25731,7 +25734,7 @@ html {
 
 .inner-wrapper {
   padding: 1.5rem 0 3.125rem;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .inner-wrapper .card .card-header {

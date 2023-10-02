@@ -494,6 +494,10 @@ export const connectionGoals = [
 
 export const getFilters = (lang) => [
   {
+    id: "all",
+    name: lang("GLOBAL_SEARCH.FILTER.ALL"),
+  },
+  {
     id: "people",
     name: lang("GLOBAL_SEARCH.FILTER.PEOPLE"),
   },

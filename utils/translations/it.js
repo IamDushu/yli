@@ -1793,6 +1793,7 @@ export const it = {
     FILTER_BY: "Filtra per",
     FILTERS: "Filtri",
     FILTER: {
+      ALL: "All",
       PEOPLE: "Persone",
       COMPANIES: "Aziende",
       GROUPS: "Grouppi",
