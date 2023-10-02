@@ -98,13 +98,7 @@ const Courses = ({
                     return (
                       i <= 3 &&
                       !showAll.courses && (
-                        <Col
-                          lg={3}
-                          md={6}
-                          sm={4}
-                          key={i}
-                          // className="d-flex flex-column m-1"
-                        >
+                        <Col lg={3} md={6} sm={4} key={i}>
                           <Card
                             className="secondary-card abstract-card-v2"
                             style={{
@@ -201,7 +195,7 @@ const Courses = ({
                   {searchData?.searchResults?.courses?.rows.map((course, i) => {
                     return (
                       showAll.courses && (
-                        <Col lg={3} md={6} sm={4} key={i}>
+                        <Col lg={3} md={6} sm={4} key={i} className="mb-2">
                           <Card
                             className="secondary-card abstract-card-v2"
                             style={{
@@ -245,7 +239,7 @@ const Courses = ({
                               <div className="position-relative pointer">
                                 <CardMedia
                                   component="img"
-                                  height="155"
+                                  height="70px"
                                   className="w-100"
                                   image={course?.imageURL}
                                   alt={course?.title}
@@ -260,7 +254,15 @@ const Courses = ({
                             <CardContent className="p-1">
                               <Link route={"/course-detail/" + course.id}>
                                 <div className="title-container">
-                                  <h6 className="font-weight-bold text-body-16 mb-1 pointer ellipsis">
+                                  <h6
+                                    className="text-body-14 pointer ellipsis"
+                                    style={{
+                                      fontWeight: "500",
+                                      color: "#6750A4",
+                                      lineHeight: "20px",
+                                      letterSpacing: "0.1px",
+                                    }}
+                                  >
                                     {course?.title?.charAt(0).toUpperCase() +
                                       course?.title?.slice(1)}
                                   </h6>
@@ -268,14 +270,16 @@ const Courses = ({
                               </Link>
                               <div className="text-ellipsis d-flex align-items-center justify-content-between">
                                 <small className="font-weight-semi-bold text-card-name text-body-12">
-                                  {`${course?.UserDetails?.firstName || ""} ${
-                                    course?.UserDetails?.lastName || ""
-                                  }`.trim()}
+                                  <span style={{ color: "#49454E" }}>
+                                    {`${course?.UserDetails?.firstName || ""} ${
+                                      course?.UserDetails?.lastName || ""
+                                    }`.trim()}
+                                  </span>
                                 </small>
                               </div>
                               <StarRatings
                                 rating={course?.rating ?? 0}
-                                starDimension="15px"
+                                starDimension="10.44px"
                                 starSpacing="1px"
                                 starRatedColor="#FFC635"
                               />
@@ -481,7 +485,7 @@ const Courses = ({
                       </>
                     ) : (
                       <>
-                        <AddIcon fontSize="small" />
+                        <RemoveIcon fontSize="small" />
                         <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
                       </>
                     )}

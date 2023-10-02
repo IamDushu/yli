@@ -34,11 +34,10 @@ const People = ({
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.PEOPLE"))) &&
         searchData?.searchResults?.users?.rows.length > 0 && (
           <Card className="mb-3">
-            <Card.Body className="p-2">
+            <Card.Body className="p-0 p-md-0 p-lg-2">
               <h3
-                className="mb-0 pl-2 py-1"
+                className="mb-0 pl-2 py-1 font-16"
                 style={{
-                  fontSize: "16px",
                   color: "#001551",
                   fontWeight: "500",
                   lineHeight: "24px",
@@ -56,8 +55,8 @@ const People = ({
                           key <= 5 &&
                           !showAll.people && (
                             <Col
-                              xs={6}
-                              md={4}
+                              xs={4}
+                              md={2}
                               lg={2}
                               key={user?.id}
                               className="p-0 d-flex justify-content-center mb-2 "
@@ -155,11 +154,11 @@ const People = ({
                         return (
                           showAll.people && (
                             <Col
-                              xs={6}
-                              md={4}
+                              xs={4}
+                              md={2}
                               lg={2}
                               key={user?.id}
-                              className="p-0 d-flex justify-content-center mb-2"
+                              className="p-0 d-flex justify-content-center mb-2 "
                             >
                               <UserCard
                                 key={key}
@@ -189,8 +188,8 @@ const People = ({
                                           style={{
                                             padding: !user?.connectionDetails
                                               ?.isConnection
-                                              ? "0.05rem 0.3rem"
-                                              : "0.05rem 0.5rem",
+                                              ? "0.05rem 0.2rem"
+                                              : "0.05rem 0.4rem",
                                           }}
                                         />
                                       )}
@@ -211,8 +210,8 @@ const People = ({
                                           style={{
                                             padding: !user?.connectionDetails
                                               ?.isConnection
-                                              ? "0.05rem 0.3rem"
-                                              : "0.05rem 0.5rem",
+                                              ? "0.05rem 0.2rem"
+                                              : "0.05rem 0.4rem",
                                           }}
                                         />
                                       )}
@@ -235,12 +234,6 @@ const People = ({
                                       }
                                       size="extra-small"
                                       style={{
-                                        color: "#6750a4",
-                                        boxShadow: "none",
-                                        padding: user?.connectionDetails
-                                          ?.isfollow
-                                          ? "0.05rem 0.2rem"
-                                          : "0.05rem 0.5rem",
                                         color: "#6750a4",
                                         boxShadow: "none",
                                         padding: "0rem",
