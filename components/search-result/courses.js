@@ -98,13 +98,7 @@ const Courses = ({
                     return (
                       i <= 3 &&
                       !showAll.courses && (
-                        <Col
-                          lg={3}
-                          md={6}
-                          sm={4}
-                          key={i}
-                          // className="d-flex flex-column m-1"
-                        >
+                        <Col lg={3} md={6} sm={4} key={i}>
                           <Card
                             className="secondary-card abstract-card-v2"
                             style={{
@@ -202,13 +196,7 @@ const Courses = ({
                   {searchData?.searchResults?.courses?.rows.map((course, i) => {
                     return (
                       showAll.courses && (
-                        <Col
-                          lg={3}
-                          md={6}
-                          sm={4}
-                          key={i}
-                          // className="d-flex flex-column m-1"
-                        >
+                        <Col lg={3} md={6} sm={4} key={i} className="mb-2">
                           <Card
                             className="secondary-card abstract-card-v2 mb-2"
                             style={{
@@ -499,7 +487,7 @@ const Courses = ({
                       </>
                     ) : (
                       <>
-                        <AddIcon fontSize="small" />
+                        <RemoveIcon fontSize="small" />
                         <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
                       </>
                     )}

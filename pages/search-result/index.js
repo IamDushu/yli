@@ -295,8 +295,8 @@ function SearchResult() {
           maxWidth="1160px"
           marginLeft={"auto"}
           marginRight={"auto"}
-          paddingLeft={{ sm: 2, xs: 1 }}
-          paddingRight={{ sm: 2, xs: 1 }}
+          paddingLeft={{ sm: 2, xs: 0 }}
+          paddingRight={{ sm: 2, xs: 0 }}
         >
           <Grid item md={3} xs={12} paddingRight={{ md: "10px", sm: 0 }}>
             {/* Left view */}
