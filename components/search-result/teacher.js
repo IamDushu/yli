@@ -27,9 +27,9 @@ const Teacher = ({
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.TEACHER"))) &&
         searchData?.searchResults?.teacher?.rows.length > 0 && (
           <Card className="mb-4">
-            <Card.Body className="p-3">
+            <Card.Body className="p-0 pb-4">
               <h3
-                className="mb-0 pl-2 py-1"
+                className="mb-0 pl-3 pt-20"
                 style={{
                   fontSize: "16px",
                   color: "#001551",
@@ -40,7 +40,7 @@ const Teacher = ({
                 {lang("GLOBAL_SEARCH.FILTER.TEACHER")}
               </h3>
 
-              <div className="d-flex justify-content-around pl-2 pr-1 mt-2">
+              <div className="d-flex justify-content-around  mt-2 pl-4 pr-21">
                 <Container fluid>
                   <Row className="custom-col-box two-grid-spacing-md row-col-4">
                     {searchData?.searchResults?.teacher?.rows?.map(

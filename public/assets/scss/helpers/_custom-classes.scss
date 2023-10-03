@@ -931,10 +931,18 @@
 
 .padding-top-12 {
   padding-top: $space12 !important;
-}
+} 
+
+.pt-20 {
+  padding-top:size(20)  !important;
+} 
 
 .p-12 {
   padding: size(12);
+}
+
+.pr-21 {
+  padding-right: size(21) !important;
 }
 
 .p-20 {
