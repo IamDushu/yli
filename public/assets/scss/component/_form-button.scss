@@ -450,8 +450,8 @@ textarea.form-control {
 
     &:checked {
       + span {
-        border: 1px solid $primary;
-        background: $primary;
+        border: 1px solid $primary-violet;
+        background: $primary-violet;
         @include css3-prefix(transition, all 0.3s);
       }
 
@@ -459,7 +459,7 @@ textarea.form-control {
         top: 50%;
         left: 50%;
         margin-left: -3px;
-        margin-top: -6px;
+        margin-top: -7px;
         width: 6px;
         height: 10px;
         border-width: 0 2px 2px 0 !important;
@@ -486,8 +486,8 @@ textarea.form-control {
     input[type="checkbox"] {
       &:checked {
         + span {
-          border-color: $primary;
-          background: $primary;
+          border-color: $primary-violet;
+          background: $primary-violet;
         }
       }
     }

@@ -2,19 +2,22 @@ header {
   background: $white;
   // box-shadow: $box-shadow;
   // border-bottom: 1px solid rgba($blueberry-whip, .54);
-  padding: size(12) 0;
+
   position: fixed;
   left: 0;
   right: 0;
   z-index: 999;
-  height: 78px;
+  // height: 78px;
+  .header-box {
+    padding: size(11) 0;
+    @include media(down, $breakpoint-xl) {
+      padding: size(10) 0;
+    }
+  }
 
   // @include media(down, $breakpoint-xxl){
   //     padding: size(15) 0;
   // }
-  @include media(down, $breakpoint-xl) {
-    padding: size(10) 0;
-  }
 
   // .container{
   //     @include media(down, $breakpoint-sd){
@@ -135,8 +138,8 @@ header {
     }
 
     .notif-icon-popup {
-      @include position(absolute, -11px, 28px, auto, auto);
-      background: $primary;
+      @include position(absolute, 0, 28px, auto, auto);
+      background: $primary-violet;
       width: auto;
       height: size(13);
       border-radius: size(8);
@@ -314,14 +317,17 @@ header {
       @include media(up, $breakpoint-xl) {
         &:hover,
         &.active {
-          // color: #6750a4;
+          color: $primary-violet;
           position: relative;
+          a {
+            color: $primary-violet;
+          }
 
           &::after {
-            content: '';
+            content: "";
             @include position(absolute, auto, 0, size(-12), 0);
             height: size(4);
-            background-color: #6750a4;
+            background-color: $primary-violet;
             z-index: -1;
           }
 
@@ -384,6 +390,8 @@ header {
     .user-profile {
       // margin: 0 0 0 size(16);
       padding-right: 0;
+      padding-left: 0;
+      margin-left: size(8);
       color: $dark;
       font-weight: $font-medium;
       position: relative;
@@ -438,7 +446,6 @@ header {
         &.dropdown-inner-left {
           top: 100% !important;
           transform: translate(0px, 16px) !important;
-
 
           @include media(down, $breakpoint-xl) {
             width: 100%;

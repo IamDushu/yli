@@ -203,13 +203,14 @@
 }
 
 .latest-article-heading {
-  padding: 8px 24px 8px 0px;
+  padding: 8px 8px 8px 0px;
   color: var(--m-3-ref-secondary-secondary-10, #001551);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 150% */
   letter-spacing: 0.15px;
+  font-family: $font-family-base;
 }
 
 .latest-article-view-all {
@@ -220,15 +221,16 @@
   font-weight: 600;
   line-height: 20px; /* 142.857% */
   letter-spacing: 0.1px;
+  font-family: $font-family-base;
 }
 
 .list-spacing {
-  padding-bottom: 8px;
+  padding-bottom: 12px;
   cursor: pointer;
 }
 
 .list-spacing:last-child {
-  padding-bottom: 0px;
+  padding-bottom: 12px;
 }
 
 .view-profile {

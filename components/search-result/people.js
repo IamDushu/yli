@@ -29,15 +29,16 @@ const People = ({
   userData,
 }) => {
   return (
-    <div className="shadow">
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.PEOPLE"))) &&
         searchData?.searchResults?.users?.rows.length > 0 && (
-          <Card className="mb-3">
-            <Card.Body className="p-0 p-md-0 p-lg-2">
+          <Card className="mb-4">
+            <Card.Body className="p-3">
               <h3
-                className="mb-0 pl-2 py-1 font-16"
+                className="mb-0 pl-2 py-1"
                 style={{
+                  fontSize: "16px",
                   color: "#001551",
                   fontWeight: "500",
                   lineHeight: "24px",
@@ -46,7 +47,7 @@ const People = ({
                 {lang("GLOBAL_SEARCH.FILTER.PEOPLE")}
               </h3>
 
-              <div className="d-flex justify-content-around px-3 mt-2">
+              <div className="d-flex justify-content-around pl-2 pr-1 mt-2">
                 <Container fluid>
                   <Row className="custom-col-box two-grid-spacing-md row-col-4">
                     {searchData?.searchResults?.users?.rows?.map(
@@ -56,7 +57,7 @@ const People = ({
                           !showAll.people && (
                             <Col
                               xs={4}
-                              md={2}
+                              md={4}
                               lg={2}
                               key={user?.id}
                               className="p-0 d-flex justify-content-center mb-2 "
@@ -155,10 +156,10 @@ const People = ({
                           showAll.people && (
                             <Col
                               xs={4}
-                              md={2}
+                              md={4}
                               lg={2}
                               key={user?.id}
-                              className="p-0 d-flex justify-content-center mb-2 "
+                              className="p-0 d-flex justify-content-center mb-2"
                             >
                               <UserCard
                                 key={key}
@@ -188,8 +189,8 @@ const People = ({
                                           style={{
                                             padding: !user?.connectionDetails
                                               ?.isConnection
-                                              ? "0.05rem 0.2rem"
-                                              : "0.05rem 0.4rem",
+                                              ? "0.05rem 0.3rem"
+                                              : "0.05rem 0.5rem",
                                           }}
                                         />
                                       )}
@@ -210,8 +211,8 @@ const People = ({
                                           style={{
                                             padding: !user?.connectionDetails
                                               ?.isConnection
-                                              ? "0.05rem 0.2rem"
-                                              : "0.05rem 0.4rem",
+                                              ? "0.05rem 0.3rem"
+                                              : "0.05rem 0.5rem",
                                           }}
                                         />
                                       )}
@@ -234,6 +235,12 @@ const People = ({
                                       }
                                       size="extra-small"
                                       style={{
+                                        color: "#6750a4",
+                                        boxShadow: "none",
+                                        padding: user?.connectionDetails
+                                          ?.isfollow
+                                          ? "0.05rem 0.2rem"
+                                          : "0.05rem 0.5rem",
                                         color: "#6750a4",
                                         boxShadow: "none",
                                         padding: "0rem",

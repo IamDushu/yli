@@ -131,15 +131,15 @@ footer {
     list-style: none;
   }
   a {
-    color: $gray;
+    color: $neutral-dark-20;
     font-size: 12px;
 
     &:hover {
-      color: $secondary;
+      color: $primary-violet;
     }
   }
-  span {
-    color: $gray;
+  span, p {
+    color: $neutral-dark-20;
   }
 }
 

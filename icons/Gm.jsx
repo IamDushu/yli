@@ -1,8 +1,8 @@
-export const GMIcon = () => {
+export const GMIcon = ({ height = 24, width = 24 }) => {
   return (
     <svg
-      width="20"
-      height="18"
+      width={width}
+      height={height}
       viewBox="0 0 20 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

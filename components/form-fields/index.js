@@ -8,6 +8,8 @@ import ImageSelectFieldSignUp from "./image-select-field-signup";
 import SelectField from "./select-field";
 import TextAreaField from "./text-area-field";
 import FileSelectFieldSignUp from "./file-select-field-signup";
+import Input from "./Input";
+import DatePicker from "./DatePicker";
 
 export {
   TextField,
@@ -20,4 +22,6 @@ export {
   SelectField,
   TextAreaField,
   FileSelectFieldSignUp,
+  Input,
+  DatePicker,
 };

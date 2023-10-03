@@ -56,9 +56,9 @@ const GrowthModal = () => {
                   </span>
                   <div className="icon-container">
                     <Tooltip
+                      classes={{ tooltip: "custom-tooltip" }}
                       title={lang("GROWTH_TOOL.TOOLTIP_1")}
-                      placement="bottom"
-                      arrow>
+                      placement="bottom">
                       <div>
                         <Image
                           src="/assets/images/info.svg"
@@ -70,19 +70,16 @@ const GrowthModal = () => {
                     </Tooltip>
                     <Tooltip
                       title={lang("GROWTH_TOOL.TOOLTIP_2")}
-                      placement="bottom"
-                      arrow>
-                      <div
-                        className="d-flex align-items-center ml-1"
-                        >
+                      classes={{ tooltip: "custom-tooltip" }}
+                      placement="bottom">
+                      <div className="d-flex align-items-center ml-1">
                         <IconButton
                           onClick={() => setShow(!show)}
                           style={{
-                            cursor: "pointer", 
-                            padding:"0px",   
+                            cursor: "pointer",
+                            padding: "0px",
                             transform: !show ? "rotate(-90deg)" : "none",
-                          }}
-                          title={lang("GROWTH_TOOL.TOOLTIP_2")}>
+                          }}>
                           <ExpandMoreIcon />
                         </IconButton>
                       </div>

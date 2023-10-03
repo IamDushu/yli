@@ -1,18 +1,39 @@
 import moment from "moment";
+import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 import draftCardUiStyle from "./draft-card-ui.module.scss";
 import Image from "next/image";
+import { makeFirstLetterCapital } from "utils";
 export const DraftCardUi = ({
   article,
   handleEdit,
   handleDelete,
   isFromDeleted = false,
+  lastIndex,
+  index,
+  undeleteHandler,
 }) => {
+  const [lang] = useTranslation("language");
+  const containerStyle = [draftCardUiStyle["draft-card-ui-container"]]
+  if(lastIndex==0){
+    containerStyle.push(draftCardUiStyle["border-top-divider"])
+    containerStyle.push(draftCardUiStyle["border-bottom-divider"])
+  }
+  else{
+    if(index==0){
+      containerStyle.push(draftCardUiStyle["border-top-divider"])
+      containerStyle.push(draftCardUiStyle["border-bottom-divider"])
+    }
+    else{
+      containerStyle.push(draftCardUiStyle["border-bottom-divider"])
+    }
+  }
   return (
-    <div className={draftCardUiStyle["draft-card-ui-container"]}>
+    <div className={(containerStyle).join(" ")}>
       <div>
         <div className={draftCardUiStyle["created-on-block"]}>
           <div className={draftCardUiStyle["created-on-label"]}>
-            {isFromDeleted ? "Deleted on" : "Created on"}
+            {isFromDeleted ? lang("ARTICLE_CARD.DELETED_ON") : lang("ARTICLE_CARD.CREATED_ON")}
           </div>
           <div className={draftCardUiStyle["created-on-value"]}>
             {isFromDeleted
@@ -29,16 +50,19 @@ export const DraftCardUi = ({
         <div>
           <div className={draftCardUiStyle["article-subtitle-block"]}>
             <div className={draftCardUiStyle["article-title"]}>
-              {article?.title}
+              {makeFirstLetterCapital(article?.title || "")}
             </div>
             <div className={draftCardUiStyle["article-subtitle"]}>
-              {article?.subTitle}
+              {makeFirstLetterCapital(article?.subTitle || "")}
             </div>
           </div>
           <div className={draftCardUiStyle["right-article-footer"]}>
             {isFromDeleted ? (
               <>
-                <div className={draftCardUiStyle["article-footer-action"]}>
+                <div
+                  className={draftCardUiStyle["article-footer-action"]}
+                  onClick={undeleteHandler}
+                >
                   <div className={draftCardUiStyle["icon-style"]}>
                     <Image
                       src="/assets/images/add-post/deleted-article-upload-icon.svg"
@@ -47,7 +71,7 @@ export const DraftCardUi = ({
                     />
                   </div>
                   <div className={draftCardUiStyle["edit-text"]}>
-                    Move to Drafts
+                    {lang("ARTICLE_CARD.MOVE_TO_DRAFT")}
                   </div>
                 </div>
               </>
@@ -65,7 +89,7 @@ export const DraftCardUi = ({
                     className={draftCardUiStyle["edit-text"]}
                     onClick={handleEdit}
                   >
-                    Edit
+                    {lang("COMMON.EDIT")}
                   </div>
                 </div>
                 <div className={draftCardUiStyle["article-footer-action"]}>
@@ -78,9 +102,30 @@ export const DraftCardUi = ({
                   </div>
                   <div
                     className={draftCardUiStyle["delete-text"]}
-                    onClick={handleDelete}
+                    onClick={() => {
+                      // POP FOR DELETION
+                      Swal.fire({
+                        html: `
+                          <div style="font-size: 22px; font-weight: 400; line-height: 28px; letter-spacing: 0em; text-align: center; color: #001551;">
+                            ${lang("ARTICLE_CARD.DELETE_ARTICLE")}
+                          </div>
+                          <div style="font-size: 14px; text-align: center; color: #001551;">
+                          ${lang("ARTICLE_CARD.DELETE_WARNING")}
+                          </div>`,
+                        imageUrl: "/assets/images/warning-modal-icon.svg",
+                        imageWidth: 60,
+                        imageHeight: 60,
+                        showDenyButton: true,
+                        confirmButtonText: lang("COMMON.CONFIRM"),
+                        denyButtonText: lang("COMMON.BACK"),
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          handleDelete();
+                        }
+                      });
+                    }}
                   >
-                    Delete
+                    {lang("COMMON.DELETE")}
                   </div>
                 </div>
               </>

@@ -8,6 +8,7 @@ import {
   GET_ARTICLE,
   POST_LIST,
   GET_DELETED_ARTICLE,
+  UNDELETE_ARTICLE,
 } from "api/routes.js";
 import { showMessageNotification } from "utils";
 import { SET_ARTICLE_DATA } from "./types";
@@ -176,4 +177,24 @@ export const getDeletedArticles = async (payload) => {
     return Promise.resolve(response.data);
   } else return Promise.reject(response);
 };
+
+
+/****
+ * @author YLIWAY
+ * @purpose : undelete articles 
+ * @param : id
+ * 
+ */
+export const undeleteArticle = async (id) => {
+  const response = await get(
+    { serviceURL: USER_API_URL },
+    `${UNDELETE_ARTICLE}${id}`,
+    true,
+    true
+  );
+  if (response.status === 1) {
+    return Promise.resolve(response.data);
+  } else return Promise.reject(response);
+};
+
 

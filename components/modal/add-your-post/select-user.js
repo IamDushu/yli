@@ -1,13 +1,21 @@
-import React, { useState, } from 'react';
-import { AutoComplete } from 'antd';
-import { CloseSquareFilled } from '@ant-design/icons';
+import React, { useState, useEffect, } from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import CloseIcon from '@mui/icons-material/Close';
 
 const SelectUser = ({
   onSearchUser,
   onSelect,
-  handleClose
+  handleClose,
+  visible,
 }) => {
   const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    if (!visible) {
+      setOptions([]);
+    }
+  }, [visible])
 
   const handleSearch = async (value) => {
     const payload = { "page": 1, "pagesize": 20, "search": value };
@@ -38,19 +46,24 @@ const SelectUser = ({
   };
 
   return (
-    <div>
-      <AutoComplete
-        style={{
-          width: 200,
-        }}
-        autoFocus
-        onSearch={handleSearch}
-        placeholder="Search by name..."
-        className="select-user-auto-complete"
+    <div className="select-user-auto-complete-wrapper">
+      <Autocomplete
+        value={null}
+        disablePortal
         options={options}
+        sx={{ width: 200 }}
+        renderInput={(params) => <TextField
+          {...params}
+          variant="standard"
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
+          label="Search by name..."
+        />}
+        className="select-user-auto-complete"
       />
       &nbsp;
-      <CloseSquareFilled style={{fontSize: "33px"}} onClick={handleClose} />
+      <CloseIcon fontSize="small" onClick={handleClose} />
     </div>
   );
 };

@@ -21,16 +21,24 @@ export const Article = ({
     <div
       className={articleStyles["yliway-container"]}
       onClick={() => handleClick(id)}>
-      <Image
-        className={articleStyles["yliway-img"]}
-        title={heading}
-        src={imgSrc}
-        width={114}
-        height={64}
-      />
+      <div
+        className="d-flex justify-content-center align=items-center"
+        style={{ overflow: "hidden", width: "114px", height: "64px" }}>
+        <Image
+          className={articleStyles["yliway-img"]}
+          style={{ paddingTop: "8px" }}
+          title={heading}
+          src={imgSrc}
+          width={114}
+          height={64}
+        />
+      </div>
       <div className={articleStyles["yliway-content-container"]}>
         <span
-          className={articleStyles["yliway-name"]}>{`${name} - ${date}`}</span>
+          title={name ? `${name} - ${date}` : date}
+          className={articleStyles["yliway-name"]}>
+          {name ? `${name} - ${date}` : date}
+        </span>
         <h5 className={articleStyles["yliway-heading"]}>
           {heading.charAt(0).toUpperCase() + heading.slice(1)}
         </h5>

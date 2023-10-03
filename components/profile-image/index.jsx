@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
  */
 export const ProfileImage = ({
   size,
+  fontSize,
   imageUrl,
   handleClick,
   firstName,
@@ -22,9 +23,9 @@ export const ProfileImage = ({
       src={imageUrl}
       alt={`${firstName} ${lastName}`}
       onClick={handleClick}
-      sx={{ width: size, height: size, bgcolor: "#6750a4" }}
+      sx={{ width: size, height: size, bgcolor: "#6750a4", fontSize:fontSize  }}
     >
-      {` ${firstName?.charAt(0)}  ${lastName?.charAt(0)}`}
+      {`${firstName?.charAt(0)}${lastName?.charAt(0)}`}
     </Avatar>
   );
 

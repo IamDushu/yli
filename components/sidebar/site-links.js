@@ -79,7 +79,7 @@ function SiteLinks() {
               <span className="mx-2 font-12">|</span>
             </li> */}
             <li className="d-flex align-items-center mt-1">
-              <p className="copyright-text mb-0 font-12 text-gray">
+              <p className="copyright-text mb-0 font-12">
                 {lang("SIDE_BAR.YLIWAY")} {year}
               </p>
             </li>

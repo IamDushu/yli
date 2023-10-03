@@ -64,13 +64,59 @@ export default function EventCalendarWidget() {
 		setMonth(newWeekRange[newWeekRange.length - 1].month())
 	}, [])
 
+
+	const onNext = () => {
+    const newWeekRange = [];
+    const curWeekEnd = weekRange[weekRange.length - 1];
+    let newWeekStart = curWeekEnd.clone().add(1, "days");
+    const newWeekEnd = newWeekStart.clone().endOf("isoWeek");
+    while (newWeekStart.isBefore(newWeekEnd)) {
+      newWeekRange.push(newWeekStart);
+      newWeekStart = newWeekStart.clone().add(1, "days");
+    }
+    setWeekRange(newWeekRange);
+    setMonth(newWeekRange[newWeekRange.length - 1].month());
+  };
+
+  const onMonthChange = (val) => {
+		setMonth(val);
+
+		const newWeekRange = [];
+		const firstDayOfMonth = moment([year, val, 1]);
+		let startDate = firstDayOfMonth.clone().startOf('isoWeek');
+		const endDate = firstDayOfMonth.clone().endOf('isoWeek');
+		while (startDate.isBefore(endDate)) {
+			newWeekRange.push(startDate);
+			startDate = startDate.clone().add(1, 'days');
+		}
+		setWeekRange(newWeekRange);
+		setMonth(newWeekRange[newWeekRange.length - 1].month());
+	}
+
+  const onPrev = () => {
+    const newWeekRange = [];
+    const curWeekEnd = weekRange[0];
+    let newWeekStart = curWeekEnd
+      .clone()
+      .subtract(1, "days")
+      .startOf("isoWeek");
+    const newWeekEnd = newWeekStart.clone().endOf("isoWeek");
+    while (newWeekStart.isBefore(newWeekEnd)) {
+      newWeekRange.push(newWeekStart);
+      newWeekStart = newWeekStart.clone().add(1, "days");
+    }
+    setWeekRange(newWeekRange);
+    setMonth(newWeekRange[newWeekRange.length - 1].month());
+  };
+
 	return (<EventCalendarWidgetUI
 		month={month}
-		onChangeMonth={setMonth}
+		onChangeMonth={onMonthChange}
 		selectedDate={selectedDate}
 		onChangeSelectedDate={setSelectedDate}
 		weekRange={weekRange}
-		onChangeWeekRange={setWeekRange}
 		dateEvents={dateEvents}
+		onPrev={onPrev}
+		onNext={onNext}
 	/>);
 }

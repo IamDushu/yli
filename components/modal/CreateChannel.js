@@ -1,6 +1,4 @@
-import React from "react";
-import { TextAreaField, TextField } from "components/form-fields";
-import { Col, Form, Row, Modal, Card } from "react-bootstrap";
+import React, { Fragment } from "react";
 import { toggleModals } from "store/actions";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -10,10 +8,14 @@ import { useYchat } from "hooks/useYchat";
 import { CHAT_TEAM_ID } from "config";
 import { useRouter } from "next/router";
 import { createAndAddMemberInYliMeetGroup } from "store/actions/yli-meet";
+import { CustomInputField } from "components/add-post-ui/custom-text-field";
+import { Radio, Card, Grid } from "@mui/material";
+import ModalFooter from "components/yli-modal/modalFooter";
+import ModalBody from "components/yli-modal/modalBody";
 
 const CreateChannel = (props) => {
   const [lang] = useTranslation("language");
-  const { createPrivateChannel , currentChannelHandler} = useYchat();
+  const { createPrivateChannel, currentChannelHandler } = useYchat();
   const dispatch = useDispatch();
   const router = useRouter();
   const { ylimeetId } = router.query;
@@ -44,7 +46,7 @@ const CreateChannel = (props) => {
         await createAndAddMemberInYliMeetGroup(yliMeetdata).then((response) => {
           if (response.data) {
             dispatch(toggleModals({ createChannel: false, isYliMeet: false }));
-            currentChannelHandler({ id: response.data.groupId});
+            currentChannelHandler({ id: response.data.groupId });
           }
         });
         return;
@@ -54,65 +56,85 @@ const CreateChannel = (props) => {
     },
   });
   return (
-    <Form onSubmit={formik.handleSubmit}>
-      <Modal.Body>
-        <Row>
-          <Col md={12}>
-            <Form.Group>
-              <TextField
-                type="text"
-                label="Channel Name"
-                placeholder="Enter channel name"
-                formik={formik}
-                name="display_name"
-              />
-            </Form.Group>
-          </Col>
-          <Col md={12}>
-            <Card>
-              <div className="p-3 d-flex align">
-                <span className="d-inline-block mr-2">
-                  <i class="bx bxs-lock bx-sm" />
-                </span>
-                <span className="d-inline-block ">
-                  <h6>Private Channel</h6>
-                  <p>Only invited members of your connections can join</p>
-                </span>
+    <Fragment>
+      <ModalBody>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <CustomInputField
+              placeholder={lang("MESSAGE.ENTER_CHANNEL_NAME")}
+              label={lang("MESSAGE.CHANNEL_NAME")}
+              required={true}
+              defaultValue={
+                formik.values?.display_name && formik.values?.display_name
+              }
+              formik={formik}
+              textarea={true}
+              formikKey={`display_name`}
+            />
+            {formik?.touched?.display_name && formik?.errors?.display_name && (
+              <small className="error form-text">
+                {formik?.errors?.display_name}
+              </small>
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <Card style={{ margin: "12px 0px 8px 0px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  backgroundColor: "#FDF8FD",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex", padding: "8px 0px 2px 15px" }}>
+                  <span className="d-inline-block mr-2">
+                    <i class="bx bxs-lock bx-sm" />
+                  </span>
+                  <span className="d-inline-block ">
+                    <p className="mb-0 font-12">Overline</p>
+                    <p className="mb-0 font-18">Private Channel</p>
+                    <p>Only invited members of your connections can join</p>
+                  </span>
+                </div>
+                <div>
+                  <Radio
+                    checked={true}
+                    color="primary"
+                    style={{ color: "#6750A4", margin: "10px" }}
+                  />
+                </div>
               </div>
             </Card>
-          </Col>
-          <Col md={12}>
-            <Form.Group className="mt-3">
-              <TextAreaField
-                type="text"
-                label="Description"
-                placeholder="Enter description"
-                formik={formik}
-                required={props.isYliMeet && false}
-                name="purpose"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer className="custom-footer text-center d-flex border-top border-geyser justify-content-between p-3">
-        <button
-          type="button"
-          className="btn btn-btn btn-dark font-weight-semibold"
-          onClick={() =>
+          </Grid>
+          <Grid item xs={12}>
+            <CustomInputField
+              placeholder={lang("MESSAGE.ENTER_DESCRIPTION")}
+              label={lang("MESSAGE.DESCRIPTION")}
+              required={true}
+              defaultValue={formik.values?.purpose && formik.values?.purpose}
+              formik={formik}
+              textarea={true}
+              formikKey={`purpose`}
+            />
+            {formik?.touched?.purpose && formik?.errors?.purpose && (
+              <small className="error form-text">
+                {formik?.errors?.purpose}
+              </small>
+            )}
+          </Grid>
+        </Grid>
+      </ModalBody>
+      <div>
+        <ModalFooter
+          showCanel
+          cancleHandleClick={() =>
             dispatch(toggleModals({ createChannel: false, isYlimeet: false }))
           }
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="btn btn-btn btn-info font-weight-semibold m-0"
-        >
-          Create Channel
-        </button>
-      </Modal.Footer>
-    </Form>
+          performButtonTitle={lang("COMMON.CREATE_CHANNEL")}
+          performHandleClick={formik.handleSubmit}
+        />
+      </div>
+    </Fragment>
   );
 };
 

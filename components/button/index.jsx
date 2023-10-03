@@ -7,6 +7,9 @@ export const YliwayButton = ({
   primary,
   textbutton,
   primaryOutlined,
+  backgroundColor,
+  color,
+  btnType,
   disabled,
   size,
   fontWeight,
@@ -27,13 +30,12 @@ export const YliwayButton = ({
     mode = buttonStyles["yliway-button--textbutton"];
   } else if (primaryOutlined) {
     mode = buttonStyles["yliway-button--primary-outlined"];
-  } else {
   }
 
   return (
     <>
       <Button
-        type="button"
+        type= {btnType ? btnType : "button"}
         className={[
           "yliway-button",
           buttonStyles["yliway-button"],
@@ -58,7 +60,7 @@ YliwayButton.propTypes = {
 
   backgroundColor: PropTypes.string,
 
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "thin"]),
 
   label: PropTypes.string.isRequired,
 
@@ -66,7 +68,7 @@ YliwayButton.propTypes = {
 };
 
 YliwayButton.defaultProps = {
-  handleClick: PropTypes.func,
+  handleClick: () => null,
   disabled: false,
   size: "medium",
 };

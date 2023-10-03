@@ -1,5 +1,6 @@
 import { Link } from "@routes";
 import router from "next/router";
+import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -104,7 +105,21 @@ const PublishArticle = () => {
         redirectRoute = `/groups/${groupDetails.name}/${body?.groupId}`;
       }
     }
-    router.push(redirectRoute);
+
+    // POP AFTER PUBLISHED
+    Swal.fire({
+      html: '<div style="font-size: 22px; font-weight: 400; line-height: 28px; letter-spacing: 0em; text-align: center; color: #001551;">Article Published</div>',
+      imageUrl: "/assets/images/tick-modal-icon.svg",
+      imageWidth: 60,
+      imageHeight: 60,
+      showDenyButton: true,
+      confirmButtonText: lang("COMMON.VIEW"),
+      denyButtonText: lang("COMMON.BACK"),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push(redirectRoute);
+      }
+    });
   };
 
   useEffect(() => {

@@ -2,9 +2,11 @@
 .text-blue-grey {
   color: $blue-grey;
 }
+
 .load-more-color {
   color: $primary;
 }
+
 .text-mist-blue {
   color: $mist-blue;
 }
@@ -48,9 +50,11 @@
 .text-black {
   color: $black;
 }
-.text-black2{
+
+.text-black2 {
   color: $black2;
 }
+
 .text-gunmetal {
   color: $gunmetal;
 }
@@ -74,7 +78,8 @@
 .text-green-primary {
   color: $green-primary;
 }
-.text-green-dark{
+
+.text-green-dark {
   color: $green-dark;
 }
 
@@ -89,9 +94,11 @@
 .text-secondary {
   color: $secondary;
 }
-.text-subnautical{
+
+.text-subnautical {
   color: $subnautical;
 }
+
 /* all new color */
 .text-gray {
   color: $gray !important;
@@ -303,11 +310,17 @@
 .bg-secondary-lighter {
   background-color: $secondary-lighter !important;
 }
-.bg-doctor{
+
+.bg-doctor {
   background-color: #F8F9FA !important;
 }
+
 .text-secondary-purple {
   color: $secondary-purple !important;
+}
+
+.bg-haiti-12 {
+  background-color: $haiti-disable-bgcolor !important;
 }
 
 /* chart background colors - end */
@@ -320,6 +333,7 @@
 .font-10 {
   font-size: size(10);
 }
+
 .font-11 {
   font-size: size(11);
 }
@@ -418,6 +432,7 @@
 
 .font-64 {
   font-size: size(64) !important;
+
   @include media(down, $breakpoint-md) {
     font-size: size(40) !important;
   }
@@ -454,6 +469,7 @@
     font-size: size(14) !important;
   }
 }
+
 .font-lg-16 {
   @include media(down, $breakpoint-lg) {
     font-size: size(16);
@@ -567,11 +583,13 @@
     font-size: size(18);
   }
 }
+
 .font-sm-10 {
   @include media(down, $breakpoint-sm) {
     font-size: size(12) !important;
   }
 }
+
 .font-xl-18 {
   @include media(down, $breakpoint-xl) {
     font-size: size(18);
@@ -617,9 +635,11 @@
 .w-20 {
   width: 20%;
 }
-.w-28{
+
+.w-28 {
   width: 28%;
 }
+
 .w-30 {
   width: 30%;
 }
@@ -643,45 +663,57 @@
 .w-65 {
   width: 65%;
 }
+
 .w-68 {
   width: 68%;
 }
+
 .w-82 {
   width: 82%;
 }
+
 .w-50-px {
   width: size(50);
 }
-.w-80{
+
+.w-80 {
   width: 80% !important;
 }
+
 .w-80-px {
   width: size(80);
 }
+
 .w-90-px {
   width: size(90);
 }
-.w-90{
+
+.w-90 {
   width: 90% !important;
 }
+
 .w-160 {
   width: size(160) !important;
 }
 
 .w-180 {
   width: size(180);
+
   @include media(down, $breakpoint-sm) {
     width: size(120);
-   }
-}
-.w-230{
-  width:size(230);
-}
-@include media(down, $breakpoint-sm) {
-  .w-100-sm {
-    width:100% !important;
   }
 }
+
+.w-230 {
+  width: size(230);
+}
+
+@include media(down, $breakpoint-sm) {
+  .w-100-sm {
+    width: 100% !important;
+  }
+}
+
 @include media(down, $breakpoint-sm) {
   .w-100-px {
     width: size(100);
@@ -878,20 +910,27 @@
 .pt-1px {
   padding-top: size(1);
 }
-.py2{
+
+.py2 {
   padding-top: size(2) !important;
   padding-bottom: size(2) !important;
 }
-.py-8{
+
+.py-8 {
   padding-top: size(8) !important;
   padding-bottom: size(8) !important;
 }
+
 .pb-10 {
   padding-bottom: size(10);
 }
 
 .pb-20 {
   padding-bottom: size(20);
+}
+
+.padding-top-12 {
+  padding-top: $space12 !important;
 }
 
 .p-12 {
@@ -963,12 +1002,14 @@
 }
 
 // lineheight
-.li-height-104{
-  line-height: size(104) ;
+.li-height-104 {
+  line-height: size(104);
+
   @include media(down, $breakpoint-md) {
     line-height: size(40);
   }
 }
+
 .lh-font-28-38 {
   line-height: 2.375rem;
 
@@ -1090,21 +1131,25 @@ hr {
 .border-geyser {
   border-color: $geyser !important;
 }
-.border-secondary{
-  border:1px solid $secondary;
+
+.border-secondary {
+  border: 1px solid $secondary;
 }
-.border-green{
+
+.border-green {
   border: 1px solid $green-dark;
 }
+
 // Cusrsor
 .pointer {
   cursor: pointer;
 }
 
 // border-radius  
-.br-8{
+.br-8 {
   border-radius: size(8) !important;
 }
+
 .rounded-12 {
   border-radius: size(12);
 }
@@ -1112,6 +1157,7 @@ hr {
 .rounded-3 {
   border-radius: size(3);
 }
+
 .rounded-4 {
   border-radius: size(4);
 }
@@ -1163,9 +1209,11 @@ hr {
 .rounded-b-8 {
   border-radius: 0 0 size(8) size(8);
 }
+
 .rounded-b-16 {
   border-radius: 0 0 size(16) size(16);
 }
+
 // Rounded Circle
 .circle-inner-icons {
   @include border-radius($rounded-pill);
@@ -1205,10 +1253,12 @@ hr {
     color: $primary !important;
   }
 }
+
 //focus
-.focus-blue{
+.focus-blue {
   border-radius: 4px !important;
-  &:focus{
+
+  &:focus {
     border: 1px solid $primary !important;
     box-shadow: 0 0 0 1px $primary !important;
   }
@@ -1266,6 +1316,10 @@ hr {
 .w-h-24 {
   width: size(24);
   height: size(24);
+}
+.w-h-30 {
+  width: size(30);
+  height: size(30);
 }
 
 .w-h-32 {
@@ -1505,6 +1559,7 @@ hr {
 // paggination
 
 .custom-pagination {
+
   .rc-pagination-item,
   .rc-pagination-prev,
   .rc-pagination-next {
@@ -2367,9 +2422,11 @@ $border-color_4: transparent;
 .border-bottom-blueberry-whip {
   border-bottom: 1px solid $blueberry-whip;
 }
-.border-bottom-dark{
+
+.border-bottom-dark {
   border-bottom: 1px solid $dark;
 }
+
 .bg-darken {
   background: darken($navy, 5%);
 }
@@ -2480,12 +2537,14 @@ $border-color_4: transparent;
   width: 74px;
   height: 42px;
 }
-.w-h-100-sm{
-   @include media(down, $breakpoint-sm) {
+
+.w-h-100-sm {
+  @include media(down, $breakpoint-sm) {
     width: 110px;
     height: 110px;
   }
 }
+
 .w-h-120-68 {
   width: 120px;
   height: 68px;
@@ -2787,31 +2846,41 @@ $border-color_4: transparent;
     width: 100%;
     background: none;
   }
+
   .collapse {
     border: $border-width solid $geyser;
     border-top: none;
   }
 }
 
-.vertical-middle{
+.vertical-middle {
   vertical-align: middle !important;
 }
-.b-dark{
+
+.b-dark {
   border: 1px solid $dark !important;
 }
-.hover-primary{
-    &:hover,&:focus,&:active{
-      background-color: $primary !important;
-      color: white !important;
-      transition: 0.3s;
-    }
+
+.hover-primary {
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $primary !important;
+    color: white !important;
+    transition: 0.3s;
+  }
 }
-.active-border-blue{
-  &:active,&:focus,&:hover{
-    border:1px solid $primary !important;
+
+.active-border-blue {
+
+  &:active,
+  &:focus,
+  &:hover {
+    border: 1px solid $primary !important;
     outline: 0;
   }
- 
+
 }
 
 .text-counter {
@@ -2821,7 +2890,7 @@ $border-color_4: transparent;
   color: #1C1B1E;
 }
 
-.flex-row-center{
+.flex-row-center {
   display: flex;
   justify-content: center;
 }

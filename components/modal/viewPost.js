@@ -5,7 +5,7 @@ import PostFooter from "components/dashboard/Posts/PostFooter";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toggleModals } from "store/actions";
 import { postImageHandler, timeAgo } from "utils";
-import PostVideo from "components/dashboard/Posts/PostVideo";
+import { Avatar, Stack, Typography } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -174,7 +174,10 @@ export default function ViewPost({
         <Box
           sx={{ ...style }}
           className={
-            viewpostData?.postDetails?.imageURL === null && viewpostData?.postDetails?.videoURL === null ? "no-image" : "post-detail" 
+            viewpostData?.postDetails?.imageURL === null &&
+            viewpostData?.postDetails?.videoURL === null
+              ? "no-image"
+              : "post-detail"
           }
         >
           {/* Post Image: viewpostData?.postDetails?.videoURL?.length === undefined ? "no-image" */}
@@ -182,42 +185,58 @@ export default function ViewPost({
             className={"post-image"}
             style={{
               display:
-              viewpostData?.postDetails?.imageURL && viewpostData?.postDetails?.videoURL === null 
-              ? "no-image" :"block",
+                viewpostData?.postDetails?.imageURL &&
+                viewpostData?.postDetails?.videoURL === null
+                  ? "no-image"
+                  : "block",
             }}
-          >          
-        {viewpostData?.postDetails?.imageURL !== null ? (
-        <img src={viewpostData?.postDetails?.imageURL} alt="Post" />
-        ):null}
-        {viewpostData?.postDetails?.videoURL !== null ? (
-          <video controls>
-            <source src={viewpostData?.postDetails?.videoURL} type="video/mp4"/>
-          </video>          
-        ) : null}
+          >
+            {viewpostData?.postDetails?.imageURL !== null ? (
+              <img src={viewpostData?.postDetails?.imageURL} alt="Post" />
+            ) : null}
+            {viewpostData?.postDetails?.videoURL !== null ? (
+              <video controls>
+                <source
+                  src={viewpostData?.postDetails?.videoURL}
+                  type="video/mp4"
+                />
+              </video>
+            ) : null}
           </div>
           {/* Sidebar */}
           <div className={"post-side"}>
-            <div className={"post-header"}>
-              <img
-                className={"profile-picture"}
+            <Stack
+              width={"100%"}
+              direction={"row"}
+              gap={2}
+              alignItems={"center"}
+            >
+              <Avatar
+                sx={{ width: 56, height: 56 }}
                 src={apostData.userProfilePicture}
                 alt="Profile"
               />
-              <div className={"user-info"}>
-                <p className={"username"}>
-                  {apostData.username} {""}{" "}
-                  {viewpostData?.postDetails?.userDetails?.lastName
-                    ? viewpostData?.postDetails?.userDetails?.lastName
-                    : ""}
-                </p>
+              <Stack gap={0} width={"100%"}>
+                <Stack direction={"row"} alignItems={"center"} width={"100%"}>
+                  <Box flex={1}>
+                    <Typography variant="titleMedium">
+                      {apostData.username} {""}{" "}
+                      {viewpostData?.postDetails?.userDetails?.lastName
+                        ? viewpostData?.postDetails?.userDetails?.lastName
+                        : ""}
+                    </Typography>
+                  </Box>
+                  <Typography variant="labelSmall">
+                    {timeAgo(viewpostData?.postDetails?.createdAt)} ago
+                  </Typography>
+                </Stack>
                 {apostData.location && (
-                  <p className={"location"}>{apostData.location}</p>
+                  <Typography variant={"bodyMedium"}>
+                    {apostData.location}
+                  </Typography>
                 )}
-                <p className={"timestamp"}>
-                  {timeAgo(viewpostData?.postDetails?.createdAt)} ago
-                </p>
-              </div>
-            </div>
+              </Stack>
+            </Stack>
             <div className={"post-actions"}>
               <p
                 className={"post-details-d"}

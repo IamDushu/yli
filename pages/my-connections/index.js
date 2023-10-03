@@ -184,11 +184,10 @@ const MyConnection = () => {
             {lang("CONNECTIONS.SENT_CONNECTIONS")}
           </Tab>
         </Tabs>
-        <div className="tab-body" style={{ padding: "0 1.5rem 1.5rem" }}>
+        <div className="tab-body" style={{ padding: "0 1.5rem 0" }}>
           {getTabBody(tabKey)}
         </div>
       </Card>
-      {showPeopleYouMayKnow && <PeopleYouMayKnow />}
     </RightSidebarLayout>
   );
 };

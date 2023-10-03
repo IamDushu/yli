@@ -1,4 +1,5 @@
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { Box, IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 
 export default function PostComment({
@@ -21,12 +22,10 @@ export default function PostComment({
   }
 
   return (
-    <Button
-      color="inherit"
-      onClick={handleComment}
-      startIcon={<ChatBubbleOutlineIcon />}
-    >
-      {showCounter && totalCount}
-    </Button>
+    <Box>
+      <IconButton onClick={handleComment} sx={{ flex: "none" }}>
+        <ChatBubbleOutlineIcon />
+      </IconButton>
+    </Box>
   );
 }

@@ -200,12 +200,15 @@ const CommentInput = ({
           right={16}
           top={10}
         >
-          <IconButton onClick={() => setAddEmoji(!addEmoji)}>
+          <IconButton size="small" onClick={() => setAddEmoji(!addEmoji)}>
             <AddReactionOutlinedIcon />
           </IconButton>
           {!commentImage && (
             <>
-              <IconButton onClick={() => inputFileRef.current.click()}>
+              <IconButton
+                size="small"
+                onClick={() => inputFileRef.current.click()}
+              >
                 <AddPhotoAlternateOutlinedIcon />
               </IconButton>
 

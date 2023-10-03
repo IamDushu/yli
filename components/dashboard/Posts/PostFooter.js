@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   likePost,
@@ -17,7 +17,7 @@ import { getSearchResults } from "store/actions/search-result";
 import PostComment from "./PostComment";
 import Share from "./Share";
 import AddToGM from "./AddToGM";
-import { Stack } from "@mui/material";
+import { CardActions, Stack, Typography } from "@mui/material";
 
 /******************** 
 @purpose : Used for Post Footer 
@@ -226,68 +226,65 @@ const PostFooter = ({
   };
 
   return (
-    <Fragment>
-      <div className="px-3 py-2 post-footer-container">
-        <Stack direction={"row"} justifyContent={"space-between"}>
-          <Stack direction="row" spacing={1}>
-            {/* Like Post Section */}
-            <div className="reaction-icons-sections post-reactions d-flex align-items-center p-0 mb-md-0 mb-0">
-              <Reactions
-                showCounter
-                eventType={eventType}
-                handleClickEvent={handleClickEvent}
-                totalCount={reactionCount}
-              />
-              <a
-                className="text-body-12 font-weight-semibold"
-                onClick={() => {
-                  dispatch(
-                    postLikeReactionData({
-                      page: 1,
-                      pageSize: 10,
-                      postId: postId || postDetails?.id,
-                    })
-                  );
-                  postLikesData?.rows &&
-                    dispatch(toggleModals({ likelistcounter: true }));
-                }}
-              >
-                <span className="text-gray-darker font-14 font-weight-semibold">
-                  {reactionCount}
-                </span>
-              </a>
-            </div>
-
-            {/* Comment Post Section */}
-            <PostComment
+    <>
+      <CardActions>
+        <Stack direction={"row"} gap={1} flex={1} alignItems={"center"}>
+          <Stack direction={"row"} alignItems={"center"}>
+            <Reactions
               showCounter
+              eventType={eventType}
+              handleClickEvent={handleClickEvent}
+              totalCount={reactionCount}
+            />
+            <Typography
+              variant="labelSmall"
+              onClick={() => {
+                dispatch(
+                  postLikeReactionData({
+                    page: 1,
+                    pageSize: 10,
+                    postId: postId || postDetails?.id,
+                  })
+                );
+                postLikesData?.rows &&
+                  dispatch(toggleModals({ likelistcounter: true }));
+              }}
+            >
+              {reactionCount}
+            </Typography>
+          </Stack>
+
+          {/* Comment Post Section */}
+          <Stack direction={"row"} alignItems={"center"}>
+            <PostComment
               totalCount={commentCount}
               postDetails={postDetails}
               currentUserInfo={currentUserInfo}
               handleUserComments={() => handleUserComments(postId)}
             />
-
-            {/* Share Post Section */}
-            <Share handleClick={shareModalHandler} />
-
-            {/* Add to GM Post Section */}
-            {!isPostAddedGM && (
-              <AddToGM
-                handleClick={() => addToGMclickFunc(instituteId, postDetails)}
-              />
-            )}
+            <Typography variant="labelSmall"> {commentCount}</Typography>
           </Stack>
-          <div className="d-flex align-items-center reaction-icons-sections">
-            {/* Post Dropdown Section */}
-            <PostFooterDropdown
-              postData={postData}
-              userInfo={currentUserInfo}
-              type={type}
-              getAllPost={getAllPost}
+
+          {/* Share Post Section */}
+          <Share handleClick={shareModalHandler} />
+
+          {/* Add to GM Post Section */}
+          {!isPostAddedGM && (
+            <AddToGM
+              handleClick={() => addToGMclickFunc(instituteId, postDetails)}
             />
-          </div>
+          )}
         </Stack>
-      </div>
+
+        {/* Post Dropdown Section */}
+        <PostFooterDropdown
+          postData={postData}
+          userInfo={currentUserInfo}
+          type={type}
+          getAllPost={getAllPost}
+        />
+      </CardActions>
+
       {isDisplayCommentsPage ||
       activityType === "comment" ||
       activityType === "commentReply" ||
@@ -310,7 +307,7 @@ const PostFooter = ({
           // commentCount={postData.postDetails.commentCount}
         />
       ) : null}
-    </Fragment>
+    </>
   );
 };
 

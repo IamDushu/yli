@@ -62,6 +62,8 @@ module.exports = {
   TERMS_AND_CONDITION_IT: "Cms/page/general-conditions-it",
   COOKIES_POLICY: "Cms/page/cookies-policy",
   COOKIES_POLICY_IT: "Cms/page/cookies-policy-it",
+  GETTING_STARTED: "Cms/page/getting-started",
+  GETTING_STARTED_IT: "Cms/page/getting-started-it",
   INVESTOR_RELATION: "Cms/page/investor-relations",
   INVESTOR_RELATION_IT: "Cms/page/investor-relations-it",
   BRAND_POLICY: "Cms/page/brand-policy",
@@ -108,7 +110,8 @@ module.exports = {
   ARTICLE_LIST: "article/list",
   DELETE_ARTICLE: "article/delete/",
   GET_ARTICLE: "article/",
-  GET_DELETED_ARTICLE:"article/deleted/list",
+  GET_DELETED_ARTICLE: "article/deleted/list",
+  UNDELETE_ARTICLE: "article/undelete/",
 
   // Connections
   PEOPLE_YOU_MAY_KNOW_LIST: "connections/peopleYouMayKnow",
@@ -129,8 +132,8 @@ module.exports = {
   RECENTLY_ADDED_TO_GM: "recentActivities",
   MOST_FOLLOWED_CONTENT: "mostFollowedContent",
   LATEST_ARTICLES: "/article/latest/list",
-  MOST_FOLLOWED_CIRCLES: "Topics/mostActive/list",
-  MOST_FOLLOWED_TOPICS: "Circles/mostActive/list",
+  MOST_FOLLOWED_CIRCLES: "Circles/mostActive/list",
+  MOST_FOLLOWED_TOPICS: "Topics/mostActive/list",
   GROWTH_PARTNERS: "growthConnections/peopleYouKnow",
   GROWTH_PARTNERS_LIST: "growthConnections/list",
   GROWTH_PARTNERS_ACTIVITY_LIST:

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@components/layout";
 import WithAuth from "components/with-auth/with-auth";
 import { useDispatch, useSelector } from "react-redux";
+import Box from '@mui/material/Box';
 import {
   Card,
   CardContent,
@@ -264,7 +265,7 @@ function SearchResult() {
 
   const toggleClass = (item) => {
     if (filteredList.includes(item)) {
-      return "model-common-listing bg-dark-list";
+      return "model-common-listing bg-haiti-12";
     }
     return "model-common-listing bg-white";
   };
@@ -289,37 +290,40 @@ function SearchResult() {
 
   return (
     <Layout>
-      <div className="inner-wrapper search-result-box inner-left-full-orsidebar">
+      <div className="inner-wrapper search-result-box inner-left-full-orsidebar pt-0">
         <Grid
           container
           maxWidth="1160px"
           marginLeft={"auto"}
           marginRight={"auto"}
-          paddingLeft={{ sm: 2, xs: 0 }}
-          paddingRight={{ sm: 2, xs: 0 }}
+          paddingLeft={{ sm: 2, xs: 1 }}
+          paddingRight={{ sm: 2, xs: 1 }}
         >
-          <Grid item md={3} xs={12} paddingRight={{ md: "10px", sm: 0 }}>
+          <Grid item md={3} xs={12} >
             {/* Left view */}
             <Stack
+              sx={{ display: { md: 'none', xs: "block" }}}
               direction="row"
               spacing={1}
               style={{ overflow: "scroll" }}
-              className="d-lg-none d-xl-none mb-3 px-2"
+              className=" mb-3 px-2"
+              paddingTop={{ sm: "16px" }}
             >
               {filterList.map((item, i) => {
                 return <Chip label={item.name} />;
               })}
             </Stack>
-            <div
-              className={`profile-right-bar common-searchbar px-6 d-none d-xl-block d-lg-block ${
-                !searchResults ? "dimmed" : ""
-              }`}
-              style={{ width: "264px" }}
+            <Box
+              sx={{ display: { md: 'block', xs: "none" } }}
+              className={`profile-right-bar common-searchbar px-6  ${!searchResults ? "dimmed" : ""
+                }`}
             >
               <FormControl className="mb-0 w-100 bg-white">
                 <TextField
                   type="text"
-                  placeholder={lang("COMMON.SEARCH")}
+                  placeholder={`${lang(
+                    "COMMON.SEARCH_RESULTS"
+                  )} '${searchText}'`}
                   onChange={(e) => handleSearchFilter(e)}
                   InputProps={{
                     startAdornment: (
@@ -327,6 +331,7 @@ function SearchResult() {
                         <SearchIcon style={{ color: "black" }} />
                       </InputAdornment>
                     ),
+                    style: { borderRadius: "0" },
                   }}
                   disabled={searchResults}
                 />
@@ -334,12 +339,16 @@ function SearchResult() {
               {/* <PerfectScrollbar> */}
               {filterList.length ? (
                 <ul
-                  className="list-unstyled model-listing-box"
+                  className="list-unstyled model-listing-box bg-white"
                   style={{ borderRadius: "0px" }}
                 >
                   {filterList.map((item, i) => {
                     return (
-                      <li className={toggleClass(item.name)} key={i}>
+                      <li
+                        className={toggleClass(item.name)}
+                        style={{ borderBottom: "0" }}
+                        key={i}
+                      >
                         <div className="custom-checkbox checkbox-blue d-flex justify-content-between align-items-center">
                           <div className=" d-flex justify-content-between align-items-center">
                             <PermIdentityIcon style={{ color: "#49454E" }} />
@@ -387,7 +396,7 @@ function SearchResult() {
               <div className="footer-relative">
                 <SiteLinks />
               </div>
-            </div>
+            </Box>
 
             {/* <div
                     className="bg-white border border-geyser font-weight-semibold rounded-8 font-12 px-2 py-12 d-inline-block text-gary mb-3"
@@ -405,7 +414,7 @@ function SearchResult() {
                   </div> */}
           </Grid>
           {/* right blog section */}
-          <Grid item md={9} xs={12} paddingLeft={{ md: "6px", sm: 0 }}>
+          <Grid item md={9} xs={12} paddingLeft={{ md: "48px", sm: 0 }} paddingTop={{ md: "24px", sm: 0 }}>
             <div className="profile-right-bar">
               <People
                 lang={lang}
@@ -521,12 +530,12 @@ function SearchResult() {
                   <Card
                     className="mb-10"
                     infinite-scroll-component__outerdiv
-                    // style={{ backgroundColor: "transparent", border: "none" }}
+                  // style={{ backgroundColor: "transparent", border: "none" }}
                   >
                     <CardContent
                       className="px-0"
                       infinite-scroll-component__outerdiv
-                      // style={{ backgroundColor: "transparent", border: "none" }}
+                    // style={{ backgroundColor: "transparent", border: "none" }}
                     >
                       <h3
                         className="h6 mb-0 px-3 py-2"
@@ -556,7 +565,9 @@ function SearchResult() {
                           <div className="mb-2 font-weight-normal">
                             <p className="font-22 mb-0">
                               {lang("GLOBAL_SEARCH.NO_RESULT")}
-                              <span className="font-italic "> Abracadabra</span>
+                              <span className="font-italic ">
+                                {lang("COMMON.ABRACADABRA")}
+                              </span>
                             </p>
 
                             <p className="font-22">
@@ -566,7 +577,7 @@ function SearchResult() {
 
                           <img
                             src="/assets/images/no-result-new.svg"
-                            alt="No result found"
+                            alt={lang("GLOBAL_SEARCH.NO_RESULT")}
                             className="mb-5"
                           />
                         </Grid>

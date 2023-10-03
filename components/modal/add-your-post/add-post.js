@@ -34,6 +34,7 @@ import reactMentionsStyle from "./react-mention-style";
 import { AssistChips } from "components/assist-chips";
 import { PostOwner } from "components/post-owner";
 import { ARTICLE } from "routes/urls";
+import { MentionUserUi } from "components/add-post-ui/mention-user-ui";
 
 /*******************   
 @purpose : User Add post
@@ -499,6 +500,7 @@ const AddPost = ({modelKey}) => {
           res.data.map((user) => ({
             display: user.name + "~+~" + user.avatar,
             id: user.userId,
+            currentPosition:user.currentPosition || "",
           }))
         )
         .then(callback);
@@ -670,7 +672,7 @@ const AddPost = ({modelKey}) => {
           <Form.Group className="mb-0 position-relative">
             <Form.Label></Form.Label>
 
-            <div className="position-relative post-view">
+            <div className="position-relative post-view mentions-tag-box">
               <MentionsInput
                 className="mentions-box"
                 inputRef={descriptionRef}
@@ -713,44 +715,28 @@ const AddPost = ({modelKey}) => {
                   trigger="@"
                   data={fetchTagUsers}
                   markup="$$$____id__~~~____display__$$$~~~"
-                  style={{
-                    backgroundColor: "#daf4fa",
-                  }}
                   renderSuggestion={(suggestion) => (
-                    <div className="d-flex mt-2">
-                      <img
-                        className="user-profile-pic rounded-pill "
-                        src={
-                          loaded
-                            ? suggestion.display.split("~+~")[1]
-                            : "/assets/images/user-no-img.jpg"
-                        }
-                        onError={(e) =>
-                          onImageError(
-                            e,
-                            "profile",
-                            suggestion.display.split("~+~")[0]
-                          )
-                        }
-                        onLoad={() => {
-                          setLoaded(true);
-                        }}
-                        height={50}
-                        width={50}
+                    <>
+                      <MentionUserUi
+                        imageUrl={suggestion.display.split("~+~")[1]}
+                        userName={suggestion.display.split("~+~")[0]}
+                        currentPosition={suggestion.currentPosition || ""}
                       />
-                      <div className="d-flex pl-2 pt-3">
-                        {suggestion.display.split("~+~")[0]}
-                      </div>
-                    </div>
+                    </>
                   )}
                 />
                 <Mention
                   trigger="#"
                   data={fetchUsers}
                   markup="$$$$____id__~~~____display__$$$~~~"
-                  style={{
-                    backgroundColor: "#daf4fa",
-                  }}
+                  renderSuggestion={(suggestion) => (
+                    <>
+                      <MentionUserUi
+                        isTag={true}
+                        tagName={suggestion.display}
+                      />
+                    </>
+                  )}
                 />
               </MentionsInput>
             </div>
@@ -828,25 +814,27 @@ const AddPost = ({modelKey}) => {
           </Form.Group>
           <div>
             <div style={{ display: "flex", marginBottom: "5px" }}>
-              {false && <div
-                className="pointer"
-                style={{
-                  display: "flex",
-                  marginRight: "15px",
-                  alignItems: "center",
-                }}
-              >
-                {/* <i
+              {false && (
+                <div
+                  className="pointer"
+                  style={{
+                    display: "flex",
+                    marginRight: "15px",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* <i
                   onClick={() => setAddEmoji(!addEmoji)}
                   className="bx bx-smile"
                 ></i> */}
-                <span
-                  className="pointer"
-                  onClick={() => setAddEmoji(!addEmoji)}
-                >
-                  <img src="assets/images/create-post-emoji-icon.svg" />
-                </span>
-              </div>}
+                  <span
+                    className="pointer"
+                    onClick={() => setAddEmoji(!addEmoji)}
+                  >
+                    <img src="assets/images/create-post-emoji-icon.svg" />
+                  </span>
+                </div>
+              )}
               <div>
                 {/* <Button
                   variant="btn text-uppercase text-info p-0"

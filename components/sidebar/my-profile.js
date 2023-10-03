@@ -71,15 +71,15 @@ const MyProfile = () => {
   const upgradeUser = (type) => {
     return (
       <div
+        className="mb-4 align-items-center d-flex"
         style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          marginBottom: "0.5rem",
-          marginRight: "1rem",
+          paddingLeft: '19px',
+          paddingRight: '19px',
+          marginTop: '18px'
         }}>
-        <div className="updgrade-profile  px-2">
+        <div className="">
           <a
-            className="text-center font-14 font-weight-bold text-secondary-purple"
+            className="text-center font-14 font-weight-bold text-secondary-purple yliway-btn-custom-space"
             onClick={() =>
               router.replace({
                 pathname: ACCOUNTS,
@@ -95,16 +95,9 @@ const MyProfile = () => {
           </a>
         </div>
         <div
-          style={{ marginTop: "1.5rem",marginLeft: "1rem", cursor: "pointer" }}
+          style={{ cursor: "pointer" }}
           onClick={() => dispatch(toggleModals({ addcredit: true }))}>
           <span className="add-credit-btn">
-            {/* style={{
-               color: "#6750A4",
-               fontSize: "14px",
-               fontStyle: "normal",
-               fontWeight: 500,
-               lineHeight: "20px",
-             }} */}
             {lang("RIGHT_SIDEBAR.OTHER_VIEWS.ADD_CREDITS")}
           </span>
         </div>
@@ -121,17 +114,16 @@ const MyProfile = () => {
         <CardMedia
           component="div"
           style={{
-            backgroundImage: `url(${
-              profileBgURL ||
+            backgroundImage: `url(${profileBgURL ||
               "../../assets/images/dashboard/cover-background-2.jpg"
-            })`,
+              })`,
           }}
           className="position-relative user-cover-box">
           <div className="user-profile-pic rounded-pill">
             <Link route={`/profile/${profileId}`}>
               <div title={getFullName(userInfo)}>
                 <ProfileImage
-                  size="120px"
+                  size="96px"
                   imageUrl={profilePicURL}
                   firstName={firstName}
                   lastName={lastName}
@@ -154,78 +146,75 @@ const MyProfile = () => {
           </div>
         </CardMedia>
         {/* position */}
-        <div className="px-3 pt-xl-0 pt-3">
-          <div className="text-center pt-3 pointer">
+        <div className="px-4 pt-xl-0 pt-2">
+          <div className="text-center pointer" style={{
+            paddingTop: '7px'
+          }}>
             <Link route={`/profile/${profileId}`}>
-              {/* <h6 className="customTypography">{getFullName(userInfo)}</h6> */}
-              <Typography variant="h6" className="profile-name">
+              <Typography variant="h6" className="profile-name" sx={{ marginBottom: "7px" }}>
                 {getFullName(userInfo)}
               </Typography>
             </Link>
-            <p className="current-position">{currentPosition ?? " "}</p>
+            {/* <p className="current-position">{currentPosition ?? " "}</p> */}
+            <Typography variant="body1" className="current-position" sx={{ marginBottom: "16px" }}>
+              {currentPosition ?? " "}
+            </Typography>
           </div>
         </div>
         {/* data */}
-        <div style={{ padding: "0px 24px 8px 16px" }}>
+        <div>
           <ul className="listing-section listing-content-between border-first-0 py-sm">
-            <li className="listing-box pt-12 pb-2">
+            <li className="listing-box pl-3 pr-4" style={{ paddingTop: '2.5px', paddingBottom: '2.5px' }}>
               <Link route={`/my-connections?tab=my-connection`}>
                 <div
                   title={lang("MY_PROFILE.MY_CONNECTIONS")}
                   className="d-flex align-items-center w-100  pointer  list-item">
                   <Icon iconName="addConnectionIcon" />
-                  <span style={{ paddingLeft: "6px" }}>
+                  <span className="flex-grow-1 mx-2 d-block">
                     {lang("MY_PROFILE.MY_CONNECTIONS")}
                   </span>
-
-                  <div className="ml-auto">
-                    <span className="count">
-                      {countData?.totalConnections
-                        ? compactNumber(countData?.totalConnections, 2) +
-                          (countData?.totalConnections > 100 ? "+" : "")
-                        : 0}
-                    </span>
-                  </div>
+                  <span className="count">
+                    {countData?.totalConnections
+                      ? compactNumber(countData?.totalConnections, 2) +
+                      (countData?.totalConnections > 100 ? "+" : "")
+                      : 0}
+                  </span>
                 </div>
               </Link>
             </li>
-            <li className="listing-box pt-0 pb-2">
+            <li className="listing-box pl-3 pr-4" style={{ paddingTop: '2.5px', paddingBottom: '2.5px' }}>
               <Link to="/people-viewed">
                 <div
                   title={lang("MY_PROFILE.PEOPLE_VIEWED")}
                   className="d-flex align-items-center w-100  pointer  list-item">
                   <Icon iconName="viewProfileIcon" />
-                  <span style={{ paddingLeft: "6px" }}>
+                  <span className="flex-grow-1 mx-2 d-block">
                     {lang("MY_PROFILE.PEOPLE_VIEWED")}
                   </span>
-                  <div className="ml-auto">
-                    <span className="count">
-                      {countData?.totalProfileViewed
-                        ? compactNumber(countData?.totalProfileViewed, 2) +
-                          (countData?.totalProfileViewed > 100 ? "+" : "")
-                        : 0}
-                    </span>
-                  </div>
+                  <span className="count">
+                    {countData?.totalProfileViewed
+                      ? compactNumber(countData?.totalProfileViewed, 2) +
+                      (countData?.totalProfileViewed > 100 ? "+" : "")
+                      : 0}
+                  </span>
                 </div>
               </Link>
             </li>
-            <li className="listing-box pt-0 pb-12">
+            <li className="listing-box pl-3 pr-4" style={{ paddingTop: '2.5px', paddingBottom: '2.5px' }}>
               <Link route={`/my-connections?tab=my_growth_connection`}>
                 <div
                   title={lang("CONNECTIONS.MY_GROWTH_CONNECTIONS")}
                   className="d-flex align-items-center w-100  pointer  list-item">
                   <Icon iconName="growthConnectionIcon" />
-                  <span style={{ paddingLeft: "6px" }}>
+                  <span className="flex-grow-1 mx-2 d-block">
                     {lang("CONNECTIONS.MY_GROWTH_CONNECTIONS")}
                   </span>
-                  <div className="ml-auto">
-                    <span className="count">
-                      {countData?.totalGrowthConnections
-                        ? compactNumber(countData?.totalGrowthConnections, 2) +
-                          (countData?.totalGrowthConnections > 100 ? "+" : "")
-                        : 0}{" "}
-                    </span>
-                  </div>
+                  <span className="count">
+                    {countData?.totalGrowthConnections
+                      ? compactNumber(countData?.totalGrowthConnections, 2) +
+                      (countData?.totalGrowthConnections > 100 ? "+" : "")
+                      : 0}{" "}
+                  </span>
                 </div>
               </Link>
             </li>

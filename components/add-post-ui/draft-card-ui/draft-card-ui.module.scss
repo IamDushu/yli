@@ -1,6 +1,7 @@
 .draft-card-ui-container {
     display: flex;
     gap: 16px;
+    padding: 12px 0px;
 
     .created-on-block {
         display: flex;
@@ -31,7 +32,7 @@
     .article-subtitle-block {
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 0px;
         margin-bottom: 5px;
 
         .article-title {
@@ -64,7 +65,7 @@
 
     .right-block {
         display: flex;
-        gap: 4px;
+        gap: 8px;
 
         .right-article-footer {
             display: flex;
@@ -103,4 +104,12 @@
             }
         }
     }
+}
+
+.border-top-divider {
+    border-top: 1px solid #D1D5DB;
+}
+
+.border-bottom-divider {
+    border-bottom: 1px solid #D1D5DB;
 }

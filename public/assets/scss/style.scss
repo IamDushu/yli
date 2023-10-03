@@ -93,11 +93,11 @@ html {
 }
 
 .main-layout {
-  margin-top: size(68);
+  margin-top: size(78);
   min-height: calc(100vh - 369px);
 
   @include media(down, $breakpoint-xl) {
-    margin-top: size(48);
+    margin-top: size(69);
   }
 }
 
@@ -106,7 +106,7 @@ html {
   background-color: $body-bg;
 
   @include media(down, $breakpoint-xl) {
-    margin-top: size(25);
+    // margin-top: size(25);
   }
 
   .card {
@@ -625,3 +625,4 @@ html {
 input#formSearch::placeholder {
   color: #77838f;
 }
+

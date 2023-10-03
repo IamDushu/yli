@@ -22,14 +22,15 @@ const LatestArticle = () => {
   }, []);
 
   const handleClick = (id) => {
-    router.push(`/article/view/${"8c92c1ad-98f1-4067-9cee-02c6ca136d06"}`);
+    router.push(`/article/view/${id}`);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <div className="mb-4 followed-content-box">
         <Card
-          className="rounded-0 border-0 border-bottom-dark-2"
+          className="rounded-0"
+          sx={{ boxShadow: 3 }}
           style={{ height: "auto" }}>
           <CardHeader
             className="d-flex border-radius-0 border-bottom border-geyser py-2"
@@ -52,18 +53,20 @@ const LatestArticle = () => {
             }
           />
 
-          <CardContent className="px-3 pb-0">
+          <CardContent className="px-3 pb-0" style={{ paddingTop: "12px" }}>
             {latestArticles?.length > 0 &&
               latestArticles?.map((article, index) => (
-                <div className="list-spacing py-12" key={index}>
+                <div className="list-spacing pb-12" key={index}>
                   <Article
-                    id={article?.id}
+                    id={article?.newsFeedId}
                     redirectLink={`/article/view/${article?.id}`}
                     imgSrc={
                       article?.imageURL ?? "/assets/images/video-Thumbnail.svg"
                     }
                     handleClick={handleClick}
-                    name="Eleanor Rigby"
+                    name={`${article?.createdBy?.firstName ?? ""} ${
+                      article?.createdBy?.lastName ?? ""
+                    }`}
                     date={moment(article?.createdAt).format("DD/MM/YY h A")}
                     heading={article?.title}
                     text={article?.subTitle}

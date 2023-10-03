@@ -94,20 +94,20 @@
       height: auto;
 
       .listing-box.active {
-        background-color: rgba($info, 0.06);
+        background-color: rgba($primary-violet, 0.06);
       }
     }
   }
 }
 
 .chatters-list {
-  width: size(280);
+  width: size(296);
   border-right: 1px solid $geyser;
 
   .listing-box {
     &:hover {
       cursor: pointer;
-      background-color: rgba($info, 0.08);
+      background-color: rgba($primary-violet, 0.08);
     }
   }
 
@@ -554,7 +554,7 @@
 }
 
 .active-chat, .bg-unread-message {
-  background: rgba($info, 0.08);
+  background: rgba($primary-violet, 0.10);
 }
 
 .float-chat-container,
@@ -671,7 +671,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: $primary;
+    background-color: $primary-violet;
     opacity: 0;
     transition: $transition-base;
   }

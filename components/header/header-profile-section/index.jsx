@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 export const HeaderProfile = ({
   handleClick,
   imageUrl,
+  firstName,
+  lastName,
   onContextMenu,
   onError,
 }) => {
@@ -50,6 +52,8 @@ export const HeaderProfile = ({
       >
         <ProfileImage
           imageUrl={imageUrl}
+          firstName={firstName}
+          lastName={lastName}
           handleClick={handleClick}
           size="small"
           onContextMenu={onContextMenu}

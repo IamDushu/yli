@@ -31,6 +31,7 @@ export const SearchBar = ({
           onChange={handleInputChange}
           autoComplete={autoComplete}
           onFocus={onFocus}
+          onClick={handleClickEvent}
         />
         <img
           className={searchBarStyles["search-icon"]}

@@ -1,14 +1,14 @@
 import { GMIcon } from "icons/index";
 import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import PropTypes from "prop-types";
+import { Box } from "@mui/material";
 export default function AddToGM({ handleClick }) {
   return (
-    <Tooltip title="GM">
+    <Box>
       <IconButton color="primary" onClick={handleClick}>
         <GMIcon />
       </IconButton>
-    </Tooltip>
+    </Box>
   );
 }
 

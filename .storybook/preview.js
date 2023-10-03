@@ -1,11 +1,13 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { withThemeFromJSXProvider } from "@storybook/addon-styling";
+import theme from "../config/theme";
 
-export const decorators = [
-  withThemeFromJSXProvider([
-    { Provider: ThemeProvider, GlobalStyles: CssBaseline },
-  ]),
-];
+export const withMuiTheme = (Story) => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Story />
+  </ThemeProvider>
+);
+export const decorators = [withMuiTheme];
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {

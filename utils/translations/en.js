@@ -83,6 +83,13 @@ export const en = {
   },
   MESSAGE: {
     MESSAGING: "Messaging",
+    FIND_CHANNEL: "Find Channel",
+    FIND_CHANNEL_DESCRIPTION: "Type to find a channel.",
+    CREATE_PRIVATE_CHANNEL: "Create New Private Channel",
+    CHANNEL_NAME: "Channel Name",
+    ENTER_CHANNEL_NAME: "Enter channel name",
+    DESCRIPTION: "Description",
+    ENTER_DESCRIPTION: "Enter Description",
     SEARCH_CHANNELS: "Search Channel",
     SEARCH_MESSAGES: "Search Message",
     SIMPLE_SEARCH: "Search...",
@@ -101,6 +108,9 @@ export const en = {
     CHECK_SPELL: "Check spelling or try another search.",
     DELETE_MESSAGE: "Are you sure you want to delete this chat ?",
     REMOVE_MESSAGE: "Are you sure you want to remove this chat ?",
+    DELETE_CHAT_TITLE: "Confirm Message Delete",
+    DELETE_CHAT: "Are you sure you want to delete this Message?",
+    ADD_MEMBER: "Add",
   },
   NOTIFICATION: {
     NOTIFICATIONS: "Notifications",
@@ -148,6 +158,9 @@ export const en = {
     NO_SUGGESTIONS_CURRENTLY: "No suggestions currently.",
     ADD_TO_GROWTH_CONNECTIONS: "Add to Growth Connections",
     REMOVE_FROM_GROWTH_CONNECTIONS: "Remove from Growth Connections",
+    CONNECTION_REMOVE_MESSAGE_TITLE: "Remove {{userName}} from connections",
+    CONNECTION_REMOVE_MESSAGE_TEXT:
+      "Are you sure you want to remove {{userName}} from your connections?",
   },
   GROWTH_CONNECTIONS: {
     GROWTH_CONNECTIONS: "Growth connections",
@@ -159,6 +172,9 @@ export const en = {
       DATE: "Date",
       ACTIONS: "Actions",
       NOT_AVAILABLE: "No activities available",
+      ENTER_ACTIVITY_TITLE: "Enter Activity Title",
+      ENTER_ACTIVITY_GOAL: "Enter Activity Goal",
+      ADD_NOTES_OPTIONAL: "Add Notes (optional)",
     },
     ENTER: "Enter...",
     WRITE_HERE: "Write here...",
@@ -168,16 +184,26 @@ export const en = {
     CHANNEL_PARTNER: "Channel Partner",
     BUSINESS_PARTNER: "Business Partner",
     DATE: "Date",
+    KNOW_HOW: "Know-how",
+    VISIBILITY: "Visibility",
+    CHANNEL: "Channel",
+    BUSINESS: "Business",
     FILTER: {
       FILTERS: "Filters",
       NAME: "Name",
       PROFESSION: "Profession",
-      CONNECTION_GOALS: "Connection goals",
+      CONNECTION_GOALS: "Connection Goals",
       COUNTRY: "Country",
       REGION: "Region",
       PROVINCE: "Province",
       CITY: "City",
     },
+    CONNECTION_GOALS_TOOLTIP:
+      "Give a value to your connections by selecting each of the tags: know-how exchange, Channel Partnership, Business Partnership and Visibility Partnership, based on the goal of your connection.",
+    GROWTH_CONNECTION_REMOVE_MESSAGE_TITLE:
+      "Remove {{userName}} from Growth Connections",
+    GROWTH_CONNECTION_REMOVE_MESSAGE_TEXT:
+      "Are you sure you want to remove {{userName}} from your growth connections? {{userName}} will be moved into your contact lists",
   },
   GROWTH_MODEL: {
     DEPARTMENT_LIST: "Department list",
@@ -341,6 +367,9 @@ export const en = {
     MESSAGE: "Message",
   },
   COMMON: {
+    NO_POSITION_ADDED: "No Position Added",
+    SEARCH_RESULTS: "Search Results for",
+    ABRACADABRA: " Abracadabra",
     LOADING: "Loading...",
     DELETE: "Delete",
     UPLOAD_COVER_IMAGE: "Upload Cover Picture",
@@ -494,6 +523,8 @@ export const en = {
     MINDSET: "Mindset",
     SOMETHING_WENT_WRONG: "Something went wrong, Please try again later",
     NO_RESULT_FOUND: "No result found",
+    ADD: "Add",
+    CREATE_CHANNEL: "Create Channel",
   },
   SECURITY: {
     RECENT_SECURITY_ACTIVITY: "Recent Security Activity",
@@ -527,6 +558,7 @@ export const en = {
     MAX_LENGTH_220: "Maximum 220 characters allowed",
     MAX_LENGTH_300: "Maximum 300 characters allowed",
     MAX_LENGTH_2000: "Maximum 2000 characters allowed",
+    MAX_LENGTH_3000: "Maximum 3000 characters allowed",
     PASSWORD: "Password",
     ZIPCODE: "Zipcode",
     NEW_PASSWORD: "New Password",
@@ -1119,7 +1151,7 @@ export const en = {
       POST_PHOTO: "Photo",
       POST_VIDEO: "Video",
       POST_POLL: "Poll",
-      POST_ARTICLE: "Article",
+      POST_ARTICLE: "Articles",
     },
 
     SORT_BY: {
@@ -1232,6 +1264,8 @@ export const en = {
     },
     HOME: "Home",
     CONNECTIONS: "Connections",
+    TOPICS:"Topics",
+    CIRCLES:"Circles",
     EVENTS: "Events",
     GROUPS: "Groups",
     MESSAGES: "Messages",
@@ -1778,6 +1812,7 @@ export const en = {
   GLOBAL_SEARCH: {
     NO_RESULT: "No results for the search",
     NO_RESULT_DESC: "Try looking for other terms",
+
     FILTER_BY: "Filter by",
     FILTERS: "Filters",
     FILTER: {
@@ -2150,6 +2185,17 @@ export const en = {
     MAX_3_TAGS: "Tags (Max 3 Tags)",
     ENTER_TAG: "Enter Tag",
     IMAGE_IS_REQUIRED: "Image is required",
+  },
+  ARTICLE_CARD:{
+    DELETED_ON:"Deleted on:",
+    CREATED_ON:"Created on:",
+    MOVE_TO_DRAFT:"Move to Drafts",
+    DELETE_ARTICLE:"Delete Article",
+    DELETE_WARNING:"Are you sure you want to delete this article?",
+    READ_MORE:"Read More",
+    PUBLISHED_ARTICLES:"Published Articles",
+    DRAFTED_ARTICLES:"Drafts",
+    DELETED:"Deleted"
   },
   FEATURESPLANS: {
     INDIVIDUALFEATURES: "Individually Buyable Features",

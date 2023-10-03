@@ -28,39 +28,11 @@ export default function EventCalendarWidgetUI(props) {
     selectedDate,
     onChangeSelectedDate,
     weekRange,
-    onChangeWeekRange,
     dateEvents,
+    onPrev,
+    onNext,
   } = props;
   const [lang] = useTranslation("language");
-
-  const onNext = () => {
-    const newWeekRange = [];
-    const curWeekEnd = weekRange[weekRange.length - 1];
-    let newWeekStart = curWeekEnd.clone().add(1, "days");
-    const newWeekEnd = newWeekStart.clone().endOf("isoWeek");
-    while (newWeekStart.isBefore(newWeekEnd)) {
-      newWeekRange.push(newWeekStart);
-      newWeekStart = newWeekStart.clone().add(1, "days");
-    }
-    onChangeWeekRange(newWeekRange);
-    onChangeMonth(newWeekRange[newWeekRange.length - 1].month());
-  };
-
-  const onPrev = () => {
-    const newWeekRange = [];
-    const curWeekEnd = weekRange[0];
-    let newWeekStart = curWeekEnd
-      .clone()
-      .subtract(1, "days")
-      .startOf("isoWeek");
-    const newWeekEnd = newWeekStart.clone().endOf("isoWeek");
-    while (newWeekStart.isBefore(newWeekEnd)) {
-      newWeekRange.push(newWeekStart);
-      newWeekStart = newWeekStart.clone().add(1, "days");
-    }
-    onChangeWeekRange(newWeekRange);
-    onChangeMonth(newWeekRange[newWeekRange.length - 1].month());
-  };
 
   return (
     <div className="calendar-widget-wrapper">
@@ -76,10 +48,12 @@ export default function EventCalendarWidgetUI(props) {
               xs={4}
             >
               <KeyboardArrowLeftOutlinedIcon
+                role="button"
                 fontSize="small"
                 onClick={onPrev}
               />
               <KeyboardArrowRightOutlinedIcon
+                role="button"
                 fontSize="small"
                 onClick={onNext}
               />

@@ -23,7 +23,7 @@ import GetStarted from "components/sidebar/get-started";
 import Grid from "@mui/material/Grid";
 import LatestArticle from "components/sidebar/latest-artcles";
 
-const SidebarLayout = ({ children, removeSidebar }) => {
+const SidebarLayout = ({ children, removeSidebar, removeRightSidebar }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [lang] = useTranslation("language");
@@ -48,7 +48,7 @@ const SidebarLayout = ({ children, removeSidebar }) => {
           paddingLeft={{ md: 2, xs: 1 }}
           paddingRight={{ md: 2, xs: 1 }}>
           <Grid item md={3} sm={12} paddingRight={{ md: "18px", sm: 0 }}>
-            <div className="left-profile-section">
+            <div className="left-profile-section h-100">
               <MyProfile />
 
               <div className="mt-4">
@@ -111,7 +111,7 @@ const SidebarLayout = ({ children, removeSidebar }) => {
 
           <Grid
             item
-            md={5}
+            md={removeRightSidebar ? 9 : 5}
             sm={12}
             paddingLeft={{ md: "6px", sm: 0 }}
             paddingRight={{ md: "8px", sm: 0 }}>
@@ -122,20 +122,25 @@ const SidebarLayout = ({ children, removeSidebar }) => {
             </div>
           </Grid>
 
-          <Grid item md={4} sm={12} paddingLeft={{ md: "16px", sm: 0 }}>
-            {/* right blog section */}
-            <div className="right-blog-section">
-              <LatestArticle />
-              <MostFollowedTopics />
-              <MostFollowedCircles />
-              {/* <GrowthPartners />
+          {
+            !removeRightSidebar
+            && <Grid item md={4} sm={12} paddingLeft={{ md: "16px", sm: 0 }}>
+              {/* right blog section */}
+              <div className="right-blog-section h-100">
+                <LatestArticle />
+                <MostFollowedTopics />
+                <div className="sticky-fix">
+                  <MostFollowedCircles />
+                </div>
+                {/* <GrowthPartners />
               <RecentAddedGM />
               <FollowedGroup />
               <div className="sticky-fix">
                 <MostFollowedContents />
               </div> */}
-            </div>
-          </Grid>
+              </div>
+            </Grid>
+          }
         </Grid>
       </div>
     </Layout>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-export const Icon = ({ handleClick, iconName }) => {
+export const Icon = ({ handleClick, iconName, width, height }) => {
   /* icon links based on icon name */
   const iconLinks = {
     addConnectionIcon: "/assets/images/profile-icons/person_add.svg",
@@ -50,7 +50,7 @@ export const Icon = ({ handleClick, iconName }) => {
     myProfileIcon: "/assets/images/homepage-icons/my-profile-icon.svg",
     notificationsIcon: "/assets/images/homepage-icons/notifications-icon.svg",
     roomsHistoryIcon: "/assets/images/homepage-icons/rooms-history-icon.svg",
-    searchIcon: "/assets/images/homepage-icons/search-Icon.svg",
+    searchIcon: "/assets/images/homepage-icons/search-icon.svg",
     settingsIcon: "/assets/images/homepage-icons/settings-icon.svg",
     shareIcon: "/assets/images/homepage-icons/share-icon.svg",
     addIcon: "/assets/images/conection-page-icons/add-icon.svg",
@@ -63,8 +63,13 @@ export const Icon = ({ handleClick, iconName }) => {
       "/assets/images/conection-page-icons/video-camera-front-icon.svg",
   };
   return (
-    <div onClick={handleClick}>
-      <Image src={iconLinks[iconName]} alt={iconName} width="24" height="24" />
+    <div onClick={handleClick} className="d-inline-flex">
+      <Image
+        src={iconLinks[iconName]}
+        alt={iconName}
+        width={width ? width : "24"}
+        height={height ? height : "24"}
+      />
     </div>
   );
 };

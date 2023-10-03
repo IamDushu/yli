@@ -24,6 +24,12 @@
       font-weight: 600;
       line-height: 16px; /* 133.333% */
       letter-spacing: 0.5px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* Number of lines to show */
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      white-space: normal; /* Ensures text wraps to two lines */
     }
 
     .yliway-heading {

@@ -58,9 +58,10 @@ const MyConnectionsList = () => {
   @Parameter : {}
   @Author : INIC
   ******************/
-  const deleteConnection = (id) => {
+  const deleteConnection = ({ id, userName }) => {
     Swal.fire({
-      text: lang("CONNECTIONS.CONNECTION_DELETE_MESSAGE"),
+      title: lang("CONNECTIONS.CONNECTION_REMOVE_MESSAGE_TITLE", { userName }),
+      text: lang("CONNECTIONS.CONNECTION_REMOVE_MESSAGE_TEXT", { userName }),
       icon: "warning",
       showDenyButton: true,
       confirmButtonText: lang("COMMON.CONFIRM"),
@@ -203,12 +204,13 @@ const MyConnectionsList = () => {
                 userId,
               } = listItem;
               const [{ profileBgURL }] = userDetails || [{}];
+              const userName = getFullName(listItem);
               return (
                 <UserCard
                   key={index}
                   coverImage={profileBgURL}
                   profileImage={profilePicURL}
-                  name={getFullName(listItem)}
+                  name={userName}
                   position={qualification || lang("CONNECTIONS.NO_POSTION")}
                   mutualCountText={`${mutualCount} ${lang(
                     "CONNECTIONS.MUTUAL_CONTACTS"
@@ -237,7 +239,11 @@ const MyConnectionsList = () => {
                             ? lang("CONNECTIONS.ADD_TO_GROWTH_CONNECTIONS")
                             : lang("CONNECTIONS.REMOVE_FROM_GROWTH_CONNECTIONS")
                         }
-                        src="/assets/images/add-to-gc-icon.svg"
+                        src={
+                          !isGrowthConnection
+                            ? "/assets/images/add-to-gc-icon.svg"
+                            : "/assets/images/remove-from-gc-icon.svg"
+                        }
                         onClick={() => {
                           handleAddRemoveGrowthConnection(
                             userId,
@@ -259,7 +265,7 @@ const MyConnectionsList = () => {
                         style={{ cursor: "pointer" }}
                         title="Delete"
                         src="/assets/images/cancel-icon.svg"
-                        onClick={() => deleteConnection(id)}
+                        onClick={() => deleteConnection({ id, userName })}
                       />
                     </Stack>
                   )}
@@ -292,6 +298,7 @@ const MyConnectionsList = () => {
             columnGap: "0.5rem",
             margin: "auto",
             color: "#48464A",
+            marginBottom: "1rem",
           }}
         />
       )}

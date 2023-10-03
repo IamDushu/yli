@@ -14,7 +14,7 @@
     background-color: $primary-violet;
     font-family: $font-family-base;
     font-weight: $font-bold;
-    border: none;
+    border: $border-width $border-solid $primary-violet;
     border-radius: $rounded-pill;
     cursor: pointer;
     font-size: $font-size-sm;
@@ -82,6 +82,11 @@
     font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.1px;
+  }
+  &.yliway-button-thin {
+    font-size: $font-size-sm;
+    padding: $space8 $space30;
+    width: $space100;
   }
   &.yliway-button-large {
     font-size: $font-size-base;

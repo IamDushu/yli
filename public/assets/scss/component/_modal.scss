@@ -726,3 +726,35 @@
     //padding-bottom: 0px;
   }
 }
+
+.basic-model-layout {
+  .modal-content {
+    border-radius: 0px;
+  }
+  .modal-header{
+    height: 70px;
+  }
+}
+
+.v4-modal {
+  .modal-content {
+    border-radius: 0;
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom-color: $neutralvariant-dark-30;
+      h2 {
+        color: $dark-blue;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 28px;
+      }
+      .close {
+        right: 1.5rem;
+      }
+    }
+    .modal-footer {
+      border-top-color: $neutralvariant-dark-30;
+    }
+  }
+}

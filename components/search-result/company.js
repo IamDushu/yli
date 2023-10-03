@@ -1,6 +1,11 @@
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import { onImageError } from "utils";
+import { Col } from "react-bootstrap";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import StarRatings from "react-star-ratings";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const Company = ({
   lang,
@@ -10,123 +15,213 @@ const Company = ({
   showAll,
   selectedFilters,
 }) => {
+  {
+    {
+      console.log(searchData?.searchResults?.companies?.rows);
+    }
+  }
   return (
-    <div>
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COMPANIES"))) &&
         searchData?.searchResults?.companies?.rows.length > 0 && (
           <Card className="mb-3">
-            <Card.Body className="p-0">
-              <h3 className="h6 mb-0 px-3 py-12">
+            <div className="p-2 pb-4 ">
+              <h3
+                className="mb-0 px-3 py-3"
+                style={{
+                  fontSize: "16px",
+                  color: "#001551",
+                  fontWeight: "500",
+                  lineHeight: "24px",
+                }}
+              >
+                {" "}
                 {lang("GLOBAL_SEARCH.FILTER.COMPANIES")}
               </h3>
-              <Container fluid>
-                <Row className="custom-col-box four-grid-spacing-md row-col-10 pb-3">
+              <div className="px-3 pb-2 video-courses-rightbar">
+                <div className="pt-1 d-flex flex-wrap">
                   {searchData?.searchResults?.companies?.rows.map(
-                    (org, key) => {
+                    (companies, i) => {
                       return (
-                        key <= 3 &&
+                        i <= 3 &&
                         !showAll.companies && (
-                          <Col lg={3} sm={6} key={key}>
+                          <Col
+                            lg={3}
+                            md={6}
+                            sm={4}
+                            key={i}
+                          >
                             <Card
-                              className="text-center position-relative h-100 p-3"
+                              className="secondary-card abstract-card-v2"
+                              style={{
+                                width: "166px",
+                                height: "152px",
+                                position: "relative",
+                                borderRadius: "0px",
+                              }}
                               onClick={() => {
                                 router.push({
                                   pathname: "/profile/company-profile",
                                   query: {
-                                    companyId: org.id,
-                                    name: org?.companyName,
-                                    userId: org?.userDetails?.id,
+                                    companiesId: companies.id,
+                                    name: companies?.companyName,
+                                    userId: companies?.userDetails?.id,
                                   },
                                 });
                               }}
                             >
-                              <div>
-                                <picture
-                                  className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer"
-                                  onContextMenu={(e) => e.preventDefault()}
-                                >
-                                  <source srcSet={org?.logo} type="image/jpg" />
-                                  <img
-                                    src={org?.logo ?? ""}
-                                    width="70"
-                                    height="70"
-                                    onError={(e) =>
-                                      onImageError(
-                                        e,
-                                        "profile",
-                                        org?.companyName
-                                      )
-                                    }
-                                  />
-                                </picture>
+                              <div className="position-relative pointer">
+                                <CardMedia
+                                  component="img"
+                                  height="70px"
+                                  className="w-100"
+                                  src={
+                                    companies?.logo ||
+                                    "../assets/images/user-no-img.jpg"
+                                  }
+                                  alt={companies?.companyName}
+                                  onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null;
+                                    currentTarget.src =
+                                      "../assets/images/user-no-img.jpg";
+                                  }}
+                                />
                               </div>
-                              <div>
-                                <div>
-                                  <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                    {org.companyName}
-                                  </h5>
+                              <CardContent className="p-1">
+                                <div className="title-container">
+                                  <h6
+                                    className="text-body-14 pointer ellipsis"
+                                    style={{
+                                      fontWeight: "500",
+                                      color: "#6750A4",
+                                      lineHeight: "20px",
+                                      letterSpacing: "0.1px",
+                                    }}
+                                  >
+                                    {companies?.companyName
+                                      ?.charAt(0)
+                                      .toUpperCase() +
+                                      companies?.companyName?.slice(1)}
+                                  </h6>
                                 </div>
-                              </div>
+                                {companies?.companyStrength && (
+                                  <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                    <small className="font-weight-semi-bold text-card-name text-body-12">
+                                      <span style={{ color: "#49454E" }}>
+                                        {`${
+                                          companies?.companyStrength || ""
+                                        }`.trim()}
+                                      </span>
+                                    </small>
+                                  </div>
+                                )}
+                                <StarRatings
+                                  rating={companies?.rating ?? 0}
+                                  starDimension="10.44px"
+                                  starSpacing="1px"
+                                  starRatedColor="#FFC635"
+                                />
+                              </CardContent>
                             </Card>
                           </Col>
                         )
                       );
                     }
                   )}
-                  {searchData?.searchResults?.companies?.rows?.map(
-                    (org, index) => {
+                  {searchData?.searchResults?.companies?.rows.map(
+                    (companies, i) => {
                       return (
                         showAll.companies && (
-                          <Col lg={3} sm={6} key={index}>
+                          <Col
+                            lg={3}
+                            md={6}
+                            sm={4}
+                            key={i}
+                            // className="d-flex flex-column m-1"
+                          >
                             <Card
-                              className="text-center position-relative h-100 p-3"
+                              className="secondary-card abstract-card-v2 mb-2"
+                              style={{
+                                width: "166px",
+                                height: "152px",
+                                position: "relative",
+                                borderRadius: "0px",
+                              }}
                               onClick={() => {
                                 router.push({
                                   pathname: "/profile/company-profile",
                                   query: {
-                                    companyId: org.id,
-                                    name: org?.companyName,
-                                    userId: org?.userDetails?.id,
+                                    companiesId: companies.id,
+                                    name: companies?.companyName,
+                                    userId: companies?.userDetails?.id,
                                   },
                                 });
                               }}
                             >
-                              {" "}
-                              <div>
-                                <picture className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer">
-                                  <source srcSet={org?.logo} type="image/jpg" />
-                                  <img
-                                    src={org?.logo ?? ""}
-                                    width="70"
-                                    height="70"
-                                    onError={(e) =>
-                                      onImageError(
-                                        e,
-                                        "profile",
-                                        org?.companyName
-                                      )
-                                    }
-                                  />
-                                </picture>
+                              <div className="position-relative pointer">
+                                <CardMedia
+                                  component="img"
+                                  height="70px"
+                                  className="w-100"
+                                  src={
+                                    companies?.logo ||
+                                    "../assets/images/user-no-img.jpg"
+                                  }
+                                  alt={companies?.companyName}
+                                  onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null;
+                                    currentTarget.src =
+                                      "../assets/images/user-no-img.jpg";
+                                  }}
+                                />
                               </div>
-                              <div className="">
-                                <div>
-                                  <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                    {org.companyName}
-                                  </h5>
+                              <CardContent className="p-1">
+                                <div className="title-container">
+                                  <h6
+                                    className="text-body-14 pointer ellipsis"
+                                    style={{
+                                      fontWeight: "500",
+                                      color: "#6750A4",
+                                      lineHeight: "20px",
+                                      letterSpacing: "0.1px",
+                                    }}
+                                  >
+                                    {companies?.companyName
+                                      ?.charAt(0)
+                                      .toUpperCase() +
+                                      companies?.companyName?.slice(1)}
+                                  </h6>
                                 </div>
-                              </div>
+
+                                {companies.companyStrength && (
+                                  <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                    <small className="font-weight-semi-bold text-card-name text-body-12">
+                                      <span style={{ color: "#49454E" }}>
+                                        {`${
+                                          companies?.companyStrength || ""
+                                        }`.trim()}
+                                      </span>
+                                    </small>
+                                  </div>
+                                )}
+                                <StarRatings
+                                  rating={companies?.rating ?? 0}
+                                  starDimension="10.44px"
+                                  starSpacing="1px"
+                                  starRatedColor="#FFC635"
+                                />
+                              </CardContent>
                             </Card>
                           </Col>
                         )
                       );
                     }
                   )}
-                </Row>
-              </Container>
+                </div>
+              </div>
               {searchData?.searchResults?.companies?.rows.length > 4 && (
-                <div className="people-tab-view-all-button my-2 border-top border-geyser pt-2">
+                <div className="people-tab-view-all-button mt-2 pt-2 d-flex justify-content-center">
                   <span
                     className="people-tab-view-all-button-text"
                     onClick={() => {
@@ -136,20 +231,26 @@ const Company = ({
                       });
                     }}
                   >
-                    {!showAll.companies
-                      ? lang("COMMON.VIEW_ALL")
-                      : lang("COMMON.VIEW_LESS")}
+                    {!showAll.companies ? (
+                      <>
+                        <AddIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.LOAD_MORE")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <RemoveIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
+                      </>
+                    )}
                   </span>
                 </div>
               )}
-            </Card.Body>
+            </div>
           </Card>
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COMPANIES")) &&
-        searchData?.searchResults?.companies?.rows.length === 0 && (
-          <p>No Companies Found</p>
-        )}
+        searchData?.searchResults?.companies?.rows.length === 0 && <></>}
     </div>
   );
 };

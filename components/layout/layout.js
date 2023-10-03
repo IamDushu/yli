@@ -7,6 +7,7 @@ const Footer = dynamic(() => import("./footer"));
 const MetaTags = dynamic(() => import("./meta-tags"));
 
 import { useRouter } from "next/router";
+import YliModal from "components/yli-modal";
 
 const DeleteMessage = dynamic(() => import("components/modal/delete-message"));
 const AddPost = dynamic(() =>
@@ -705,14 +706,13 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
           </div>
         }
       />
-      <MainModal
-        className="profile-photo-view custom-modal-footer"
+      <YliModal
         show={deleteMessage}
         keyModal="deleteMessage"
         centered={false}
         body={<DeleteMessage />}
         headerClassName="mb-50 block md-mb-30"
-        header={<h2 className="h6 m-0">Confirm Message Delete</h2>}
+        header={lang("MESSAGE.DELETE_CHAT_TITLE")}
       />
       {/******************* 
       @purpose :Add Participants for YMeet

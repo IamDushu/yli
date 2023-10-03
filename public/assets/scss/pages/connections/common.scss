@@ -89,3 +89,60 @@
   align-items: center;
   margin-bottom: 1rem;
 }
+
+.growth-connection-selection-wrapper {
+  .MuiToggleButtonGroup-root {
+    > button {
+      padding: 0;
+      text-transform: unset;
+      white-space: nowrap;
+      height: 28px;
+      width: 104px;
+      color: $neutral-dark-10;
+      text-align: center;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0.5px;
+      border-color: $neutralvariant-dark-50;
+      justify-content: space-evenly;
+      &:first-child {
+        border-radius: 16px 0 0 16px;
+      }
+      &:last-child {
+        border-radius: 0 16px 16px 0;
+      }
+      &.Mui-selected {
+        background-color: $secondary-blue-90;
+        border-color: $neutralvariant-dark-50;
+        color: $secondary-blue-10;
+      }
+    }
+  }
+}
+
+.edit-text-field-wrapper {
+  width: calc(100% - 22px);
+  input,
+  textarea {
+    border: 0.5px solid $primary-violet;
+    outline: none;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+  }
+  input {
+    height: 1.125rem;
+  }
+  textarea {
+    padding: 2px;
+  }
+  .textarea-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}

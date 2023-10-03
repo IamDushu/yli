@@ -8,12 +8,9 @@ import { useRouter } from "next/router";
 import * as types from "../../store/actions/types";
 import { useState } from "react";
 import { Spin } from "antd";
-import LoadingLayer from "components/zoom/loading-layer";
 import { LoadingOutlined } from '@ant-design/icons';
 import { useTranslation } from "react-i18next";
 
-
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export const GrowthConnectionList = ({ isSelfProfile, userId }) => {
   const dispatch = useDispatch();

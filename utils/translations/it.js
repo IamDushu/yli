@@ -149,6 +149,9 @@ export const it = {
     NO_SUGGESTIONS_CURRENTLY: "Nessun suggerimento",
     ADD_TO_GROWTH_CONNECTIONS: "Aggiungi alle connessioni di crescita",
     REMOVE_FROM_GROWTH_CONNECTIONS: "Rimuovi dalle connessioni di crescita",
+    CONNECTION_REMOVE_MESSAGE_TITLE: "Rimuovi {{userName}} dalle connessioni",
+    CONNECTION_REMOVE_MESSAGE_TEXT:
+      "Sei sicuro di voler rimuovere {{userName}} dalle tue connessioni?",
   },
   GROWTH_CONNECTIONS: {
     GROWTH_CONNECTIONS: "Connessioni di crescita",
@@ -160,7 +163,14 @@ export const it = {
       DATE: "Data",
       ACTIONS: "Azioni",
       NOT_AVAILABLE: "Nessuna attività disponibile",
+      ENTER_ACTIVITY_TITLE: "Inserisci il titolo dell'attività",
+      ENTER_ACTIVITY_GOAL: "Inserisci l'obiettivo dell'attività",
+      ADD_NOTES_OPTIONAL: "Aggiungi note (facoltativo)",
     },
+    KNOW_HOW: "Competenza",
+    VISIBILITY: "Visibilità",
+    CHANNEL: "Canale",
+    BUSINESS: "Attività commerciale",
     DATE: "Data",
     ENTER: "accedere...",
     WRITE_HERE: "Scrivere qui...",
@@ -179,6 +189,12 @@ export const it = {
       PROVINCE: "Provincia",
       CITY: "Città",
     },
+    CONNECTION_GOALS_TOOLTIP:
+      "Dai un valore alle tue connessioni selezionando ciascuno dei tag: scambio di know-how, Channel Partnership, Business Partnership e Visibility Partnership, in base all'obiettivo della tua connessione.",
+    GROWTH_CONNECTION_REMOVE_MESSAGE_TITLE:
+      "Rimuovi {{userName}} da Growth Connections",
+    GROWTH_CONNECTION_REMOVE_MESSAGE_TEXT:
+      "Sei sicuro di voler rimuovere {{userName}} dalle tue connessioni di crescita? {{userName}} verrà spostato nei tuoi elenchi di contatti",
   },
   GROWTH_MODEL: {
     DEPARTMENT_LIST: "Elenco dipartimenti",
@@ -341,6 +357,9 @@ export const it = {
     MESSAGE: "Messaggio",
   },
   COMMON: {
+    NO_POSITION_ADDED: "No Position Added",
+    SEARCH_RESULTS: "Search Results for",
+    ABRACADABRA: " Abracadabra",
     LOADING: "Caricamento...",
     OK: "Ok",
     DELETE: "Eliminare",
@@ -495,6 +514,7 @@ export const it = {
     MINDSET: "Mindset",
     SOMETHING_WENT_WRONG: "Qualcosa è andato storto, riprova più tardi",
     NO_RESULT_FOUND: "Nessun risultato trovato",
+    ADD: "Aggiungi",
   },
   SECURITY: {
     RECENT_SECURITY_ACTIVITY: "Attività di sicurezza recente",
@@ -525,6 +545,7 @@ export const it = {
     MAX_LENGTH_220: "Massimo 220 caratteri consentiti",
     MAX_LENGTH_300: "Massimo 300 caratteri consentiti",
     MAX_LENGTH_2000: "Massimo 2000 caratteri consentiti",
+    MAX_LENGTH_3000: "Massimo 3000 caratteri consentiti",
     ZIPCODE: "Codice postale",
     DAY: "giorno",
     MOBILE_NUMBER: "Recapito Mobile",
@@ -1126,7 +1147,7 @@ export const it = {
       POST_PHOTO: "Foto",
       POST_VIDEO: "video",
       POST_POLL: "Sondaggio",
-      POST_ARTICLE: "Articolo",
+      POST_ARTICLE: "Articoli",
     },
 
     SORT_BY: {
@@ -1242,6 +1263,8 @@ export const it = {
     },
     HOME: "Home",
     CONNECTIONS: "Connessioni",
+    TOPICS: "Argomenti",
+    CIRCLES: "Circoli",
     EVENTS: "Eventi",
     GROUPS: "Gruppi",
     MESSAGES: "Messaggi",
@@ -2284,5 +2307,16 @@ export const it = {
     ALL: "Tutto",
     MYGC: "Le mie connessioni di crescita",
     CONNECTION: "Le mie connessioni",
+  },
+  ARTICLE_CARD: {
+    DELETED_ON: "Eliminato il:",
+    CREATED_ON: "Creato il:",
+    MOVE_TO_DRAFT: "Sposta in bozze",
+    DELETE_ARTICLE: "Elimina articolo",
+    DELETE_WARNING: "Sei sicuro di voler eliminare questo articolo?",
+    READ_MORE: "Leggi di più",
+    PUBLISHED_ARTICLES: "Articoli pubblicati",
+    DRAFTED_ARTICLES: "Bozze",
+    DELETED: "Eliminato",
   },
 };

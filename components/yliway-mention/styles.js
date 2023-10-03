@@ -3,10 +3,12 @@ import { createStyles, makeStyles } from "@mui/styles";
 export const mentionInputClassName = "yliway-mention-input";
 export const floatingLabelClassName = "yliway-mention-input-floating-label";
 
-const paddingTop = "21px";
-const paddingBottom = "20px";
+const paddingTop = "19px";
+const paddingBottom = "19px";
 const padding = `${paddingTop} 100px ${paddingBottom} 16px`;
-const fontSize = 16;
+const fontSize = `12px`;
+const lineHeight = `16px`;
+const color = "#49454E";
 
 const getPlaceholderStyle = (isSuperscript) => ({
   top: isSuperscript ? 0 : paddingTop,
@@ -18,6 +20,8 @@ export const useStyles = makeStyles(({ palette, transitions }) => {
     root: (props) => ({
       [`& .${mentionInputClassName}__control`]: {
         fontSize,
+        lineHeight,
+        color,
       },
 
       [`& .${mentionInputClassName}__input`]: {
@@ -63,7 +67,7 @@ export const useStyles = makeStyles(({ palette, transitions }) => {
       [`& .${mentionInputClassName}__suggestions__item`]: {
         display: "flex",
         alignItems: "center",
-        height: 48,
+
         padding: "0px 8px !important",
         transition: transitions?.create("background-color", {
           duration: transitions?.duration?.shortest,

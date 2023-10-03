@@ -180,6 +180,7 @@ const PendingConnectionRequest = () => {
             columnGap: "0.5rem",
             margin: "auto",
             color: "#48464A",
+            marginBottom: "1rem",
           }}
         />
       )}
