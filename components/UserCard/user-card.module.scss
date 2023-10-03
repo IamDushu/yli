@@ -1,16 +1,14 @@
 .user-card-wrapper {
   box-shadow: 0px 1px 3px 1px #00000026;
   box-shadow: 0px 1px 2px 0px #0000004d;
-  min-width: 108px;
-  min-height: 159px;
-  max-width: 124px;
+  min-width: 124px;
+  min-height: 182px;
+  max-width: 142px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: calc(20% - 6.4px);
-  width: 124px;
-  height: 182px;
 
   @media only screen and (max-width: 1130px) {
     width: calc(25% - 6px);
@@ -22,8 +20,6 @@
 
   @media only screen and (max-width: 780px) {
     width: calc(25% - 6px);
-    width: 108px;
-    height: 159px;
   }
 
   .cover-image {

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@components/layout";
 import WithAuth from "components/with-auth/with-auth";
 import { useDispatch, useSelector } from "react-redux";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import {
   Card,
   CardContent,
@@ -45,7 +45,7 @@ const SearchGroup = dynamic(() => import("components/search-result/group"));
 const Courses = dynamic(() => import("components/search-result/courses"));
 const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
-  import("components/search-result/learning-institute")
+  import("components/search-result/learning-institute"),
 );
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 
@@ -118,7 +118,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "withdrawl",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -139,7 +139,7 @@ function SearchResult() {
       changeConnectionStatus({
         id,
         status: "",
-      })
+      }),
     );
     let body = {
       page: 1,
@@ -227,7 +227,7 @@ function SearchResult() {
     const searchValue = e.target.value;
     if (searchValue) {
       const filteredListData = filters.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+        item.name.toLowerCase().includes(searchValue.toLowerCase()),
       );
       setFilterList(filteredListData);
     } else {
@@ -276,7 +276,7 @@ function SearchResult() {
   };
   useEffect(() => {
     const isAllEmpty = Object.values(searchData?.searchResults || {}).every(
-      (result) => result?.rows.length === 0
+      (result) => result?.rows.length === 0,
     );
     setSearchResults(isAllEmpty);
   }, [searchData?.searchResults]);
@@ -299,30 +299,29 @@ function SearchResult() {
           paddingLeft={{ sm: 2, xs: 1 }}
           paddingRight={{ sm: 2, xs: 1 }}
         >
-          <Grid item md={3} xs={12} >
+          <Grid item md={3} xs={12}>
             {/* Left view */}
             <Stack
-              sx={{ display: { md: 'none', xs: "block" }}}
               direction="row"
               spacing={1}
               style={{ overflow: "scroll" }}
-              className=" mb-3 px-2"
-              paddingTop={{ sm: "16px" }}
+              className="d-lg-none d-xl-none my-3 px-2"
             >
               {filterList.map((item, i) => {
                 return <Chip label={item.name} />;
               })}
             </Stack>
             <Box
-              sx={{ display: { md: 'block', xs: "none" } }}
-              className={`profile-right-bar common-searchbar px-6  ${!searchResults ? "dimmed" : ""
-                }`}
+              sx={{ display: { md: "block", xs: "none" } }}
+              className={`profile-right-bar common-searchbar px-6  ${
+                !searchResults ? "dimmed" : ""
+              }`}
             >
               <FormControl className="mb-0 w-100 bg-white">
                 <TextField
                   type="text"
                   placeholder={`${lang(
-                    "COMMON.SEARCH_RESULTS"
+                    "COMMON.SEARCH_RESULTS",
                   )} '${searchText}'`}
                   onChange={(e) => handleSearchFilter(e)}
                   InputProps={{
@@ -414,7 +413,13 @@ function SearchResult() {
                   </div> */}
           </Grid>
           {/* right blog section */}
-          <Grid item md={9} xs={12} paddingLeft={{ md: "48px", sm: 0 }} paddingTop={{ md: "24px", sm: 0 }}>
+          <Grid
+            item
+            md={9}
+            xs={12}
+            paddingLeft={{ md: "48px", sm: 0 }}
+            paddingTop={{ md: "24px", sm: 0 }}
+          >
             <div className="profile-right-bar">
               <People
                 lang={lang}
@@ -530,12 +535,12 @@ function SearchResult() {
                   <Card
                     className="mb-10"
                     infinite-scroll-component__outerdiv
-                  // style={{ backgroundColor: "transparent", border: "none" }}
+                    // style={{ backgroundColor: "transparent", border: "none" }}
                   >
                     <CardContent
                       className="px-0"
                       infinite-scroll-component__outerdiv
-                    // style={{ backgroundColor: "transparent", border: "none" }}
+                      // style={{ backgroundColor: "transparent", border: "none" }}
                     >
                       <h3
                         className="h6 mb-0 px-3 py-2"
