@@ -125,7 +125,7 @@ const UpgradeYourProfile = (isSelfProfile) => {
       {/* growth modal listing */}
       <Accordion
         defaultActiveKey="0"
-        className="upgrade-your-profile mb-2 mt-lg-0 mt-2"
+        className="upgrade-your-profile mb-2"
       >
         <Card className="d-none">
           <Card.Header className="p-0">

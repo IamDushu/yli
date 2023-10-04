@@ -1,0 +1,124 @@
+import React, { Fragment, useEffect, useState } from "react";
+import { getMostFollowedCircles } from "store/actions";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { onImageError } from "utils";
+import { useRouter } from "next/router";
+import { Card, CardHeader, CardContent } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "config/theme";
+
+const MostFollowedCircles = () => {
+  const [lang] = useTranslation("language");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { mostFollowedCircles } = useSelector((state) => state.growth);
+
+  useEffect(() => {
+    dispatch(getMostFollowedCircles({ page: 1, pagesize: 5 }));
+  }, []);
+
+  const getCourseType = (type) => {
+    switch (type) {
+      case "online":
+        return "Online Course";
+      case "offline":
+        return "Offline Course";
+      case "other":
+        return "Other Course";
+      case "training-room":
+        return "Training Room";
+      case "business-network-room":
+        return "Business Network Room";
+      case "webinar":
+        return "Webinar";
+      case "event":
+        return "Event";
+      case "master-class":
+        return "Master Class";
+      case "coaching-room":
+        return "Coaching Room";
+    }
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="mb-4 followed-content-box">
+        <Card className="rounded-0 overflow-hidden" sx={{ boxShadow: 3 }}>
+          <CardHeader
+            sx={{ my: 0 }}
+            className="d-flex border-radius-0 border-bottom border-geyser"
+            title={
+              <div className="w-100 d-flex border-0 p-0">
+                <Typography
+                  variant="subtitle1"
+                  className="most-followed-topics-heading">
+                  {lang("RIGHT_SIDEBAR.MOST_FOLLOWED_CIRCLES")}
+                </Typography>
+              </div>
+            }
+          />
+          <CardContent
+            className="px-0 pb-1"
+            style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+            <ul className="listing-section listing-content-start pt-first-0 border-first-0">
+              {mostFollowedCircles?.length > 0 ? (
+                mostFollowedCircles?.slice(0, 4)?.map((circle, i) => (
+                  <li
+                    key={i}
+                    className={`listing-box cursor-pointer font-12 font-weight-semibold px-3`}
+                    // onClick={() => {
+                    //   contents.courseType
+                    //     ? router.push(`/course-detail/${contents.id}`)
+                    //     : router.push(`/virtual-events/${contents.id}`);
+                    // }}
+                  >
+                    <div className="position-relative flex-shrink-0 mr-3">
+                      <Image
+                        className="img-fluid w-h-84-48"
+                        src={
+                          circle?.imageURL ??
+                          "/assets/images/video-Thumbnail.svg"
+                        }
+                        title={circle?.name}
+                        width={114}
+                        height={64}
+                        style={{ borderRadius: "0px" }}
+                      />
+                    </div>
+
+                    <div className="w-68">
+                      <Typography
+                        variant="h5"
+                        className="topic-name-elipis"
+                        noWrap="true"
+                      
+                        title={circle?.name}>
+                        {circle?.name}
+                      </Typography>
+
+                      <Typography
+                        variant="body2"
+                        className="topic-text-elipis">
+                        {circle?.description}
+                      </Typography>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <div className="px-3">
+                  <em className="font-12">
+                    {lang("RIGHT_SIDEBAR.NO_RECORDS")}
+                  </em>
+                </div>
+              )}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </ThemeProvider>
+  );
+};
+export default MostFollowedCircles;

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Modal } from "react-bootstrap";
 import {
   deleteMessageListing,
   getMessageListing,
@@ -8,9 +7,13 @@ import {
 } from "store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { ChatContext } from "context/ChatContext";
+import { useTranslation } from "react-i18next";
+import ModalFooter from "components/yli-modal/modalFooter";
+import ModalBody from "components/yli-modal/modalBody";
 
 const DeleteMessage = () => {
   const [submitting, setSubmitting] = useState(false);
+  const [lang] = useTranslation("language");
   const { activeThread } = useContext(ChatContext);
   const dispatch = useDispatch();
   const { singleMessage } = useSelector((state) => state.ui);
@@ -27,23 +30,15 @@ const DeleteMessage = () => {
   };
   return (
     <div>
-      <Modal.Body>
-        <span>Are you sure you want to delete this Message?</span>
-      </Modal.Body>
-      <Modal.Footer className="custom-footer text-center d-flex border-top border-geyser justify-content-between">
-        <button
-          className="btn btn-btn btn-dark font-weight-semibold"
-          onClick={() => dispatch(toggleModals({ deleteMessage: false }))}
-        >
-          Cancel
-        </button>
-        <button
-          className="btn btn-btn btn-info font-weight-semibold"
-          onClick={() => !submitting && deleteMessageHandler()}
-        >
-          {submitting ? "Deleting..." : "Delete"}
-        </button>
-      </Modal.Footer>
+      <ModalBody>
+        <span>{lang("MESSAGE.DELETE_CHAT")}</span>
+      </ModalBody>
+      <ModalFooter
+        showCanel
+        cancleHandleClick={() => dispatch(toggleModals({ deleteMessage: false }))}
+        performButtonTitle={submitting ? "Deleting..." : lang("CONNECTIONS.DELETE")}
+        performHandleClick={() => !submitting && deleteMessageHandler()}
+      />
     </div>
   );
 };

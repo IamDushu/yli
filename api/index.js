@@ -3,6 +3,10 @@ import store from "store"; // Access redux store data
 import { setUiKey } from "@actions";
 import { errorHandler, DEFAULT_TIMEOUT } from "@utils";
 import { refreshToken, sessionDestroy } from "store/actions";
+import {
+  UPDATE_USER_DETAILS,
+  CONTACT_INFO_UPDATE_VISIBILITY,
+} from "../api/routes";
 import { getCookie, getLocalStorage, showMessageNotification } from "utils";
 
 /******************* 
@@ -90,21 +94,24 @@ export const responseHandler =
                 });
             } else {
               store.dispatch(sessionDestroy());
-              if (data.url === "visibility/contactInfo") {
+              if (data.url === CONTACT_INFO_UPDATE_VISIBILITY) {
                 return;
               }
               showMessageNotification("Error Occured");
             }
           } else if (res?.statusCode !== 200 && res?.statusCode !== 201) {
             if (alert) {
-              if (data.url === "visibility/contactInfo") {
+              if (data.url === CONTACT_INFO_UPDATE_VISIBILITY) {
                 return;
               }
               showMessageNotification(res.message);
             }
           } else {
             if (alert) {
-              if (data.url === "visibility/contactInfo") {
+              if (
+                data.url === CONTACT_INFO_UPDATE_VISIBILITY ||
+                data.url === UPDATE_USER_DETAILS
+              ) {
                 return;
               }
               if (res?.message?.indexOf("OTP") !== -1) {

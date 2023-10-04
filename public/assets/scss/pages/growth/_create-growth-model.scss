@@ -231,7 +231,7 @@
           color: $white;
           border-bottom-left-radius: 10px;
         }
-        .growth-project-open-single{
+        .growth-project-open-single {
           width: 100%;
           padding: 10px 0;
           text-align: center;
@@ -907,11 +907,11 @@
       border: 0;
       font-weight: $font-semibold;
       font-size: size(14);
-      padding:  size(8) size(8);
+      padding: size(8) size(8);
       vertical-align: middle;
 
       @include media(down, $breakpoint-xxxl - 1px) {
-        padding:size(8) size(16);
+        padding: size(8) size(16);
       }
 
       // &:first-child{
@@ -1147,7 +1147,21 @@
 // New style 04-10-2022
 
 .growth-tools-card-border {
-  border: $border-width-2 solid $secondary-purple;
+  // border: $border-width-2 solid $secondary-purple;
+
+  /* M3/Elevation Light/1 */
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+
+  .growth-area-header {
+    margin: 0px;
+    border-radius: 0px !important;
+    // border-bottom: 3px solid black !important;
+
+    /* M3/Elevation Light/1 */
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+      0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  }
 
   .growth-tools-list {
     border-top: 1px solid $blueberry-whip;
@@ -1169,7 +1183,9 @@
     padding: size(8) size(12);
     border: none;
     box-shadow: none;
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       background: $secondary;
       outline: 0;
       box-shadow: none;
@@ -1177,7 +1193,9 @@
     &.active {
       background: $primary;
       border-color: $primary;
-      &:hover, &:active, &:focus {
+      &:hover,
+      &:active,
+      &:focus {
         outline: 0;
         box-shadow: none;
       }
@@ -1190,7 +1208,6 @@
   background-color: $geyser;
   margin: 0 8px;
 }
-
 
 .gm-prof-list {
   height: calc(100vh - 250px);
@@ -1206,9 +1223,9 @@
     .gm-prof-item {
       font-size: size(14);
       font-weight: $font-weight-base;
-     
 
-      &:hover, &:active {
+      &:hover,
+      &:active {
         color: $primary !important;
         .icon-right-gray-arrow {
           &:before {
@@ -1226,5 +1243,90 @@
       }
     }
   }
-  
+}
+
+.growth-area-header-container {
+  // display: flex;
+  // margin-left: 1.5rem;
+  // align-items: center;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .heading {
+    margin-left: 1rem !important;
+    color: var(--m-3-sys-light-on-surface, #1c1b1e);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+    letter-spacing: 0.15px;
+  }
+}
+
+.icon-container {
+  // margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.growth-area-header {
+  color: var(--m-3-sys-light-on-surface, #1c1b1e);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.15px;
+  margin-left: 1rem;
+
+  // display: block;
+  // text-align: center;
+  // width: 100%;
+}
+
+.most-followed-topics-heading {
+  /* M3/title/medium */
+  color: var(
+    --m-3-ref-secondary-secondary-10,
+    #001551
+  ); /* Text color, using a CSS variable with a fallback color of #001551 */
+
+  font-size: 16px; /* Font size */
+  font-style: normal; /* Font style (normal) */
+  font-weight: 500; /* Font weight (500) */
+  line-height: 24px; /* Line height (150% of the font size) */
+  letter-spacing: 0.15px; /* Letter spacing */
+  font-family: $font-family-base;
+}
+
+.topic-name-elipis {
+  font-size: size(14);
+  font-style: normal;
+  font-weight: $font-regular;
+  line-height: size(20);
+  letter-spacing: 0.25px;
+  color: $violet-dark;
+  text-transform: capitalize;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal; /* Ensures text wraps to two lines */
+}
+
+.topic-text-elipis {
+  color: $neutralvariant-dark-30;
+  font-size: size(12);
+  font-style: normal;
+  font-weight: $font-regular;
+  line-height: size(16);
+  text-transform: capitalize;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal; /* Ensures text wraps to two lines */
 }

@@ -1,14 +1,18 @@
 import { APP_URL } from "config";
 import React from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toggleModals } from "store/actions";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Link } from "@routes";
 import StarRatings from "react-star-ratings";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { GMIcon } from "icons/index";
 const MainModal = dynamic(() =>
   import("components/modal").then((mod) => mod.MainModal)
 );
@@ -65,683 +69,238 @@ const Courses = ({
     }
   };
 
-
   return (
-    <div>
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COURSES"))) &&
         searchData?.searchResults?.courses?.rows.length > 0 && (
           <Card className="mb-3">
-            <Card.Body className="p-0">
-              <h3 className="h6 mb-0 px-3 py-12">
+            <div className="p-2 pb-4">
+              <h3
+                className="mb-0 px-3 py-3"
+                style={{
+                  fontSize: "16px",
+                  color: "#001551",
+                  fontWeight: "500",
+                  lineHeight: "24px",
+                }}
+              >
                 {" "}
                 {lang("GLOBAL_SEARCH.FILTER.COURSES")}
               </h3>
-              <div className="px-3 pb-3 video-courses-rightbar">
-                <Row className="pt-1 row-col-10 three-grid-spacing">
+              <div className="pb-2 video-courses-rightbar">
+                <div
+                  className="pt-1 px-3 d-flex flex-wrap"
+                  style={{
+                    columnGap: "0.5rem",
+                    rowGap: "1.5rem",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }}
+                >
                   {searchData?.searchResults?.courses?.rows.map((course, i) => {
                     return (
                       i <= 3 &&
                       !showAll.courses && (
-                        <Col lg={4} md={6} sm={4} key={i}>
-                          {/* <Card className="secondary-card h-100">
-                            <Card.Body className="d-flex flex-column">
-                              <Link route={"/course-detail/" + course.id}>
-                                <div className="courses-img position-relative pointer">
-                                  <picture
-                                    onContextMenu={(e) => e.preventDefault()}
-                                  >
-                                    <img
-                                      src={v?.imageURL}
-                                      alt={v?.title}
-                                      width=""
-                                      height="120"
-                                      className="img-fluid w-100"
-                                      onError={({ currentTarget }) => {
-                                        currentTarget.onerror = null;
-                                        currentTarget.src =
-                                          "../assets/images/user-no-img.jpg";
-                                      }}
-                                    />
-                                  </picture>
-                                  <div>
-                                    <span className="available-status text-uppercase font-12 rounded-pill bg-white font-weight-semibold">
-                                      {v?.courseType.toUpperCase()}
-                                    </span>
-                                    <div className="m-0 d-flex align-items-center rating">
-                                      <em className="icon icon-star-fill font-20 pr-2"></em>
-                                      <span className="pt-1 font-weight-semibold font-12 text-white">
-                                        4.3
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link>
-                              <div className="courses-info p-2 p-lg-3 d-flex flex-column h-100">
-                                <Link route={"/course-detail/" + course.id}>
-                                  <h6 className="text-ellipsis text-body-16 pointer pb-1">
-                                    {v.title}
-                                  </h6>
-                                </Link>
-                                {v?.courseType === "other" && (
-                                  <>
-                                    {v?.structureInformation && (
-                                      <div className="text-ellipsis pb-2">
-                                        <small className="font-weight-normal text-gray text-body-14">
-                                          {`${v?.structureInformation}`}
-                                        </small>
-                                      </div>
-                                    )}
-                                  </>
-                                )}
-                                <div className="package-info mt-3 d-flex flex-column h-100">
-                                  {v.courseType === "other" ? (
-                                    <div className="d-flex justify-content-between mb-2">
-                                      <small className="text-secondary font-12">
-                                        {lang("ROOMS.OTHER_TITLE")}
-                                      </small>
-                                    </div>
-                                  ) : (
-                                    <React.Fragment>
-                                      <div className="d-flex justify-content-between">
-                                        <small className="text-secondary-75">
-                                          {lang("COMMON.FREE")}
-                                        </small>
-                                        <small>
-                                          <span className="font-medium">
-                                            {v.courseType === "offline"
-                                              ? v.enterPrice
-                                              : v.freePrice}
-                                          </span>{" "}
-                                          <span className="font-medium font-weight-semibold font-14">
-                                            &euro;
-                                          </span>
-                                        </small>
-                                      </div>
-                                      <div className="d-flex justify-content-between">
-                                        <small className="text-secondary-75">
-                                          {lang("COMMON.LITE")}
-                                        </small>
-                                        <small>
-                                          <span className="font-medium">
-                                            {" "}
-                                            {v.courseType === "offline"
-                                              ? v.enterPrice
-                                              : v.litePrice}
-                                          </span>
-                                          <span className="font-weight-semibold font-14">
-                                            {" "}
-                                            &euro;
-                                          </span>
-                                        </small>
-                                      </div>
-                                      <div className="d-flex mb-4 justify-content-between">
-                                        <small className="text-secondary-75">
-                                          {lang("COMMON.PREMIUM")}
-                                        </small>
-                                        <small>
-                                          <span className="font-medium">
-                                            {v.courseType === "offline"
-                                              ? v.enterPrice
-                                              : v.premiumPrice}
-                                          </span>
-                                          <span className="font-weight-semibold font-14">
-                                            {" "}
-                                            &euro;
-                                          </span>
-                                        </small>
-                                      </div>
-                                    </React.Fragment>
-                                  )}
-                                  <div className="text-center mt-auto">
-                                    {v?.gmData === null ||
-                                    v?.gmData === undefined ? (
-                                      <Button
-                                        variant="outline-info"
-                                        className="mx-3 px-3"
-                                        onClick={() => {
-                                          addtoGrowthM(
-                                            v?.id,
-                                            v?.title,
-                                            v?.courseType,
-                                            v?.personalWebsiteLink
-                                          );
-                                        }}
-                                      >
-                                        <em className="icon icon-plus-primary font-12 mr-2 ml-auto hover-white"></em>
-                                        {lang("ROOMS.ADD_TO_GM")}
-                                      </Button>
-                                    ) : v?.gmData !== null ? (
-                                      <Button
-                                        variant="outline-info"
-                                        className="mx-3 px-3"
-                                      >
-                                        <em className="font-12 mr-2 ml-auto hover-white"></em>
-                                        Added to GM
-                                      </Button>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </Card.Body>
-                          </Card> */}
-                          <Card className="secondary-card abstract-card-v2">
-                            <Card.Body className="d-flex flex-column h-100">
-                              <Link route={"/course-detail/" + course.id}>
-                                <div className="position-relative pointer">
-                                  <picture>
-                                    <source
-                                      srcSet={course?.imageURL}
-                                      type="image/png"
-                                    />
-                                    <img
-                                      src={course?.imageURL}
-                                      alt={course?.title}
-                                      height="155"
-                                      className="w-100"
-                                      onError={({ currentTarget }) => {
-                                        currentTarget.onerror = null;
-                                        currentTarget.src =
-                                          "../assets/images/user-no-img.jpg";
-                                      }}
-                                    />
-                                  </picture>
-                                </div>
-                              </Link>
+                        <Card
+                          className="secondary-card abstract-card-v2"
+                          style={{
+                            width: "166px",
+                            height: "152px",
+                            position: "relative",
+                            borderRadius: "0px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "104px",
+                              height: "16px",
+                              backgroundColor: "#D9D9D9",
+                              position: "absolute",
+                              top: "4px",
+                              left: "7px",
+                              fontWeight: "500",
+                              fontSize: "11px",
+                              color: "#6750A4",
+                              zIndex: "1",
+                              lineHeight: "16px",
+                              textAlign: "center",
+                              opacity: "0.7",
+                            }}
+                          >
+                            {lang("COMMON.ONLINE_COURSE")}
+                          </div>
 
-                              <div className="courses-info px-3 pt-3 pb-2 d-flex flex-column">
-                                <Link route={"/course-detail/" + course.id}>
-                                  <div className="title-container">
-                                    <h6 className="font-weight-bold text-body-16 mb-1 pointer ellipsis">
-                                      {course?.title?.charAt(0).toUpperCase() +
-                                        course?.title?.slice(1)}
-                                    </h6>
-                                  </div>
-                                </Link>
-                                <div className="text-ellipsis d-flex align-items-center justify-content-between">
-                                  <small className="font-weight-semi-bold text-card-name text-body-12">
-                                    {`${course?.UserDetails?.firstName || ""} ${
-                                      course?.UserDetails?.lastName || ""
-                                    }`.trim()}
-                                  </small>
-                                </div>
-
-                                <div className="package-info">
-                                  {/* <div className="d-flex justify-content-between">
-                                  <div className="">
-                                    <small className="font-12 font-weight-semibold">
-                                      {`${moment().format("DD/MM/YY")}`} &bull;{" "}
-                                      {`${timeGetter(moment())}`}
-                                    </small>
-                                  </div>
-                                </div> */}
-                                  <div className="d-flex justify-content-between align-middle">
-                                    <div className="d-flex align-items-center">
-                                      <StarRatings
-                                        rating={course?.rating ?? 0}
-                                        starDimension="15px"
-                                        starSpacing="1px"
-                                        starRatedColor="#FFC635"
-                                      />
-                                      <div
-                                        className="d-flex pointer chevron-right-icon-bg"
-                                        onClick={() =>
-                                          router.push({
-                                            pathname:
-                                              "/course-detail/" + course?.id,
-                                          })
-                                        }
-                                      >
-                                        <FontAwesomeIcon
-                                          className="align-items-center chevron-right-icon"
-                                          icon={faChevronRight}
-                                        />
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <img
-                                        src={
-                                          course?.courseType === "online"
-                                            ? "/assets/images/online-icon-svg.svg"
-                                            : course?.courseType === "offline"
-                                            ? "/assets/images/offline-course.svg"
-                                            : "/assets/images/icon-other-course.svg"
-                                        }
-                                        alt={
-                                          course?.courseType === "online"
-                                            ? "online"
-                                            : "offline"
-                                        }
-                                        width={
-                                          course?.courseType === "other"
-                                            ? "20"
-                                            : "20"
-                                        }
-                                        height={
-                                          course?.courseType === "other"
-                                            ? "20"
-                                            : "20"
-                                        }
-                                        className="mr-2"
-                                      />
-
-                                      <img
-                                        src={"/assets/images/icon-add-gm.svg"}
-                                        alt="Add To GM"
-                                        width="20"
-                                        height="20"
-                                        onClick={() => {
-                                          addtoGrowthM(
-                                            course?.id,
-                                            course?.title,
-                                            course?.courseType,
-                                            course?.personalWebsiteLink
-                                          );
-                                        }}
-                                        className="pointer"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
+                          <div
+                            style={{
+                              position: "absolute",
+                              right: "8px",
+                              top: "0px",
+                              color: "#6750A4",
+                              zIndex: "1",
+                            }}
+                          >
+                            <GMIcon />
+                          </div>
+                          <Link route={"/course-detail/" + course.id}>
+                            <div className="position-relative pointer">
+                              <CardMedia
+                                component="img"
+                                height="70px"
+                                className="w-100"
+                                src={
+                                  course?.imageURL ||
+                                  "../assets/images/course-no-img.jpg"
+                                }
+                                alt={course?.title}
+                                onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null;
+                                  currentTarget.src =
+                                    "../assets/images/course-no-img.jpg";
+                                }}
+                              />
+                            </div>
+                          </Link>
+                          <CardContent className="p-1">
+                            <Link route={"/course-detail/" + course.id}>
+                              <div className="title-container">
+                                <h6
+                                  className="text-body-14 pointer ellipsis"
+                                  style={{
+                                    fontWeight: "500",
+                                    color: "#6750A4",
+                                    lineHeight: "20px",
+                                    letterSpacing: "0.1px",
+                                  }}
+                                >
+                                  {course?.title?.charAt(0).toUpperCase() +
+                                    course?.title?.slice(1)}
+                                </h6>
                               </div>
-                            </Card.Body>
-                            <Card.Footer className="py-2 px-3 m-0 border-top">
-                              <div className="justify-content-between d-flex align-items-center">
-                                {course?.courseType === "other" ? (
-                                  <div className="text-center flex-grow-1">
-                                    <small className="font-12 font-weight-semibold d-inline-flex">
-                                      {lang("ROOMS.OTHER_TITLE")}
-                                    </small>
-                                  </div>
-                                ) : (
-                                  <div className="text-center flex-grow-1">
-                                    <small className="font-12 font-weight-semibold d-inline-flex">
-                                      {course?.courseType === "offline"
-                                        ? lang("ROOMS.PRICE")
-                                        : lang("COMMON.FREE")}
-                                    </small>
-                                    <small className="d-block font-12 font-weight-bold">
-                                      <span className="">
-                                        {course?.courseType === "offline"
-                                          ? course?.enterPrice
-                                            ? course?.enterPrice
-                                            : "0"
-                                          : course?.freePrice
-                                          ? course?.freePrice
-                                          : "0"}
-                                      </span>{" "}
-                                      <span className="">YC</span>
-                                    </small>
-                                  </div>
-                                )}
-                                {course?.courseType === "online" && (
-                                  <>
-                                    <hr className="bg-paper-white m-0 course-card-hr"></hr>{" "}
-                                    <div className="text-center flex-grow-1">
-                                      <small className="font-weight-semibold font-12 d-inline-flex">
-                                        {lang("COMMON.LITE")}
-                                      </small>
-                                      <small className="d-block font-weight-bold font-12">
-                                        <span className="">
-                                          {course?.litePrice}{" "}
-                                        </span>
-                                        <span className="">YC</span>
-                                      </small>
-                                    </div>
-                                    <hr className="bg-paper-white m-0 course-card-hr"></hr>
-                                    <div className="text-center flex-grow-1">
-                                      <small className="font-weight-semibold font-12 d-inline-flex text-green-dark">
-                                        {lang("COMMON.PREMIUM")}
-                                      </small>
-                                      <small className="d-block font-weight-bold font-12">
-                                        <span className="">
-                                          {course?.premiumPrice}{" "}
-                                        </span>
-                                        <span className="">YC</span>
-                                      </small>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </Card.Footer>
-                          </Card>
-                        </Col>
+                            </Link>
+                            <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                              <small className="font-weight-semi-bold text-card-name text-body-12">
+                                <span style={{ color: "#49454E" }}>
+                                  {`${course?.UserDetails?.firstName || ""} ${
+                                    course?.UserDetails?.lastName || ""
+                                  }`.trim()}
+                                </span>
+                              </small>
+                            </div>
+                            <StarRatings
+                              rating={course?.rating ?? 0}
+                              starDimension="10.44px"
+                              starSpacing="1px"
+                              starRatedColor="#FFC635"
+                            />
+                          </CardContent>
+                        </Card>
                       )
                     );
                   })}
-                  {searchData?.searchResults?.courses?.rows.map(
-                    (course, index) => {
-                      return (
-                        showAll.courses && (
-                          <Col lg={4} md={6} sm={4} key={index}>
-                            {/* <Card className="secondary-card h-100">
-                            <Card.Body>
-                              <div
-                                className="courses-img position-relative pointer"
-                                onClick={() => {
-                                  router.push({
-                                    pathname: "/course-detail/" + course.id,
-                                  });
+                  {searchData?.searchResults?.courses?.rows.map((course, i) => {
+                    return (
+                      showAll.courses && (
+                        <Card
+                          className="secondary-card abstract-card-v2 mb-2"
+                          style={{
+                            width: "166px",
+                            height: "152px",
+                            position: "relative",
+                            borderRadius: "0px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "104px",
+                              height: "16px",
+                              backgroundColor: "#D9D9D9",
+                              position: "absolute",
+                              top: "4px",
+                              left: "7px",
+                              fontWeight: "500",
+                              fontSize: "11px",
+                              color: "#6750A4",
+                              zIndex: "1",
+                              lineHeight: "16px",
+                              textAlign: "center",
+                              opacity: "0.7",
+                            }}
+                          >
+                            {lang("COMMON.ONLINE_COURSE")}
+                          </div>
+
+                          <div
+                            style={{
+                              position: "absolute",
+                              right: "8px",
+                              top: "0px",
+                              color: "#6750A4",
+                              zIndex: "1",
+                            }}
+                          >
+                            <GMIcon />
+                          </div>
+                          <Link route={"/course-detail/" + course.id}>
+                            <div className="position-relative pointer">
+                              <CardMedia
+                                component="img"
+                                height="70px"
+                                className="w-100"
+                                src={
+                                  course?.imageURL ||
+                                  "../assets/images/course-no-img.jpg"
+                                }
+                                alt={course?.title}
+                                onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null;
+                                  currentTarget.src =
+                                    "../assets/images/course-no-img.jpg";
                                 }}
-                              >
-                                <picture>
-                                  <img
-                                    src={v.imageURL}
-                                    alt={v.title}
-                                    width=""
-                                    height="120"
-                                    className="img-fluid w-100"
-                                    onError={({ currentTarget }) => {
-                                      currentTarget.onerror = null;
-                                      currentTarget.src =
-                                        "../assets/images/user-no-img.jpg";
-                                    }}
-                                  />
-                                </picture>
-                                <div>
-                                  <span className="available-status text-uppercase font-12 rounded-pill bg-white font-weight-semibold">
-                                    {v.courseType.toUpperCase()}
-                                  </span>
-                                  <div className="m-0 d-flex align-items-center rating">
-                                    <em className="icon icon-star-fill font-20 pr-2"></em>
-                                    <span className="pt-1 font-weight-semibold font-12 text-white">
-                                      4.3
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="courses-info p-2 p-lg-3">
+                              />
+                            </div>
+                          </Link>
+                          <CardContent className="p-1">
+                            <Link route={"/course-detail/" + course.id}>
+                              <div className="title-container">
                                 <h6
-                                  className="text-ellipsis text-body-16 pointer pb-1"
-                                  onClick={() => {
-                                    router.push({
-                                      pathname: "/course-detail/" + course.id,
-                                    });
+                                  className="text-body-14 pointer ellipsis"
+                                  style={{
+                                    fontWeight: "500",
+                                    color: "#6750A4",
+                                    lineHeight: "20px",
+                                    letterSpacing: "0.1px",
                                   }}
                                 >
-                                  {v.title}
+                                  {course?.title?.charAt(0).toUpperCase() +
+                                    course?.title?.slice(1)}
                                 </h6>
-                                <div className="package-info mt-3">
-                                  <div className="d-flex justify-content-between">
-                                    <small className="text-secondary-75">
-                                      {lang("COMMON.FREE")}
-                                    </small>
-                                    <small>
-                                      <span className="font-medium">
-                                        {v.courseType === "offline"
-                                          ? v.enterPrice
-                                          : v.freePrice}
-                                      </span>{" "}
-                                      <span className="font-medium font-weight-semibold font-14">
-                                        &euro;
-                                      </span>
-                                    </small>
-                                  </div>
-                                  <div className="d-flex justify-content-between">
-                                    <small className="text-secondary-75">
-                                      {lang("COMMON.LITE")}
-                                    </small>
-                                    <small>
-                                      <span className="font-medium">
-                                        {" "}
-                                        {v.courseType === "offline"
-                                          ? v.enterPrice
-                                          : v.litePrice}
-                                      </span>
-                                      <span className="font-weight-semibold font-14">
-                                        {" "}
-                                        &euro;
-                                      </span>
-                                    </small>
-                                  </div>
-                                  <div className="d-flex justify-content-between">
-                                    <small className="text-secondary-75">
-                                      {lang("COMMON.PREMIUM")}
-                                    </small>
-                                    <small>
-                                      <span className="font-medium">
-                                        {" "}
-                                        {v.courseType === "offline"
-                                          ? v.enterPrice
-                                          : v.premiumPrice}
-                                      </span>
-                                      <span className="font-weight-semibold font-14">
-                                        {" "}
-                                        &euro;
-                                      </span>
-                                    </small>
-                                  </div>
-                                  {userData.id !== v.userId && (
-                                    <div className="text-center mt-4">
-                                      <div>
-                                        <Button
-                                          variant="info py-12 mb-2 px-4 text-uppercase"
-                                          size="sm"
-                                          type="button"
-                                          onClick={() => {
-                                            router.push({
-                                              pathname:
-                                                "/course-detail/" + course.id,
-                                            });
-                                          }}
-                                        >
-                                          {lang("COMMON.DO_IT_NOW")}
-                                        </Button>
-                                      </div>
-                                      <div>
-                                        <Button
-                                          variant="outline-info py-12 px-4 text-uppercase"
-                                          size="sm"
-                                          type="button"
-                                          onClick={() => {
-                                            router.push({
-                                              pathname:
-                                                "/course-detail/" + course.id,
-                                            });
-                                          }}
-                                        >
-                                          {lang("ROOMS.ADD_TO_GM")}
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
                               </div>
-                            </Card.Body>
-                          </Card> */}
-                            <Card className="secondary-card abstract-card-v2">
-                              <Card.Body className="d-flex flex-column h-100">
-                                <Link route={"/course-detail/" + course.id}>
-                                  <div className="position-relative pointer">
-                                    <picture>
-                                      <source
-                                        srcSet={course?.imageURL}
-                                        type="image/png"
-                                      />
-                                      <img
-                                        src={course?.imageURL}
-                                        alt={course?.title}
-                                        height="155"
-                                        className="w-100"
-                                        onError={({ currentTarget }) => {
-                                          currentTarget.onerror = null;
-                                          currentTarget.src =
-                                            "../assets/images/user-no-img.jpg";
-                                        }}
-                                      />
-                                    </picture>
-                                  </div>
-                                </Link>
-
-                                <div className="courses-info px-3 pt-3 pb-2 d-flex flex-column">
-                                  <Link route={"/course-detail/" + course.id}>
-                                    <div className="title-container">
-                                      <h6 className="font-weight-bold text-body-16 mb-1 pointer ellipsis">
-                                        {course?.title
-                                          ?.charAt(0)
-                                          .toUpperCase() +
-                                          course?.title?.slice(1)}
-                                      </h6>
-                                    </div>
-                                  </Link>
-                                  <div className="text-ellipsis d-flex align-items-center justify-content-between">
-                                    <small className="font-weight-semi-bold text-card-name text-body-12">
-                                      {course?.UserDetails?.firstName +
-                                        " " +
-                                        course?.UserDetails?.lastName}
-                                    </small>
-                                  </div>
-
-                                  <div className="package-info">
-                                    {/* <div className="d-flex justify-content-between">
-                                  <div className="">
-                                    <small className="font-12 font-weight-semibold">
-                                      {`${moment().format("DD/MM/YY")}`} &bull;{" "}
-                                      {`${timeGetter(moment())}`}
-                                    </small>
-                                  </div>
-                                </div> */}
-                                    <div className="d-flex justify-content-between align-middle">
-                                      <div className="d-flex align-items-center">
-                                        <StarRatings
-                                          rating={course?.rating ?? 0}
-                                          starDimension="15px"
-                                          starSpacing="1px"
-                                          starRatedColor="#FFC635"
-                                        />
-                                        <div
-                                          className="d-flex pointer chevron-right-icon-bg"
-                                          onClick={() =>
-                                            router.push({
-                                              pathname:
-                                                "/course-detail/" + course?.id,
-                                            })
-                                          }
-                                        >
-                                          <FontAwesomeIcon
-                                            className="align-items-center chevron-right-icon"
-                                            icon={faChevronRight}
-                                          />
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <img
-                                          src={
-                                            course?.courseType === "online"
-                                              ? "/assets/images/online-icon-svg.svg"
-                                              : course?.courseType === "offline"
-                                              ? "/assets/images/offline-course.svg"
-                                              : "/assets/images/icon-other-course.svg"
-                                          }
-                                          alt={
-                                            course?.courseType === "online"
-                                              ? "online"
-                                              : "offline"
-                                          }
-                                          width={
-                                            course?.courseType === "other"
-                                              ? "20"
-                                              : "20"
-                                          }
-                                          height={
-                                            course?.courseType === "other"
-                                              ? "20"
-                                              : "20"
-                                          }
-                                          className="mr-2"
-                                        />
-
-                                        <img
-                                          src={"/assets/images/icon-add-gm.svg"}
-                                          alt="Add To GM"
-                                          width="20"
-                                          height="20"
-                                          onClick={() => {
-                                            addtoGrowthM(
-                                              course?.id,
-                                              course?.title,
-                                              course?.courseType,
-                                              course?.personalWebsiteLink
-                                            );
-                                          }}
-                                          className="pointer"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </Card.Body>
-                              <Card.Footer className="py-2 px-3 m-0 border-top">
-                                <div className="justify-content-between d-flex align-items-center">
-                                  {course?.courseType === "other" ? (
-                                    <div className="text-center flex-grow-1">
-                                      <small className="font-12 font-weight-semibold d-inline-flex">
-                                        {lang("ROOMS.OTHER_TITLE")}
-                                      </small>
-                                    </div>
-                                  ) : (
-                                    <div className="text-center flex-grow-1">
-                                      <small className="font-12 font-weight-semibold d-inline-flex">
-                                        {course?.courseType === "offline"
-                                          ? lang("ROOMS.PRICE")
-                                          : lang("COMMON.FREE")}
-                                      </small>
-                                      <small className="d-block font-12 font-weight-bold">
-                                        <span className="">
-                                          {course?.courseType === "offline"
-                                            ? course?.enterPrice
-                                              ? course?.enterPrice
-                                              : "0"
-                                            : course?.freePrice
-                                            ? course?.freePrice
-                                            : "0"}
-                                        </span>{" "}
-                                        <span className="">YC</span>
-                                      </small>
-                                    </div>
-                                  )}
-                                  {course?.courseType === "online" && (
-                                    <>
-                                      <hr className="bg-paper-white m-0 course-card-hr"></hr>{" "}
-                                      <div className="text-center flex-grow-1">
-                                        <small className="font-weight-semibold font-12 d-inline-flex">
-                                          {lang("COMMON.LITE")}
-                                        </small>
-                                        <small className="d-block font-weight-bold font-12">
-                                          <span className="">
-                                            {course?.litePrice}{" "}
-                                          </span>
-                                          <span className="">YC</span>
-                                        </small>
-                                      </div>
-                                      <hr className="bg-paper-white m-0 course-card-hr"></hr>
-                                      <div className="text-center flex-grow-1">
-                                        <small className="font-weight-semibold font-12 d-inline-flex text-green-dark">
-                                          {lang("COMMON.PREMIUM")}
-                                        </small>
-                                        <small className="d-block font-weight-bold font-12">
-                                          <span className="">
-                                            {course?.premiumPrice}{" "}
-                                          </span>
-                                          <span className="">YC</span>
-                                        </small>
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </Card.Footer>
-                            </Card>
-                          </Col>
-                        )
-                      );
-                    }
-                  )}
-                </Row>
+                            </Link>
+                            <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                              <small className="font-weight-semi-bold text-card-name text-body-12">
+                                <span style={{ color: "#49454E" }}>
+                                  {`${course?.UserDetails?.firstName || ""} ${
+                                    course?.UserDetails?.lastName || ""
+                                  }`.trim()}
+                                </span>
+                              </small>
+                            </div>
+                            <StarRatings
+                              rating={course?.rating ?? 0}
+                              starDimension="10.44px"
+                              starSpacing="1px"
+                              starRatedColor="#FFC635"
+                            />
+                          </CardContent>
+                        </Card>
+                      )
+                    );
+                  })}
+                </div>
               </div>
               {searchData?.searchResults?.courses?.rows.length > 4 && (
-                <div className="people-tab-view-all-button my-2 border-top border-geyser pt-2">
+                <div className="people-tab-view-all-button mt-2 pt-2 d-flex justify-content-center">
                   <span
                     className="people-tab-view-all-button-text"
                     onClick={() => {
@@ -751,20 +310,26 @@ const Courses = ({
                       });
                     }}
                   >
-                    {!showAll.courses
-                      ? lang("COMMON.VIEW_ALL")
-                      : lang("COMMON.VIEW_LESS")}
+                    {!showAll.courses ? (
+                      <>
+                        <AddIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.LOAD_MORE")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <RemoveIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
+                      </>
+                    )}
                   </span>
                 </div>
               )}
-            </Card.Body>
+            </div>
           </Card>
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COURSES")) &&
-        searchData?.searchResults?.courses?.rows.length === 0 && (
-          <p>No Courses Found</p>
-        )}
+        searchData?.searchResults?.courses?.rows.length === 0 && <></>}
       <MainModal
         className="add-to-gmodal modal"
         show={addtoGrowthModelglobalCourse}

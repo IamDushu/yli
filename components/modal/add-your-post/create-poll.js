@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Button, Card, Form, Modal } from "react-bootstrap";
+import {Card, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { toggleModals, createPoll, posttype } from "store/actions";
@@ -7,6 +7,10 @@ import { useFormik } from "formik";
 import { CREATE_POLL_SCHEMA } from "utils";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { CustomInputField } from "components/add-post-ui/custom-text-field";
+import { AssistChips } from "components/assist-chips";
+import { YliwayButton } from "components/button";
+import { CustomSelectWithRadio } from "components/add-post-ui/custom-select-comment-right";
 let uniqueKey = 2; //To generate unique key for render answers correctly
 
 /*******************   
@@ -98,11 +102,28 @@ export const CreatePoll = () => {
               <div>
                 <div>
                   <Form.Group>
-                    <Form.Label>
+                    {/* <Form.Label>
                       {lang("DASHBOARD.POLL.YOUR_QUESTION")}
                     </Form.Label>{" "}
-                    <sup>*</sup>
-                    <Form.Control
+                    <sup>*</sup> */}
+
+                    <CustomInputField
+                      placeholder={lang("DASHBOARD.POLL.QUESTION_PLACEHOLDER")}
+                      label={lang("DASHBOARD.POLL.YOUR_QUESTION")}
+                      required={true}
+                      defaultValue={
+                        editCreatePol
+                          ? createPolls.pollQuestion.question
+                          : formik.values.pollQuestion.question
+                      }
+                      formik={formik}
+                      textarea={true}
+                      formikKey={`pollQuestion.question`}
+                      maxTextCount={140}
+                      rows={3}
+                    />
+
+                    {/* <Form.Control
                       type="text"
                       placeholder={lang("DASHBOARD.POLL.QUESTION_PLACEHOLDER")}
                       name="pollQuestion.question"
@@ -118,7 +139,7 @@ export const CreatePoll = () => {
                           : formik.values.pollQuestion.question
                       }
                       autoComplete="off"
-                    />
+                    /> */}
                     {formik?.touched?.pollQuestion?.question &&
                       formik?.errors?.pollQuestion?.question && (
                         <small className="error form-text">
@@ -130,11 +151,13 @@ export const CreatePoll = () => {
                 {formik?.values?.pollAnswers?.map((options, index) => {
                   return (
                     <div key={`poll-${options.keyIndex}`}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>
-                          {lang("DASHBOARD.POLL.OPTION")} {index + 1}
-                        </Form.Label>
-                        {index <= 1 && <sup>*</sup>}
+                      <Form.Group
+                        className={
+                          formik?.values?.pollAnswers?.length == index + 1
+                            ? "mb-2"
+                            : "mb-3"
+                        }
+                      >
                         {formik?.values?.pollAnswers.length > 2 ? (
                           <button
                             className="remove-btn"
@@ -143,7 +166,23 @@ export const CreatePoll = () => {
                             {lang("DASHBOARD.POLL.REMOVE")}
                           </button>
                         ) : null}
-                        <Form.Control
+                        <CustomInputField
+                          placeholder={`${lang("DASHBOARD.POLL.OPTION")} ${
+                            index + 1
+                          }`}
+                          label={`${lang("DASHBOARD.POLL.OPTION")} ${
+                            index + 1
+                          }`}
+                          required={index <= 1}
+                          defaultValue={
+                            editCreatePol
+                              ? createPolls.pollAnswers[index]?.answer
+                              : formik.values?.pollAnswers[index]?.answer
+                          }
+                          formik={formik}
+                          formikKey={`pollAnswers.[${index}].answer`}
+                        />
+                        {/* <Form.Control
                           maxLength="50"
                           type="text"
                           name="pollAnswers"
@@ -161,7 +200,7 @@ export const CreatePoll = () => {
                               e.target.value
                             );
                           }}
-                        />
+                        /> */}
 
                         {formik?.touched?.pollAnswers !== undefined
                           ? formik?.touched?.pollAnswers[index]?.answer &&
@@ -179,18 +218,27 @@ export const CreatePoll = () => {
                 })}
 
                 {formik?.values?.pollAnswers?.length < 5 ? (
-                  <div>
-                    <button
+                  <div className="my-1 border-divider-color-bottom pb-2">
+                    {/* <button
                       onClick={addMoreOption}
                       className="btn btn-primary btn-sm shadow-none py-12 addMore-btn ml-0 mb-4"
                     >
                       {lang("DASHBOARD.POLL.ADD_MORE")}
-                    </button>
+                    </button> */}
+                    <AssistChips
+                      border="none"
+                      label={lang("DASHBOARD.POLL.ADD_MORE")}
+                      color="#6750A4"
+                      paddingX="0"
+                      paddingY="0"
+                      iconName="addQuestionIcon"
+                      handleClick={addMoreOption}
+                    />
                   </div>
                 ) : null}
                 <div>
                   <Form.Group>
-                    <Form.Label>
+                    {/* <Form.Label>
                       {lang("DASHBOARD.POLL.POLL_DURATION")}
                     </Form.Label>
                     <sup>*</sup>
@@ -212,6 +260,21 @@ export const CreatePoll = () => {
                           formik.setFieldValue("pollQuestion.pollExpiry", e);
                         }}
                       />
+                    </div> */}
+                    <div className="mt-3">
+                      <CustomSelectWithRadio
+                        formik={formik}
+                        required={true}
+                        formikKey={"pollQuestion.pollExpiry"}
+                        defaultValue={
+                          editCreatePol
+                            ? createPolls.pollQuestion?.pollExpiry
+                            : formik.values?.pollQuestion?.pollExpiry
+                        }
+                        options={durationOptions}
+                        placeholder={lang("DASHBOARD.POLL.SELECT_TIME")}
+                        label={lang("DASHBOARD.POLL.POLL_DURATION")}
+                      />
                     </div>
                     {formik?.touched?.pollQuestion?.pollExpiryDate &&
                       formik?.errors?.pollQuestion?.pollExpiryDate && (
@@ -221,11 +284,8 @@ export const CreatePoll = () => {
                       )}
                   </Form.Group>
                 </div>
-
-                <div>
-                  <p className="font-14 mb-0">
-                    {lang("DASHBOARD.POLL.DESCRIPTION")}
-                  </p>
+                <div className="post-poll-description">
+                  {lang("DASHBOARD.POLL.DESCRIPTION")}
                 </div>
               </div>
             </Form>
@@ -233,20 +293,41 @@ export const CreatePoll = () => {
         </Card>
         {/* </PerfectScrollbar> */}
       </Modal.Body>
-      <Modal.Footer className="text-center d-flex p-4 border-top border-geyser">
-        <Button
+      <Modal.Footer className="text-center d-flex p-4">
+        <div>
+          <YliwayButton
+            backgroundColor="white"
+            label={lang("DASHBOARD.POLL.BACK")}
+            size={"medium"}
+            fontWeight={500}
+            primaryOutlined={true}
+            // disabled={isButtonDisabled || error.error}
+            handleClick={handleBackPage}
+          />
+        </div>
+        {/* <Button
           onClick={handleBackPage}
           variant="btn btn-outline-info weight-semibold btn-sm text-uppercase py-12 mr-3"
         >
           {lang("DASHBOARD.POLL.BACK")}
-        </Button>
-        <Button
+        </Button> */}
+        <div>
+          <YliwayButton
+            size="medium"
+            primary={true}
+            fontWeight={500}
+            label={lang("DASHBOARD.POLL.DONE")}
+            // disabled={isButtonDisabled || error.error}
+            handleClick={formik.handleSubmit}
+          />
+        </div>
+        {/* <Button
           type="submit"
           onClick={formik.handleSubmit}
           variant="btn btn-info btn-sm weight-semibold text-uppercase py-12 ml-3"
         >
           {lang("DASHBOARD.POLL.DONE")}
-        </Button>
+        </Button> */}
       </Modal.Footer>
     </Fragment>
   );

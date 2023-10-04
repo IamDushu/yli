@@ -7,6 +7,7 @@ const Footer = dynamic(() => import("./footer"));
 const MetaTags = dynamic(() => import("./meta-tags"));
 
 import { useRouter } from "next/router";
+import YliModal from "components/yli-modal";
 
 const DeleteMessage = dynamic(() => import("components/modal/delete-message"));
 const AddPost = dynamic(() =>
@@ -24,9 +25,12 @@ const ViewCertificate = dynamic(() =>
 const GroupMemberDelete = dynamic(() =>
   import("components/modal/group-member-delete")
 );
-const ReportPost = dynamic(() =>
-  import("components/dashboard/Posts/ReportPost")
+const ReportPostModal = dynamic(() =>
+  import("components/modal/report-post")
 );
+const ReportPost = dynamic(() =>
+import("components/dashboard/Posts/ReportPost")
+)
 const MainModal = dynamic(() =>
   import("./../modal").then((mod) => mod.MainModal)
 );
@@ -349,7 +353,9 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
         className="PhotoPost header-none-modal"
         show={photopost}
         keyModal="photopost"
+        closeIcon={false}
         body={<PhotoPost />}
+        header={<div className="photo-post-header m-0">{lang("DASHBOARD.ADD_POST.PHOTO_POST")}</div>}
         headerClassName="mb-50 block md-mb-30"
       />
 
@@ -368,7 +374,9 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
         className="VideoPost header-none-modal"
         show={videopost}
         keyModal="videopost"
+        closeIcon={false}
         body={<VideoPost />}
+        header={<div className="video-post-header m-0">{lang("DASHBOARD.ADD_POST.VIDEO_POST")}</div>}
         headerClassName="mb-50 block md-mb-30"
       />
 
@@ -388,7 +396,7 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
            @purpose : Dashboard page add post Modal
            @Author : INIC
            ******************/}
-      <MainModal
+      {/* <MainModal
         className="addpost img-view custom-modal-footer"
         show={addpost}
         keyModal="addpost"
@@ -402,7 +410,7 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
               : lang("DASHBOARD.ADD_POST.CREATE_POST")}
           </h2>
         }
-      />
+      /> */}
       {/******************* 
            @purpose : userpost voterList Modal
            @Author : INIC
@@ -417,11 +425,11 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
 
       {/******************* 
            @purpose : report post Modal
-           @Author : INIC
+           @Author : YLIWAY
            ******************/}
-      <MainModal
+      <ReportPostModal
         className="report-post"
-        show={reportpost}
+        open={reportpost}
         keyModal="reportpost"
         centered
         body={<ReportPost />}
@@ -526,12 +534,12 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
            @Author : INIC
            ******************/}
       <MainModal
-        className="create-poll custom-modal-footer"
+        className="create-poll custom-modal-footer add-poll-post"
         show={createpoll}
         keyModal="createpoll"
         body={<CreatePoll />}
         headerClassName="mb-50 block md-mb-30"
-        header={<h2 className="h6 m-0">{lang("DASHBOARD.POLL.SHARE_POLL")}</h2>}
+        header={<div className="share-poll-header m-0">{lang("DASHBOARD.POLL.SHARE_POLL")}</div>}
       />
 
       {/******************* 
@@ -698,14 +706,13 @@ export const Layout = ({ children, removeSidebar, isJoinRoom = false }) => {
           </div>
         }
       />
-      <MainModal
-        className="profile-photo-view custom-modal-footer"
+      <YliModal
         show={deleteMessage}
         keyModal="deleteMessage"
         centered={false}
         body={<DeleteMessage />}
         headerClassName="mb-50 block md-mb-30"
-        header={<h2 className="h6 m-0">Confirm Message Delete</h2>}
+        header={lang("MESSAGE.DELETE_CHAT_TITLE")}
       />
       {/******************* 
       @purpose :Add Participants for YMeet

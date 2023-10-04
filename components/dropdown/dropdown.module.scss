@@ -1,0 +1,37 @@
+@import '../../public/assets/scss/helpers/variable';
+
+.dropdown-content-messages {
+  width: 80vw;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0.1px 0.1px 5px 1px rgba(0.1, 0.1, 0.1, 0.1);
+  z-index: 999;
+}
+.custom-dropdown:hover .dropdown-content-messages {
+  display: block;
+}
+
+/* Style individual dropdown items as needed */
+.dropdown-content-messages div {
+  padding: 16px;
+  cursor: pointer;
+}
+@media screen and (min-width:380px) {
+  .dropdown-content-messages{
+    width:20vh;
+  }
+}
+
+.p-m-option{
+  display:flex;
+  text-align: center;
+  align-items: center;
+  &:hover{
+    background-color: #1D1B2014;
+  }
+  span{
+    margin-left: 3%;
+  }
+}

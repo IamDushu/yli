@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, } from 'react';
 import { useRouter } from 'next/router'
-import { Select, Button, Row, Col, } from 'antd';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'; // For week view
@@ -8,6 +7,17 @@ import listPlugin from '@fullcalendar/list'; // For list view
 import interactionPlugin from '@fullcalendar/interaction';
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import ReactDOMServer from 'react-dom/server';
+
+import EventInfoModal from './events-info-modal';
+import Popover from '@mui/material/Popover';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 
 import {
 	getCalendarEvents,
@@ -15,7 +25,7 @@ import {
 	removeEvents,
 } from "../../store/actions";
 
-import eventInfo from './events-info';
+import EventInfo from './events-info';
 import AddEditEvents from './events-edit';
 import EventCalendarWidget from './events-calendar-widget';
 
@@ -35,14 +45,34 @@ export default function Events() {
 	const [popupPosition, setPopupPosition] = useState({ left: 20, top: 20 });
 	const [currentView, setCurrentView] = useState('timeGridWeek');
 	const [selectedEvent, setSelectedEvent] = useState({});
+	const [viewEvent, setViewEvent] = useState(null);
+	const [viewEventAnchor, setViewEventAnchor] = useState(null);
 	const [title, setTitle] = useState('');
 	const calendarRef = useRef(null);
+	const eventRef = useRef(null);
 	const { list } = useSelector((state) => state.calendar);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
 	const handleViewChange = newView => {
 		setCurrentView(newView);
+	};
+
+	const renderEventComponent = (event) => {
+		const htmlString = ReactDOMServer.renderToString(
+			<EventInfo eventInfo={event} />
+		);
+		return htmlString;
+	};
+
+	const handleEventClick = (e, event) => {
+		setViewEventAnchor(e.currentTarget);
+		setViewEvent(event);
+	};
+
+	const handleClose = () => {
+		setViewEvent(null);
+		setViewEventAnchor(null);
 	};
 
 	useEffect(() => {
@@ -52,12 +82,12 @@ export default function Events() {
 			const { clientX, clientY } = info.jsEvent;
 
 			// Handle the click event here
-			const clickedDate = info.date;
 			setSelectedEvent({
 				eventTime: [moment(info.date), moment(+info.date + (30 * 60 * 1000))]
 			});
 
-			setPopupPosition({ left: clientX, top: clientY });
+			const react = eventRef.current.getBoundingClientRect();
+			setPopupPosition({ left: clientX - react.left, top: clientY - react.top });
 			setAddEditPopup(true);
 		});
 
@@ -66,7 +96,8 @@ export default function Events() {
 			const rect = info.el.getBoundingClientRect();
 			setSelectedEvent({});
 			setAddEditPopup(false);
-			setPopupPosition({ left: rect.x, top: rect.y });
+			const eventContainer = eventRef.current.getBoundingClientRect();
+			setPopupPosition({ left: rect.x - eventContainer.left, top: rect.y - eventContainer.top });
 		});
 
 	}, []);
@@ -96,10 +127,10 @@ export default function Events() {
 	}, [router.query]);
 
 	const reloadEvents = () => {
-			dispatch(getCalendarEvents({
-				from: moment(calendarRef.current.getApi().view.currentStart).clone().subtract(7, 'days').valueOf(),
-				to: moment(calendarRef.current.getApi().view.currentEnd).clone().add(7, 'days').valueOf(),
-			}));
+		dispatch(getCalendarEvents({
+			from: moment(calendarRef.current.getApi().view.currentStart).clone().subtract(7, 'days').valueOf(),
+			to: moment(calendarRef.current.getApi().view.currentEnd).clone().add(7, 'days').valueOf(),
+		}));
 	}
 
 	// const handleDateClick = (arg) => {
@@ -115,6 +146,7 @@ export default function Events() {
 	// };
 
 	const onEdit = (event) => {
+		handleClose();
 		setSelectedEvent({
 			title: event.title,
 			eventTime: [moment(event.start), moment(event.end)],
@@ -159,28 +191,27 @@ export default function Events() {
 	}
 
 	return (
-		<div className="events-wrapper">
-			<Row className="mb-3 pb-3 d-flex image-editor-optimization-wrapper">
-				<Col span={6}>
-					<EventCalendarWidget />
-				</Col>
-				<Col className="ml-3" span={17}>
+		<div ref={eventRef} className="events-wrapper">
+			<Grid container className="mb-3 pb-3 d-flex image-editor-optimization-wrapper">
+				<Grid xs={12}>
 					<div className="calender-wrapper">
 						<div className="calender-title">
-							<h2>{title}</h2>
+							<span className="calender-title-range">{title}</span>
 							<div>
-								<Button onClick={onPrevious} size="small">Previous</Button> &nbsp;
-							<Button onClick={onToday} size="small">Today</Button> &nbsp;
-							<Button onClick={onNext} size="small">Next</Button> &nbsp;&nbsp;&nbsp;
-							<Select
-									size="small"
+								<Button className="calendar-today-button" variant="outlined" onClick={onToday} size="small">Today</Button> &nbsp;
+								<ArrowLeftIcon role="button" onClick={onPrevious} size="small" /> &nbsp;
+								<ArrowRightIcon role="button" onClick={onNext} size="small" /> &nbsp;&nbsp;&nbsp;
+								<Select
 									value={currentView}
-									onChange={handleViewChange}
-									style={{
-										width: 100,
-									}}
-									options={viewOptions}
-								/>
+									IconComponent={KeyboardArrowDownOutlinedIcon}
+									onChange={(e) => handleViewChange(e.target.value)}
+									size="small"
+									className="calendar-view-select"
+								>
+									{
+										viewOptions.map(o => (<MenuItem value={o.value}>{o.label}</MenuItem>))
+									}
+								</Select>
 							</div>
 						</div>
 						<FullCalendar
@@ -194,16 +225,26 @@ export default function Events() {
 							}}
 							events={list}
 							// dateClick={handleDateClick}
-							eventContent={prop => eventInfo(prop, onEdit, onDelete)}
+							eventContent={prop => () => <div
+								aria-describedby={prop.id} variant="contained"
+								onClick={(e) => handleEventClick(e, prop)}
+								dangerouslySetInnerHTML={{ __html: renderEventComponent(prop) }}></div>}
 							slotDuration="01:00:00"
 							allDaySlot={false}
 							eventMinHeight={20}
-						// onClick={handleSlotClick}
-						// selectable={true}
+							dayHeaderContent={(args) => {
+								return moment(args.date).format('ddd')
+							}}
+							slotLabelFormat={{
+								hour: '2-digit',
+								minute: '2-digit',
+								omitZeroMinute: false,
+								hour12: false,
+							}}
 						/>
 					</div>
-				</Col>
-			</Row>
+				</Grid>
+			</Grid>
 			{
 				addEditPopup
 				&& <AddEditEvents
@@ -213,6 +254,17 @@ export default function Events() {
 					closePopup={closePopup}
 				/>
 			}
+			{
+				viewEvent
+				&& <Popover
+					id={viewEvent.id}
+					open={!!viewEvent}
+					anchorEl={viewEventAnchor}
+					onClose={handleClose}
+					variant="popover"
+				>
+					<EventInfoModal event={viewEvent.event} onEdit={onEdit} onDelete={onDelete} />
+				</Popover>}
 		</div>
 	);
 }

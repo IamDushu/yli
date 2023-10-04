@@ -561,6 +561,9 @@ export const EDIT_CERTIFICATE_SCHEMA = (lang) =>
           organisationType: Yup.string()
             .trim()
             .max(250, lang("CERTIFICATE.FORM.CHAR_250")),
+          description: Yup.string()
+            .trim()
+            .max(2000, lang("FORM.MAX_LENGTH_2000")),
         })
       )
 
@@ -1741,10 +1744,7 @@ export const GROWTH_CONNECTIONS_ACTIVITY_SCHEMA = (lang) =>
     date: Yup.string().trim().required(lang("FORM.REQUIRED")),
     activityGoal: Yup.string()
       .trim()
-      .max(300, lang("FORM.MAX_LENGTH_300"))
+      .max(100, lang("FORM.MAX_LENGTH_100"))
       .required(lang("FORM.REQUIRED")),
-    note: Yup.string()
-      .trim()
-      .max(2000, lang("FORM.MAX_LENGTH_2000"))
-      .required(lang("FORM.REQUIRED")),
+    note: Yup.string().trim().max(3000, lang("FORM.MAX_LENGTH_3000")),
   });

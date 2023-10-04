@@ -1,17 +1,20 @@
 import React from "react";
 import { Link } from "@routes";
 import { Card } from "react-bootstrap";
-import { onImageError, timeAgo } from "utils";
-import { Tooltip, } from 'antd';
+import { timeAgo } from "utils";
+import Tooltip from "@mui/material/Tooltip";
+import {
+  Avatar,
+  Box,
+  CardHeader,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
+import MoreHoriz from "@mui/icons-material/MoreHoriz";
+import { useRouter } from "next/router";
 
-const PostHeader = ({
-  listData,
-  userInfo,
-  type,
-  imagePreference,
-  isModal,
-  lastNameFunction,
-}) => {
+const PostHeader = ({ listData, userInfo, type, imagePreference }) => {
   const firstName =
     type === "share"
       ? listData?.postShareDetails?.companyId ??
@@ -79,37 +82,53 @@ const PostHeader = ({
     : "";
 
   const taggedUserDetails = listData?.postDetails?.postTaggedUsers || [];
-
+  const router = useRouter();
   return (
-    <div
-      className={
-        type === "share" && !isModal
-          ? "d-flex mb-3 px-3"
-          : "d-flex mb-3 align-items-center"
+    <CardHeader
+      avatar={
+        <Avatar
+          onClick={(e) => router.push(profileRoute)}
+          sx={{ width: 56, height: 56, cursor: "pointer" }}
+          src={dashboardHeaderPhoto}
+        />
+      }
+      title={
+        <Typography
+          sx={{ cursor: "pointer" }}
+          onClick={(e) => router.push(profileRoute)}
+          variant="titleMedium"
+        >
+          {firstName} {lastName}
+        </Typography>
+      }
+      subheader={
+        <Box
+          sx={{ cursor: "pointer" }}
+          onClick={(e) => router.push(profileRoute)}
+        >
+          <Typography variant="bodyMedium">
+            {type == "share"
+              ? listData.postShareDetails?.userDetails?.currentPosition || ""
+              : listData.postDetails?.userDetails?.currentPosition || ""}
+          </Typography>
+        </Box>
+      }
+      action={
+        <Stack direction={"row"} alignItems={"center"} gap={1}>
+          <Typography variant="labelSmall">
+            {timeAgo(
+              type
+                ? listData.postShareDetails !== null
+                  ? listData?.postShareDetails?.createdAt
+                  : ""
+                : listData?.postDetails?.createdAt
+            )}
+          </Typography>
+        </Stack>
       }
     >
       <div className="w-h-54 position-relative flex-shrink-0 mr-3">
-        <div className="overflow-hidden flex-shrink-0 border border-geyser w-h-54 rounded-pill">
-          <Link route={profileRoute}>
-            <a>
-              <picture
-                className="user-profile-pic flex-shrink-0 w-100 h-100 d-block border-0"
-                onContextMenu={(e) => e.preventDefault()}
-              >
-                <source srcSet={dashboardHeaderPhoto} type="image/jpg" />
-                <img
-                  src={dashboardHeaderPhoto}
-                  onError={(e) => {
-                    onImageError(e, "profile", `${firstName} ${lastName}`);
-                  }}
-                  width="54"
-                  height="54"
-                  className="img-fluid w-100 h-100"
-                />
-              </picture>
-            </a>
-          </Link>
-        </div>
+        <div className="overflow-hidden flex-shrink-0 border border-geyser w-h-54 rounded-pill"></div>
         {((listData?.postDetails?.userDetails?.visibilityDetails?.settings
           ?.myConnection &&
           listData?.postDetails?.userDetails?.connectionData[0]
@@ -125,73 +144,51 @@ const PostHeader = ({
             <span className="chat-blue-icon w-h-8 mr-2 flex-shrink-0 bg-success rounded-circle"></span>
           )}
       </div>
-      <div className="w-100">
-        <div className="d-flex position-relative justify-space-bw">
-          <div>
-            <Card.Title className="mb-1">
-              <Link route={profileRoute}>
-                <h5 className="cursor-pointer font-16 font-600 text-secondary d-inline text-body-14 mb-0">
-                  {firstName} {lastName}
-                </h5>
-              </Link>
-              {
-                taggedUserDetails?.length > 0
-                && (
-                  <React.Fragment>
-                    &nbsp;
-                    <span className="font-12 font-weight-light">
-                      is with
-                        <Link route={`/profile/${taggedUserDetails[0]?.user.profileId}`}>
-                        <span className="ml-1 cursor-pointer font-12 font-weight-bold">
-                          {taggedUserDetails[0]?.user.firstName} {taggedUserDetails[0]?.user.lastName || ""}
-                        </span>
-                      </Link>
-                    </span>
-                  </React.Fragment>
-                )
-              }
-              {
-                taggedUserDetails?.length > 1
-                && (
-                  <React.Fragment>
-                    &nbsp;
-                    <span className="font-12 font-weight-light">
-                      and other
-                    </span>
-                    <Tooltip placement="bottom" title={
-                      taggedUserDetails?.map((taggedUser, index) => index != 0 ? (
-                        <div>
-                          {taggedUser.user.firstName} {taggedUser.user.lastName || ""}
-                        </div>
-                      ) : "")
-                    }>
-                      <span className="ml-1 font-12 font-weight-light">
-                        {taggedUserDetails?.length - 1} people
-                      </span>
-                    </Tooltip>
-                  </React.Fragment>
-                )
-              }
-            </Card.Title>
-            <Card.Text className="text-body-12 mb-0 text-secondary">
-              {type == "share"
-                ? listData.postShareDetails?.userDetails?.currentPosition || ""
-                : listData.postDetails?.userDetails?.currentPosition || ""}
-            </Card.Text>
-          </div>
 
-          <Card.Text className="text-body-12 df">
-            {timeAgo(
-              type
-                ? listData.postShareDetails !== null
-                  ? listData?.postShareDetails?.createdAt
-                  : ""
-                : listData?.postDetails?.createdAt
-            )}
-          </Card.Text>
-        </div>
+      <div>
+        <Card.Title className="mb-1">
+          {taggedUserDetails?.length > 0 && (
+            <React.Fragment>
+              &nbsp;
+              <span className="font-12 font-weight-light">
+                is with
+                <Link
+                  route={`/profile/${taggedUserDetails[0]?.user.profileId}`}
+                >
+                  <span className="ml-1 cursor-pointer font-12 font-weight-bold">
+                    {taggedUserDetails[0]?.user.firstName}{" "}
+                    {taggedUserDetails[0]?.user.lastName || ""}
+                  </span>
+                </Link>
+              </span>
+            </React.Fragment>
+          )}
+          {taggedUserDetails?.length > 1 && (
+            <React.Fragment>
+              &nbsp;
+              <span className="font-12 font-weight-light">and other</span>
+              <Tooltip
+                placement="bottom"
+                title={taggedUserDetails?.map((taggedUser, index) =>
+                  index != 0 ? (
+                    <div>
+                      {taggedUser.user.firstName}{" "}
+                      {taggedUser.user.lastName || ""}
+                    </div>
+                  ) : (
+                    ""
+                  )
+                )}
+              >
+                <span className="ml-1 font-12 font-weight-light">
+                  {taggedUserDetails?.length - 1} people
+                </span>
+              </Tooltip>
+            </React.Fragment>
+          )}
+        </Card.Title>
       </div>
-    </div>
+    </CardHeader>
   );
 };
 

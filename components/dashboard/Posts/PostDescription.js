@@ -1,10 +1,10 @@
+import { Box, Button, Stack, Typography, styled } from "@mui/material";
 import { LinkPreviewGenerator } from "components/ui/link-preview";
-import { replace } from "lodash";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
 import ReactHtmlParser from "react-html-parser";
-import { detectURLs, urlify } from "utils";
+import { detectURLs } from "utils";
 /******************** 
 @purpose : Post Description
 @Parameter : { description, isEdit }
@@ -16,6 +16,8 @@ const PostDescription = ({
   type,
   articleSubtitle,
   postType,
+  title,
+  id,
 }) => {
   const router = useRouter();
   const [postPreviewUrl, setPostPreviewUrl] = useState([]);
@@ -51,37 +53,45 @@ const PostDescription = ({
     }
   }
 
+  const PostContentTypography = styled(Typography)(({ theme }) => ({
+    [`& a`]: {
+      color: theme.palette.primary["light"],
+    },
+  }));
+
   return (
     <Fragment>
+      {(title || articleSubtitle) && (
+        <Stack mt={2} gap={1}>
+          <Link passHref href={`/post/${id}`}>
+            <Typography sx={{ cursor: "pointer" }} variant="titleSmall">
+              {title}
+            </Typography>
+          </Link>
+          <Link passHref href={`/post/${id}`}>
+            <Typography sx={{ cursor: "pointer" }} variant="bodySmall">
+              {articleSubtitle}
+            </Typography>
+          </Link>
+        </Stack>
+      )}
       {!isEdit && (
-        <div
-          className={
-            type === "postShare"
-              ? `font-14 overflow-auto w-100 link-blue ${
-                  articleSubtitle ? "" : "pb-3"
-                }`
-              : `font-14 overflow-auto w-100 link-blue ${
-                  articleSubtitle ? "" : "pb-3"
-                }`
-          }
-        >
+        <Box mb={type === "photo" ? 3 : 0}>
           {type === "article" &&
             router.pathname === "/profile/institute-profile" && (
               <>
                 <div className="px-3 pt-3">
-                  <h4 className="mb-3 font-16 font-weight-bold">
-                    {articleSubtitle}
-                  </h4>
                   {isReadMore
                     ? ReactHtmlParser(`${description?.slice(0, 500)}`)
                     : ReactHtmlParser(description)}
                   {description?.length > 500 && (
-                    <span
-                      className="ml-1 text-primary font-weight-semibold cursor-pointer"
+                    <Button
+                      sx={{ mt: 1 }}
+                      size="small"
                       onClick={toggleReadMore}
                     >
                       {isReadMore ? "Read more" : "Read less"}
-                    </span>
+                    </Button>
                   )}
                 </div>
               </>
@@ -90,41 +100,45 @@ const PostDescription = ({
             <></>
           ) : (
             <>
-              <div className="px-3 text-secondary">
+              <Typography variant="bodyMedium">
                 {isReadMore && description?.length > 500 ? (
-                  <div
+                  <span
                     dangerouslySetInnerHTML={{
                       __html: `${replaceLinkWithAnchorTag(
                         description?.slice(0, 500)
-                      )}...`,
+                      )}`,
                     }}
                   />
                 ) : (
-                  <div>
+                  <span>
                     {!isEdit && (
-                      <Card.Text className="font-14 mb-3">
+                      <PostContentTypography variant="bodyMedium">
                         {ReactHtmlParser(
                           description?.replaceAll("\n", "<br />")
                         )}
-                      </Card.Text>
+                      </PostContentTypography>
                     )}
-                  </div>
-                )}
-                {description?.length > 500 && (
-                  <span
-                    className="ml-1 text-primary font-weight-semibold cursor-pointer"
-                    onClick={toggleReadMore}
-                  >
-                    {isReadMore ? "Read more" : "Read less"}
                   </span>
                 )}
-              </div>
+                {description?.length > 500 && (
+                  <Typography
+                    component={"span"}
+                    sx={{ cursor: "pointer" }}
+                    onClick={toggleReadMore}
+                    color={"primary.light"}
+                    variant="bodyMedium"
+                    ml={2}
+                  >
+                    {isReadMore ? "...read more" : "...read less"}
+                  </Typography>
+                )}
+              </Typography>
               {postPreviewUrl.length > 0 && (
                 <LinkPreviewGenerator url={postPreviewUrl[0]} />
               )}
             </>
           )}
-        </div>
+        </Box>
       )}
     </Fragment>
   );

@@ -1,0 +1,65 @@
+.yliway-container {
+  display: flex;
+
+  .yliway-img {
+    width: 7.125rem;
+    // height: 4rem;
+    margin-top: 10px;
+  }
+
+  .yliway-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 12.8rem;
+    height: auto;
+    margin-left: 1rem;
+
+    .yliway-name {
+      color: var(--m-3-sys-light-on-surface-variant, #49454e);
+
+      /* M3/label/medium */
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px; /* 133.333% */
+      letter-spacing: 0.5px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* Number of lines to show */
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      white-space: normal; /* Ensures text wraps to two lines */
+    }
+
+    .yliway-heading {
+      color: var(--m-3-sys-light-on-surface, #1c1b1e);
+
+      /* M3/body/medium */
+      font-size: 14px;
+      margin: 0px;
+      padding: 0px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px; /* 142.857% */
+      letter-spacing: 0.25px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Number of lines to show */
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      white-space: normal; /* Ensures text wraps to two lines */
+    }
+
+    .yliway-text {
+      color: var(--m-3-sys-light-on-surface-variant, #49454e);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+    }
+    .yliway-pointer {
+      cursor: pointer;
+      font-style: italic;
+    }
+  }
+}

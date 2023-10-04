@@ -1,0 +1,95 @@
+.user-card-wrapper {
+  box-shadow: 0px 1px 3px 1px #00000026;
+  box-shadow: 0px 1px 2px 0px #0000004d;
+  min-width: 124px;
+  min-height: 182px;
+  max-width: 152px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // min width will be the minimum value for the mobile view
+  align-items: center;
+  width: calc(20% - 6.4px);
+
+  @media only screen and (max-width: 1130px) {
+    width: calc(25% - 6px);
+  }
+
+  @media only screen and (max-width: 985px) {
+    width: calc(20% - 6.4px);
+  }
+
+  @media only screen and (max-width: 780px) {
+    width: calc(25% - 6px);
+  }
+
+  .cover-image {
+    width: 124px;
+    height: 54px;
+    background-size: cover;
+    position: relative;
+    margin-bottom: 17px;
+    .profile-avatar-image {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 50%);
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0.5rem;
+    align-items: center;
+    height: 80px;
+    justify-content: space-around;
+    .name {
+      color: #6750a4;
+      text-align: center;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0.1px;
+      display: inline-block;
+    }
+    .position {
+      color: var(--m-3-sys-light-on-surface-variant);
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+    }
+    .mutual-contacts {
+      color: var(--m-3-ref-neutral-neutral-60, #938f94);
+      text-align: center;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 16px; /* 145.455% */
+      letter-spacing: 0.5px;
+    }
+    @media only screen and (max-width: 985px) {
+      height: 60px;
+      margin: 0;
+
+      .position {
+        font-size: 10px;
+        line-height: 12.1px;
+      }
+
+      .mutual-contacts {
+        font-size: 10px;
+      }
+    }
+  }
+  .footer {
+    display: flex;
+    padding-bottom: 5px;
+    // flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+  }
+}

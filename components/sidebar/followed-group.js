@@ -19,8 +19,8 @@ const FollowedGroup = () => {
   }, []);
   return (
     groupsJoinedList?.data?.length > 0 && (
-      <div className="mb-3 followed-content-box ">
-        <Card className="rounded-0 border-0 border-bottom-dark-2">
+      <div className="mb-3 followed-content-box">
+        <Card className="rounded-0 border-0" sx={{boxShadow: 3}}>
           <Card.Header className="d-flex border-radius-0 border-bottom border-geyser py-2">
             <div className="w-100 d-flex border-0 p-0">
               <Card.Title className="text-body-16 mb-0 w-100 text-secondary">

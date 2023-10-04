@@ -360,9 +360,8 @@ export const updateUserInfo =
     );
     if (response.status === 1) {
       dispatch({ type: UPDATE_CURRENT_USER_INFO, payload });
-
       if (typeof cb === "function") cb();
-      return Promise.resolve(response.data);
+      return Promise.resolve(response);
     } else {
       return Promise.reject(response);
     }

@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { Card, Button } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostHeader from "./PostHeader";
 import PostBody from "./PostBody";
@@ -11,7 +10,9 @@ import moment from "moment";
 import { Loader } from "components/ui";
 import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
-
+import ViewPost from "components/modal/viewPost";
+import Card from "@mui/material/Card";
+import { Button, Divider, Stack } from "@mui/material";
 const AddToGMModal = dynamic(() =>
   import("@components/modal").then((mod) => mod.AddToGMModal)
 );
@@ -28,6 +29,16 @@ const DashboardPost = ({
   searchText,
   page,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [viewpostData, setViewpostData] = useState([]);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  React.useEffect(() => {
+    if (open === true) {
+      setOpen(false);
+    }
+  }, []);
   const [lang] = useTranslation("language");
   const { addtoGrowthModel } = useSelector(({ ui }) => ui.modals, shallowEqual);
   const { addtoGrowthModelLi } = useSelector(
@@ -135,6 +146,11 @@ const DashboardPost = ({
   @purpose : Rander HTML/ React Components
   @Author : INIC
   ******************/
+
+  const handleOpenPostModal = (data) => {
+    setViewpostData(data);
+    setOpen(true);
+  };
   return (
     <Fragment>
       <InfiniteScroll
@@ -143,36 +159,34 @@ const DashboardPost = ({
             ? postListData?.rows?.length
             : ""
         }
-        style={{ backgroundColor: "transparent", border: "none" }}
         next={fetchMorePost}
         hasMore={postListData?.rows?.length !== postListData?.total}
         loader={<Loader />}
       >
-        {postListData?.rows?.length > 0 &&
-          postListData?.rows?.map((listData) => {
-            const imagePreference = postImageHandler(
-              listData?.postDetails?.userDetails,
-              listData?.postDetails?.instituteDetails,
-              userInfo
-            );
-            const lastNameFunction = postLastNameHandler(
-              listData?.postDetails?.userDetails,
-              listData?.postDetails?.instituteDetails,
-              userInfo
-            );
-            let type = listData?.postDetails?.postType;
-            return (
-              <Card
-                className="mb-2 post-views border-0 border-bottom-dark-2 rounded-0"
-                key={listData.id}
-              >
-                <div className="post-load-more">
+        {postListData?.rows?.length > 0 && (
+          <Stack gap={3}>
+            {postListData?.rows?.map((listData) => {
+              const imagePreference = postImageHandler(
+                listData?.postDetails?.userDetails,
+                listData?.postDetails?.instituteDetails,
+                userInfo
+              );
+              const lastNameFunction = postLastNameHandler(
+                listData?.postDetails?.userDetails,
+                listData?.postDetails?.instituteDetails,
+                userInfo
+              );
+              let type = listData?.postDetails?.postType;
+              return (
+                <Card key={listData.id}>
                   {newPostCount === 10 && (
                     <Button
-                      variant="info btn-sm"
-                      size="sm"
+                      variant="contained"
+                      color="primary"
+                      size="small"
                       type="button"
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.stopPropagation();
                         setCookie(
                           "postToken",
                           moment(new Date()).utc().valueOf()
@@ -183,23 +197,23 @@ const DashboardPost = ({
                       {lang("DASHBOARD.POSTS.LOAD_MORE")}
                     </Button>
                   )}
-                </div>
-                <Card.Header className="pb-0">
+
                   <PostHeader
                     listData={listData}
                     userInfo={userInfo}
                     imagePreference={imagePreference}
                     lastNameFunction={lastNameFunction}
                   />
-                </Card.Header>
-                <Card.Body className="p-0">
+
                   <PostBody
                     listData={listData}
                     getAllPost={getAllPost}
                     isEdit={false}
                     type={type}
+                    handleOpenPostModal={handleOpenPostModal}
                   />
-                  {/* {listData?.postId && ( */}
+                  <Divider sx={{ mx: 2 }} />
+
                   <PostFooter
                     postData={listData}
                     currentUserInfo={userInfo}
@@ -211,12 +225,29 @@ const DashboardPost = ({
                     searchText={searchText}
                     type={type}
                   />
-                  {/* )} */}
-                </Card.Body>
-              </Card>
-            );
-          })}
+                </Card>
+              );
+            })}
+          </Stack>
+        )}
       </InfiniteScroll>
+      {/******************* 
+           @purpose : View Post Modal
+           @Author : YLIWAY
+          ******************/}
+      {viewpostData && (
+        <ViewPost
+          getAllPost={getAllPost}
+          // toggleGMModal={addToGModalToggle}
+          // toggleGMModalLI={addToGModalToggleLi}
+          // toggleGMModalArticle={addToGModalToggleArticle}
+          searchText={searchText}
+          userInfo={userInfo}
+          viewpostData={viewpostData}
+          open={open}
+          onClose={handleClose}
+        />
+      )}
 
       {/******************* 
            @purpose : Add To Gm Modal

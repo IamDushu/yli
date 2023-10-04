@@ -19,6 +19,9 @@ import {
   GM_DEPARTMENT_LIST,
   GROWTH_PARTNERS_LIST,
   MOST_FOLLOWED_CONTENT,
+  LATEST_ARTICLES,
+  MOST_FOLLOWED_TOPICS,
+  MOST_FOLLOWED_CIRCLES,
   OTHER_GROWTH_COURSES,
   OTHER_GROWTH_ROOMS,
   RECENTLY_ADDED_TO_GM,
@@ -363,7 +366,6 @@ export const getGrowthModelActivitiesStatus = (id) => async (dispatch) => {
   }
 };
 
-
 /******************** 
 @purpose : Used for delete growth model activities
 @Parameter : { dispatch }
@@ -572,6 +574,113 @@ export const setMostFollowedContents = (data) => ({
   type: types.MOST_FOLLOWED_CONTENT,
   data,
 });
+
+/******************** 
+@purpose : Used for get Latest Article list
+@Parameter : {body, dispatch}
+@Author : Yliway
+******************/
+export const getLatestArticles = (body) => async (dispatch) => {
+  try {
+    const response = await post(
+      { serviceURL: USER_API_URL },
+      LATEST_ARTICLES,
+      false,
+      body,
+      true
+    );
+    if (response.status === 1) {
+      dispatch(setLatestArticles(response.data.rows));
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+/******************** 
+@purpose : set recent added to gm data
+@Parameter : {}
+@Author : INIC
+******************/
+
+export const setLatestArticles = (data) => ({
+  type: types.LATEST_ARTICLES,
+  data,
+});
+
+/******************** 
+@purpose : Used to get Most Followed Topics list
+@Parameter : {body, dispatch}
+@Author : Yliway
+******************/
+export const getMostFollowedTopics = () => async (dispatch) => {
+  try {
+    const response = await get(
+      { serviceURL: USER_API_URL },
+      MOST_FOLLOWED_TOPICS,
+      false,
+      true
+    );
+    if (response.status === 1) {
+      dispatch(setMostFollowedTopics(response.data.rows));
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+/******************** 
+@purpose : set Most Followed Topics
+@Parameter : {}
+@Author : INIC
+******************/
+
+export const setMostFollowedTopics = (data) => ({
+  type: types.MOST_FOLLOWED_TOPICS,
+  data,
+});
+
+/******************** 
+@purpose : Used to get Most Followed Circles
+@Parameter : {body, dispatch}
+@Author : Yliway
+******************/
+export const getMostFollowedCircles = () => async (dispatch) => {
+  try {
+    const response = await get(
+      { serviceURL: USER_API_URL },
+      MOST_FOLLOWED_CIRCLES,
+      false,
+      true
+    );
+    if (response.status === 1) {
+      dispatch(setMostFollowedCircles(response.data.rows));
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+/******************** 
+@purpose : set Most Followed Circles
+@Parameter : {}
+@Author : INIC
+******************/
+
+export const setMostFollowedCircles = (data) => ({
+  type: types.MOST_FOLLOWED_CIRCLES,
+  data,
+});
+
 /******************* 
   @purpose : To generate acitivity list in required manner
   @Parameter : {courseList}

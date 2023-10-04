@@ -1,7 +1,11 @@
 import React from "react";
 import { Card, Button, Col, Container, Row } from "react-bootstrap";
-import { imagePreferenceHandler, lastNameHandler, onImageError } from "utils";
-import { Link } from "../../routes";
+import { getFullName } from "utils";
+import UserCard from "../UserCard";
+import { YliwayButton } from "../button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
 import {
   Follow,
   UnFollow,
@@ -25,328 +29,237 @@ const People = ({
   userData,
 }) => {
   return (
-    <div>
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.PEOPLE"))) &&
         searchData?.searchResults?.users?.rows.length > 0 && (
-          <Card className="mb-3">
-            <Card.Body className="p-0">
-              <h3 className="h6 mb-0 px-3 py-12">
+          <Card className="mb-4">
+            <Card.Body
+              className={
+                searchData?.searchResults?.users?.rows.length > 4
+                  ? "p-0"
+                  : "p-0 pb-3"
+              }
+            >
+              <h3
+                className="mb-0 pl-3 pt-20"
+                style={{
+                  fontSize: "16px",
+                  color: "#001551",
+                  fontWeight: "500",
+                  lineHeight: "24px",
+                }}
+              >
                 {lang("GLOBAL_SEARCH.FILTER.PEOPLE")}
               </h3>
-              <Container fluid>
-                <Row className="custom-col-box four-grid-spacing-md row-col-10">
-                  {searchData?.searchResults?.users?.rows?.map((user, key) => {
-                    return (
-                      key <= 3 &&
-                      !showAll.people && (
-                        <Col md={4} xl={3} key={user?.id} className="mb-sm-3">
-                          <Card className="text-center position-relative h-100 myconnection-card overflow-hidden">
-                            <Card.Header className="p-0">
-                              <Link route={`/profile/${user.profileId}`}>
-                                <div
-                                  style={{
-                                    backgroundImage: `url(${
-                                      user?.profileBgURL ??
-                                      "../../assets/images/dashboard/cover-background-2.jpg"
-                                    })`,
-                                    borderRadius: "8px 8px 0px 0px",
-                                  }}
-                                  className="position-relative connection-user-cover-img"
-                                >
-                                  <div className="d-flex mx-auto">
-                                    <div className="user-profile-pic flex-shrink-0 w-h-70 border-0 rounded-pill pointer">
-                                      <img
-                                        src={user?.profilePicURL || ""}
-                                        className="d-flex img-fluid w-100 h-100"
-                                        onError={(e) => {
-                                          onImageError(
-                                            e,
-                                            "profile",
-                                            `${user?.firstName} ${user?.lastName}`
-                                          );
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link>
-                            </Card.Header>
-                            <Card.Body className="d-flex flex-column h-100 p-0 pt-1 myconnection-body">
-                              {/* <div className="d-flex flex-column h-100"> */}
-                              <Card.Title className="mb-1">
-                                <Link route={`/profile/${user.profileId}`}>
-                                  {/* <h5 className="text-body-14 mb-1 text-ellipsis pointer"> */}
-                                  <h5 className="text-body-14 mb-0 text-ellipsis pointer">
-                                    {user.firstName}{" "}
-                                    {lastNameHandler(
-                                      user,
-                                      user.lastNameVisibility,
-                                      userData
-                                    )
-                                      ? user.lastName
-                                      : ""}
-                                  </h5>
-                                </Link>
-                              </Card.Title>
-                              {/* <p className="text-body-12 font-weight-normal text-secondary mb-2 text-ellipsis">
-                                    {user?.role?.join(",")}
-                                  </p> */}
-                              <div className="mb-0 px-2">
-                                <p className="mb-1 text-gray-darker font-12 text-ellipsis">
-                                  {user?.currentPosition ?? "No Position Added"}
-                                </p>
-                                <p className="text-body-12 mb-2 text-gray-darker text-ellipsis">
-                                  {user?.mutualCount}{" "}
-                                  {lang("CONNECTIONS.MUTUAL_CONTACTS")}
-                                </p>
-                              </div>
 
-                              {user.id !== userId && (
-                                <div className="text-gary font-medium mb-2 d-flex px-2">
-                                  {user?.connectionDetails?.isConnection && (
-                                    <>
-                                      {/* <Button
-                                        variant="btn btn-outline-info mb-2 w-100"
-                                        onClick={() =>
-                                          deleteConnection(user?.id)
-                                        }
-                                      >
-                                        {lang("COMMON.MESSAGE")}
-                                      </Button>
-                                      <Button
-                                        variant="btn btn-outline-info mb-2 w-100"
-                                        onClick={() =>
-                                          history.push(
-                                            `/profile/${user.profileId}`
-                                          )
-                                        }
-                                      >
-                                        {lang("HEADER.VIEW_PROFILE")}
-                                      </Button> */}
-                                    </>
-                                  )}
+              <div className="d-flex justify-content-around  mt-2 pl-4 pr-21">
+                <Container fluid className="p-0">
+                  <div
+                    style={{
+                      columnGap: "0.5rem",
+                      rowGap: "1.5rem",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {searchData?.searchResults?.users?.rows?.map(
+                      (user, key) => {
+                        return (
+                          key <= 4 &&
+                          !showAll.people && (
+                            <UserCard
+                              key={key}
+                              coverImage={user?.profileBgURL}
+                              profileImage={user?.profilePicURL}
+                              name={getFullName(user)}
+                              position={
+                                user?.currentPosition || "No Position Added"
+                              }
+                              mutualCountText={`${user?.mutualCount} ${lang(
+                                "CONNECTIONS.MUTUAL_CONTACTS"
+                              )}`}
+                              profileurl={`/profile/${user?.profileId}`}
+                              renderFooter={() => (
+                                <React.Fragment>
                                   {!user?.connectionDetails?.isConnection &&
                                     user?.connectionDetails?.status ===
                                       null && (
-                                      <Button
-                                        className="mb-1"
-                                        title="Connect"
-                                        variant="btn btn-outline-primary mr-1 btn-small-icon w-100"
-                                        onClick={() => {
+                                      <YliwayButton
+                                        title={lang("CONNECTIONS.CONNECT")}
+                                        primary
+                                        handleClick={() => {
                                           sendConnection(user?.id);
                                         }}
-                                      >
-                                        <Connect />
-                                        <span> {lang("COMMON.CONNECT")} </span>
-                                      </Button>
+                                        label={lang("CONNECTIONS.CONNECT")}
+                                        size="extra-small"
+                                        style={{
+                                          padding: !user?.connectionDetails
+                                            ?.isConnection
+                                            ? "0.05rem 0.2rem"
+                                            : "0.05rem 0.4rem",
+                                        }}
+                                      />
                                     )}
                                   {user?.connectionDetails?.status ===
                                     "requested" &&
                                     user?.connectionDetails?.isConnection ===
                                       false && (
-                                      <Button
-                                        title="Withdraw"
-                                        variant="btn btn-outline-primary mr-1 btn-small-icon w-100"
-                                        onClick={() => {
+                                      <YliwayButton
+                                        title={lang("CONNECTIONS.WITHDRAW")}
+                                        primary
+                                        handleClick={() => {
                                           withdrawRequest(
                                             user?.connectionDetails?.id
                                           );
                                         }}
-                                      >
-                                        <CrossIcon />
-                                        {lang("COMMON.WITHDRAW")}
-                                      </Button>
-                                    )}
-                                  {!user?.connectionDetails?.isfollow && (
-                                    <Button
-                                      title="Follow"
-                                      variant="btn btn-outline-primary btn-small-icon w-100"
-                                      onClick={() => {
-                                        followRequest(user?.id);
-                                      }}
-                                    >
-                                      <Follow />
-                                      {lang("COMMON.FOLLOW")}
-                                    </Button>
-                                  )}
-
-                                  {user?.connectionDetails?.isfollow && (
-                                    <Button
-                                      title="Unfollow"
-                                      variant="btn btn-outline-primary btn-small-icon w-100"
-                                      onClick={() => {
-                                        unfollowRequest(user?.id);
-                                      }}
-                                    >
-                                      <UnFollow />
-                                      {lang("COMMON.UNFOLLOW")}
-                                    </Button>
-                                  )}
-                                </div>
-                              )}
-                              {/* </div> */}
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      )
-                    );
-                  })}
-                  {searchData?.searchResults?.users?.rows?.map((user, key) => {
-                    return (
-                      showAll.people && (
-                        <Col md={4} xl={3} key={user?.id} className="mb-sm-3">
-                          <Card className="text-center position-relative h-100 myconnection-card overflow-hidden">
-                            <Card.Header className="p-0">
-                              <Link route={`/profile/${user.profileId}`}>
-                                <div
-                                  style={{
-                                    backgroundImage: `url(${
-                                      user?.profileBgURL ??
-                                      "../../assets/images/dashboard/cover-background-2.jpg"
-                                    })`,
-                                    borderRadius: "8px 8px 0px 0px",
-                                  }}
-                                  className="position-relative connection-user-cover-img"
-                                >
-                                  <div className="d-flex mx-auto">
-                                    <div className="user-profile-pic flex-shrink-0 w-h-70 border-0 rounded-pill pointer">
-                                      <img
-                                        src={user?.profilePicURL || ""}
-                                        className="d-flex img-fluid w-100 h-100"
-                                        onError={(e) => {
-                                          onImageError(
-                                            e,
-                                            "profile",
-                                            `${user?.firstName} ${user?.lastName}`
-                                          );
+                                        label={lang("CONNECTIONS.WITHDRAW")}
+                                        size="extra-small"
+                                        style={{
+                                          padding: !user?.connectionDetails
+                                            ?.isConnection
+                                            ? "0.05rem 0.2rem"
+                                            : "0.05rem 0.4rem",
                                         }}
                                       />
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link>
-                            </Card.Header>
-                            <Card.Body className="d-flex flex-column h-100 p-0 pt-1 myconnection-body">
-                              {/* <div className="d-flex flex-column h-100"> */}
-                              <Card.Title className="mb-1">
-                                <Link route={`/profile/${user.profileId}`}>
-                                  <h5 className="text-body-14 mb-0 text-ellipsis pointer">
-                                    {user.firstName}{" "}
-                                    {lastNameHandler(
-                                      user,
-                                      user.lastNameVisibility,
-                                      userData
-                                    )
-                                      ? user.lastName
-                                      : ""}
-                                  </h5>
-                                </Link>
-                              </Card.Title>
-                              <div className="mb-0 px-2">
-                                <p className="mb-1 text-gray-darker font-12 text-ellipsis">
-                                  {user?.currentPosition ?? "No Position Added"}
-                                </p>
-                                <p className="text-body-12 mb-2 text-gray-darker text-ellipsis">
-                                  {user?.mutualCount}{" "}
-                                  {lang("CONNECTIONS.MUTUAL_CONTACTS")}
-                                </p>
-                              </div>
+                                    )}
 
-                              {user.id !== userId && (
-                                <div className="text-gary font-medium mb-3 d-flex px-2">
-                                  {user?.connectionDetails?.isConnection && (
-                                    <>
-                                      {/* <Button
-                                        variant="btn btn-outline-info mb-2 w-100"
-                                        onClick={() =>
-                                          deleteConnection(user?.id)
-                                        }
-                                      >
-                                        {lang("COMMON.MESSAGE")}
-                                      </Button>
-                                      <Button
-                                        variant="btn btn-outline-info mb-2 w-100"
-                                        onClick={() =>
-                                          history.push(
-                                            `/profile/${user.profileId}`
-                                          )
-                                        }
-                                      >
-                                        {lang("HEADER.VIEW_PROFILE")}
-                                      </Button> */}
-                                    </>
-                                  )}
+                                  <YliwayButton
+                                    title={
+                                      user?.connectionDetails?.isfollow
+                                        ? lang("CONNECTIONS.UN_FOLLOW")
+                                        : lang("CONNECTIONS.FOLLOW")
+                                    }
+                                    handleClick={() =>
+                                      user?.connectionDetails?.isfollow
+                                        ? unfollowRequest(user?.id)
+                                        : followRequest(user?.id)
+                                    }
+                                    label={
+                                      user?.connectionDetails?.isfollow
+                                        ? lang("CONNECTIONS.UN_FOLLOW")
+                                        : lang("CONNECTIONS.FOLLOW")
+                                    }
+                                    size="extra-small"
+                                    style={{
+                                      color: "#6750a4",
+                                      boxShadow: "none",
+                                      padding: "0rem",
+                                      "min-width": "30px",
+                                    }}
+                                  />
+                                </React.Fragment>
+                              )}
+                            />
+                          )
+                        );
+                      }
+                    )}
+                    {searchData?.searchResults?.users?.rows?.map(
+                      (user, key) => {
+                        return (
+                          showAll.people && (
+                            <UserCard
+                              key={key}
+                              coverImage={user?.profileBgURL}
+                              profileImage={user?.profilePicURL}
+                              name={getFullName(user)}
+                              position={
+                                user?.currentPosition || "No Position Added"
+                              }
+                              mutualCountText={`${user?.mutualCount} ${lang(
+                                "CONNECTIONS.MUTUAL_CONTACTS"
+                              )}`}
+                              profileurl={`/profile/${user?.profileId}`}
+                              renderFooter={() => (
+                                <React.Fragment>
                                   {!user?.connectionDetails?.isConnection &&
                                     user?.connectionDetails?.status ===
                                       null && (
-                                      <Button
-                                        title="Follow"
-                                        variant="btn btn-outline-primary mr-1 btn-small-icon w-100"
-                                        onClick={() => {
+                                      <YliwayButton
+                                        title={lang("CONNECTIONS.CONNECT")}
+                                        primary
+                                        handleClick={() => {
                                           sendConnection(user?.id);
                                         }}
-                                      >
-                                        <Connect />
-                                        {lang("COMMON.CONNECT")}
-                                      </Button>
+                                        label={lang("CONNECTIONS.CONNECT")}
+                                        size="extra-small"
+                                        style={{
+                                          padding: !user?.connectionDetails
+                                            ?.isConnection
+                                            ? "0.05rem 0.3rem"
+                                            : "0.05rem 0.5rem",
+                                        }}
+                                      />
                                     )}
                                   {user?.connectionDetails?.status ===
                                     "requested" &&
                                     user?.connectionDetails?.isConnection ===
                                       false && (
-                                      <Button
-                                        title="Withdraw"
-                                        variant="btn btn-outline-primary mr-1 btn-small-icon w-100"
-                                        onClick={() => {
+                                      <YliwayButton
+                                        title={lang("CONNECTIONS.WITHDRAW")}
+                                        primary
+                                        handleClick={() => {
                                           withdrawRequest(
                                             user?.connectionDetails?.id
                                           );
                                         }}
-                                      >
-                                        <CrossIcon />
-                                        {lang("COMMON.WITHDRAW")}
-                                      </Button>
+                                        label={lang("CONNECTIONS.WITHDRAW")}
+                                        size="extra-small"
+                                        style={{
+                                          padding: !user?.connectionDetails
+                                            ?.isConnection
+                                            ? "0.05rem 0.3rem"
+                                            : "0.05rem 0.5rem",
+                                        }}
+                                      />
                                     )}
-                                  {!user?.connectionDetails?.isfollow && (
-                                    <Button
-                                      variant="btn btn-outline-primary btn-small-icon w-100"
-                                      onClick={() => {
-                                        followRequest(user?.id);
-                                      }}
-                                    >
-                                      <Follow />
-                                      {lang("COMMON.FOLLOW")}
-                                    </Button>
-                                  )}
 
-                                  {user?.connectionDetails?.isfollow && (
-                                    <Button
-                                      title="Unfollow"
-                                      variant="btn btn-outline-primary btn-small-icon w-100"
-                                      onClick={() => {
-                                        unfollowRequest(user?.id);
-                                      }}
-                                    >
-                                      <UnFollow />
-                                      {lang("COMMON.UNFOLLOW")}
-                                    </Button>
-                                  )}
-                                </div>
+                                  <YliwayButton
+                                    title={
+                                      user?.connectionDetails?.isfollow
+                                        ? lang("CONNECTIONS.UN_FOLLOW")
+                                        : lang("CONNECTIONS.FOLLOW")
+                                    }
+                                    handleClick={() =>
+                                      user?.connectionDetails?.isfollow
+                                        ? unfollowRequest(user?.id)
+                                        : followRequest(user?.id)
+                                    }
+                                    label={
+                                      user?.connectionDetails?.isfollow
+                                        ? lang("CONNECTIONS.UN_FOLLOW")
+                                        : lang("CONNECTIONS.FOLLOW")
+                                    }
+                                    size="extra-small"
+                                    style={{
+                                      color: "#6750a4",
+                                      boxShadow: "none",
+                                      padding: user?.connectionDetails?.isfollow
+                                        ? "0.05rem 0.2rem"
+                                        : "0.05rem 0.5rem",
+                                      color: "#6750a4",
+                                      boxShadow: "none",
+                                      padding: "0rem",
+                                      "min-width": "30px",
+                                    }}
+                                  />
+                                </React.Fragment>
                               )}
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      )
-                    );
-                  })}
-                </Row>
-              </Container>
+                            />
+                          )
+                        );
+                      }
+                    )}
+                  </div>
+                </Container>
+              </div>
 
               {searchData?.searchResults?.users?.rows.length > 4 && (
-                <div className="people-tab-view-all-button border-top border-geyser mt-2">
+                <div className="people-tab-view-all-button border-geyser d-flex justify-content-center">
                   <span
-                    className="people-tab-view-all-button-text py-2 d-block"
+                    className="people-tab-view-all-button-text py-3 d-flex ml-2 align-items-center"
                     onClick={() => {
                       setShowAll({
                         ...showAll,
@@ -354,9 +267,17 @@ const People = ({
                       });
                     }}
                   >
-                    {!showAll.people
-                      ? lang("COMMON.VIEW_ALL")
-                      : lang("COMMON.VIEW_LESS")}
+                    {!showAll.people ? (
+                      <>
+                        <AddIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_ALL")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <RemoveIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
+                      </>
+                    )}
                   </span>
                 </div>
               )}
@@ -365,9 +286,7 @@ const People = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.PEOPLE")) &&
-        searchData?.searchResults?.users?.rows.length === 0 && (
-          <p>No People Found</p>
-        )}
+        searchData?.searchResults?.users?.rows.length === 0 && <></>}
     </div>
   );
 };

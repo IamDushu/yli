@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,11 +7,13 @@ import {
   setSearchUser,
   toggleModals,
 } from "store/actions";
-import { Modal, Form } from "react-bootstrap";
 import { debounce } from "lodash";
-import ProfileImage from "components/messagesV2/ProfileImage";
+import ProfileImage from "components/MessagesV3/ProfileImage";
 import { getLocalStorage } from "utils";
 import { useYchat } from "hooks/useYchat";
+import { FormControl, InputAdornment, OutlinedInput } from "@mui/material";
+import { Icon } from "components/icons";
+import ModalBody from "components/yli-modal/modalBody";
 
 const FindChannel = () => {
   const [lang] = useTranslation("language");
@@ -70,15 +72,15 @@ const FindChannel = () => {
   );
 
   const searchHandler = async (userData) => {
-    if(userData.type !== "P") {
+    if (userData.type !== "P") {
       const res = await chatCreateUser({
         ids: [userData?.mmId, mmLogin?.mmId],
       });
       currentChannelHandler({
         ...res,
         members: {
-          [userData?.mmId]: res.userData
-        }
+          [userData?.mmId]: res.userData,
+        },
       });
     } else {
       currentChannelHandler(userData);
@@ -89,75 +91,68 @@ const FindChannel = () => {
   };
   return (
     <>
-      {/* <Form> */}
-      <Modal.Body className="p-4">
-        <div className="common-searchbar mb-3">
-          <Form.Group controlId="formSearch" className="position-relative mb-0">
-            <Form.Control
-              type="text"
+      <Fragment>
+        <ModalBody>
+          <FormControl sx={{ m: 0, width: "100%" }} variant="outlined">
+            <OutlinedInput
+              startAdornment={
+                <InputAdornment className="mt-1">
+                  <Icon iconName="searchIcon" />
+                </InputAdornment>
+              }
+              aria-describedby="outlined-weight-helper-text"
+              inputProps={{
+                "aria-label": "weight",
+              }}
               placeholder={lang("MY_ACCOUNTS.COMMON.SEARCH")}
               onChange={(e) => searchChannelMembers(e.target.value)}
             />
-            <div className="search-inner-icon">
-              <em className="bx bx-search"></em>
-            </div>
-          </Form.Group>
-        </div>
-        {searchChannelData?.length > 0 ? (
-          searchChannelData?.map((channel) => {
-            const fullName =
-              channel?.display_name ||
-              (channel?.firstName || "") + " " + (channel?.lastName || "");
+          </FormControl>
+          {searchChannelData?.length > 0 ? (
+            searchChannelData?.map((channel) => {
+              const fullName =
+                channel?.display_name ||
+                (channel?.firstName || "") + " " + (channel?.lastName || "");
 
-            return (
-              <div
-                className="chat-message-container cursor-pointer"
-                key={channel?.id}
-                onClick={() => {
-                  searchHandler(channel);
-                }}
-              >
-                <div className="row mb-2 pl-3">
-                    {channel?.type !== "P" ? (
+              return (
+                <div
+                  className="mt-2 cursor-pointer"
+                  key={channel?.id}
+                  onClick={() => {
+                    searchHandler(channel);
+                  }}
+                >
+                  <div style={{ display:"flex", alignItems:"center", marginTop: "2px"}}>
+                    <div>
                       <ProfileImage
                         key={fullName}
                         name={fullName}
                         src={channel?.profilePicURL}
-                        size={24}
+                        size={32}
                       />
-                    ) : (
-                      <i class="bx bxs-lock-alt bx-xs"></i>
-                    )}
-                    <div
-                      className={`position-relative ${channel.type === "P" ? "pl-2" : ""
-                        } mr-2 text-ellipsis notification-listing`}
-                    >
-                      <a
-                        title={fullName}
-                        className="font-14 text-ellipsis font-weight-normal"
-                      >
-                        {fullName}
-                      </a>
                     </div>
+                    <div className="ml-2">
+                      <a title={fullName}>{fullName}</a>
+                    </div>
+                  </div>
                 </div>
+              );
+            })
+          ) : (
+            <div className="text-center pt-5 pb-3">
+              <div className="mb-3 icon-avatar-54">
+                <Icon iconName="searchIcon" width={30} height={30} />
               </div>
-            )
-          })
-        ) : (
-          <div className="text-center pt-5 pb-3">
-            <div className="mb-3 icon-avatar-54">
-              <span className="material-icons">search</span>
+              <h5 className="model-header">
+                {searchMessage !== "" && searchMessage.trim()
+                  ? lang("MESSAGE.NO_RESULT", { query: searchMessage })
+                  : lang("MESSAGE.SEARCH_CHANNELS")}
+              </h5>
+              <p className="mb-0 text-gray">{lang("MESSAGE.CHECK_SPELL")}</p>
             </div>
-            <h5>
-              {searchMessage !== "" && searchMessage.trim()
-                ? lang("MESSAGE.NO_RESULT", { query: searchMessage })
-                : lang("MESSAGE.SEARCH_CHANNELS")}
-            </h5>
-            <p className="mb-0">{lang("MESSAGE.CHECK_SPELL")}</p>
-          </div>
-        )}
-      </Modal.Body>
-      <Modal.Footer className="custom-footer text-center d-flex border-top border-geyser justify-content-between" />
+          )}
+        </ModalBody>
+      </Fragment>
     </>
   );
 };

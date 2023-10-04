@@ -1,9 +1,18 @@
 .events-wrapper {
 	background: transparent;
-	padding: 20px;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+	border: 1px solid $dark;
+	position: relative;
 
 	.calender-wrapper {
-		background-color: white;
+		background-color: $white;
+	}
+
+	.fc-event-main {
+		padding: 0px;
+		div:nth-child(1) {
+			height: 100%;
+		}
 	}
 
 	.fc-header-toolbar {
@@ -46,29 +55,105 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 8px 16px;
+
+		.calender-title-range {
+			font-family: $font-family-base;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 24px;
+			letter-spacing: 0.5px;
+			text-align: left;
+		}
+
+		.calendar-today-button {
+			padding: 8px;
+			font-family: $font-family-base;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 16px;
+			letter-spacing: 0.5px;
+			text-align: left;
+			color: $subnautical;
+
+			border: 1px solid $dark;
+		}
+
+		.calendar-view-select {
+			font-family: $font-family-base;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 16px;
+			letter-spacing: 0.5px;
+			text-align: left;
+			color: $subnautical;
+		}
 	}
 
-	.event-wrappe {
+	.event-wrapper {
+		background: $primary-violet-90;
+		font-family: $font-family-base;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 12px;
+		letter-spacing: 0em;
+		color: $primary-violet;
+		padding: 4px;
+		border-radius: 3px;
+		gap: 2px;
 		height: 100%;
 		width: 100%;
-		background-color: #daebf7;
-			padding: 4px;
-		border-radius: 3px;
-
-		.ant-typography {
-			color: #0F6BBF;
-		}
 	}
 
 	.event-user-list {
 		font-size: 12px;
     font-weight: 400;
-		padding-top: 14px;
+		margin: 16px 32px 0px 32px;
+		max-height: 172px;
+		overflow-y: scroll;
+
+		svg {
+			color: $neutralvariant-dark-30;
+			height: 16px;
+			width: 16px;
+		}
+
+		.selected-event-user {
+			font-family: $font-family-base;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 16px;
+			letter-spacing: 0em;
+			text-align: left;
+			color: $secondary;
+		}
+	}
+
+	.note-label {
+		font-family: $font-family-base;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 20px;
+		letter-spacing: 0.25px;
+		text-align: left;
+		color: $primary-violet-10;
+		margin-bottom: 8px;
+	}
+
+	.event-reminder-select {
+		padding-left: 6px;
+		font-family: $font-family-base;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 16px;
+		letter-spacing: 0.5px;
+		text-align: left;
+		color: $primary-violet-10;
+		width: 100%;
 	}
 
 	.fc-v-event {
 		background-color: #daebf7;
-		border: 1px solid #daebf7;
+		border: none;
 	}
 
 	.fc-timeGridDay-view tbody tbody tr,
@@ -79,7 +164,25 @@
 	.fc-timeGridDay-view thead thead tr:nth-child(1) a,
 	.fc-timeGridWeek-view thead thead tr:nth-child(1) a,
 	.fc-dayGridMonth-view thead thead tr:nth-child(1) a {
-		color: black;
+		font-family: $font-family-base;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 16px;
+		letter-spacing: 0.5px;
+		text-align: left;
+		color: $black2;
+	}
+
+	.fc-timeGridDay-view tbody tbody tr td:nth-child(1),
+	.fc-timeGridWeek-view tbody tbody tr td:nth-child(1){
+		font-family: $font-family-base;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 16px;
+		letter-spacing: 0.5px;
+		text-align: left;
+		color: $black2;
+		padding: 0px 10px 0px 10px;
 	}
 
 	.fc-dayGridMonth-view .fc-daygrid-day-number {
@@ -107,7 +210,57 @@
 	.add-edit-event-wrapper {
 		border: 1px solid #d1d5db;
     border-radius: 8px;
-		width: 350px;
+		width: 400px;
+
+		.ck-editor__editable_inline {
+			max-height: 160px;
+			min-height: 160px;
+		}
+
+		.event-form-label {
+			padding: 0px 4px 0px 4px;
+			background: rgba(253, 248, 253, 1);
+		}
+
+		.bottom-spacer-16 {
+			margin-bottom: 16px;
+		}
+
+		.event-time-selector {
+			width: 100%;
+		}
+
+		.calendar-event-datetime-selector {
+			opacity: 0.0000;
+			width: 1px;
+			height: 1px;
+			position: inherit !important;
+
+			button {
+				display: none;
+			}
+		}
+
+		.start-time-label {
+			padding-left: 8px;
+			font-family: $font-family-base;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 20px;
+			letter-spacing: 0.25px;
+			text-align: left;
+			color: $primary-violet-10;
+		}
+
+		.end-time-label {
+			font-family: $font-family-base;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 20px;
+			letter-spacing: 0.25px;
+			text-align: left;
+			color: $primary-violet-10;
+		}
 
 		.pl-16 {
 			padding-left: 16px;
@@ -135,16 +288,12 @@
 
 		.add-edit-event-header {
 			min-height: 32px;
-			background-color: #eff0f6;
 			border-radius: 8px 8px 0px 0px;
-			display: flex;
-			align-items: center;
-			justify-content: end;
+			padding: 8px 16px;
+			background: linear-gradient(0deg, $primary-violet-95, $primary-violet-95);
 		}
 
 		.add-edit-event-form {
-			padding-top: 12px;
-
 			.ant-divider-horizontal {
 				border-top: 1px solid rgb(209 212 219 / 100%);
 				margin: 16px 0 14px 0;
@@ -166,7 +315,7 @@
 			border-bottom: 1px solid #d1d5db;
 			display: flex;
 			align-items: center;
-			padding: 4px;
+			padding: 14px 16px;
 		}
 
 		.add-edit-event-submit {
@@ -176,17 +325,19 @@
 			button {
 				background: #6750a4;
 				border-color: #6750a4;
-				border-radius: 8px;
+				border-radius: 25px;
 			}
 		}
 	}
 }
 
 .event-info-modal-wrapper {
-	border: 2px solid #d1d5db;
-	border-radius: 8px;
+	border: 1px solid rgba(230, 225, 230, 1);
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+	background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
 	.event-info-modal-header {
-		height: 20px;
+		height: 16px;
 		display: flex;
 		align-items: center;
 		justify-content: end;
@@ -196,13 +347,40 @@
 		}
 	}
 	.event-info-modal-body {
-		padding: 0 20px 20px 20px;
+		padding: 0 16px 16px 16px;
+		font-family: $font-family-base;
+		color: $primary-violet-10;
+		margin-bottom: 10px;
+		
+		.event-title {
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 24px;
+			letter-spacing: 0.15000000596046448px;
+			text-align: left;
+		}
+
+		.event-info-row {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 20px;
+			letter-spacing: 0.25px;
+			text-align: left;
+		}
 	}
-	.event-title {
-		font-size: 16px;
+
+	.event-info-modal-footer {
+		padding: 0 16px 16px 16px;
+		font-family: $font-family-base;
+		color: $primary-violet-10;
+
+		button {
+			border-radius: 25px;
+			padding: 5px 24px;
+		}
 	}
 }
 
-.ant-popover-inner {
-	box-shadow: none;
+.event-user-search {
+	padding: 8px 8px 2px 8px;
 }

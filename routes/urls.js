@@ -82,6 +82,7 @@ module.exports = {
   CREATE_PROFILE_COMPANY: "/create-profile-company",
   CREATE_PROFILE_COMPANY_STEP1: "/create-profile-company-step1",
   CREATE_PROFILE_COMPANY_STEP2: "/create-profile-company-step2",
+  TOPIC:"/topic",
   COMPANY_INTRODUCTION: "/company-introduction",
   COMPANY_PROFILE: "/company-profile",
   EVENTS: "/events",

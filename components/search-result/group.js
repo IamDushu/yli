@@ -1,7 +1,11 @@
 import React from "react";
-import { Card, Button, Col, Container, Row } from "react-bootstrap";
-import { onImageError } from "utils";
-import { Link } from "../../routes";
+import { Button, Col, Row } from "react-bootstrap";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const SearchGroup = ({
   lang,
@@ -12,103 +16,162 @@ const SearchGroup = ({
   router,
 }) => {
   return (
-    <div>
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.GROUPS"))) &&
         searchData?.searchResults?.groups?.rows.length > 0 && (
           <Card className="mb-3">
-            <Card.Body className="p-0">
-              <h3 className="h6 mb-0 px-3 py-12">
+            <div className="p-2 pb-4 ">
+              <h3
+                className="mb-0 px-3 py-3"
+                style={{
+                  fontSize: "16px",
+                  color: "#001551",
+                  fontWeight: "500",
+                  lineHeight: "24px",
+                }}
+              >
+                {" "}
                 {lang("GLOBAL_SEARCH.FILTER.GROUPS")}
               </h3>
-              <Container fluid>
-                <Row className="custom-col-box four-grid-spacing-md row-col-10">
-                  {searchData?.searchResults?.groups?.rows?.map(
-                    (group, key) => {
-                      return (
-                        key <= 3 &&
-                        !showAll.groups && (
-                          <Col md={4} xl={3} key={key} className="mb-sm-3">
-                            <Card
-                              className="text-center position-relative h-100"
-                              onClick={() =>
-                                router.push(`/groups/${group.name}/${group.id}`)
-                              }
-                            >
-                              <Card.Body className="pt-4">
-                                <picture
-                                  className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer"
-                                  onContextMenu={(e) => e.preventDefault()}
-                                >
-                                  <source
-                                    srcSet={group.imageURL}
-                                    type="image/jpg"
-                                  />
-                                  <img
-                                    src={group.imageURL}
-                                    width="70"
-                                    height="70"
-                                    onError={(e) => onImageError(e)}
-                                  />
-                                </picture>
-                                <div>
-                                  <div>
-                                    <a>
-                                      <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                        {group.name}
-                                      </h5>
-                                    </a>
-                                  </div>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          </Col>
-                        )
-                      );
-                    }
-                  )}
-                  {searchData?.searchResults?.groups?.rows?.map((group, i) => {
+              <div className="pb-2 video-courses-rightbar">
+                <div
+                  className="pt-1 px-3 d-flex flex-wrap"
+                  style={{
+                    columnGap: "0.5rem",
+                    rowGap: "1.5rem",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {searchData?.searchResults?.groups?.rows.map((groups, i) => {
                     return (
-                      showAll.groups && (
-                        <Col md={4} xl={3} key={i} className="mb-sm-3">
-                          <Card
-                            className="text-center position-relative h-100"
-                            onClick={() =>
-                              router.push(`/groups/${group.name}/${group.id}`)
-                            }
-                          >
-                            <Card.Body className="pt-4">
-                              <picture className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer">
-                                <source
-                                  srcSet={group.imageURL}
-                                  type="image/jpg"
-                                />
-                                <img
-                                  src={group.imageURL}
-                                  width="70"
-                                  height="70"
-                                  onError={(e) => onImageError(e)}
-                                />
-                              </picture>
-                              <div>
-                                <div>
-                                  <a>
-                                    <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                      {group.name}
-                                    </h5>
-                                  </a>
-                                </div>
+                      i <= 3 &&
+                      !showAll.groups && (
+                        <Card
+                          className="secondary-card abstract-card-v2"
+                          style={{
+                            width: "166px",
+                            height: "152px",
+                            position: "relative",
+                            borderRadius: "0px",
+                          }}
+                          onClick={() => {
+                            router.push(`/groups/${groups.name}/${groups.id}`);
+                          }}
+                        >
+                          <div className="position-relative pointer">
+                            <CardMedia
+                              component="img"
+                              height="70px"
+                              className="w-100"
+                              src={
+                                groups?.imageURL ||
+                                "../assets/images/circles-no-img.jpg"
+                              }
+                              alt={groups?.name}
+                              onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src =
+                                  "../assets/images/circles-no-img.jpg";
+                              }}
+                            />
+                          </div>
+                          <CardContent className="p-1">
+                            <div className="title-container">
+                              <h6
+                                className="text-body-14 pointer ellipsis"
+                                style={{
+                                  fontWeight: "500",
+                                  color: "#6750A4",
+                                  lineHeight: "20px",
+                                  letterSpacing: "0.1px",
+                                }}
+                              >
+                                {groups?.name?.charAt(0).toUpperCase() +
+                                  groups?.name?.slice(1)}
+                              </h6>
+                            </div>
+                            {groups?.name && (
+                              <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                <small className="font-weight-semi-bold text-card-name text-body-12">
+                                  <span style={{ color: "#49454E" }}>
+                                    {`${groups?.name || ""}`.trim()}
+                                  </span>
+                                </small>
                               </div>
-                            </Card.Body>
-                          </Card>
-                        </Col>
+                            )}
+                          </CardContent>
+                        </Card>
                       )
                     );
                   })}
-                </Row>
-              </Container>
+                  {searchData?.searchResults?.groups?.rows.map((groups, i) => {
+                    return (
+                      showAll.groups && (
+                        <Card
+                          className="secondary-card abstract-card-v2 mb-2"
+                          style={{
+                            width: "166px",
+                            height: "152px",
+                            position: "relative",
+                            borderRadius: "0px",
+                          }}
+                          onClick={() => {
+                            router.push(`/groups/${groups.name}/${groups.id}`);
+                          }}
+                        >
+                          <div className="position-relative pointer">
+                            <CardMedia
+                              component="img"
+                              height="70px"
+                              className="w-100"
+                              src={
+                                groups?.imageURL ||
+                                "../assets/images/circles-no-img.jpg"
+                              }
+                              alt={groups?.name}
+                              onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src =
+                                  "../assets/images/circles-no-img.jpg";
+                              }}
+                            />
+                          </div>
+                          <CardContent className="p-1">
+                            <div className="title-container">
+                              <h6
+                                className="text-body-14 pointer ellipsis"
+                                style={{
+                                  fontWeight: "500",
+                                  color: "#6750A4",
+                                  lineHeight: "20px",
+                                  letterSpacing: "0.1px",
+                                }}
+                              >
+                                {groups?.name?.charAt(0).toUpperCase() +
+                                  groups?.name?.slice(1)}
+                              </h6>
+                            </div>
+
+                            {groups?.name && (
+                              <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                <small className="font-weight-semi-bold text-card-name text-body-12">
+                                  <span style={{ color: "#49454E" }}>
+                                    {`${groups?.name || ""}`.trim()}
+                                  </span>
+                                </small>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      )
+                    );
+                  })}
+                </div>
+              </div>
               {searchData?.searchResults?.groups?.rows.length > 4 && (
-                <div className="people-tab-view-all-button my-2 border-top border-geyser pt-2">
+                <div className="people-tab-view-all-button mt-2 pt-2 d-flex justify-content-center">
                   <span
                     className="people-tab-view-all-button-text"
                     onClick={() => {
@@ -118,20 +181,26 @@ const SearchGroup = ({
                       });
                     }}
                   >
-                    {!showAll.groups
-                      ? lang("COMMON.VIEW_ALL")
-                      : lang("COMMON.VIEW_LESS")}
+                    {!showAll.groups ? (
+                      <>
+                        <AddIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.LOAD_MORE")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <RemoveIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
+                      </>
+                    )}
                   </span>
                 </div>
               )}
-            </Card.Body>
+            </div>
           </Card>
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.GROUPS")) &&
-        searchData?.searchResults?.groups?.rows.length === 0 && (
-          <p>No Groups Found</p>
-        )}
+        searchData?.searchResults?.groups?.rows.length === 0 && <></>}
     </div>
   );
 };

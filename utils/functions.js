@@ -567,16 +567,16 @@ export const createImageFromInitials = (size, name, color) => {
   const context = canvas.getContext("2d");
   canvas.width = canvas.height = size;
 
-  context.fillStyle = "#133FF1";
+  context.fillStyle = "#6750a4";
   context.fillRect(0, 0, size, size);
 
-  context.fillStyle = `${color}50`;
+  context.fillStyle = `${color}10`;
   context.fillRect(0, 0, size, size);
 
   context.fillStyle = color;
   context.textBaseline = "middle";
   context.textAlign = "center";
-  context.font = `${size / 2}px Roboto`;
+  context.font = `${size / 1.9}px Roboto`;
   context.fillText(name, size / 2, size / 2);
 
   return canvas.toDataURL();
@@ -664,7 +664,8 @@ export const postLastNameHandler = (
   }
 };
 
-export const getFullName = (v) => `${v.firstName} ${v.lastName}`;
+export const getFullName = (v) =>
+  `${v?.firstName || ""} ${v?.lastName || ""}`.trim();
 
 export const timeGetter = (timeStampz) => {
   const dt = new Date(timeStampz);
@@ -801,16 +802,34 @@ export function getValueByKey(object, value) {
 }
 
 /***********************
+ @purpose : return string with first letter in capital
+ @Parameters : string
+ @author: YLIWAY
+ **************/
+export function makeFirstLetterCapital(str) {
+  const arr = str.split(" ");
+
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  return arr.join(" ");
+}
+
+/***********************
  @purpose : Converts date to given timezone
  @Parameters : date,timezone
  @author: YLIWAY
  **************/
+
 export const convertToTargetTimezone = (inputDate, targetTimezone) => {
   const inputMoment = moment(inputDate);
 
+  if (targetTimezone === null || targetTimezone === undefined) {
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const userMoment = inputMoment.tz(userTimezone);
+    return userMoment.format(defaultDateFormat);
+  }
+
   const targetMoment = inputMoment.tz(targetTimezone);
-
-  const formattedDate = targetMoment.format(defaultDateFormat);
-
-  return formattedDate;
+  return targetMoment.format(defaultDateFormat);
 };

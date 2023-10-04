@@ -72,6 +72,7 @@ const {
   CREATE_PROFILE_COMPANY,
   CREATE_PROFILE_COMPANY_STEP1,
   CREATE_PROFILE_COMPANY_STEP2,
+  TOPIC,
 } = require("./urls");
 
 /******************* 
@@ -186,3 +187,11 @@ routes.add(
   "company/create-profile-company-step2",
   CREATE_PROFILE_COMPANY_STEP2
 );
+
+
+// Topic
+routes.add(
+  "topic",
+  TOPIC
+);
+

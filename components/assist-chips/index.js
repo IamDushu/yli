@@ -3,16 +3,26 @@ import assistChipsStyle from "./assist-chips.module.scss";
 
 export const AssistChips = ({
   backgroundColor = "white",
-  color = "#6750A4",
+  color = "#48464A",
   border = "1px solid #6750A4",
   iconName = "",
   paddingX = "8px",
   paddingY = "6px",
+  fontWeight="600",
+  fontSize="14px",
   handleClick,
   label,
   arrow = "",
+  tooltip="",
 }) => {
-  const iconLink = {};
+  const iconLink = {
+    addQuestionIcon:"assets/images/add-post/add-poll-question-icon.svg",
+    postPhoto: "assets/images/post-type-icons/post-image.svg",
+    postVideo: "assets/images/post-type-icons/post-video.svg",
+    postPoll: "assets/images/post-type-icons/post-poll.svg",
+    postArticle: "assets/images/post-type-icons/post-article.svg",
+    addIcon:"/assets/images/add-post/add.svg"
+  };
 
   const style = {
     border,
@@ -22,6 +32,8 @@ export const AssistChips = ({
     paddingTop: paddingY,
     paddingLeft: paddingX,
     paddingRight: paddingX,
+    fontWeight,
+    fontSize
   };
 
   const arrowStyle = {
@@ -32,9 +44,15 @@ export const AssistChips = ({
   const styleClassArray = [assistChipsStyle["yliway-assist-chips"]];
 
   return (
-    <div style={style} className={styleClassArray.join(" ")}>
-      <div>{iconLink[iconName]}</div>
-      <div>{label}</div>
+    <div style={style} className={styleClassArray.join(" ")} onClick={handleClick} data-toggle="tooltip" title={tooltip}>
+      {iconName ? (
+        <div className={assistChipsStyle["yliway-assist-chips-icon"]}>
+          <img src={iconLink[iconName]} />
+        </div>
+      ) : (
+        <></>
+      )}
+      <div className={assistChipsStyle["yliway-assist-chips-label"]}>{label}</div>
       {arrow ? (
         <div style={arrowStyle}>
           <img src={arrow} />

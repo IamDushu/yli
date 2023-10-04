@@ -1,5 +1,6 @@
+import { Box, LinearProgress, Stack, Typography } from "@mui/material";
+import LinearProgressbar from "components/linear-progressbar";
 import React, { useState } from "react";
-import { Card, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -123,86 +124,76 @@ const PostPoll = ({ poll, getAllPost, postUserId }) => {
   };
 
   return (
-    <Card width="100%" className="poll-post">
-      <Card.Body>
-        <Card.Title>
-          <div>
-            <h6>{poll?.question}</h6>
-            <p className="text-small">The author can see how you vote.</p>
-          </div>
-        </Card.Title>
+    <Box>
+      <Typography variant="titleSmall">{poll?.question}</Typography>
+      <Box variant="labelSmall">
+        <Typography variant="labelSmall" component={"span"}>
+          The author can see how you vote.
+        </Typography>
 
-        <Card.Text className="poll-effect w-100 cursor-pointer">
-          {viewResult === true || isVoted === true
-            ? poll?.answerDetails.slice(0).map((answer, index) => {
-                const averageVote =
-                  (answer?.pVHD?.length * 100) /
-                  poll?.pollHistoryDetails?.length;
-                const num = roundOfNumbers(averageVote);
-                return (
-                  <div className="poll-box mb-2">
-                    <div
-                      className="d-flex position-relative justify-space-bw"
-                      key={index}
-                    >
-                      <div className="mb-2">
-                        <div className="fw-dark"> {answer.answer}</div>
-                        <div className="text-small">
-                          {answer?.pVHD?.length} votes
-                        </div>
-                      </div>
-                      <div className="ml-2 text-right fw-dark">{`${num}%`}</div>
-                    </div>
-                    <ProgressBar now={num} className="w-100" />
-                  </div>
-                );
-              })
-            : poll?.answerDetails
-                // ?.sort(({ pollOrder }) => (pollOrder ? 1 : -1))
-                .map((answer, index) => (
-                  <div
-                    className="poll-option-bar"
-                    key={index}
-                    onClick={() => handlePollVoting(answer, poll.id)}
+        <Typography variant="labelSmall" color={"#6750A4"} component={"span"}>
+          {" "}
+          Learn more
+        </Typography>
+      </Box>
+
+      <Box>
+        {viewResult === true || isVoted === true
+          ? poll?.answerDetails.slice(0).map((answer, index) => {
+              const averageVote =
+                (answer?.pVHD?.length * 100) / poll?.pollHistoryDetails?.length;
+              const num = roundOfNumbers(averageVote);
+              return (
+                <Box key={index} px={2} py={"12px"}>
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    alignItems={"flex-end"}
+                    mb={2}
                   >
-                    {answer.answer}
-                  </div>
-                ))}
-        </Card.Text>
+                    <Stack>
+                      <Typography variant="bodyLarge">
+                        {answer.answer}
+                      </Typography>
+                      <Typography variant="bodySmall">
+                        {answer?.pVHD?.length} votes
+                      </Typography>
+                    </Stack>
+                    <Typography variant="labelLarge">{`${num}%`}</Typography>
+                  </Stack>
 
-        <div className="poll-result">
-          <span
-            className={`vote poll-vote-text ${
-              postUserId === userData.id
-                ? "cursor-pointer poll-vote-hover"
-                : "cursor-default"
-            }`}
-            onClick={(e) =>
-              postUserId === userData.id
-                ? handlePollViewVoteResult(e, poll)
-                : null
-            }
-          >
-            Total votes:
-            {`${poll?.pollHistoryDetails?.length || 0} `}
-          </span>
-          {isPollClosed ? (
-            <>
-              <span className="px-1  text-small cursor-default">•</span>
-              <span className="font-12 cursor-default text-secondary">
-                {lang("DASHBOARD.POSTS.POST_BODY.POST_POLL.POLL_CLOSED")}
-              </span>
-            </>
-          ) : null}
+                  <LinearProgressbar variant="determinate" value={num} />
+                </Box>
+              );
+            })
+          : poll?.answerDetails
+              // ?.sort(({ pollOrder }) => (pollOrder ? 1 : -1))
+              .map((answer, index) => (
+                <div
+                  className="poll-option-bar"
+                  key={index}
+                  onClick={() => handlePollVoting(answer, poll.id)}
+                >
+                  {answer.answer}
+                </div>
+              ))}
+      </Box>
 
-          {!isPollClosed && pollUndoResult(poll)}
-          <span className="px-1  text-small cursor-default">•</span>
-          <span className="text-small cursor-default">
-            {convertToTargetTimezone(poll?.pollExpiryDate, userData?.timezone)}
-          </span>
-        </div>
-      </Card.Body>
-    </Card>
+      <Typography
+        color={"neutral.50"}
+        onClick={(e) =>
+          postUserId === userData.id ? handlePollViewVoteResult(e, poll) : null
+        }
+        variant="labelSmall"
+      >
+        Total votes: {`${poll?.pollHistoryDetails?.length || 0} `}
+        {isPollClosed
+          ? `- ${lang("DASHBOARD.POSTS.POST_BODY.POST_POLL.POLL_CLOSED")}`
+          : null}
+        {!isPollClosed && pollUndoResult(poll)} -{" "}
+        {convertToTargetTimezone(poll?.pollExpiryDate, userData?.timezone)}
+      </Typography>
+    </Box>
   );
 };
 

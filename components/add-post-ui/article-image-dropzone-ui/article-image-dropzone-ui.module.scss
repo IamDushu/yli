@@ -1,0 +1,27 @@
+.dropzone-container {
+    height: 334px;
+    background-color: #F4F6FA;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .dropzone-container-nest-1 {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        .dropzone-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dropzone-size-text{
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14.52px;
+            text-align: center;
+        }
+    }
+
+}

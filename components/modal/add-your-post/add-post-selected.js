@@ -232,39 +232,42 @@ const AddPostSelected = (props) => {
         </Card>
       )}
       {props.isEditDshBordPost === true ? (
-        Array.isArray(props?.createPolls) &&
-        props?.createPolls?.map((poll, index) => (
-          <Card width="100%" key={index}>
+        Array.isArray(props?.createPolls?.pollAnswers) && (
+          <Card width="100%">
             <Card.Body>
               <Card.Title>
                 <Row>
-                  <Col sm={6} md={6} lg={6}>
-                    <h4>{poll?.question}</h4>
+                  <Col sm={10} md={10} lg={10}>
+                    <h6>{props.createPolls?.pollQuestion?.question}</h6>
                   </Col>
-                  <Col sm={6} md={6} lg={6}>
-                    <span className="poll-header">
-                      {new Date(poll?.pollExpiryDate).toLocaleString()}
-                    </span>
+                  <Col sm={2} md={2} lg={2}>
+                    <button
+                      className="poll-option-bar-btn"
+                      onClick={handleDelete}
+                    >
+                      <em className="icon icon-delete font-20"></em>
+                    </button>
+                    <button
+                      className="poll-option-bar-btn"
+                      onClick={handleEditCreatPol}
+                    >
+                      <em className="icon icon-write font-20"></em>
+                    </button>
                   </Col>
                 </Row>
               </Card.Title>
-
-              <Card.Text className="poll-effect w-100">
-                {poll?.answerDetails?.map((answer, index) => {
+              <Card.Text className="poll-text-bar">
+                {props.createPolls?.pollAnswers?.map((poll, index) => {
                   return (
-                    <div
-                      className="poll-option-bar"
-                      key={index}
-                      onClick={() => handlePollVoting(answer, poll.id)}
-                    >
-                      {answer.answer}
+                    <div className="poll-option-bar" key={index}>
+                      {poll.answer}
                     </div>
                   );
                 })}
               </Card.Text>
             </Card.Body>
           </Card>
-        ))
+        )
       ) : props.createPolls !== "" ? (
         <Card width="100%">
           <Card.Body>

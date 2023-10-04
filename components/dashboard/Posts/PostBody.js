@@ -5,29 +5,33 @@ import PostDocument from "./PostDocument";
 import PostPoll from "./PostPoll";
 import SharePost from "./SharePost";
 import PostDescription from "./PostDescription";
-import { Card } from "react-bootstrap";
-import ReactHtmlParser from "react-html-parser";
-import { urlify } from "utils";
 import { LinkPreviewGenerator } from "components/ui/link-preview";
+import { APP_URL } from "config";
+import { Box, CardContent } from "@mui/material";
 
-const PostBody = ({ listData, getAllPost, isEdit, type }) => {
+const PostBody = ({
+  listData,
+  getAllPost,
+  isEdit,
+  type,
+  handleOpenPostModal,
+}) => {
   /******************* 
   @purpose : Rander HTML/ React Components
   @Author : INIC
   ******************/
   return (
-    <div className="mb-0">
+    <CardContent>
       {listData?.postDetails?.title &&
         listData?.postDetails?.postType !== "article" && (
-          <h4 className="px-3 pt-3 text-center">
-            {listData?.postDetails?.title}
-          </h4>
+          <h4 className="px-3 text-center">{listData?.postDetails?.title}</h4>
         )}
       {(type === "courseShare" || type === "virtualShare") && (
         <PostDescription
           description={listData?.postDetails?.description}
           isEdit={isEdit}
           type={type}
+          id={listData?.id}
         />
       )}
       {(listData?.postDetails?.postType === "virtualShare" ||
@@ -37,7 +41,7 @@ const PostBody = ({ listData, getAllPost, isEdit, type }) => {
             url={
               listData?.postDetails?.eventExternalLink
                 ? listData?.postDetails?.eventExternalLink
-                : `https://front-dev.yliway.com/${
+                : `${APP_URL}/${
                     listData?.postDetails?.postType === "courseShare"
                       ? `course-detail/${listData?.postDetails?.courseId}`
                       : `virtual-events/${listData?.postDetails?.virtualEventId}/false`
@@ -56,11 +60,13 @@ const PostBody = ({ listData, getAllPost, isEdit, type }) => {
           />
         </Fragment>
       )}
-      <div>
+      <>
         {type !== "article" &&
           type !== "courseShare" &&
-          type !== "virtualShare" && (
+          type !== "virtualShare" &&
+          listData?.postDetails?.description && (
             <PostDescription
+              id={listData?.id}
               description={listData?.postDetails?.description}
               isEdit={isEdit}
               type={type}
@@ -68,7 +74,15 @@ const PostBody = ({ listData, getAllPost, isEdit, type }) => {
           )}
 
         {/* Image Post Section */}
-        {listData?.postDetails?.imageURL && <PostImage listData={listData} />}
+        {listData?.postDetails?.imageURL && (
+          <Box
+            onClick={() =>
+              type === "photo" ? handleOpenPostModal(listData) : null
+            }
+          >
+            <PostImage listData={listData} />
+          </Box>
+        )}
         {/* Video Post Section */}
         {listData?.postDetails?.videoURL !== null ? (
           <PostVideo listData={listData} />
@@ -95,16 +109,18 @@ const PostBody = ({ listData, getAllPost, isEdit, type }) => {
             isEdit={isEdit}
             type={type}
             articleSubtitle={listData?.postDetails?.subTitle}
+            title={listData?.postDetails?.title}
+            id={listData?.id}
           />
         )}
-      </div>
+      </>
 
       {listData.postShareDetails !== null && (
         <div className="">
           <SharePost listData={listData} getAllPost={getAllPost} type="share" />
         </div>
       )}
-    </div>
+    </CardContent>
   );
 };
 

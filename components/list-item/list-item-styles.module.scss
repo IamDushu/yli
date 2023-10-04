@@ -1,0 +1,45 @@
+.yliway-flex-container {
+  display: flex;
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Space between items */
+  flex: 1 1 0;
+
+  .yliway-image1-wrapper {
+    // flex: 1; /* Distribute available space evenly between image containers */
+    padding: 10px; /* Add some spacing around images */
+    padding-right: 16px;
+
+    .yliway-img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .yliway-img2 {
+      align-self: flex-end;
+    }
+  }
+
+  // .yliway-img2 {
+  //   align-self: flex-end;
+  // }
+
+  .yliway-label {
+    width: 136px;
+    // padding-right: 16px;
+    // margin-left: 16px;
+    margin-right: 16px;
+
+    color: var(--m-3-sys-light-on-surface, #1c1b1e);
+    /* M3/body/large */
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    letter-spacing: 0.5px;
+
+    // flex: 1; /* Distribute available space evenly for the label */
+    // text-align: center;
+    // padding: 10px;
+    // background-color: #eee;
+  }
+}

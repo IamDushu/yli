@@ -1,26 +1,25 @@
 // EXTERNAL
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Country, State, City } from "country-state-city";
+import { Checkbox, Stack } from "@mui/material";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 // INTERNAL
-import { connectionGoals } from "utils";
-import GrowthProfessionnSelectField from "components/form-fields/growth-profession-select-field";
-import SelectField from "components/form-fields/select-field";
-import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
+import { connectionGoals, makeFirstLetterCapital } from "utils";
+import { Autocomplete } from "components/form-fields";
+import { getGrowthProfessionList } from "store/actions";
 
-function GrowthConnectionFilters({
-  page,
-  pagesize,
-  showFilters,
-  formik,
-  getFilteredList,
-}) {
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+function GrowthConnectionFilters({ showFilters, formik, getFilteredList }) {
   const dispatch = useDispatch();
   const [lang] = useTranslation("language");
-
+  const [defaultProfessionOptions, setDefaultProfessionOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
 
@@ -57,6 +56,10 @@ function GrowthConnectionFilters({
       });
     }
   }, [formik?.values?.country]);
+
+  useEffect(() => {
+    loadProfessionOptions("").then((res) => setDefaultProfessionOptions(res));
+  }, []);
 
   /*******************
   @purpose : City Listing 
@@ -108,130 +111,131 @@ function GrowthConnectionFilters({
     "Know-how exchange": lang("GROWTH_CONNECTIONS.KNOW_HOW_EXCHANGE"),
   };
 
+  const loadProfessionOptions = async (inputValue) => {
+    try {
+      const res = await dispatch(
+        getGrowthProfessionList({
+          searchText: inputValue,
+          page: 1,
+          pagesize: 20,
+        })
+      );
+      const professionList = (res?.data || []).map((data) => ({
+        label: makeFirstLetterCapital(data),
+        value: data,
+      }));
+      return professionList;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
+  };
+
+  const connectionGoalOptions = connectionGoals.map((goal) => {
+    return {
+      label: goalTranslation[goal.value],
+      value: goal.value,
+    };
+  });
+
   return (
     <React.Fragment>
       {showFilters && (
         <div className="video-search-list border-0 w-100 p-0 df">
-          <Form className="courses-filter">
-            <Row>
-              <Col md={3} lg={4}>
-                <Form.Group className="w-100">
-                  <Form.Label htmlFor="profession">
-                    {lang("GROWTH_CONNECTIONS.FILTER.PROFESSION")}
-                  </Form.Label>
-                  <GrowthProfessionnSelectField
-                    name="profession"
-                    id="profession"
-                    placeholder={lang("COMMON.SELECT")}
-                    formik={formik}
+          <Stack direction="row" flexWrap="wrap" gap="1rem" margin="1.5rem 0 0">
+            <Autocomplete
+              width="calc(33% - 10.6px)"
+              limitTags={1}
+              multiple
+              label={lang("GROWTH_CONNECTIONS.FILTER.PROFESSION")}
+              noOptionsText={lang("COMMON.SEARCH_FOR_PROFESSION")}
+              name="profession"
+              placeholder={lang("COMMON.SELECT")}
+              formik={formik}
+              defaultOptions={defaultProfessionOptions}
+              loadOptions={loadProfessionOptions}
+              value={formik?.values?.selected_profession || []}
+            />
+
+            <Autocomplete
+              width="calc(33% - 10.6px)"
+              limitTags={1}
+              label={lang("GROWTH_CONNECTIONS.FILTER.CONNECTION_GOALS")}
+              name="connectionGoals"
+              placeholder={lang("COMMON.SELECT")}
+              formik={formik}
+              loadOptions={null}
+              value={formik?.values?.selected_connectionGoals || []}
+              defaultOptions={connectionGoalOptions}
+              disableCloseOnSelect
+              multiple
+              autoComplete={false}
+              includeInputInList={false}
+              filterSelectedOptions={false}
+              renderOption={(props, option, third) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={third.selected}
                   />
-                </Form.Group>
-              </Col>
-              <Col md={3} lg={4}>
-                <Form.Group className="w-100">
-                  <Form.Label htmlFor="connectionGoals">
-                    {lang("GROWTH_CONNECTIONS.FILTER.CONNECTION_GOALS")}
-                  </Form.Label>
-                  <div className="custom-multiselectcheck-courses">
-                    <ReactMultiSelectCheckboxes
-                      placeholderButtonLabel={lang("COMMON.SELECT")}
-                      options={connectionGoals.map((goal)=>{
-                        return ({label:goalTranslation[goal.value],value:goal.value})
-                      })}
-                      value={formik.values.connectionGoals}
-                      defaultValue={formik.values.connectionGoals}
-                      onChange={(e) => {
-                        const values = e.map((data) => data?.value);
-                        formik.setFieldValue(
-                          "connectionGoals",
-                          values.map((value) => {
-                            return {
-                              value: value,
-                              label: goalTranslation[value],
-                            };
-                          })
-                        );
-                      }}
-                      placeholder={lang("COMMON.SELECT")}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col md={3} lg={4}>
-                <Form.Group className="w-100">
-                  <Form.Label htmlFor="country">
-                    {lang("GROWTH_CONNECTIONS.FILTER.COUNTRY")}
-                  </Form.Label>
-                  <div className="custom-selectpicker-xs">
-                    <SelectField
-                      name="country"
-                      id="country"
-                      placeholder={lang("COMMON.SELECT")}
-                      options={countryOptions}
-                      formik={formik}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col md={3} lg={4}>
-                <Form.Group className="w-100">
-                  <Form.Label htmlFor="province">
-                    {lang("GROWTH_CONNECTIONS.FILTER.PROVINCE")}
-                  </Form.Label>
-                  <div className="custom-selectpicker-xs">
-                    <SelectField
-                      name="province"
-                      id="province"
-                      placeholder={lang("COMMON.SELECT")}
-                      formik={formik}
-                      options={stateOptions}
-                      isDisabled={!formik?.values?.country}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col md={3} lg={4}>
-                <Form.Group className="w-100">
-                  <Form.Label htmlFor="city">
-                    {lang("GROWTH_CONNECTIONS.FILTER.CITY")}
-                  </Form.Label>
-                  <div className="custom-selectpicker-xs">
-                    <SelectField
-                      name="city"
-                      id="city"
-                      placeholder={lang("COMMON.SELECT")}
-                      formik={formik}
-                      options={cityOptions}
-                      isDisabled={!formik?.values?.province}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col
-                md={3}
-                lg={4}
-                className="my-auto"
-                style={{ marginLeft: "auto" }}
+                  {option.label}
+                </li>
+              )}
+            />
+
+            <Autocomplete
+              width="calc(33% - 10.6px)"
+              label={lang("GROWTH_CONNECTIONS.FILTER.COUNTRY")}
+              name="country"
+              placeholder={lang("COMMON.SELECT")}
+              formik={formik}
+              loadOptions={null}
+              value={formik?.values?.selected_country || null}
+              defaultOptions={countryOptions}
+            />
+            <Autocomplete
+              width="calc(33% - 10.6px)"
+              label={lang("GROWTH_CONNECTIONS.FILTER.PROVINCE")}
+              name="province"
+              placeholder={lang("COMMON.SELECT")}
+              formik={formik}
+              loadOptions={null}
+              value={formik?.values?.selected_province || null}
+              defaultOptions={stateOptions}
+              disabled={!formik?.values?.country}
+            />
+            <Autocomplete
+              width="calc(33% - 10.6px)"
+              label={lang("GROWTH_CONNECTIONS.FILTER.CITY")}
+              name="city"
+              placeholder={lang("COMMON.SELECT")}
+              formik={formik}
+              loadOptions={null}
+              value={formik?.values?.selected_city || null}
+              defaultOptions={cityOptions}
+              disabled={!formik?.values?.province}
+            />
+            <div className="my-auto" style={{ marginLeft: "auto" }}>
+              <Button
+                variant="link"
+                className="pl-0 text-info "
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
               >
-                <Button
-                  variant="link"
-                  className="pl-0 text-info "
-                  onClick={() => {
-                    formik.handleSubmit();
-                  }}
-                >
-                  {lang("COMMON.APPLY")}
-                </Button>
-                <Button
-                  variant="link"
-                  className="pl-0 text-info "
-                  onClick={resetForm}
-                >
-                  {lang("COMMON.CLEAR_FILTERS")}
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+                {lang("COMMON.APPLY")}
+              </Button>
+              <Button
+                variant="link"
+                className="pl-0 text-info "
+                onClick={resetForm}
+              >
+                {lang("COMMON.CLEAR_FILTERS")}
+              </Button>
+            </div>
+          </Stack>
         </div>
       )}
     </React.Fragment>

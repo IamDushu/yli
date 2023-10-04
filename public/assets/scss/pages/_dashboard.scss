@@ -32,9 +32,9 @@
 
 /* left section */
 .left-profile-section {
-  padding-right: size(12);
-  width: size(237);
-  flex-shrink: 0;
+  // padding-right: size(12);
+  // width: size(290);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: size(271);
   // }
@@ -44,7 +44,7 @@
   }
 }
 .right-profile-section {
-  padding-left: size(12);
+  // padding-left: size(12);
   // width: calc(100% - size(237));
   width: calc(100% - 14.8125rem);
   @include media(down, $breakpoint-md) {
@@ -68,16 +68,17 @@
 
 /* center post section */
 .post-section {
-  padding: 0 size(12);
+  // padding: 0 size(12);
   // width: calc(100% - size(564));
-  width: calc(100% - 35.25rem);
-  flex-shrink: 0;
+  // width: calc(100% - 35.25rem);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: calc(100% - size(632.15));
   // }
+
   @include media(down, $breakpoint-lg) {
     // width: calc(100% - size(237));
-    width: calc(100% - 14.8125rem);
+    // width: calc(100% - 14.8125rem);
     padding-right: 0;
   }
   @include media(down, $breakpoint-md) {
@@ -92,18 +93,18 @@
 
 /* right section */
 .right-blog-section {
-  padding-left: size(12);
-  width: size(327);
-  flex-shrink: 0;
+  // padding-left: size(12);
+  // width: size(327);
+  // flex-shrink: 0;
   // @include media(down, $breakpoint-xxl) {
   //   width: size(360);
   // }
-  @include media(down, $breakpoint-md) {
-    width: 100%;
-    padding-left: size(249);
+  @include media(down, $breakpoint-xl) {
+    // width: 100% !important;
+    // padding-left: size(249);
   }
-  @include media(down, $breakpoint-md) {
-    padding-left: 0;
+  @include media(down, $breakpoint-lg) {
+    // width: 100% !important;
   }
 }
 
@@ -219,9 +220,11 @@
   .listing-box {
     display: flex;
     align-items: center;
-    padding: size(12) 0;
-    border-top: 1px solid $geyser;
+    // padding: size(12) 0;
+    // border-top: 1px solid $geyser;
     font-weight: $font-semibold;
+    padding-right: 16px;
+    padding-bottom: 12px;
     // &:first-child {
     //   padding-top: 0;
     // }
@@ -262,9 +265,11 @@
     }
 
     .list-item {
-      color: $secondary;
+      color: $neutral-dark-10;
       font-size: size(12);
-      line-height: size(14.52);
+      font-style: normal;
+      font-weight: 400;
+      line-height: size(16);
       @include css3-prefix(transition, all 0.3s);
       &.text-gray {
         color: $gray;
@@ -279,7 +284,7 @@
         }
       }
       &:hover {
-        color: $primary;
+        color: $primary-violet;
         .icon {
           &:before {
             color: $primary;
@@ -350,24 +355,70 @@
   }
 }
 
+.yliway-btn-custom-space {
+  .yliway-button {
+    padding: 8.5px 17.5px !important;
+  }
+}
+
+.add-credit-btn {
+  color: $primary-violet;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 8.5px 0;
+  display: inline-flex;
+  margin-left: 11px;
+}
+
+.current-position {
+  color: $neutralvariant-dark-30;
+  text-align: center;
+  /* M3/body/medium */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18.5px;
+  letter-spacing: 0.25px;
+}
+
+.profile-name {
+  color: $primary-violet;
+  text-align: center;
+  font-family: $font-family-base;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.count {
+  font-size: 11px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 16px !important;
+  color: $neutralvariant-dark-30;
+}
+
 /* cover with profile pic */
 .user-cover-box {
   background-size: cover;
-  height: size(90);
+  height: size(114);
   margin-bottom: size(50);
   .user-profile-pic {
     @include position(absolute, auto, 0, -50px, 0);
     z-index: 9;
-    border: size(3) solid $white;
-    height: size(120);
-    width: size(120);
+    // border: size(3) solid $white;
+    height: size(96);
+    width: size(96);
     margin: 0 auto;
   }
 }
 .user-profile-pic {
   .default-user-pic {
-    height: size(120);
-    width: size(120);
+    height: size(96);
+    width: size(96);
   }
 }
 
@@ -503,7 +554,7 @@ ul.hover-papperwhite-list {
 
 /* post profile pic - Dashboard */
 .user-profile-pic {
-  border: 1px solid $geyser;
+  // border: 1px solid $geyser;
   overflow: hidden;
   img {
     object-fit: cover;
@@ -1117,6 +1168,23 @@ li.listing-box.pl-2.selected {
   textarea {
     outline: none;
     border: 0;
+    padding: 0;
+  }
+}
+
+.mentions-tag-box {
+  .mentions-box__highlighter {
+    strong {
+      color: $primary-violet;
+      position: relative;
+      z-index: 99;
+      font-weight: 500;
+    }
+  }
+  .mentions-box {
+    textarea {
+      border: 1px solid transparent;
+    }
   }
 }
 
@@ -1265,4 +1333,20 @@ pre code {
   @include media(down, $breakpoint-md) {
     max-width: 100%;
   }
+}
+
+.custom-tooltip {
+  display: flex;
+  width: size(200);
+  padding: 4px 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius-lg;
+  opacity: 0.7;
+  background: $tertiary-green-90;
+  color: $primary-violet;
+  font-size: size(12);
+  font-style: normal;
+  font-weight: $font-regular;
 }

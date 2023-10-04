@@ -1,11 +1,13 @@
 import VideoJS from "components/videoComponent";
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FileUploader } from "react-drag-drop-files";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toggleModals, uploadPostVideo } from "store/actions";
 import videojs from "video.js";
+import { YliwayButton } from "components/button";
+import { FileDropzoneUi } from "components/add-post-ui/file-dropzone-UI";
 
 export const VideoPost = () => {
   const [lang] = useTranslation("language");
@@ -67,7 +69,6 @@ export const VideoPost = () => {
   const handlePickVideos = (file) => {
     if (file) {
       setSelectVidFile(file);
-      console.log(file.type);
       const type =
         "video/mp4" ||
         "video/mkv" ||
@@ -110,7 +111,7 @@ export const VideoPost = () => {
 
   return (
     <>
-      <Modal.Body>
+      <Modal.Body className="pb-0">
         {videoUrl !== "" ? (
           <div className="course-detail-play">
             <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
@@ -121,14 +122,20 @@ export const VideoPost = () => {
               handleChange={handlePickVideos}
               children={
                 <>
-                  <div className="dropzone-wrap-xxl text-center pointer w-100">
-                    <em className="icon icon-upload-cloud font-44 pb-0"></em>
-                    <p className="m-0 font-16 text-geyser font-medium">
-                      {lang("DASHBOARD.UPLOAD_HERE")}
-                    </p>
-                    <small className="m-0 body-text-14 text-geyser font-normal">
-                      ( {lang("COMMON.UPLOAD_VIDEO_FORMAT")})
-                    </small>
+                  {false && (
+                    <div className="dropzone-wrap-xxl text-center pointer w-100">
+                      <em className="icon icon-upload-cloud font-44 pb-0"></em>
+                      <p className="m-0 font-16 text-geyser font-medium">
+                        {lang("DASHBOARD.UPLOAD_HERE")}
+                      </p>
+                      <small className="m-0 body-text-14 text-geyser font-normal">
+                        ( {lang("COMMON.UPLOAD_VIDEO_FORMAT")})
+                      </small>
+                    </div>
+                  )}
+                  <div>
+                    {" "}
+                    <FileDropzoneUi />{" "}
                   </div>
                 </>
               }
@@ -151,13 +158,33 @@ export const VideoPost = () => {
           ? vidSizeError
           : ""}
       </small>
-      <Modal.Footer className="d-flex ">
-        <Button
+      <Modal.Footer className="d-flex pt-0">
+        {/* <Button
           variant="btn btn-info btn-sm px-xl-4 px-5 mt-xl-0 mt-2 py-3 w-lg-100 mb-0"
           onClick={handlePostVideo}
         >
           {loading ? lang("COMMON.LOADING") : lang("DASHBOARD.SAVE_VIDEO")}
-        </Button>
+        </Button> */}
+        <div>
+          <YliwayButton
+            label={lang("COMMON.BACK")}
+            size={"medium"}
+            fontWeight={500}
+            primaryOutlined={true}
+            handleClick={() => {
+              dispatch(toggleModals({ videopost: false }));
+            }}
+          />
+        </div>
+        <div>
+          <YliwayButton
+            size="medium"
+            primary={true}
+            fontWeight={500}
+            label={loading ? lang("COMMON.LOADING") : lang("COMMON.NEXT")}
+            handleClick={handlePostVideo}
+          />
+        </div>
       </Modal.Footer>
     </>
   );

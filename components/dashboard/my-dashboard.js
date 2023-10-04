@@ -2,7 +2,8 @@ import { Link } from "@routes";
 import React, { Fragment, useEffect, useState } from "react";
 import { Card, Dropdown } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import dynamic from "next/dynamic";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { ARTICLE, CREATE_GROUPS } from "routes/urls";
 import {
   editDashboardPost,
@@ -14,6 +15,18 @@ import {
 import { selectUserInfo } from "store/selectors/user";
 import { getCookie, onImageError, setCookie } from "utils";
 import Posts from "./Posts";
+import { AssistChips } from "components/assist-chips";
+import { useRouter } from "next/router";
+import { BasicTextFields } from "components/add-post-ui/custom-underline-input";
+import { ProfileImage } from "components/profile-image";
+import { CardContent } from "@mui/material";
+
+const MainModal = dynamic(() =>
+  import("./../modal").then((mod) => mod.MainModal)
+);
+const AddPost = dynamic(() =>
+  import("components/modal/add-your-post/add-post")
+);
 
 const MyDashboard = ({ groupId, page }) => {
   const dispatch = useDispatch();
@@ -21,6 +34,20 @@ const MyDashboard = ({ groupId, page }) => {
   const [lang] = useTranslation("language");
   const [sortBy, setSortBy] = useState(sortByPost || "Recent");
   const [newPostCount, setNewPostCount] = useState(0);
+  const { addpost} = useSelector(({ ui }) => ui.modals, shallowEqual);
+  const router = useRouter()
+
+  /******************* 
+  @Purpose : for triggering post poll
+  @Parameter : 
+  @Author : YLIWAY
+  ******************/
+
+  const handlePostPoll = () => {
+    dispatch(toggleModals({ createpoll: true }));
+    dispatch(posttype("poll"));
+    //dispatch(toggleModals({ addpost: true }));
+  };
 
   /******************* 
   @Purpose : Used for useSelectors
@@ -123,10 +150,18 @@ const MyDashboard = ({ groupId, page }) => {
   return (
     <Fragment>
       {/* Dashboard page */}
-      <Card className="mb-2 post-upload border-bottom-dark-2 border-0 rounded-lg-0">
-        <Card.Body>
-          <div className="d-flex mb-3">
-            <div className="mr-2 w-h-40 rounded-pill border-geyser overflow-hidden flex-shrink-0">
+      <Card className="mb-2 post-dashboard-card post-upload border-0 rounded-lg-0">
+        <Card.Body className="pb-0">
+          <CardContent
+            sx={{
+              ":last-child": {
+                // Target the last child of CardContent
+                paddingBottom: 0, // Set bottom padding to 0 for the last child
+              },
+            }}
+          >
+            <div className="profile-pic-input-box">
+              {/* <div className="mr-2 w-h-40 rounded-pill border-geyser overflow-hidden flex-shrink-0">
               <Link route="/">
                 <a>
                   <img
@@ -134,8 +169,8 @@ const MyDashboard = ({ groupId, page }) => {
                       userInfo.profilePicURL !== null
                         ? userInfo.profilePicURL
                         : userInfo.firstName !== null
-                          ? userInfo.firstName.charAt(0).toUpperCase()
-                          : ""
+                        ? userInfo.firstName.charAt(0).toUpperCase()
+                        : ""
                     }
                     onError={(e) => {
                       onImageError(
@@ -150,24 +185,89 @@ const MyDashboard = ({ groupId, page }) => {
                   />
                 </a>
               </Link>
+            </div> */}
+              <div>
+                <ProfileImage
+                  size="56px"
+                  imageUrl={
+                    userInfo?.profilePicURL !== null
+                      ? userInfo?.profilePicURL
+                      : userInfo?.firstName !== null
+                      ? userInfo?.firstName.charAt(0).toUpperCase()
+                      : ""
+                  }
+                  firstName={userInfo?.firstName}
+                  lastName={userInfo?.lastName}
+                />
+              </div>
+              <div className="input-post-option-container">
+                <div className="w-100">
+                  <div className="position-relative"></div>
+                  {/* <input
+                  type="text"
+                  className="rounded-lg write-post w-100 text-body-14 text-gray border-geyser font-weight-lighter h-40 bg-paper-white"
+                  placeholder={lang("DASHBOARD.ADD_POST.INPUT_PLACEHOLDER")}
+                  readOnly={true}
+                  onClick={() => {
+                    dispatch(postGroupId(groupId));
+                    dispatch(toggleModals({ addpost: true }));
+                    dispatch(editDashboardPost({}));
+                  }}
+                /> */}
+                  <BasicTextFields
+                    placeholder={lang("DASHBOARD.ADD_POST.INPUT_PLACEHOLDER")}
+                    handleClick={() => {
+                      dispatch(postGroupId(groupId));
+                      dispatch(toggleModals({ addpost: true }));
+                      dispatch(editDashboardPost({}));
+                    }}
+                  />
+                </div>
+                <div className="post-type-icons-box-wrap">
+                  <AssistChips
+                    border="none"
+                    iconName="postPhoto"
+                    tooltip={lang("DASHBOARD.ADD_POST.POST_PHOTO")}
+                    paddingX="0px"
+                    paddingY="20px"
+                    label={lang("DASHBOARD.ADD_POST.POST_PHOTO")}
+                    handleClick={handlePostPhotoV2}
+                  />
+                  <AssistChips
+                    border="none"
+                    iconName="postVideo"
+                    tooltip={lang("DASHBOARD.ADD_POST.POST_VIDEO")}
+                    paddingX="0px"
+                    paddingY="20px"
+                    label={lang("DASHBOARD.ADD_POST.POST_VIDEO")}
+                    handleClick={handlePostVideo}
+                  />
+                  <AssistChips
+                    border="none"
+                    iconName="postPoll"
+                    tooltip={lang("DASHBOARD.ADD_POST.POST_POLL")}
+                    paddingX="0px"
+                    paddingY="20px"
+                    label={lang("DASHBOARD.ADD_POST.POST_POLL")}
+                    handleClick={handlePostPoll}
+                  />
+                  <AssistChips
+                    border="none"
+                    iconName="postArticle"
+                    tooltip={lang("DASHBOARD.ADD_POST.POST_ARTICLE")}
+                    paddingX="0px"
+                    paddingY="20px"
+                    label={lang("DASHBOARD.ADD_POST.POST_ARTICLE")}
+                    handleClick={() => {
+                      addArticle();
+                      router.push(ARTICLE);
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="w-100">
-              <div className="position-relative"></div>
-              <input
-                type="text"
-                className="rounded-lg write-post w-100 text-body-14 text-gray border-geyser font-weight-lighter h-40 bg-paper-white"
-                placeholder={lang("DASHBOARD.ADD_POST.INPUT_PLACEHOLDER")}
-                readOnly={true}
-                onClick={() => {
-                  dispatch(postGroupId(groupId));
-                  dispatch(toggleModals({ addpost: true }));
-                  dispatch(editDashboardPost({}));
-                }}
-              />
-            </div>
-          </div>
 
-          <div className="reaction-icons-sections pl-xl-5 d-flex justify-content-between">
+            {/* <div className="reaction-icons-sections pl-xl-5 d-flex justify-content-between">
             <div className="reaction-icons-box post-box-width pl-0   ">
               <label
                 className=" rounded-lg d-xl-flex align-items-center justify-content-center mb-0 border-blueberry-whip py-2 px-12 w-100"
@@ -237,7 +337,8 @@ const MyDashboard = ({ groupId, page }) => {
                 </div>
               </>
             )}
-          </div>
+          </div> */}
+          </CardContent>
         </Card.Body>
       </Card>
 
@@ -299,6 +400,18 @@ const MyDashboard = ({ groupId, page }) => {
         setNewPostCount={setNewPostCount}
         newPostCount={newPostCount}
         page={page}
+      />
+      {/******************* 
+           @purpose : Dashboard page add post Modal
+           @Author : YLIWAY
+           ******************/}
+      <MainModal
+        className="addpost img-view custom-modal-footer"
+        show={addpost}
+        keyModal="addpost"
+        hideHeader={true}
+        closeIcon={false}
+        body={<AddPost modelKey={"addpost"} />}
       />
     </Fragment>
   );

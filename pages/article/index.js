@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "@components/layout";
+import Swal from "sweetalert2";
 import CustomCkEditor from "components/form-fields/ckEditor/CkEditor";
 import WithAuth from "components/with-auth/with-auth";
 import { useRouter } from "next/router";
@@ -13,15 +13,6 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import Select from "react-select";
-import {
-  RecentAddedGM,
-  MostFollowedContents,
-  GrowthPartners,
-  GrowthModal,
-  UpgradeYourProfile,
-  FollowedGroup,
-} from "components/sidebar";
 import { getGroupDetailsByID, toggleModals } from "store/actions";
 import { shareArticleModal } from "../../store/actions/ui";
 import {
@@ -40,6 +31,15 @@ import TagsComponent from "components/courses/upload-course/tags-field";
 import { useFormik } from "formik";
 import { ARTICLE_VALIDATION } from "utils";
 import { TextField } from "components/form-fields";
+import { CustomInputField } from "components/add-post-ui/custom-text-field";
+import { CustomAutocomplete } from "components/add-post-ui/custom-autocomplete";
+import { YliwayButton } from "components/button";
+import Image from "next/image";
+import { ArticleCard } from "components/add-post-ui/article-card";
+import { selectUserInfo } from "store/selectors/user";
+import { DraftCardUi } from "components/add-post-ui/draft-card-ui";
+import DeletedArticleListing from "components/article-components/deleted-articles";
+import { SidebarLayout } from "components/layout";
 
 /******************** 
   @purpose :  Article
@@ -50,9 +50,13 @@ function Article() {
   const [lang] = useTranslation("language");
   const dispatch = useDispatch();
   const router = useRouter();
+  const userInfo = useSelector(selectUserInfo);
   const articles = useSelector(selectArticleData);
   const data = useSelector(selectGetArticleData);
+  const [draftCount,setDraftCount] = useState(0);
+  const [publishedCount,setPublishedCount] = useState(0);
   const [scrollToError, setScrollToError] = useState(false);
+  const [updateCount,setUpdateCount] = useState(0);
 
   const statusList = [
     {
@@ -65,6 +69,10 @@ function Article() {
     },
     {
       value: "drafted",
+      label: lang("ATRICLE.DRAFTED_ARTICLE"),
+    },
+    {
+      value: "deleted",
       label: lang("ATRICLE.DRAFTED_ARTICLE"),
     },
   ];
@@ -112,6 +120,31 @@ function Article() {
       setDefaultDataForArticle();
     }
   }, []);
+
+  useEffect(() => {
+    let payload = {
+      page: 1,
+      pagesize: 10,
+      publishedStatus: "published",
+      ...(router.query?.groupId !== undefined &&
+        router.query?.groupId !== "" && { groupId: router.query?.groupId }),
+    };
+    dispatch(articleListing(payload)).then((res) => {
+      setPublishedCount(res?.total);
+    });
+
+    payload = {
+      page: 1,
+      pagesize: 10,
+      publishedStatus: "drafted",
+      ...(router.query?.groupId !== undefined &&
+        router.query?.groupId !== "" && { groupId: router.query?.groupId }),
+    };
+
+    dispatch(articleListing(payload)).then((res) => {
+      setDraftCount(res?.total);
+    });
+  }, [updateCount]);
 
   useEffect(() => {
     if (router?.query?.id || router?.query?.draftedId) {
@@ -179,6 +212,8 @@ function Article() {
         ) {
           formik.setFieldValue("tags", postDetails.tags);
         }
+      } else if (data?.tags) {
+        formik.setFieldValue("tags", (data?.tags || []));
       }
     }
   }, [data]);
@@ -216,7 +251,20 @@ function Article() {
               redirectRoute = `/groups/${groupDetails.name}/${data?.groupId}`;
             }
           }
-          router.push(redirectRoute);
+          // POP AFTER DRAFTED
+          Swal.fire({
+            html: '<div style="font-size: 22px; font-weight: 400; line-height: 28px; letter-spacing: 0em; text-align: center; color: #001551;">Article Saved</div>',
+            imageUrl: "/assets/images/tick-modal-icon.svg",
+            imageWidth: 60,
+            imageHeight: 60,
+            showDenyButton: true,
+            confirmButtonText: lang("COMMON.VIEW"),
+            denyButtonText: lang("COMMON.BACK"),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              router.push(redirectRoute);
+            }
+          });
         }, 1000);
       } else {
         dispatch(shareArticleModal(data));
@@ -244,9 +292,11 @@ function Article() {
     formik.setFieldValue("groupId", "");
     formik.setFieldValue("postId", "");
     formik.setFieldValue("title", "");
+    formik.setFieldValue("subTitle", "");
     formik.setFieldValue("selectedFile", "");
     formik.setFieldValue("description", "");
     formik.setFieldValue("articleStatus", "");
+    formik.setFieldValue("tags",[]);
 
     if (e.value === "newArticle") {
       formik.setFieldValue("isAdd", true);
@@ -273,6 +323,8 @@ function Article() {
     formik.setFieldValue("isAdd", false);
     formik.setFieldValue("title", article.title);
     formik.setFieldValue("description", article.description);
+    formik.setFieldValue("subTitle", article.subTitle);
+    formik.setFieldValue("tags", article.tags);
     formik.setFieldValue("selectedFile", article.imageURL);
     formik.setFieldValue("articleStatus", article.publishedStatus);
     article?.groupId !== undefined &&
@@ -282,6 +334,7 @@ function Article() {
 
   const removeArticle = (id) => {
     dispatch(deleteArticle(id));
+    const currentStatus = formik?.values?.status?.value;
     let payload = {
       page: 1,
       pagesize: 10,
@@ -290,21 +343,135 @@ function Article() {
     setTimeout(() => {
       dispatch(articleListing(payload));
     }, [500]);
+    if(currentStatus=="published"){
+      formik?.setFieldValue("isEdit",false);
+      formik?.setFieldValue("isAdd",false);
+    }
+    setUpdateCount((prev)=>!prev);
   };
 
   return (
-    <Layout>
-      <div className="inner-wrapper dashboard-box inner-left-full-orsidebar">
-        <Container>
-          <div className="d-flex flex-xl-nowrap flex-wrap">
-            {/* post view */}
-            <div className="profile-left-bar">
-              <Card className="mb-3">
-                <Card.Header className="pb-0 px-4 pt-4">
-                  <h5 className="mb-0">{lang("ATRICLE.WRITE_AN_ARTICLE")}</h5>
-                </Card.Header>
-                <Card.Body className="p-4">
-                  <Form.Group className="mb-4">
+    <SidebarLayout removeSidebar="footer" removeRightSidebar>
+      <div className="profile-right-bar">
+        <div className="article-publish-tab">
+          <div
+            className={`tab-itms ${
+              formik?.values?.status?.value == "newArticle" ||
+              formik.values.isAdd ||
+              formik.values.isEdit
+                ? "article-tab-selected"
+                : ""
+            }`}
+            onClick={() => handleStatusChange(statusList[0])}
+          >
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M15 16L11 20H21V16H15Z" fill="#6750A4" />
+                <path
+                  d="M12.06 7.19L3 16.25V20H6.75L15.81 10.94L12.06 7.19ZM5.92 18H5V17.08L12.06 10.02L12.98 10.94L5.92 18Z"
+                  fill="#6750A4"
+                />
+                <path
+                  d="M18.71 8.04C19.1 7.65 19.1 7.02 18.71 6.63L16.37 4.29C16.17 4.09 15.92 4 15.66 4C15.41 4 15.15 4.1 14.96 4.29L13.13 6.12L16.88 9.87L18.71 8.04Z"
+                  fill={(formik?.values?.status?.value == "newArticle")?"#6750A4":"#49454E"}
+                />
+              </svg>
+            </div>
+            <div>{lang("ATRICLE.WRITE")}</div>
+          </div>
+          <div
+            className={`tab-itms ${
+              formik?.values?.status?.value == "published" &&
+              !formik.values.isAdd &&
+              !formik.values.isEdit
+                ? "article-tab-selected"
+                : ""
+            }`}
+            onClick={() => handleStatusChange(statusList[1])}
+          >
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM4 12C4 11.39 4.08 10.79 4.21 10.22L8.99 15V16C8.99 17.1 9.89 18 10.99 18V19.93C7.06 19.43 4 16.07 4 12ZM17.89 17.4C17.63 16.59 16.89 16 15.99 16H14.99V13C14.99 12.45 14.54 12 13.99 12H7.99V10H9.99C10.54 10 10.99 9.55 10.99 9V7H12.99C14.09 7 14.99 6.1 14.99 5V4.59C17.92 5.77 20 8.65 20 12C20 14.08 19.19 15.98 17.89 17.4Z"
+                  fill={(formik?.values?.status?.value == "published")?"#6750A4":"#49454E"}
+                />
+              </svg>
+            </div>
+            <div>{`${lang("ATRICLE.PUBLISHED")} (${publishedCount})`}</div>
+          </div>
+
+          <div
+            className={`tab-itms ${
+              formik?.values?.status?.value == "drafted"
+                ? "article-tab-selected"
+                : ""
+            }`}
+            onClick={() => handleStatusChange(statusList[2])}
+          >
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.5 1H4.5C3.4 1 2.5 1.9 2.5 3V17H4.5V3H16.5V1ZM15.5 5H8.5C7.4 5 6.51 5.9 6.51 7L6.5 21C6.5 22.1 7.39 23 8.49 23H19.5C20.6 23 21.5 22.1 21.5 21V11L15.5 5ZM8.5 21V7H14.5V12H19.5V21H8.5Z"
+                  fill={(formik?.values?.status?.value == "drafted")?"#6750A4":"#49454E"}
+                />
+              </svg>
+            </div>
+            <div>{`${lang("ATRICLE.DRAFTS")} (${draftCount})`}</div>
+          </div>
+          <div
+            className={`tab-itms ${
+              formik?.values?.status?.value == "deleted"
+                ? "article-tab-selected"
+                : ""
+            }`}
+            onClick={() => handleStatusChange(statusList[3])}
+          >
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.5 10V9H14.5V10H12V11.5H13V15.5C13 16.33 13.67 17 14.5 17H16.5C17.33 17 18 16.33 18 15.5V11.5H19V10H16.5ZM16.5 15.5H14.5V11.5H16.5V15.5ZM20 6H12L10 4H4C2.89 4 2.01 4.89 2.01 6L2 18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V8C22 6.89 21.11 6 20 6ZM20 18H4V6H9.17L11.17 8H20V18Z"
+                  fill={(formik?.values?.status?.value == "deleted")?"#6750A4":"#49454E"}
+                />
+              </svg>
+            </div>
+            <div>{lang("ATRICLE.DELETED")}</div>
+          </div>
+        </div>
+        {(formik.values.isAdd || formik.values.isEdit) && (
+          <Card className="mb-3">
+            <Card.Header className="pb-0 px-4 pt-4">
+              {(formik.values.isAdd || formik.values.isEdit) && (
+                <div className="mb-0 article-header">
+                  {lang("ATRICLE.WRITE_AN_ARTICLE")}
+                </div>
+              )}
+            </Card.Header>
+            <Card.Body className="p-4">
+              {/* <Form.Group className="mb-4">
                     <Form.Label>{lang("ATRICLE.PUBLISHING_MENU")}</Form.Label>
                     <div className="custom-selectpicker-xs custom-selectpicker-grey">
                       <Select
@@ -313,86 +480,124 @@ function Article() {
                         onChange={(e) => handleStatusChange(e)}
                       />
                     </div>
-                  </Form.Group>
-                  {(formik.values.isAdd || formik.values.isEdit) && (
-                    <Form onSubmit={formik.handleSubmit} className="form">
-                      <Row>
-                        <Col sm={12}>
-                          <Form.Group className="mb-4">
-                            <TextField
+                  </Form.Group> */}
+              {(formik.values.isAdd || formik.values.isEdit) && (
+                <Form onSubmit={formik.handleSubmit} className="form">
+                  <Row>
+                    <Col sm={12}>
+                      <Form.Group className="mb-4">
+                        {/* <TextField
                               label={lang("ATRICLE.TITLE")}
                               placeholder={lang("ATRICLE.TITLE_PLACEHOLDER")}
                               name="title"
                               count={220}
                               formik={formik}
                               required={true}
-                            />
-                          </Form.Group>
-                          <Form.Group className="mb-4">
-                            <TextField
+                            /> */}
+                        <CustomInputField
+                          label={lang("ATRICLE.TITLE")}
+                          placeholder={lang("ATRICLE.TITLE_PLACEHOLDER")}
+                          required={true}
+                          defaultValue={formik?.values?.title || ""}
+                          formik={formik}
+                          formikKey={"title"}
+                          maxTextCount={220}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-4">
+                        {/* <TextField
                               label={lang("ATRICLE.SUB_TITLE")}
                               placeholder={lang("ATRICLE.SUBTITLE_PLACEHOLDER")}
                               name="subTitle"
                               count={220}
                               formik={formik}
                               required={true}
-                            />
-                            <Form.Group
-                              controlId="uploadTrainingAddTags"
-                              className="mb-4"
-                            >
-                              <Form.Label className="text-secondary">
+                            /> */}
+
+                        <CustomInputField
+                          label={lang("ATRICLE.SUB_TITLE")}
+                          placeholder={lang("ATRICLE.SUBTITLE_PLACEHOLDER")}
+                          required={true}
+                          defaultValue={formik?.values?.subTitle || ""}
+                          formik={formik}
+                          formikKey={"subTitle"}
+                          maxTextCount={220}
+                        />
+                      </Form.Group>
+                      <Form.Group
+                        controlId="uploadTrainingAddTags"
+                        className="mb-4"
+                      >
+                        {/* <Form.Label className="text-secondary">
                                 {lang("ATRICLE.MAX_3_TAGS")}
                                 <sup>*</sup>
-                              </Form.Label>
-
-                              <div className="custom-selectpicker-multi">
-                                <TagsComponent
-                                  maxTags={3}
-                                  name="tags"
-                                  formik={formik}
-                                />
-                              </div>
-                            </Form.Group>
-                          </Form.Group>
-                          <Form.Group
-                            controlId="createGroupUploadPhoto"
-                            className="mb-4"
+                              </Form.Label> */}
+                        {false && (
+                          <div className="custom-selectpicker-multi">
+                            <TagsComponent
+                              maxTags={3}
+                              name="tags"
+                              formik={formik}
+                            />
+                          </div>
+                        )}
+                        <CustomAutocomplete
+                          formik={formik}
+                          formikKey={"tags"}
+                          placeholder={lang("ATRICLE.ENTER_TAG")}
+                          label={lang("ATRICLE.MAX_3_TAGS")}
+                        />
+                      </Form.Group>
+                      <Form.Group
+                        controlId="createGroupUploadPhoto"
+                        className="mb-4"
+                      >
+                        <div className="article-form-label">
+                          {lang("COMMON.UPLOAD_COVER_IMAGE")}
+                          <sup>*</sup>
+                        </div>
+                        {formik.values.isEdit ? (
+                          <CropImages
+                            handleChange={handleChange}
+                            groupImage={formik.values.selectedFile}
+                            isEdit={formik.values.isEdit}
+                            type="articles"
+                          />
+                        ) : (
+                          <>
+                            <CropImages
+                              handleChange={handleChange}
+                              isArticleFormUi={true}
+                              groupImage={formik.values.selectedFile}
+                              type="articles"
+                            />
+                            {formik?.touched?.selectedFile &&
+                              formik?.errors?.selectedFile && (
+                                <span
+                                  className="error"
+                                  style={{
+                                    color: "red",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  {formik?.errors?.selectedFile}
+                                </span>
+                              )}
+                          </>
+                        )}
+                      </Form.Group>
+                      {
+                        <>
+                          <div className="article-form-label">
+                            {lang("COMMON.WRITE")}
+                            <sup>*</sup>
+                          </div>
+                          <div
+                            style={{
+                              position: "relative",
+                              zIndex: 0,
+                            }}
                           >
-                            <Form.Label>
-                              {lang("ATRICLE.UPLOAD_PHOTO")}
-                              <sup>*</sup>
-                            </Form.Label>
-                            {formik.values.isEdit ? (
-                              <CropImages
-                                handleChange={handleChange}
-                                groupImage={formik.values.selectedFile}
-                                isEdit={formik.values.isEdit}
-                                type="articles"
-                              />
-                            ) : (
-                              <>
-                                <CropImages
-                                  handleChange={handleChange}
-                                  groupImage={formik.values.selectedFile}
-                                  type="articles"
-                                />
-                                {formik?.touched?.selectedFile &&
-                                  formik?.errors?.selectedFile && (
-                                    <span
-                                      className="error"
-                                      style={{ color: "red", fontSize: "14px" }}
-                                    >
-                                      {formik?.errors?.selectedFile}
-                                    </span>
-                                  )}
-                              </>
-                            )}
-                          </Form.Group>
-                          {((formik.values.isEdit &&
-                            formik?.values?.description &&
-                            formik?.values?.description?.length) ||
-                            !formik.values.isEdit) && (
                             <CustomCkEditor
                               initData={formik?.values?.description || ""}
                               onChange={(value) => {
@@ -404,88 +609,92 @@ function Article() {
                                   value || ""
                                 );
                               }}
+                              className="article-form-ckeditor"
                               allowImageUpload={true}
                             />
-                          )}
+                          </div>
+                        </>
+                      }
 
-                          {formik?.touched?.description &&
-                            formik?.errors?.description && (
-                              <span
-                                className="error"
-                                style={{ color: "red", fontSize: "14px" }}
-                              >
-                                {formik?.errors?.description}
-                              </span>
-                            )}
-                          <Row>
-                            {formik.values.isEdit && (
-                              <Col sm={6}>
-                                <div className="mt-4 pb-2 px-md-4 px-0">
-                                  <Button
-                                    variant="btn btn-secondary w-50 "
-                                    onClick={() => {
-                                      router.push("/dashboard");
-                                    }}
-                                  >
-                                    {lang("COMMON.CANCEL")}
-                                  </Button>
-                                </div>
-                              </Col>
-                            )}
-                            {(!formik.values.isEdit ||
-                              router.query.draftedId != null) && (
-                              <Col sm={6} className="pr-sm-0">
-                                <div className="text-center text-sm-left  mt-4 pb-3 pb-md-1">
-                                  <Button
-                                    type="submit"
-                                    variant="btn btn-secondary w-50 w-100-sm"
-                                    onClick={() => {
-                                      formik.setFieldValue("type", "drafted");
-                                      if (
-                                        Object.keys(formik.errors).length > 0
-                                      ) {
-                                        setScrollToError(true);
-                                      }
-                                    }}
-                                  >
-                                    {lang("ATRICLE.SAVE_AS_DRAFT")}
-                                  </Button>
-                                </div>
-                              </Col>
-                            )}
-                            <Col sm={6} className="pl-sm-0">
-                              <div className="text-sm-right text-center mt-0 mt-sm-4 pb-1 ">
-                                <Button
-                                  type="submit"
-                                  variant="btn btn-info w-50 w-100-sm"
-                                  onClick={() => {
-                                    formik.setFieldValue("type", "publish");
-                                    if (Object.keys(formik.errors).length > 0) {
-                                      setScrollToError(true);
-                                    }
-                                  }}
-                                >
-                                  {lang("ATRICLE.PUBLISH")}
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Form>
-                  )}
-                  {!formik.values.isAdd &&
-                    !formik.values.isEdit &&
-                    articles &&
-                    articles.articleList &&
-                    articles.articleList.rows &&
-                    articles.articleList.rows.length > 0 && (
-                      <ul>
-                        {articles.articleList.rows.map((article, i) => {
-                          return (
-                            <Card
-                              key={`article-${i}`}
-                              className={`mb-3 
+                      {formik?.touched?.description &&
+                        formik?.errors?.description && (
+                          <span
+                            className="error"
+                            style={{ color: "red", fontSize: "14px" }}
+                          >
+                            {formik?.errors?.description}
+                          </span>
+                        )}
+                    </Col>
+                  </Row>
+                  <div className="article-creation-button-box">
+                    <div className="article-creation-button-box-left">
+                      <div>
+                        <YliwayButton
+                          label={lang("ATRICLE.SAVE_AS_DRAFT")}
+                          size={"medium"}
+                          fontWeight={500}
+                          primaryOutlined={true}
+                          // disabled={isButtonDisabled || error.error}
+                          handleClick={() => {
+                            formik.setFieldValue("type", "drafted");
+                            if (Object.keys(formik.errors).length > 0) {
+                              setScrollToError(true);
+                            }
+                            formik.handleSubmit();
+                          }}
+                        />
+                      </div>
+                      {formik?.values?.id && (
+                        <div>
+                          <YliwayButton
+                            label={lang("COMMON.DELETE")}
+                            size={"medium"}
+                            fontWeight={500}
+                            primaryOutlined={true}
+                            // disabled={isButtonDisabled || error.error}
+                            handleClick={() => {
+                              removeArticle(formik?.values?.id);
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="article-creation-button-box-right">
+                      <div>
+                        <YliwayButton
+                          label={lang("ATRICLE.PUBLISH")}
+                          size="medium"
+                          primary={true}
+                          fontWeight={500}
+                          //disabled={isButtonDisabled || error.error}
+                          handleClick={() => {
+                            formik.setFieldValue("type", "publish");
+                            if (Object.keys(formik.errors).length > 0) {
+                              setScrollToError(true);
+                            }
+                            formik.handleSubmit();
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Form>
+              )}
+              {false &&
+                !formik.values.isAdd &&
+                !formik.values.isEdit &&
+                articles &&
+                articles.articleList &&
+                articles.articleList.rows &&
+                articles.articleList.rows.length > 0 && (
+                  <ul>
+                    {articles.articleList.rows.map((article, i) => {
+                      return (
+                        <Card
+                          key={`article-${i}`}
+                          className={`mb-3 
                               ${
                                 formik.values.status.value === "published"
                                   ? article?.newsFeedId
@@ -493,118 +702,189 @@ function Article() {
                                     : ""
                                   : "cursor-pointer"
                               }`}
-                              onClick={() => {
-                                if (formik.values.status.value === "drafted") {
-                                  formik.setFieldValue("id", article?.id);
-                                  formik.setFieldValue(
-                                    "postId",
-                                    article?.postId
-                                  );
-                                  formik.setFieldValue("title", article?.title);
-                                  formik.setFieldValue(
-                                    "selectedFile",
-                                    article?.imageURL
-                                  );
-                                  formik.setFieldValue(
-                                    "description",
-                                    article?.description
-                                  );
-                                  formik.setFieldValue(
-                                    "articleStatus",
-                                    article?.publishedStatus
-                                  );
-                                  formik.setFieldValue("isAdd", true);
-                                  formik.setFieldValue("tags", article.tags);
-                                  return router.push(
-                                    `/article?draftedId=${article.id}`
-                                  );
-                                }
-                                if (
-                                  formik.values.status.value === "published" &&
-                                  article?.newsFeedId
-                                ) {
-                                  return router.push(
-                                    `/article/view/${article?.newsFeedId}`
-                                  );
-                                }
-                              }}
-                            >
-                              <Card.Body>
-                                <Row>
-                                  <Col sm={11}>{article.title}</Col>
-                                  <Col sm={1}>
-                                    <Dropdown className="theme-dropdown d-flex align-items-start">
-                                      <Dropdown.Toggle>
-                                        <em className="icon icon-ellipsis-h font-24"></em>
-                                      </Dropdown.Toggle>
-                                      <Dropdown.Menu>
-                                        <Dropdown.Item
-                                          onClick={() =>
-                                            removeArticle(article.id)
-                                          }
-                                          className="d-flex align-items-center"
-                                        >
-                                          <em className="icon icon-delete-line reaction-icons pr-2 font-26"></em>
-                                          <span>
-                                            {lang("ATRICLE.DELETE_ARTICLE")}
-                                          </span>
-                                        </Dropdown.Item>
-                                        {/* Edit Post Section */}
-                                        <Dropdown.Item
-                                          onClick={(e) =>
-                                            handleEditArticle(article)
-                                          }
-                                          className="d-flex align-items-center"
-                                        >
-                                          <em className="icon icon-write reaction-icons pr-2 font-22"></em>
-                                          <span>
-                                            {lang("ATRICLE.EDIT_ARTICLE")}
-                                          </span>
-                                        </Dropdown.Item>
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </Col>
-                                </Row>
-                                {article.imageURL && (
-                                  <img
-                                    src={article.imageURL}
-                                    width="100%"
-                                    height="100%"
-                                    className="img-fluid"
-                                  />
-                                )}
-                                {/*<p
+                          onClick={() => {
+                            if (formik.values.status.value === "drafted") {
+                              formik.setFieldValue("id", article?.id);
+                              formik.setFieldValue("postId", article?.postId);
+                              formik.setFieldValue("title", article?.title);
+                              formik.setFieldValue(
+                                "selectedFile",
+                                article?.imageURL
+                              );
+                              formik.setFieldValue(
+                                "description",
+                                article?.description
+                              );
+                              formik.setFieldValue(
+                                "articleStatus",
+                                article?.publishedStatus
+                              );
+                              formik.setFieldValue("isAdd", true);
+                              formik.setFieldValue("tags", article.tags);
+                              return router.push(
+                                `/article?draftedId=${article.id}`
+                              );
+                            }
+                            if (
+                              formik.values.status.value === "published" &&
+                              article?.newsFeedId
+                            ) {
+                              return router.push(
+                                `/article/view/${article?.newsFeedId}`
+                              );
+                            }
+                          }}
+                        >
+                          <Card.Body>
+                            <Row>
+                              <Col sm={11}>{article.title}</Col>
+                              <Col sm={1}>
+                                <Dropdown className="theme-dropdown d-flex align-items-start">
+                                  <Dropdown.Toggle>
+                                    <em className="icon icon-ellipsis-h font-24"></em>
+                                  </Dropdown.Toggle>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item
+                                      onClick={() => removeArticle(article.id)}
+                                      className="d-flex align-items-center"
+                                    >
+                                      <em className="icon icon-delete-line reaction-icons pr-2 font-26"></em>
+                                      <span>
+                                        {lang("ATRICLE.DELETE_ARTICLE")}
+                                      </span>
+                                    </Dropdown.Item>
+                                    {/* Edit Post Section */}
+                                    <Dropdown.Item
+                                      onClick={(e) =>
+                                        handleEditArticle(article)
+                                      }
+                                      className="d-flex align-items-center"
+                                    >
+                                      <em className="icon icon-write reaction-icons pr-2 font-22"></em>
+                                      <span>
+                                        {lang("ATRICLE.EDIT_ARTICLE")}
+                                      </span>
+                                    </Dropdown.Item>
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                              </Col>
+                            </Row>
+                            {article.imageURL && (
+                              <img
+                                src={article.imageURL}
+                                width="100%"
+                                height="100%"
+                                className="img-fluid"
+                              />
+                            )}
+                            {/*<p
                                   dangerouslySetInnerHTML={{
                                     __html: article.description,
                                   }}
                                 />*/}
-                              </Card.Body>
-                            </Card>
-                          );
-                        })}
-                      </ul>
-                    )}
-                </Card.Body>
-              </Card>
+                          </Card.Body>
+                        </Card>
+                      );
+                    })}
+                  </ul>
+                )}
+            </Card.Body>
+          </Card>
+        )}
+        {!formik.values.isAdd &&
+        !formik.values.isEdit &&
+        formik?.values?.status?.value == "published" ? (
+          <>
+            <div className="article-published-container">
+              <div className="published-article-heading">
+                {lang("ARTICLE_CARD.PUBLISHED_ARTICLES")}
+              </div>
+              <div className="article-cards-wrapper">
+                {articles &&
+                  articles.articleList &&
+                  articles.articleList.rows &&
+                  articles.articleList.rows.length > 0 &&
+                  articles.articleList.rows.map((article, i) => {
+                    return (
+                      <ArticleCard
+                        article={article}
+                        handleEditArticle={handleEditArticle}
+                        userInfo={userInfo}
+                        key={i}
+                        redirectHandle={() => {
+                          if (
+                            formik.values.status.value === "published" &&
+                            article?.newsFeedId
+                          ) {
+                            return router.push(
+                              `/article/view/${article?.newsFeedId}`
+                            );
+                          }
+                        }}
+                      />
+                    );
+                  })}
+              </div>
             </div>
-
-            {/* right blog section */}
-            <div className="profile-right-bar">
-              <UpgradeYourProfile />
-
-              <GrowthModal />
-
-              <GrowthPartners />
-
-              <RecentAddedGM />
-
-              <FollowedGroup />
-              <MostFollowedContents />
-            </div>
+          </>
+        ) : (
+          <></>
+        )}
+        {!formik.values.isAdd &&
+        !formik.values.isEdit &&
+        formik?.values?.status?.value == "drafted" ? (
+          <div className="article-published-container">
+            <div className="draft-article-heading">{lang("ARTICLE_CARD.DRAFTED_ARTICLES")}</div>
+            {articles &&
+              articles.articleList &&
+              articles.articleList.rows &&
+              articles.articleList.rows.length > 0 &&
+              articles.articleList.rows.map((article, i) => {
+                return (
+                  <DraftCardUi
+                    article={article}
+                    lastIndex={articles?.articleList?.rows?.length - 1}
+                    index={i}
+                    handleEdit={() => {
+                      if (formik.values.status.value === "drafted") {
+                        formik.setFieldValue("id", article?.id);
+                        formik.setFieldValue("postId", article?.postId);
+                        formik.setFieldValue("title", article?.title);
+                        formik.setFieldValue("selectedFile", article?.imageURL);
+                        formik.setFieldValue(
+                          "description",
+                          article?.description
+                        );
+                        formik.setFieldValue(
+                          "articleStatus",
+                          article?.publishedStatus
+                        );
+                        formik.setFieldValue("isAdd", true);
+                        formik.setFieldValue("tags", article.tags);
+                        return router.push(`/article?draftedId=${article.id}`);
+                      }
+                    }}
+                    handleDelete={() => {
+                      removeArticle(article.id);
+                    }}
+                    key={i}
+                  />
+                );
+              })}
           </div>
-        </Container>
+        ) : (
+          <></>
+        )}
+
+        {!formik.values.isAdd &&
+        !formik.values.isEdit &&
+        formik?.values?.status?.value == "deleted" ? (
+          <DeletedArticleListing setUpdateCount={setUpdateCount} />
+        ) : (
+          <></>
+        )}
       </div>
-    </Layout>
+    </SidebarLayout>
   );
 }
 

@@ -12,8 +12,35 @@ const DateTimePickerField = ({
   formik,
   validateDateFn = "",
   type,
+  isClearable = false,
   ...otherProps
 }) => {
+  const renderInput = (props) => {
+    const fieldNames = name.split(".");
+    let value = formik.values;
+
+    for (const fieldName of fieldNames) {
+      if (value && typeof value === "object" && fieldName in value) {
+        value = value[fieldName];
+      } else {
+        value = undefined; // Field not found
+        break;
+      }
+    }
+    const clear = () => {
+      props.onChange({ target: { value: "" } });
+    };
+
+    return (
+      <div>
+        <input {...props} />
+        {value && (
+          <em className="icon icon-deny mr-4 pr-1" onClick={clear}></em>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="calendar-wrap">
       <Datetime
@@ -42,6 +69,7 @@ const DateTimePickerField = ({
             formik?.setFieldValue(name, value?.format("DD-MM-YYYY"));
           }
         }}
+        {...(isClearable ? { renderInput: renderInput } : {})}
       />
       <em className="icon icon-calendar"></em>
     </div>

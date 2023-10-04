@@ -1,3 +1,16 @@
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import SchoolIcon from "@mui/icons-material/School";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import ScreenshotMonitorIcon from "@mui/icons-material/ScreenshotMonitor";
+import DomainIcon from "@mui/icons-material/Domain";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import PortraitOutlinedIcon from "@mui/icons-material/PortraitOutlined";
+import RoomPreferencesOutlinedIcon from "@mui/icons-material/RoomPreferencesOutlined";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import TollIcon from "@mui/icons-material/Toll";
+import DescriptionIcon from "@mui/icons-material/Description";
+
 export const DEFAULT_TIMEOUT = 20000; //milliseconds
 export const INPUT_VALIDATOR = {
   noSpeacialCharRegex: /^[a-zA-Z0-9_.-]*$/,
@@ -494,43 +507,75 @@ export const connectionGoals = [
 
 export const getFilters = (lang) => [
   {
+    id: "all",
+    name: lang("GLOBAL_SEARCH.FILTER.ALL"),
+    icon: <PermIdentityIcon style={{ color: "#49454E" }} />,
+  },
+  {
     id: "people",
     name: lang("GLOBAL_SEARCH.FILTER.PEOPLE"),
+    icon: <PermIdentityIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "companies",
     name: lang("GLOBAL_SEARCH.FILTER.COMPANIES"),
+    icon: <ApartmentIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "groups",
     name: lang("GLOBAL_SEARCH.FILTER.GROUPS"),
+    icon: <GroupWorkIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "guides",
     name: lang("GLOBAL_SEARCH.FILTER.YLI_GUIDES"),
+    icon: <ScreenshotMonitorIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "teachers",
     name: lang("GLOBAL_SEARCH.FILTER.TEACHER"),
+    icon: <SchoolIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "trainers",
     name: lang("GLOBAL_SEARCH.FILTER.TRAINER"),
+    icon: <BusinessCenterIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "coach",
     name: lang("GLOBAL_SEARCH.FILTER.COACH"),
+    icon: <BusinessCenterIcon style={{ color: "#49454E" }} />,
+  },
+  {
+    id: "courses",
+    name: lang("GLOBAL_SEARCH.FILTER.COURSES"),
+    icon: <TollIcon style={{ color: "#49454E" }} />,
+  },
+  {
+    id: "rooms",
+    name: lang("GLOBAL_SEARCH.FILTER.ROOMS"),
+    icon: <RoomPreferencesOutlinedIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "learningInstitute",
     name: lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE"),
+    icon: <DomainIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "articles",
     name: lang("GLOBAL_SEARCH.FILTER.ARTICLES"),
+    icon: <DescriptionIcon style={{ color: "#49454E" }} />,
   },
   {
     id: "posts",
     name: lang("GLOBAL_SEARCH.FILTER.POSTS"),
+    icon: <PortraitOutlinedIcon style={{ color: "#49454E" }} />,
   },
+];
+
+export const PPAndCompanyNotificationType = [
+  "Peer Producer",
+  "Admin Peer Producer",
+  "Company",
+  "Admin Company",
 ];

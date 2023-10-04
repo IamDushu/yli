@@ -1,10 +1,12 @@
 // Begin: Button
 .btn {
-  @include button-size($btn-padding-y,
+  @include button-size(
+    $btn-padding-y,
     $btn-padding-x,
     $btn-font-size,
     $line-height-base,
-    $box-shadow-0);
+    $box-shadow-0
+  );
   font-weight: $font-semibold;
   letter-spacing: 0.25px;
   border-radius: size(8);
@@ -20,11 +22,13 @@
   &.btn-sm {
     //font-size: $font-size-sm;
     //font-size:size(14);
-    @include button-size($btn-padding-y-sm,
+    @include button-size(
+      $btn-padding-y-sm,
       $btn-padding-x-sm,
       $btn-font-size-sm,
       $line-height-base,
-      $box-shadow-0);
+      $box-shadow-0
+    );
 
     &.font-12 {
       font-size: size(12);
@@ -34,11 +38,13 @@
   &.btn-lg {
     //font-size: $font-size-lg;
     //font-size:size(20);
-    @include button-size($btn-padding-y-lg,
+    @include button-size(
+      $btn-padding-y-lg,
       $btn-padding-x-lg,
       $btn-font-size-lg,
       $line-height-base,
-      $box-shadow-0);
+      $box-shadow-0
+    );
     min-width: 325px;
   }
 
@@ -78,7 +84,8 @@
     font-weight: $font-weight-bold;
     padding: size(8) size(16);
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: darken($white, 12%);
       transition: $transition-base;
     }
@@ -92,7 +99,8 @@
     font-weight: $font-weight-bold;
     padding: size(12) size(24);
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: $secondary-purple-hover;
       transition: $transition-base;
     }
@@ -107,7 +115,8 @@
     font-weight: $font-weight-bold;
     padding: size(8) size(16);
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: $white;
       color: $primary;
       transition: $transition-base;
@@ -282,7 +291,6 @@
     box-shadow: none;
 
     &.btn-link-hover {
-
       &:hover,
       &:active {
         text-decoration: none;
@@ -424,7 +432,7 @@ textarea.form-control {
   input[type="checkbox"] {
     display: none;
 
-    +span {
+    + span {
       content: "";
       display: inline-block;
       width: 18px;
@@ -432,26 +440,26 @@ textarea.form-control {
       position: absolute;
       left: 0;
       background: $white;
-      border: 1px solid $gray;
+      border: 2px solid $black;
       border-radius: $border-radius;
     }
 
-    +span.wt-text {
+    + span.wt-text {
       margin-top: size(-12);
     }
 
     &:checked {
-      +span {
-        border: 1px solid $primary;
-        background: $primary;
+      + span {
+        border: 1px solid $primary-violet;
+        background: $primary-violet;
         @include css3-prefix(transition, all 0.3s);
       }
 
-      ~span:after {
+      ~ span:after {
         top: 50%;
         left: 50%;
         margin-left: -3px;
-        margin-top: -6px;
+        margin-top: -7px;
         width: 6px;
         height: 10px;
         border-width: 0 2px 2px 0 !important;
@@ -461,14 +469,14 @@ textarea.form-control {
       }
     }
 
-    ~span:after {
+    ~ span:after {
       display: none;
       position: absolute;
       content: "";
     }
 
     &:disabled {
-      +span {
+      + span {
         opacity: 0.7;
       }
     }
@@ -477,9 +485,9 @@ textarea.form-control {
   &.checkbox-blue {
     input[type="checkbox"] {
       &:checked {
-        +span {
-          border-color: $primary;
-          background: $primary;
+        + span {
+          border-color: $primary-violet;
+          background: $primary-violet;
         }
       }
     }
@@ -489,7 +497,7 @@ textarea.form-control {
 .modal-dialog {
   .custom-radio {
     input[type="radio"] {
-      +span {
+      + span {
         left: 0;
         right: 0;
       }
@@ -515,7 +523,7 @@ textarea.form-control {
   input[type="radio"] {
     display: none;
 
-    +span {
+    + span {
       content: "";
       display: inline-block;
       width: 20px;
@@ -528,26 +536,26 @@ textarea.form-control {
       border-radius: 50%;
     }
 
-    ~span:after {
+    ~ span:after {
       display: none;
       position: absolute;
       content: "";
     }
 
     &:disabled {
-      +span {
+      + span {
         opacity: 0.7;
       }
     }
 
     &:checked {
-      +span {
+      + span {
         background: $primary;
         border: 2px solid $primary;
         @include css3-prefix(transition, all 0.3s);
       }
 
-      ~span {
+      ~ span {
         &::after {
           top: 8px;
           left: 8px;
@@ -566,12 +574,12 @@ textarea.form-control {
   &.custom-blue-radio {
     &.custom-radio-outline {
       input[type="radio"] {
-        +span {
+        + span {
           border-color: $info;
         }
 
         &:checked {
-          ~span {
+          ~ span {
             &::after {
               background-color: $info;
             }
@@ -595,7 +603,7 @@ textarea.form-control {
     }
 
     input[type="radio"] {
-      +span {
+      + span {
         right: 0;
         left: auto;
         border: $border-width-2 solid $gray;
@@ -603,7 +611,7 @@ textarea.form-control {
       }
 
       &:checked {
-        +span {
+        + span {
           border-color: $primary;
           transition: $transition-base;
         }
@@ -664,8 +672,6 @@ sup {
   }
 }
 
-
-
 .custom-file-input-banner {
   visibility: hidden;
   width: 44px;
@@ -701,7 +707,7 @@ sup {
     cursor: pointer;
 
     &:checked {
-      +label {
+      + label {
         background-color: $primary;
         color: $white;
         border: size(1) solid $primary;
@@ -740,7 +746,7 @@ sup {
     cursor: pointer;
 
     &:checked {
-      +label:after {
+      + label:after {
         content: "";
         @include position(absolute, 54%, auto, auto, 10px);
         margin-left: size(-5);
@@ -788,7 +794,7 @@ sup {
 }
 
 .btn-upgrade_plan {
-  .btn-dismiss-txt  {
+  .btn-dismiss-txt {
     font-size: 15px;
   }
   color: $info;
@@ -800,11 +806,11 @@ sup {
 }
 
 .btn-dismiss {
-  .btn-dismiss-txt  {
+  .btn-dismiss-txt {
     font-size: 15px;
   }
   color: $white;
-  background-color: #FFFFFF14;
+  background-color: #ffffff14;
   max-width: 116px;
   height: 35px;
   padding: 0;
@@ -813,7 +819,7 @@ sup {
 
 @media (max-width: 1024px) {
   .btn-upgrade_plan {
-    .btn-dismiss-txt  {
+    .btn-dismiss-txt {
       font-size: 11px;
     }
     max-width: 80px;
@@ -822,7 +828,7 @@ sup {
     border-radius: 5px;
   }
   .btn-dismiss {
-    .btn-dismiss-txt  {
+    .btn-dismiss-txt {
       font-size: 10px;
     }
     max-width: 70px;
@@ -833,7 +839,7 @@ sup {
 
 @media (max-width: 768px) {
   .btn-upgrade_plan {
-    .btn-dismiss-txt  {
+    .btn-dismiss-txt {
       font-size: 9px;
     }
     max-width: 65px;
@@ -841,7 +847,7 @@ sup {
     border-radius: 5px;
   }
   .btn-dismiss {
-    .btn-dismiss-txt  {
+    .btn-dismiss-txt {
       font-size: 9px;
     }
     max-width: 50px;
@@ -903,7 +909,9 @@ sup {
   }
 }
 
-.theme-dropdown.dropdown-secondary .dropdown-toggle:hover .icon-plus-primary:before {
+.theme-dropdown.dropdown-secondary
+  .dropdown-toggle:hover
+  .icon-plus-primary:before {
   color: #ffffff !important;
 }
 
@@ -911,7 +919,9 @@ sup {
   color: #0f6bbf !important;
 }
 
-.theme-dropdown.dropdown-secondary .dropdown-toggle .icon-plus-secondary::before {
+.theme-dropdown.dropdown-secondary
+  .dropdown-toggle
+  .icon-plus-secondary::before {
   color: $secondary !important;
 }
 

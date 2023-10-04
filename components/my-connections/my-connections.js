@@ -1,29 +1,39 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMyConnectionsList,
   changeConnectionStatus,
   addRemoveGrowthPartner,
 } from "store/actions/connections";
-import Link from "next/link";
-import { onImageError, getFullName } from "utils";
+import { getFullName, getLocalStorage, showMessageNotification } from "utils";
 import Swal from "sweetalert2";
-import { getGrowthPartnerList } from "store/actions";
-import { useTranslation } from "react-i18next";
 import {
-  RemoveConnectionIcon,
-  TrashBin,
-  Connect,
-} from "components/svg/connections";
+  chatCreateUser,
+  chatSignupUser,
+  getGrowthPartnerList,
+  getUserById,
+} from "store/actions";
+import { useTranslation } from "react-i18next";
 import { debounce } from "lodash";
+import SearchBar from "components/SearchBar";
+import UserCard from "components/UserCard";
+import { YliwayButton } from "components/button";
+import Image from "next/image";
+import Stack from "@mui/material/Stack";
+import { getOtherProfileInfo } from "store/actions/aboutUs";
+import { useYchat } from "hooks/useYchat";
+import { createMeeting } from "store/actions/yli-meet";
 
 const MyConnectionsList = () => {
   const [lang] = useTranslation("language");
   const dispatch = useDispatch();
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const pagesize = 20;
+  const { currentChannelHandler } = useYchat();
+  const pagesize = 10;
   const list = useSelector((state) => state.connections.myConnectionList);
   const totalConnection = useSelector(
     (state) => state.connections.totalConnection
@@ -41,20 +51,21 @@ const MyConnectionsList = () => {
         search,
       })
     );
-  }, [search, page]);
+  }, [search, page, pagesize]);
 
   /******************** 
   @purpose : Delete Connection
   @Parameter : {}
   @Author : INIC
   ******************/
-  const deleteConnection = (id) => {
+  const deleteConnection = ({ id, userName }) => {
     Swal.fire({
-      text: lang("CONNECTIONS.CONNECTION_DELETE_MESSAGE"),
+      title: lang("CONNECTIONS.CONNECTION_REMOVE_MESSAGE_TITLE", { userName }),
+      text: lang("CONNECTIONS.CONNECTION_REMOVE_MESSAGE_TEXT", { userName }),
       icon: "warning",
       showDenyButton: true,
-      confirmButtonText: lang("COMMON.YES"),
-      denyButtonText: lang("COMMON.NO"),
+      confirmButtonText: lang("COMMON.CONFIRM"),
+      denyButtonText: lang("COMMON.CANCEL"),
     }).then(async (result) => {
       if (result.isConfirmed) {
         await dispatch(
@@ -85,12 +96,36 @@ const MyConnectionsList = () => {
   @Parameter : {}
   @Author : INIC
   ******************/
-  const handleAddRemoveGrowthConnection = async (id, status) => {
+  const handleAddRemoveGrowthConnection = async (id, status, userName) => {
+    if (status === false) {
+      const result = await Swal.fire({
+        title: lang(
+          "GROWTH_CONNECTIONS.GROWTH_CONNECTION_REMOVE_MESSAGE_TITLE",
+          { userName }
+        ),
+        text: lang("GROWTH_CONNECTIONS.GROWTH_CONNECTION_REMOVE_MESSAGE_TEXT", {
+          userName,
+        }),
+        icon: "warning",
+        showDenyButton: true,
+        confirmButtonText: lang("COMMON.CONFIRM"),
+        denyButtonText: lang("COMMON.CANCEL"),
+      });
+      if (!result.isConfirmed) return;
+    }
     let data = {
       connectionUserId: id,
       growthConnection: status,
     };
-    await dispatch(addRemoveGrowthPartner(data));
+    const res = await dispatch(addRemoveGrowthPartner(data));
+    if (res.status === 1) {
+      const successMessage = !!status
+        ? lang("GROWTH_CONNECTIONS.GROWTH_CONNECTION_ADD_SUCCESS", { userName })
+        : lang("GROWTH_CONNECTIONS.GROWTH_CONNECTION_REMOVE_SUCCESS", {
+            userName,
+          });
+      showMessageNotification(successMessage);
+    }
 
     await dispatch(
       getMyConnectionsList({
@@ -114,145 +149,182 @@ const MyConnectionsList = () => {
     }, 500)
   );
 
+  const sendDM = async (otherUserData) => {
+    let chatRes;
+    let mmLogin = getLocalStorage("mmLogin");
+    if (mmLogin && typeof mmLogin === "string") {
+      mmLogin = JSON.parse(mmLogin);
+    }
+
+    if (otherUserData?.mmRegister) {
+      let userMmId = otherUserData?.mmId;
+      if (!userMmId) {
+        const res = await getUserById(otherUserData?.id);
+        userMmId = res?.mmId;
+      }
+      chatRes = await chatCreateUser({
+        ids: [userMmId, mmLogin?.mmId],
+      });
+    } else {
+      let userEmail = otherUserData?.email;
+      if (!userEmail || userEmail === "HIDDEN") {
+        const user = await getUserById(otherUserData?.id);
+        userEmail = user.email;
+      }
+      const res = await dispatch(
+        chatSignupUser(
+          {
+            email: userEmail,
+          },
+          "profile"
+        )
+      );
+      chatRes = await chatCreateUser({
+        ids: [res?.id, mmLogin?.mmId],
+      });
+    }
+    currentChannelHandler(chatRes);
+  };
+
+  const messageHandler = (profileId) => {
+    dispatch(getOtherProfileInfo(profileId)).then((res) => {
+      if (res?.id) {
+        sendDM(res);
+      }
+    });
+  };
+
+  const launchRoom = () => {
+    dispatch(createMeeting({ router }));
+  };
+
   return (
     <React.Fragment>
       <Card.Body
-        className={list === undefined ? "pb-5 px-1" : "py-3 px-1"}
+        className={list === undefined ? "pb-5 px-1" : "py-3 px-0"}
         style={{ paddingTop: "21 px !important" }}
       >
-        <div className="common-searchbar mb-3 px-12">
-          <Form.Group controlId="formSearch" className="position-relative mb-0">
-            <Form.Control
-              type="text"
-              placeholder={lang("CONNECTIONS.SEARCH_BY_NAME")}
-              onChange={(e) => searchConnection(e.target.value)}
-            />
-            <div className="search-inner-icon">
-              <em className="bx bx-search"></em>
-            </div>
-          </Form.Group>
+        <div className="common-searchbar mb-3">
+          <SearchBar
+            onChange={(e) => searchConnection(e.target.value)}
+            placeholder={lang("CONNECTIONS.SEARCH_BY_NAME")}
+          />
         </div>
-        {totalConnection > 0 && (
-          <p className="px-12">
-            {`${totalConnection} ${lang("CONNECTIONS.RECORDS_FOUND")}`}
-          </p>
-        )}
-        <Container fluid>
-          <Row className="custom-col-box four-grid-spacing-md row-col-10">
-            {list ? (
-              list.map((v, i) => (
-                <Col md={4} xl={3} key={v.id} className="mb-sm-3">
-                  <Card className="text-center  h-100 myconnection-card">
-                    <Card.Header className="p-0">
-                      <Link href={`/profile/${v.profileId}`}>
-                        <div
-                          style={{
-                            backgroundImage: `url(${
-                              v?.userDetails?.[0]?.profileBgURL ??
-                              "../../assets/images/dashboard/cover-background-2.jpg"
-                            })`,
-                            borderRadius: "8px 8px 0px 0px",
-                          }}
-                          className="position-relative connection-user-cover-img"
-                        >
-                          <div className="d-flex mx-auto">
-                            <div className="user-profile-pic flex-shrink-0 w-h-70 border-0 rounded-pill pointer">
-                              <img
-                                src={v.profilePicURL ?? ""}
-                                alt={getFullName(v)}
-                                width="72"
-                                height="72"
-                                className="d-flex img-fluid w-100 h-100"
-                                onError={(e) => {
-                                  onImageError(e, "profile", getFullName(v));
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </Card.Header>
-
-                    <Card.Body className="d-flex flex-column h-100 p-0 pt-1 myconnection-body">
-                      <Card.Title className="mb-1">
-                        <Link href={`/profile/${v.profileId}`}>
-                          <h5 className="text-body-14 mb-0 text-ellipsis pointer p-1">
-                            {getFullName(v)}
-                          </h5>
-                        </Link>
-                      </Card.Title>
-                      <Card.Text className="mb-0 px-2">
-                        <p className="mb-1 text-gray-darker font-12 text-ellipsis">
-                          {v?.qualification
-                            ? v?.qualification
-                            : "No Position Added"}
-                          {/* <br />
-                        {v?.country
-                          ? `${v?.country},${v?.city}`
-                          : "No Location Added"} */}
-                        </p>
-                        <p className="font-12 text-gray-darker mb-2 text-ellipsis">
-                          {v.mutualCount} {lang("CONNECTIONS.MUTUAL_CONTACTS")}
-                        </p>
-                      </Card.Text>
-                      <div className="text-gary font-medium mb-2 d-flex px-2">
-                        <Button
-                          title={
-                            !v?.isGrowthConnection
-                              ? "Add Growth Connection"
-                              : "Remove Growth Connection"
-                          }
-                          variant="btn btn-outline-primary btn-small-icon w-100 mr-1"
-                          onClick={() => {
-                            handleAddRemoveGrowthConnection(
-                              v?.userId,
-                              !v?.isGrowthConnection
-                            );
-                          }}
-                        >
-                          {v?.isGrowthConnection ? (
-                            <>
-                              <RemoveConnectionIcon />
-                              {lang("CONNECTIONS.REMOVE_TO_GC")}
-                            </>
-                          ) : (
-                            <>
-                              <Connect />
-                              {lang("CONNECTIONS.ADD_TO_GC")}
-                            </>
-                          )}
-                        </Button>
-                        <Button
-                          title="Delete"
-                          variant="btn btn-small-icon btn-outline-gray w-100"
-                          // style={{ border: "1px solid #0f6bbf" }}
-                          onClick={() => deleteConnection(v?.id)}
-                          // size="sm"
-                        >
-                          <TrashBin />
-                          {lang("CONNECTIONS.DELETE")}
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <p>{lang("CONNECTIONS.NO_CONNECTIONS_AVAILABLE")}</p>
-            )}
-          </Row>
-        </Container>
+        <Row
+          className="custom-col-box four-grid-spacing-md row-col-10"
+          style={{ columnGap: "0.5rem", rowGap: "1.5rem", margin: 0 }}
+        >
+          {list?.length ? (
+            list?.map((listItem, index) => {
+              const {
+                userDetails,
+                profilePicURL,
+                qualification,
+                mutualCount,
+                profileId,
+                id,
+                isGrowthConnection,
+                userId,
+              } = listItem;
+              const [{ profileBgURL }] = userDetails || [{}];
+              const userName = getFullName(listItem);
+              return (
+                <UserCard
+                  key={index}
+                  coverImage={profileBgURL}
+                  profileImage={profilePicURL}
+                  name={userName}
+                  position={qualification || lang("CONNECTIONS.NO_POSTION")}
+                  mutualCountText={`${mutualCount} ${lang(
+                    "CONNECTIONS.MUTUAL_CONTACTS"
+                  )}`}
+                  profileurl={`/profile/${profileId}`}
+                  renderFooter={() => (
+                    <Stack
+                      direction="row"
+                      justifyContent="space-evenly"
+                      width="100%"
+                    >
+                      <Image
+                        height={22}
+                        width={22}
+                        style={{ cursor: "pointer" }}
+                        src="/assets/images/send-icon.svg"
+                        title={lang("COMMON.SEND_MESSAGE")}
+                        onClick={() => messageHandler(profileId)}
+                      />
+                      <Image
+                        height={22}
+                        width={22}
+                        style={{ cursor: "pointer" }}
+                        title={
+                          !isGrowthConnection
+                            ? lang("CONNECTIONS.ADD_TO_GROWTH_CONNECTIONS")
+                            : lang("CONNECTIONS.REMOVE_FROM_GROWTH_CONNECTIONS")
+                        }
+                        src={
+                          !isGrowthConnection
+                            ? "/assets/images/add-to-gc-icon.svg"
+                            : "/assets/images/remove-from-gc-icon.svg"
+                        }
+                        onClick={() => {
+                          handleAddRemoveGrowthConnection(
+                            userId,
+                            !isGrowthConnection,
+                            userName
+                          );
+                        }}
+                      />
+                      <Image
+                        height={22}
+                        width={22}
+                        style={{ cursor: "pointer" }}
+                        src="/assets/images/video-call.svg"
+                        title={lang("COMMON.LAUNCH_ROOM")}
+                        onClick={launchRoom}
+                      />
+                      <Image
+                        height={22}
+                        width={22}
+                        style={{ cursor: "pointer" }}
+                        title="Delete"
+                        src="/assets/images/cancel-icon.svg"
+                        onClick={() => deleteConnection({ id, userName })}
+                      />
+                    </Stack>
+                  )}
+                />
+              );
+            })
+          ) : (
+            <p>{lang("CONNECTIONS.NO_REQUEST_THERE")}</p>
+          )}
+        </Row>
       </Card.Body>
-      {list && list?.total > pagesize && list?.data?.length < list?.total && (
-        <div className="d-flex justify-content-center mt-2 border-geyser border-top">
-          <Button
-            variant="link"
-            onClick={() => setPage(page + 1)}
-            className="text-body-14 py-2 text-center load-more-color"
-          >
-            {lang("COMMON.LOAD_MORE")}
-          </Button>
-        </div>
+      {totalConnection > pagesize && list?.length < totalConnection && (
+        <YliwayButton
+          label={
+            <>
+              <Image
+                src={"/assets/images/plus-icon.svg"}
+                height={18}
+                width={18}
+              />
+              {lang("COMMON.LOAD_MORE")}
+            </>
+          }
+          handleClick={() => setPage(page + 1)}
+          size="small"
+          textbutton
+          style={{
+            display: "flex",
+            alignItems: "center",
+            columnGap: "0.5rem",
+            margin: "auto",
+            color: "#48464A",
+            marginBottom: "1rem",
+          }}
+        />
       )}
     </React.Fragment>
   );

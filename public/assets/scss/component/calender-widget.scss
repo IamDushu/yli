@@ -1,5 +1,29 @@
 .calendar-widget-wrapper {
 	background-color: white;
+	box-shadow: 0px 2px 1px -1px rgb(0, 0, 0, 0.20), 0px 1px 1px 0px rgb(0, 0, 0, 0.14), 0px 1px 3px 0px rgb(0, 0, 0, 0.12);
+
+	.no-event-ui {
+		display: flex;
+		height: Hug(28.41px);
+		padding: 6.7px;
+		border-radius: 3.35px;
+		border: 0.84px;
+
+		border: 0.84px solid rgba(209, 213, 219, 1);
+
+		background: rgba(125, 82, 96, 0.12);
+
+		span {
+			font-family: "Inter", sans-serif;
+			font-size: 10px;
+			font-style: italic;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+
+		}
+	}
 
 	.fc-timeGridWeek-view tbody {
 		display: none;
@@ -8,13 +32,32 @@
 	.ant-divider-horizontal {
 		margin: 12px 0 0 0;
 	}
-
+	
 	.calendar-widget-header {
-		padding: 16px 16px 0 16px;
-
+		padding: 14px 14px 0px 14px;
+         
 		.calendar-header-title {
-			font-weight: 700;
-			font-size: 14px;
+			font-family: "Inter", sans-serif;
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+			color: $primary-violet;
+			cursor: pointer;
+		}
+
+		.calendar-widget-month {
+			font-family: "Inter", sans-serif;
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 15px;
+			letter-spacing: 0.07353759557008743px;
+			text-align: left;
+
+			svg {
+				font-size: 18px;
+			}
 		}
 
 		.ant-select-selector {
@@ -27,25 +70,38 @@
 		}
 		
 		.week-day {
-			font-size: 12px;
-			font-weight: 700;
+			font-family: "Inter", sans-serif;
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 20px;
+			letter-spacing: 0.10000000149011612px;
+			text-align: left;
 			color: rgba(48, 52, 57, 1);
-			padding: 4px;
+			padding: 5px;
 		}
 
 		.week-date-active {
+			font-family: "Inter", sans-serif;
 			font-size: 12px;
-			font-weight: 700;
-			color: #0f6bbf;
-			padding: 4px;
-			background-color: rgba($color: #0f6bbf, $alpha: 0.2);
+			font-weight: 400;
+			line-height: 16px;
+			letter-spacing: 0em;
+			text-align: left;
+			color: rgba(103, 80, 164, 1);
+			padding: 5px;
 			border-radius: 25px;
+			background: rgba(233, 221, 255, 1);
 		}
 	
 		.week-date {
+			font-family: "Inter", sans-serif;
 			font-size: 12px;
 			font-weight: 400;
-			padding: 4px;
+			line-height: 16px;
+			letter-spacing: 0em;
+			text-align: left;
+			color: rgba(48, 52, 57, 1);
+			padding: 5px;
 		}
 	}
 
@@ -71,7 +127,7 @@
 	}
 
 	.calendar-widget-body {
-		padding: 16px;
+		padding: 14px;
 		max-height: 300px;
     overflow-y: auto;
 		scrollbar-width: thin;
@@ -83,22 +139,43 @@
 			border: 1px solid rgba(209, 213, 219, 1);
 
 			.calendar-widget-event-title {
-				font-size: 12px;
-				font-weight: 700;
-				color: black;
+				font-family: "Inter", sans-serif;
+				font-size: 10px;
+				font-weight: 500;
+				line-height: 15px;
+				letter-spacing: 0.07353759557008743px;
+				text-align: left;
+				color: rgba(5, 31, 78, 1);
 			}
 
 			.calendar-widget-event-note {
-				font-size: 12px;
-				font-weight: 400;
+				font-family: "Inter", sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				line-height: 12px;
+				letter-spacing: 0.36768800020217896px;
+				text-align: left;
 				color: rgba(89, 93, 97, 1);
 			}
 
 			.calendar-widget-event-time {
-				font-size: 11px;
-				font-weight: 400;
+				font-family: "Inter", sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				line-height: 12px;
+				letter-spacing: 0.36768800020217896px;
+				text-align: left;
 				color: rgba(5, 31, 78, 1);
 			}
 		}
 	}
+}
+
+.calendar-widget-month-option {
+	font-family: "Inter", sans-serif;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 15px;
+	letter-spacing: 0.07353759557008743px;
+	text-align: left;
 }

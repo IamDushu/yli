@@ -242,6 +242,7 @@ const EducationDetails = ({ formik, i, type, data }) => {
             validateDateFn={validateDateFnEndDate}
             formik={formik}
             name={`educationDetails.${i}.endDate`}
+            isClearable={true}
           />
           {formik?.touched["educationDetails"]?.[i]?.endDate &&
             formik?.errors["educationDetails"]?.[i]?.endDate && (

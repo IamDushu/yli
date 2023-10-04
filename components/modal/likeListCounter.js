@@ -6,6 +6,14 @@ import { onImageError } from "utils";
 import { toggleModals } from "store/actions";
 import { selectUserInfo } from "store/selectors/user";
 import { useTranslation } from "react-i18next";
+import {
+  CelebrateIcon,
+  InsightIcon,
+  LaughIcon,
+  LikeIcon,
+  LoveIcon,
+  SupportIcon,
+} from "icons";
 
 export const LikeListCounter = () => {
   const dispatch = useDispatch();
@@ -30,12 +38,12 @@ export const LikeListCounter = () => {
   );
 
   const curiouses = postLikesData?.rows?.filter(
-    (item) => item.reaction === "Curious"
+    (item) => item.reaction === "Laugh"
   );
 
   const allLikes = (
     <div className="d-flex justify-content-center">
-      <div>{lang("DASHBOARD.POSTS.LIKES_MODAL.ALL_LIKES")}</div>
+      <div>{"All"}</div>
       <div className="ml-2">
         {Array.isArray(postLikesData?.rows) && postLikesData?.rows?.length}
       </div>
@@ -44,30 +52,14 @@ export const LikeListCounter = () => {
 
   const like = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source src="/assets/images/dashboard/like.svg" type="image/svg" />
-        <img
-          src="/assets/images/dashboard/like.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
+      <LikeIcon />
       <div className="ml-2">{Array.isArray(likes) && likes.length}</div>
     </div>
   );
 
   const celebrate = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source src="/assets/images/dashboard/Celebrate.svg" type="image/svg" />
-        <img
-          src="/assets/images/dashboard/Celebrate.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
+      <CelebrateIcon />
       <div className="ml-2">
         {Array.isArray(celebrates) && celebrates.length}
       </div>
@@ -76,48 +68,21 @@ export const LikeListCounter = () => {
 
   const support = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source src="/assets/images/dashboard/Support.svg" type="image/svg" />
-        <img
-          src="/assets/images/dashboard/Support.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
+      <SupportIcon />
       <div className="ml-2">{Array.isArray(supports) && supports.length}</div>
     </div>
   );
 
   const love = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source src="/assets/images/dashboard/Love.svg" type="image/svg" />
-        <img
-          src="/assets/images/dashboard/Love.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
+      <LoveIcon />
       <div className="ml-2">{Array.isArray(loves) && loves.length}</div>
     </div>
   );
 
   const insightful = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source
-          src="/assets/images/dashboard/Insightful.svg"
-          type="image/svg"
-        />
-        <img
-          src="/assets/images/dashboard/Insightful.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
+      <InsightIcon />
       <div className="ml-2">
         {Array.isArray(insightfuls) && insightfuls.length}
       </div>
@@ -126,16 +91,8 @@ export const LikeListCounter = () => {
 
   const curious = (
     <div className="d-flex justify-content-center">
-      <picture className="icon">
-        <source src="/assets/images/dashboard/Curious.svg" type="image/svg" />
-        <img
-          src="/assets/images/dashboard/Curious.svg"
-          width="24"
-          height="24"
-          className="img-fluid w-h-24"
-        />
-      </picture>
-      <div className="ml-2">{Array.isArray(curiouses) && curiouses.length}</div>
+      <LaughIcon />
+      <div className="ml-2">{Array.isArray(love) && love.length}</div>
     </div>
   );
 
@@ -197,13 +154,13 @@ export const LikeListCounter = () => {
                   {postLikesData?.rows?.map((item, index) => {
                     const AllLikeProfileRoute = item["instituteDetails.id"]
                       ? "/profile/institute-profile?instituteId=" +
-                      item["instituteDetails.id"] +
-                      "&name=" +
-                      item["instituteDetails.name"].split(" ", 1)[0] +
-                      "+" +
-                      item["instituteDetails.id"].split(" ", 2)[1] +
-                      "&userId=" +
-                      userInfo.id
+                        item["instituteDetails.id"] +
+                        "&name=" +
+                        item["instituteDetails.name"].split(" ", 1)[0] +
+                        "+" +
+                        item["instituteDetails.id"].split(" ", 2)[1] +
+                        "&userId=" +
+                        userInfo.id
                       : `/profile/${item["userDetails.profileId"]}`;
                     const instFirName =
                       item["userDetails.firstName"] !== null
@@ -223,8 +180,9 @@ export const LikeListCounter = () => {
                         <Link route={AllLikeProfileRoute}>
                           <a
                             className="rounded-pill overflow-hidden w-h-70"
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -255,7 +213,8 @@ export const LikeListCounter = () => {
                                   onImageError(
                                     e,
                                     "profile",
-                                    `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                    `${instFirName} ${
+                                      lastNameHandler(item) ? instLasName : ""
                                     }`
                                   );
                                 }}
@@ -266,8 +225,9 @@ export const LikeListCounter = () => {
                         <div className="pl-3 text-left">
                           <Link route={AllLikeProfileRoute}>
                             <a
-                              title={`${instFirName !== null ? instFirName : ""
-                                } ${instLasName !== null ? instLasName : ""}`}
+                              title={`${
+                                instFirName !== null ? instFirName : ""
+                              } ${instLasName !== null ? instLasName : ""}`}
                               onClick={() =>
                                 dispatch(
                                   toggleModals({ likelistcounter: false })
@@ -296,13 +256,13 @@ export const LikeListCounter = () => {
                 {likes.map((item, index) => {
                   const LikesProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -318,8 +278,9 @@ export const LikeListCounter = () => {
                       <Link route={LikesProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -350,7 +311,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -361,8 +323,9 @@ export const LikeListCounter = () => {
                       <div className="pl-3 text-left">
                         <Link route={LikesProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -389,13 +352,13 @@ export const LikeListCounter = () => {
                 {celebrates.map((item, index) => {
                   const CelebrateProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -411,8 +374,9 @@ export const LikeListCounter = () => {
                       <Link route={CelebrateProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -443,7 +407,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -454,8 +419,9 @@ export const LikeListCounter = () => {
                       <div className="pl-3 text-left">
                         <Link route={CelebrateProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -482,13 +448,13 @@ export const LikeListCounter = () => {
                 {supports.map((item, index) => {
                   const SupportProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -504,8 +470,9 @@ export const LikeListCounter = () => {
                       <Link route={SupportProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -536,7 +503,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -547,8 +515,9 @@ export const LikeListCounter = () => {
                       <div className="ml-2 text-left">
                         <Link route={SupportProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -574,13 +543,13 @@ export const LikeListCounter = () => {
                 {loves.map((item, index) => {
                   const LovesProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -596,8 +565,9 @@ export const LikeListCounter = () => {
                       <Link route={LovesProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -628,7 +598,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -639,8 +610,9 @@ export const LikeListCounter = () => {
                       <div className="ml-2 text-left">
                         <Link route={LovesProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -667,13 +639,13 @@ export const LikeListCounter = () => {
                 {insightfuls.map((item, index) => {
                   const InsightfulProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -690,8 +662,9 @@ export const LikeListCounter = () => {
                       <Link route={InsightfulProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -722,7 +695,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -733,8 +707,9 @@ export const LikeListCounter = () => {
                       <div className="pl-3 text-left">
                         <Link route={InsightfulProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }
@@ -761,13 +736,13 @@ export const LikeListCounter = () => {
                 {curiouses.map((item, index) => {
                   const CuriousesProfileRoute = item["instituteDetails.id"]
                     ? "/profile/institute-profile?instituteId=" +
-                    item["instituteDetails.id"] +
-                    "&name=" +
-                    item["instituteDetails.name"].split(" ", 1)[0] +
-                    "+" +
-                    item["instituteDetails.id"].split(" ", 2)[1] +
-                    "&userId=" +
-                    userInfo.id
+                      item["instituteDetails.id"] +
+                      "&name=" +
+                      item["instituteDetails.name"].split(" ", 1)[0] +
+                      "+" +
+                      item["instituteDetails.id"].split(" ", 2)[1] +
+                      "&userId=" +
+                      userInfo.id
                     : `/profile/${item["userDetails.profileId"]}`;
                   const instFirName =
                     item["userDetails.firstName"] !== null
@@ -783,8 +758,9 @@ export const LikeListCounter = () => {
                       <Link route={CuriousesProfileRoute}>
                         <a
                           className="rounded-pill overflow-hidden w-h-70"
-                          title={`${instFirName !== null ? instFirName : ""
-                            } ${instLasName !== null ? instLasName : ""}`}
+                          title={`${instFirName !== null ? instFirName : ""} ${
+                            instLasName !== null ? instLasName : ""
+                          }`}
                           onClick={() =>
                             dispatch(toggleModals({ likelistcounter: false }))
                           }
@@ -815,7 +791,8 @@ export const LikeListCounter = () => {
                                 onImageError(
                                   e,
                                   "profile",
-                                  `${instFirName} ${lastNameHandler(item) ? instLasName : ""
+                                  `${instFirName} ${
+                                    lastNameHandler(item) ? instLasName : ""
                                   }`
                                 );
                               }}
@@ -826,8 +803,9 @@ export const LikeListCounter = () => {
                       <div className="pl-3 text-left">
                         <Link route={CuriousesProfileRoute}>
                           <a
-                            title={`${instFirName !== null ? instFirName : ""
-                              } ${instLasName !== null ? instLasName : ""}`}
+                            title={`${
+                              instFirName !== null ? instFirName : ""
+                            } ${instLasName !== null ? instLasName : ""}`}
                             onClick={() =>
                               dispatch(toggleModals({ likelistcounter: false }))
                             }

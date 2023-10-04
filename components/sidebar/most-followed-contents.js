@@ -57,15 +57,14 @@ const MostFollowedContents = () => {
                 mostFollowedContents?.rows?.map((contents, i) => (
                   <li
                     key={i}
-                    className={`listing-box cursor-pointer font-12 font-weight-semibold px-3 ${
+                    className={`listing-box cursor-pointer font-12 font-weight-semibold px-3 py-2 ${
                       i === mostFollowedContents?.rows?.length - 1 ? "pb-0" : ""
                     }`}
                     onClick={() => {
                       contents.courseType
                         ? router.push(`/course-detail/${contents.id}`)
                         : router.push(`/virtual-events/${contents.id}`);
-                    }}
-                  >
+                    }}>
                     <div className="position-relative flex-shrink-0 mr-3">
                       <img
                         className="img-fluid w-h-84-48 border-radius-8"

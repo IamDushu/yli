@@ -6,6 +6,7 @@ import testimonial from "./testimonial";
 import privacyPolicy from "./privacy-policy";
 import termscondiction from "./terms-and-condiction";
 import cookiesPolicy from "./cookies-policy";
+import startedDetails from "./getting-started";
 import investorRelations from "./investor-relations";
 import brandPolicy from "./brand-policy";
 import experienceReducer from "./experience";
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
   privacyPolicy,
   termscondiction,
   cookiesPolicy,
+  startedDetails,
   investorRelations,
   brandPolicy,
   experience: experienceReducer,

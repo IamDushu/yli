@@ -41,6 +41,7 @@ const SharePost = ({ listData, type, getAllPost }) => {
         description={listData?.postShareDetails?.description}
         isShared={true}
         postType={listData?.postShareDetails?.postType}
+        id={listData?.id}
       />
       {listData?.postShareDetails?.imageURL && (
         <PostImage listData={listData} type="share" isShared={true} />

@@ -22,15 +22,15 @@
       "@components/*": ["/components/*"],
       "@config": ["/config"],
       "@pages/*": ["/pages/*"],
-      "@assets/*": ["public/assets/*"],      
+      "@assets/*": ["public/assets/*"],
       "@routes": ["/routes"],
       "@routes/*": ["/routes/*"],
-      "@store": ["/routes"],          
-      "@store/*": ["/store/*"], 
-      "@actions": ["/store/actions"],     
-      "@reducers": ["/store/reducers"],               
-      "@utils": ["/utils"]
+      "@store": ["/routes"],
+      "@store/*": ["/store/*"],
+      "@actions": ["/store/actions"],
+      "@reducers": ["/store/reducers"],
+      "@utils": ["/utils"],
+      "@icons": ["/icons"]
     }
   }
-  
 }

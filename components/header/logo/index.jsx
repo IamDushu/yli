@@ -25,5 +25,5 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-  logoUrl: "assets/images/brand-logo.svg",
+  logoUrl: "/assets/images/brand-logo.svg",
 };

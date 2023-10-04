@@ -1,0 +1,145 @@
+@import "../helpers/variable";
+
+.topic-desc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .desc {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 28px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: $secondary;
+
+    }
+
+    .content {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+        text-align: left;
+        color: $violet-dark;
+    }
+}
+
+.topic-role-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .role {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 28px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: $secondary;
+    }
+
+    .content {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+        text-align: left;
+        color: $violet-dark;
+    }
+}
+
+.topic-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.topic-contact-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .topic-contact-info-sub-container {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+
+        .topic-contact-info-name-img-cp {
+            display: flex;
+            gap: 8px;
+
+            .topic-contact-info-name-cp {
+                .topic-contact-info-name {
+                    font-size: 22px;
+                    font-weight: 400;
+                    line-height: 28px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: $primary-violet;
+                    text-transform: capitalize;
+                }
+
+                .topic-contact-info-cp {
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    letter-spacing: 0.10000000149011612px;
+                    text-align: left;
+                    color: $secondary;
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        .contact-info-icon-box {
+            display: flex;
+
+            .contact-info-icon-box-left {
+                display: flex;
+                width: 56px;
+                height: 48px;
+                padding: 12px 16px 12px 16px;
+            }
+
+            .contact-info-icon-box-right {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .contact-info-icon-label {
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    letter-spacing: 0.15000000596046448px;
+                    text-align: left;
+                    color: $secondary;
+                }
+
+                .contact-info-icon-content {
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 16px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: $primary-violet;
+                }
+            }
+        }
+    }
+
+    .contact-info-social-icons-box {
+        display: flex;
+        gap: 12px;
+        padding: 12px;
+
+        .contact-info-social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

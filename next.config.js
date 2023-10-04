@@ -36,7 +36,7 @@ const config = {
 };
 // const withBundleAnalyzer = require("@next/bundle-analyzer")({
 //   enabled: true,
-//   openAnalyzer: true,
+//   openAnalyzer: false,
 // });
 
 // module.exports = withPlugins(
@@ -60,6 +60,9 @@ module.exports = withPlugins(
     [
       withImages,
       {
+        images: {
+          domains: ["d39ubr28bcomsg.cloudfront.net"], // Add your image domain(s) here
+        },
         cssLoaderOptions: {
           url: false,
         },

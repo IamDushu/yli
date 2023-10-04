@@ -1,10 +1,10 @@
 import * as types from "./types.js";
 import { get, post } from "../../api";
-import { COOKIES_POLICY,COOKIES_POLICY_IT } from "./../../api/routes";
+import { COOKIES_POLICY, COOKIES_POLICY_IT } from "./../../api/routes";
 import { ADMIN_API_URL } from "config/index.js";
 
 export const getCookiesInfo = (language) => async (dispatch) => {
-  const cookiesRoutes = (language=="it")?COOKIES_POLICY_IT:COOKIES_POLICY;
+  const cookiesRoutes = language == "it" ? COOKIES_POLICY_IT : COOKIES_POLICY;
   const res = await get(
     { serviceURL: ADMIN_API_URL },
     cookiesRoutes,
@@ -18,6 +18,7 @@ export const getCookiesInfo = (language) => async (dispatch) => {
   }
   return Promise.reject(res);
 };
+
 /******************** 
 @purpose : set Cookies Policy Info
 @Parameter : { }

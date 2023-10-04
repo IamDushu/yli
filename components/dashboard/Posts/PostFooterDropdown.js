@@ -1,5 +1,4 @@
-import React, { Fragment, useMemo, useCallback } from "react";
-import { Dropdown } from "react-bootstrap";
+import React, { useMemo, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import {
@@ -17,13 +16,23 @@ import {
   toggleModals,
 } from "store/actions";
 import { followUser, unfollowUser } from "store/actions/connections";
-import { useRouter } from "next/router";
 import { showMessageNotification } from "utils";
-
-function PostFooterDropdown({ postData, userInfo, type, getAllPost }) {
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { IconButton, ListItemIcon, Typography } from "@mui/material";
+import Image from "next/image";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+const PostFooterDropdown = ({ postData, userInfo, type, getAllPost }) => {
   const dispatch = useDispatch();
   const [lang] = useTranslation("language");
-  const router = useRouter();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const followData =
     postData?.postDetails?.userDetails?.followData &&
     postData?.postDetails?.userDetails?.followData?.length > 0;
@@ -123,150 +132,208 @@ function PostFooterDropdown({ postData, userInfo, type, getAllPost }) {
     }
   };
 
+  const options = [
+    {
+      name: postData?.savePost
+        ? lang("DASHBOARD.POSTS.POST_HEADER.UNSAVE")
+        : lang("DASHBOARD.POSTS.POST_HEADER.SAVE"),
+      icon: postData?.savePost ? (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src={"/assets/images/posts/save.svg"}
+        />
+      ) : (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src={"/assets/images/posts/unsave.svg"}
+        />
+      ),
+      onClick: () => {
+        hideAllPost(postData?.id, !postData?.savePost, "save");
+        setAnchorEl(null);
+      },
+      show: true,
+    },
+    {
+      show: true,
+      name: lang("DASHBOARD.POSTS.POST_HEADER.TURN_ON_NOTIFICATION"),
+      icon: (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src={"/assets/images/posts/notification.svg"}
+        />
+      ),
+      onClick: () => {
+        hideAllPost(postData?.id, !postData?.savePost, "save");
+        setAnchorEl(null);
+      },
+    },
+    {
+      show: true,
+      name: lang("DASHBOARD.POSTS.POST_HEADER.COPY_LINK"),
+      icon: (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src={"/assets/images/posts/copy.svg"}
+        />
+      ),
+      onClick: () => {
+        handleCopyLinkToClipboard();
+        setAnchorEl(null);
+      },
+    },
+    {
+      name: lang("DASHBOARD.POSTS.POST_HEADER.DELETE_POST"),
+      icon: (
+        <em className="like-tsp icon icon-delete-line reaction-icons pr-2 font-26"></em>
+      ),
+      onClick: () => {
+        deleteOwnPost(postData.postId);
+        setAnchorEl(null);
+      },
+      show: userInfo?.id === postData?.postDetails?.userDetails?.id,
+    },
+    {
+      name: `${followData ? lang("COMMON.UNFOLLOW") : lang("COMMON.FOLLOW")} ${
+        firstName !== null ? firstName : ""
+      } ${lastName !== null ? lastName : ""}`,
+      icon: followData ? (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/unfollow.svg"
+        />
+      ) : (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/follow.svg"
+        />
+      ),
+      onClick: () => {
+        if (followData) {
+          dispatch(unfollowUser(postData?.postDetails?.userId));
+        } else {
+          dispatch(followUser(postData?.postDetails?.userId));
+        }
+        setAnchorEl(null);
+      },
+      show: postData?.postDetails?.userDetails?.id !== userInfo?.id,
+    },
+    {
+      name: `${
+        postData?.mutePost
+          ? lang("DASHBOARD.POSTS.POST_HEADER.UNMUTE")
+          : lang("DASHBOARD.POSTS.POST_HEADER.MUTE")
+      } ${firstName !== null ? firstName : ""} ${
+        lastName !== null ? lastName : ""
+      }`,
+      icon: postData?.mutePost ? (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/mute.svg"
+        />
+      ) : (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/unmute.svg"
+        />
+      ),
+      onClick: () => {
+        hideAllPost(postData?.id, !postData?.mutePost, "mute");
+        setAnchorEl(null);
+      },
+      show: true,
+    },
+    {
+      name: lang("DASHBOARD.POSTS.POST_HEADER.SEE_POST"),
+      icon: (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/hide.svg"
+        />
+      ),
+      onClick: () => {
+        hideAllPost(postData?.id, !postData?.hidePost, "hide");
+        setAnchorEl(null);
+      },
+      show: true,
+    },
+    {
+      name: lang("DASHBOARD.POSTS.POST_HEADER.REPORT_POST"),
+      icon: (
+        <Image
+          className="like-tsp"
+          width={24}
+          height={24}
+          src="/assets/images/posts/report.svg"
+        />
+      ),
+      onClick: () => {
+        dispatch(toggleModals({ reportpost: true }));
+        dispatch(setReportPostId(postData?.postId));
+        setAnchorEl(null);
+      },
+      show: true,
+    },
+  ];
+
   return (
     <div>
-      <Dropdown className="theme-dropdown d-flex align-items-start">
-        <Dropdown.Toggle>
-          {/* !type && (
-            <em className="icon icon-ellipsis-h font-24 text-gray-darker"></em>
-          ) */}
-          <em className="icon icon-ellipsis-h font-24 text-secondary-purple"></em>
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-inner-left dropdown-scroll">
-          {/* SavePost Post Section */}
-          <Dropdown.Item
-            className="d-flex align-items-center"
-            onClick={() =>
-              hideAllPost(postData?.id, !postData?.savePost, "save")
-            }
-          >
-            {postData?.savePost === true ? (
-              <em className="icon icon-save reaction-icons pr-2 font-24"></em>
-            ) : (
-              <em className="icon icon-save reaction-icons pr-2 font-24"></em>
-            )}
-            <span>
-              {postData?.savePost
-                ? lang("DASHBOARD.POSTS.POST_HEADER.UNSAVE")
-                : lang("DASHBOARD.POSTS.POST_HEADER.SAVE")}
-            </span>
-          </Dropdown.Item>
-          {/* Copy Link Post Section */}
-          <Dropdown.Item
-            onClick={handleCopyLinkToClipboard}
-            className="d-flex align-items-center"
-          >
-            <em className="icon icon-copy-link reaction-icons pr-2 font-24"></em>
-            <span>{lang("DASHBOARD.POSTS.POST_HEADER.COPY_LINK")}</span>
-          </Dropdown.Item>
-
-          {userInfo?.id === postData?.postDetails?.userDetails?.id && (
-            <Fragment>
-              {/* Delete Post Section */}
-              <Dropdown.Item
-                onClick={() => deleteOwnPost(postData.postId)}
-                className="d-flex align-items-center"
-              >
-                <em className="icon icon-delete-line reaction-icons pr-2 font-26"></em>
-                <span>{lang("DASHBOARD.POSTS.POST_HEADER.DELETE_POST")}</span>
-              </Dropdown.Item>
-
-              {/* Edit Post Section */}
-              {postData?.postDetails?.postType !== "virtualShare" && (
-                <Dropdown.Item
-                  onClick={(e) =>
-                    postData.postDetails.title
-                      ? router.push({
-                          pathname: "/article",
-                          query: { id: postData.postDetails.id },
-                        })
-                      : handleEditDashboardPost(e, postData)
-                  }
-                  className="d-flex align-items-center"
-                >
-                  <em className="icon icon-write reaction-icons pr-2 font-22"></em>
-                  <span>{lang("DASHBOARD.POSTS.POST_HEADER.EDIT_POST")}</span>
-                </Dropdown.Item>
-              )}
-            </Fragment>
-          )}
-          {postData?.postDetails?.userDetails?.id !== userInfo?.id && (
-            <Fragment>
-              {/* Unfollow Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  if (followData) {
-                    dispatch(unfollowUser(postData?.postDetails?.userId));
-                  } else {
-                    dispatch(followUser(postData?.postDetails?.userId));
-                  }
-                }}
-              >
-                {followData ? (
-                  <em className="icon icon-unfollow reaction-icons pr-2 font-24" />
-                ) : (
-                  <i class="bx bx-user-plus bx-sm pr-2 pl-1" />
-                )}
-                <span className="pr-1 text-ellipsis">
-                  {followData ? lang("COMMON.UNFOLLOW") : lang("COMMON.FOLLOW")}
-                  {` ${firstName !== null ? firstName : ""} ${
-                    lastName !== null ? lastName : ""
-                  }`}
-                </span>
-              </Dropdown.Item>
-              {/* Mute Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  hideAllPost(postData?.id, !postData?.mutePost, "mute");
-                }}
-              >
-                <em className="icon icon-mute reaction-icons pr-2 font-24"></em>
-                <span className="pr-1">
-                  {postData?.mutePost
-                    ? lang("DASHBOARD.POSTS.POST_HEADER.UNMUTE")
-                    : lang("DASHBOARD.POSTS.POST_HEADER.MUTE")}
-                </span>
-                <span className="pr-1 text-ellipsis">
-                  {`${firstName !== null ? firstName : ""} ${
-                    lastName !== null ? lastName : ""
-                  }`}
-                </span>
-              </Dropdown.Item>
-              {/* Report Post Section */}
-
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() => {
-                  dispatch(toggleModals({ reportpost: true }));
-                  dispatch(setReportPostId(postData?.postId));
-                }}
-              >
-                <em className="icon icon-report reaction-icons pr-2 font-24"></em>
-                <span className="pr-1 text-ellipsis">
-                  {lang("DASHBOARD.POSTS.POST_HEADER.REPORT_POST")}
-                </span>
-              </Dropdown.Item>
-
-              {/* Hide Post Section */}
-              <Dropdown.Item
-                className="d-flex align-items-center"
-                onClick={() =>
-                  hideAllPost(postData?.id, !postData?.hidePost, "hide")
-                }
-              >
-                <em className="icon icon-eye-close reaction-icons pr-2 font-24"></em>
-                <span className="pr-1 text-ellipsis">
-                  {lang("DASHBOARD.POSTS.POST_HEADER.SEE_POST")}
-                </span>
-              </Dropdown.Item>
-            </Fragment>
-          )}
-        </Dropdown.Menu>
-      </Dropdown>
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreHorizIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          "aria-labelledby": "long-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        sx={{ paddingTop: 0, paddingBottom: 0 }}
+      >
+        {options
+          .filter((o) => o.show)
+          .map((option) => (
+            <MenuItem
+              sx={{
+                padding: "8px 24px 8px 16px",
+                borderBottom: "1px solid #CAC4CF",
+              }}
+              key={option.name}
+              onClick={option.onClick}
+            >
+              <ListItemIcon>{option.icon}</ListItemIcon>
+              <Typography variant="bodySmall">{option.name}</Typography>
+            </MenuItem>
+          ))}
+      </Menu>
     </div>
   );
-}
+};
 
 export default PostFooterDropdown;

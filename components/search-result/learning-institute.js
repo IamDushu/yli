@@ -1,6 +1,14 @@
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import { onImageError } from "utils";
+import { Button, Col, Row } from "react-bootstrap";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import dynamic from "next/dynamic";
+import { Link } from "@routes";
+import StarRatings from "react-star-ratings";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { GMIcon } from "icons/index";
 
 const LearningInstitute = ({
   lang,
@@ -11,141 +19,237 @@ const LearningInstitute = ({
   selectedFilters,
 }) => {
   return (
-    <div>
+    <div style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)" }}>
       {(selectedFilters.length === 0 ||
         selectedFilters.includes(
           lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE")
         )) &&
         searchData?.searchResults?.institute?.rows.length > 0 && (
           <Card className="mb-3">
-            <Card.Body className="p-0">
-              <h3 className="h6 mb-0 px-3 py-12">
+            <div className="p-2 pb-4">
+              <h3
+                className="mb-0 px-3 py-3"
+                style={{
+                  fontSize: "16px",
+                  color: "#001551",
+                  fontWeight: "500",
+                  lineHeight: "24px",
+                }}
+              >
+                {" "}
                 {lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE")}
               </h3>
-              <Container fluid>
-                <Row className="custom-col-box four-grid-spacing-md row-col-10 ">
+              <div className="pb-2 video-courses-rightbar">
+                <div
+                  className="pt-1 px-3 d-flex flex-wrap"
+                  style={{
+                    columnGap: "0.5rem",
+                    rowGap: "1.5rem",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }}
+                >
                   {searchData?.searchResults?.institute?.rows.map(
-                    (org, key) => {
+                    (institute, i) => {
                       return (
-                        key <= 3 &&
-                        !showAll.learningInstitute && (
-                          <Col md={4} xl={3} key={key} className="mb-sm-3">
-                            <Card
-                              className="text-center position-relative h-100 p-3"
-                              onClick={() => {
-                                router.push({
-                                  pathname: "/profile/institute-profile",
-                                  query: {
-                                    instituteId: org.id,
-                                    name: org?.name,
-                                    userId: org?.userDetails?.id,
-                                  },
-                                });
-                              }}
-                            >
-                              <div>
-                                <picture
-                                  className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer"
-                                  onContextMenu={(e) => e.preventDefault()}
+                        i <= 3 &&
+                        !showAll.institute && (
+                          <Card
+                            className="secondary-card abstract-card-v2"
+                            style={{
+                              width: "166px",
+                              height: "152px",
+                              position: "relative",
+                              borderRadius: "0px",
+                            }}
+                            onClick={() => {
+                              router.push({
+                                pathname: "/profile/institute-profile",
+                                query: {
+                                  instituteId: institute.id,
+                                  name: institute?.name,
+                                  userId: institute?.userDetails?.id,
+                                },
+                              });
+                            }}
+                          >
+                            <div className="position-relative pointer">
+                              <CardMedia
+                                component="img"
+                                height="70px"
+                                className="w-100"
+                                src={
+                                  institute?.logo ||
+                                  "../assets/images/li-no-img.jpg"
+                                }
+                                alt={institute?.name}
+                                onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null;
+                                  currentTarget.src =
+                                    "../assets/images/li-no-img.jpg";
+                                }}
+                              />
+                            </div>
+                            <CardContent className="p-1">
+                              <div className="title-container">
+                                <h6
+                                  className="text-body-14 pointer ellipsis"
+                                  style={{
+                                    fontWeight: "500",
+                                    color: "#6750A4",
+                                    lineHeight: "20px",
+                                    letterSpacing: "0.1px",
+                                  }}
                                 >
-                                  <source srcSet={org?.logo} type="image/jpg" />
-                                  <img
-                                    src={org?.logo ?? ""}
-                                    width="70"
-                                    height="70"
-                                    onError={(e) =>
-                                      onImageError(e, "profile", org?.name)
-                                    }
-                                  />
-                                </picture>
+                                  {institute?.name?.charAt(0).toUpperCase() +
+                                    institute?.name?.slice(1)}
+                                </h6>
                               </div>
-                              <div>
-                                <div>
-                                  <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                    {org.name}
-                                  </h5>
+                              {institute?.motto && (
+                                <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                  <small className="font-weight-semi-bold text-card-name text-body-12">
+                                    <span style={{ color: "#49454E" }}>
+                                      {`${
+                                        institute?.UserDetails?.firstName ||
+                                        institute?.motto ||
+                                        ""
+                                      } ${
+                                        institute?.UserDetails?.lastName || ""
+                                      }`.trim()}
+                                    </span>
+                                  </small>
                                 </div>
-                              </div>
-                            </Card>
-                          </Col>
+                              )}
+                              <StarRatings
+                                rating={institute?.rating ?? 0}
+                                starDimension="10.44px"
+                                starSpacing="1px"
+                                starRatedColor="#FFC635"
+                              />
+                            </CardContent>
+                          </Card>
                         )
                       );
                     }
                   )}
-                  {searchData?.searchResults?.institute?.rows?.map(
-                    (org, index) => {
+                  {searchData?.searchResults?.institute?.rows.map(
+                    (institute, i) => {
                       return (
-                        showAll.learningInstitute && (
-                          <Col md={4} xl={3} key={index} className="mb-sm-3">
-                            <Card
-                              className="text-center position-relative h-100 p-3"
-                              onClick={() => {
-                                router.push({
-                                  pathname: "/profile/institute-profile",
-                                  query: {
-                                    instituteId: org.id,
-                                    name: org?.name,
-                                    userId: org?.userDetails?.id,
-                                  },
-                                });
-                              }}
-                            >
-                              {" "}
-                              <div>
-                                <picture className="user-profile-pic mt-2 d-inline-block rounded-pill mb-3 pointer">
-                                  <source srcSet={org?.logo} type="image/jpg" />
-                                  <img
-                                    src={org?.logo ?? ""}
-                                    width="70"
-                                    height="70"
-                                    onError={(e) =>
-                                      onImageError(e, "profile", org?.name)
-                                    }
-                                  />
-                                </picture>
+                        showAll.institute && (
+                          <Card
+                            className="secondary-card abstract-card-v2 mb-2"
+                            style={{
+                              width: "166px",
+                              height: "152px",
+                              position: "relative",
+                              borderRadius: "0px",
+                            }}
+                            onClick={() => {
+                              router.push({
+                                pathname: "/profile/institute-profile",
+                                query: {
+                                  instituteId: institute.id,
+                                  name: institute?.name,
+                                  userId: institute?.userDetails?.id,
+                                },
+                              });
+                            }}
+                          >
+                            <div className="position-relative pointer">
+                              <CardMedia
+                                component="img"
+                                height="70px"
+                                className="w-100"
+                                src={
+                                  institute?.logo ||
+                                  "../assets/images/li-no-img.jpg"
+                                }
+                                alt={institute?.name}
+                                onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null;
+                                  currentTarget.src =
+                                    "../assets/images/li-no-img.jpg";
+                                }}
+                              />
+                            </div>
+                            <CardContent className="p-1">
+                              <div className="title-container">
+                                <h6
+                                  className="text-body-14 pointer ellipsis"
+                                  style={{
+                                    fontWeight: "500",
+                                    color: "#6750A4",
+                                    lineHeight: "20px",
+                                    letterSpacing: "0.1px",
+                                  }}
+                                >
+                                  {institute?.name?.charAt(0).toUpperCase() +
+                                    institute?.name?.slice(1)}
+                                </h6>
                               </div>
-                              <div className="">
-                                <div>
-                                  <h5 className="text-body-14 mb-1 text-ellipsis pointer">
-                                    {org.name}
-                                  </h5>
+
+                              {institute.motto && (
+                                <div className="text-ellipsis d-flex align-items-center justify-content-between">
+                                  <small className="font-weight-semi-bold text-card-name text-body-12">
+                                    <span style={{ color: "#49454E" }}>
+                                      {`${
+                                        institute?.UserDetails?.firstName ||
+                                        institute?.motto ||
+                                        ""
+                                      } ${
+                                        institute?.UserDetails?.lastName || ""
+                                      }`.trim()}
+                                    </span>
+                                  </small>
                                 </div>
-                              </div>
-                            </Card>
-                          </Col>
+                              )}
+                              <StarRatings
+                                rating={institute?.rating ?? 0}
+                                starDimension="10.44px"
+                                starSpacing="1px"
+                                starRatedColor="#FFC635"
+                              />
+                            </CardContent>
+                          </Card>
                         )
                       );
                     }
                   )}
-                </Row>
-              </Container>
+                </div>
+              </div>
               {searchData?.searchResults?.institute?.rows.length > 4 && (
-                <div className="people-tab-view-all-button my-2 border-top border-geyser pt-2">
+                <div className="people-tab-view-all-button mt-2 pt-2 d-flex justify-content-center">
                   <span
                     className="people-tab-view-all-button-text"
                     onClick={() => {
                       setShowAll({
                         ...showAll,
-                        learningInstitute: !showAll.learningInstitute,
+                        institute: !showAll.institute,
                       });
                     }}
                   >
-                    {!showAll.learningInstitute
-                      ? lang("COMMON.VIEW_ALL")
-                      : lang("COMMON.VIEW_LESS")}
+                    {!showAll.institute ? (
+                      <>
+                        <AddIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.LOAD_MORE")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <RemoveIcon fontSize="small" />
+                        <span className="ml-2">{lang("COMMON.VIEW_LESS")}</span>
+                      </>
+                    )}
                   </span>
                 </div>
               )}
-            </Card.Body>
+            </div>
           </Card>
         )}
 
       {selectedFilters.includes(
         lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE")
       ) &&
-        searchData?.searchResults?.institute?.rows.length === 0 && (
-          <p>No Learning Institute Found</p>
-        )}
+        searchData?.searchResults?.institute?.rows.length === 0 && <></>}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import WithAuth from "components/with-auth/with-auth";
 import Message from "components/messagesV2";
 import { SiteLinks } from "components/sidebar";
 import { Container } from "react-bootstrap";
+import MessageV3 from "components/MessagesV3";
 
 const Messages = () => {
   /******************* 
@@ -17,7 +18,8 @@ const Messages = () => {
       <div className="inner-wrapper profile-wrapper connection-box pt-4 pb-0">
         <Container>
           <div className="message-page-container">
-            <Message />
+            {/* <Message /> */}
+            <MessageV3 />
           </div>
 
           {/* <SiteLinks /> */}

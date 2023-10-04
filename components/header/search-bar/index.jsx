@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import searchBarStyles from './search-bar.module.scss';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import searchBarStyles from "./search-bar.module.scss";
 
 export const SearchBar = ({
   handleInput,
@@ -10,7 +10,7 @@ export const SearchBar = ({
   autoComplete,
   onFocus,
 }) => {
-  const [queryText, setQueryText] = useState('');
+  const [queryText, setQueryText] = useState("");
 
   const handleInputChange = (e) => {
     setQueryText(e.target.value);
@@ -22,18 +22,19 @@ export const SearchBar = ({
   };
   return (
     <>
-      <div className={searchBarStyles['main-header-search-bar']}>
+      <div className={searchBarStyles["main-header-search-bar"]}>
         <input
-          className={searchBarStyles['main-header-search-text']}
-          type='text'
+          className={searchBarStyles["main-header-search-text"]}
+          type="text"
           placeholder={placeHolderText}
           value={queryText}
           onChange={handleInputChange}
           autoComplete={autoComplete}
           onFocus={onFocus}
+          onClick={handleClickEvent}
         />
         <img
-          className={searchBarStyles['search-icon']}
+          className={searchBarStyles["search-icon"]}
           src={searchLogoUrl}
           onClick={handleClickEvent}
         />
@@ -52,6 +53,6 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
-  searchLogoUrl: 'assets/images/search-icon.svg',
-  placeHolderText: 'Search Text',
+  searchLogoUrl: "/assets/images/search-icon.svg",
+  placeHolderText: "Search Text",
 };

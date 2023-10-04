@@ -19,5 +19,28 @@ const config = {
     autodocs: "tag",
   },
   staticDirs: ["../public"],
+  webpackFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@api": "/api",
+        "@api/*": "/api/*",
+        "@components": "/components",
+        "@components/*": "/components/*",
+        "@config": "/config",
+        "@pages/*": "/pages/*",
+        "@assets/*": "public/assets/*",
+        "@routes": "/routes",
+        "@routes/*": "/routes/*",
+        "@store": "/routes",
+        "@store/*": "/store/*",
+        "@actions": "/store/actions",
+        "@reducers": "/store/reducers",
+        "@utils": "/utils",
+        "@icons": "/icons"
+      };
+    }
+    return config;
+  },
 };
 export default config;

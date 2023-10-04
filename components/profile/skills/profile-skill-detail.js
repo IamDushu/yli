@@ -91,7 +91,7 @@ const ProfileSkillDetail = ({
 
               {data?.endorsements?.length > 0 && (
                 <span className="pl-2 d-block">
-                  confirmed By
+                  {lang("SKILLS.TEXT.CONFIRMED_BY")}
                   {data &&
                     data?.endorsements?.slice(0, 2)?.map((user) => (
                       <span key={user?.endorsedByUser?.id}>
