@@ -6,13 +6,6 @@ import { YliwayButton } from "../button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-import {
-  Follow,
-  UnFollow,
-  Connect,
-  CrossIcon,
-} from "components/svg/connections";
-
 const People = ({
   lang,
   selectedFilters,
@@ -61,7 +54,10 @@ const People = ({
                       rowGap: "1.5rem",
                       display: "flex",
                       flexWrap: "wrap",
-                      justifyContent: "space-between",
+                      justifyContent:
+                        searchData?.searchResults?.users?.rows.length > 4
+                          ? "space-between"
+                          : "flex-start",
                     }}
                   >
                     {searchData?.searchResults?.users?.rows?.map(

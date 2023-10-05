@@ -238,7 +238,9 @@ const Company = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COMPANIES")) &&
-        searchData?.searchResults?.companies?.rows.length === 0 && <></>}
+        searchData?.searchResults?.companies?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

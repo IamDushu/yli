@@ -743,15 +743,50 @@ const Header = (props) => {
                                     >
                                       <ListItemText
                                         primary={
-                                          <div className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100">
+                                          <div
+                                            className="text-body-14 pl-2 d-flex justify-content-center align-items-center w-100"
+                                            style={{
+                                              fontSize: "0.75rem",
+                                              fontStyle: "normal",
+                                              fontWeight: 600,
+                                              lineHeight: "1rem",
+                                              letterSpacing: "0.03125rem",
+                                            }}
+                                          >
                                             {itm.firstName}{" "}
                                             {lastNameHandler(
                                               itm,
                                               itm.lastNameVisibility
                                             )
                                               ? itm.lastName
-                                              : ""}{" "}
-                                            {itm?.role}
+                                              : ""}
+                                          </div>
+                                        }
+                                      />
+                                    </MuiLink>
+                                    <MuiLink
+                                      href={`/profile/${itm?.profileId}`}
+                                      underline="none"
+                                    >
+                                      <ListItemText
+                                        primary={
+                                          <div
+                                            className="text-body-14 pl-2 ml-2 d-flex justify-content-center align-items-center w-100"
+                                            style={{
+                                              fontSize: "0.75rem",
+                                              fontStyle: "normal",
+                                              fontWeight: 400,
+                                              lineHeight: "1rem",
+                                              letterSpacing: "0.03125rem",
+                                            }}
+                                          >
+                                            {/* {itm?.currentPosition != null && itm?.instituteData !=(null || undefined)
+                                              ? `${itm?.currentPosition} at ${itm?.instituteData?.name}`
+                                              : ""} */}
+                                            {itm?.currentPosition &&
+                                            itm?.instituteData?.name
+                                              ? `${itm.currentPosition} at ${itm.instituteData.name}`
+                                              : ""}
                                           </div>
                                         }
                                       />
@@ -781,9 +816,7 @@ const Header = (props) => {
                                           }`
                                         );
                                       }}
-                                      width="32"
-                                      height="32"
-                                      className="border ml-auto rounded-pill overflow-hidden w-h-32 img-fluid object-cover"
+                                      className="border ml-auto rounded-pill overflow-hidden w-h-40 img-fluid object-cover"
                                       alt={itm.firstName}
                                     />
                                   </ListItem>
@@ -1136,6 +1169,13 @@ const Header = (props) => {
                                         <AccessTimeIcon className="reaction-icons" />
                                         <ListItemText
                                           className="text-body-14 pl-2"
+                                          style={{
+                                            fontSize: "0.75rem",
+                                            fontStyle: " normal",
+                                            fontWeight: 600,
+                                            lineHeight: "1rem" /* 133.333% */,
+                                            letterSpacing: "0.03125rem",
+                                          }}
                                           primary={
                                             item.searchText &&
                                             item.searchText.trim() !== "" &&

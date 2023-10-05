@@ -53,10 +53,10 @@ function Article() {
   const userInfo = useSelector(selectUserInfo);
   const articles = useSelector(selectArticleData);
   const data = useSelector(selectGetArticleData);
-  const [draftCount,setDraftCount] = useState(0);
-  const [publishedCount,setPublishedCount] = useState(0);
+  const [draftCount, setDraftCount] = useState(0);
+  const [publishedCount, setPublishedCount] = useState(0);
   const [scrollToError, setScrollToError] = useState(false);
-  const [updateCount,setUpdateCount] = useState(0);
+  const [updateCount, setUpdateCount] = useState(0);
 
   const statusList = [
     {
@@ -213,7 +213,7 @@ function Article() {
           formik.setFieldValue("tags", postDetails.tags);
         }
       } else if (data?.tags) {
-        formik.setFieldValue("tags", (data?.tags || []));
+        formik.setFieldValue("tags", data?.tags || []);
       }
     }
   }, [data]);
@@ -296,7 +296,7 @@ function Article() {
     formik.setFieldValue("selectedFile", "");
     formik.setFieldValue("description", "");
     formik.setFieldValue("articleStatus", "");
-    formik.setFieldValue("tags",[]);
+    formik.setFieldValue("tags", []);
 
     if (e.value === "newArticle") {
       formik.setFieldValue("isAdd", true);
@@ -343,11 +343,11 @@ function Article() {
     setTimeout(() => {
       dispatch(articleListing(payload));
     }, [500]);
-    if(currentStatus=="published"){
-      formik?.setFieldValue("isEdit",false);
-      formik?.setFieldValue("isAdd",false);
+    if (currentStatus == "published") {
+      formik?.setFieldValue("isEdit", false);
+      formik?.setFieldValue("isAdd", false);
     }
-    setUpdateCount((prev)=>!prev);
+    setUpdateCount((prev) => !prev);
   };
 
   return (
@@ -379,7 +379,11 @@ function Article() {
                 />
                 <path
                   d="M18.71 8.04C19.1 7.65 19.1 7.02 18.71 6.63L16.37 4.29C16.17 4.09 15.92 4 15.66 4C15.41 4 15.15 4.1 14.96 4.29L13.13 6.12L16.88 9.87L18.71 8.04Z"
-                  fill={(formik?.values?.status?.value == "newArticle")?"#6750A4":"#49454E"}
+                  fill={
+                    formik?.values?.status?.value == "newArticle"
+                      ? "#6750A4"
+                      : "#49454E"
+                  }
                 />
               </svg>
             </div>
@@ -405,7 +409,11 @@ function Article() {
               >
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM4 12C4 11.39 4.08 10.79 4.21 10.22L8.99 15V16C8.99 17.1 9.89 18 10.99 18V19.93C7.06 19.43 4 16.07 4 12ZM17.89 17.4C17.63 16.59 16.89 16 15.99 16H14.99V13C14.99 12.45 14.54 12 13.99 12H7.99V10H9.99C10.54 10 10.99 9.55 10.99 9V7H12.99C14.09 7 14.99 6.1 14.99 5V4.59C17.92 5.77 20 8.65 20 12C20 14.08 19.19 15.98 17.89 17.4Z"
-                  fill={(formik?.values?.status?.value == "published")?"#6750A4":"#49454E"}
+                  fill={
+                    formik?.values?.status?.value == "published"
+                      ? "#6750A4"
+                      : "#49454E"
+                  }
                 />
               </svg>
             </div>
@@ -430,7 +438,11 @@ function Article() {
               >
                 <path
                   d="M16.5 1H4.5C3.4 1 2.5 1.9 2.5 3V17H4.5V3H16.5V1ZM15.5 5H8.5C7.4 5 6.51 5.9 6.51 7L6.5 21C6.5 22.1 7.39 23 8.49 23H19.5C20.6 23 21.5 22.1 21.5 21V11L15.5 5ZM8.5 21V7H14.5V12H19.5V21H8.5Z"
-                  fill={(formik?.values?.status?.value == "drafted")?"#6750A4":"#49454E"}
+                  fill={
+                    formik?.values?.status?.value == "drafted"
+                      ? "#6750A4"
+                      : "#49454E"
+                  }
                 />
               </svg>
             </div>
@@ -454,7 +466,11 @@ function Article() {
               >
                 <path
                   d="M16.5 10V9H14.5V10H12V11.5H13V15.5C13 16.33 13.67 17 14.5 17H16.5C17.33 17 18 16.33 18 15.5V11.5H19V10H16.5ZM16.5 15.5H14.5V11.5H16.5V15.5ZM20 6H12L10 4H4C2.89 4 2.01 4.89 2.01 6L2 18C2 19.11 2.89 20 4 20H20C21.11 20 22 19.11 22 18V8C22 6.89 21.11 6 20 6ZM20 18H4V6H9.17L11.17 8H20V18Z"
-                  fill={(formik?.values?.status?.value == "deleted")?"#6750A4":"#49454E"}
+                  fill={
+                    formik?.values?.status?.value == "deleted"
+                      ? "#6750A4"
+                      : "#49454E"
+                  }
                 />
               </svg>
             </div>
@@ -834,7 +850,9 @@ function Article() {
         !formik.values.isEdit &&
         formik?.values?.status?.value == "drafted" ? (
           <div className="article-published-container">
-            <div className="draft-article-heading">{lang("ARTICLE_CARD.DRAFTED_ARTICLES")}</div>
+            <div className="draft-article-heading">
+              {lang("ARTICLE_CARD.DRAFTED_ARTICLES")}
+            </div>
             {articles &&
               articles.articleList &&
               articles.articleList.rows &&

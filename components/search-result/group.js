@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-
+import NoSearchResult from "./noSearchResult";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
@@ -200,7 +199,9 @@ const SearchGroup = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.GROUPS")) &&
-        searchData?.searchResults?.groups?.rows.length === 0 && <></>}
+        searchData?.searchResults?.groups?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

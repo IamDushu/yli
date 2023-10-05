@@ -5,6 +5,8 @@ import UserCard from "../UserCard";
 import { YliwayButton } from "../button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import NoSearchResult from "./noSearchResult";
+
 const Trainer = ({
   lang,
   selectedFilters,
@@ -284,7 +286,9 @@ const Trainer = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.TRAINER")) &&
-        searchData?.searchResults?.trainer?.rows.length === 0 && <></>}
+        searchData?.searchResults?.trainer?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

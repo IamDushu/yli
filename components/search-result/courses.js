@@ -1,6 +1,5 @@
 import { APP_URL } from "config";
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,6 +12,7 @@ import StarRatings from "react-star-ratings";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { GMIcon } from "icons/index";
+import NoSearchResult from "./noSearchResult";
 const MainModal = dynamic(() =>
   import("components/modal").then((mod) => mod.MainModal)
 );
@@ -329,7 +329,9 @@ const Courses = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COURSES")) &&
-        searchData?.searchResults?.courses?.rows.length === 0 && <></>}
+        searchData?.searchResults?.courses?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
       <MainModal
         className="add-to-gmodal modal"
         show={addtoGrowthModelglobalCourse}

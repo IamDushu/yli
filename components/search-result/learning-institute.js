@@ -1,14 +1,11 @@
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import dynamic from "next/dynamic";
-import { Link } from "@routes";
 import StarRatings from "react-star-ratings";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { GMIcon } from "icons/index";
+import NoSearchResult from "./noSearchResult";
 
 const LearningInstitute = ({
   lang,
@@ -249,7 +246,9 @@ const LearningInstitute = ({
       {selectedFilters.includes(
         lang("GLOBAL_SEARCH.FILTER.LEARNING_INSTITUTE")
       ) &&
-        searchData?.searchResults?.institute?.rows.length === 0 && <></>}
+        searchData?.searchResults?.institute?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

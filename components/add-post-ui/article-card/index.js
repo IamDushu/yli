@@ -97,18 +97,19 @@ export const ArticleCard = ({
                 </div>
               </div>
             </div>
-
-            <div>
-              <YliwayButton
-                label="Edit"
-                size="medium"
-                primary={true}
-                fontWeight={500}
-                handleClick={() => {
-                  handleEditArticle(article);
-                }}
-              />
-            </div>
+            {handleEditArticle && (
+              <div>
+                <YliwayButton
+                  label="Edit"
+                  size="medium"
+                  primary={true}
+                  fontWeight={500}
+                  handleClick={() => {
+                    handleEditArticle(article);
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </CardContent>

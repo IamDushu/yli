@@ -5,6 +5,7 @@ import UserCard from "../UserCard";
 import { YliwayButton } from "../button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import NoSearchResult from "./noSearchResult";
 
 const Teacher = ({
   lang,
@@ -286,7 +287,9 @@ const Teacher = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.TEACHER")) &&
-        searchData?.searchResults?.teacher?.rows.length === 0 && <></>}
+        searchData?.searchResults?.teacher?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

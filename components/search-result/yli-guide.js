@@ -5,6 +5,7 @@ import UserCard from "../UserCard";
 import { YliwayButton } from "../button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import NoSearchResult from "./noSearchResult";
 const Host = ({
   lang,
   selectedFilters,
@@ -279,7 +280,9 @@ const Host = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.YLI_GUIDES")) &&
-        searchData?.searchResults?.host?.rows.length === 0 && <></>}
+        searchData?.searchResults?.host?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };

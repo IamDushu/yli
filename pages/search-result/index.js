@@ -46,6 +46,11 @@ const Company = dynamic(() => import("components/search-result/company"));
 const LearningInstitute = dynamic(() =>
   import("components/search-result/learning-institute")
 );
+const PostSec = dynamic(() => import("components/search-result/posts"));
+const Article = dynamic(() => import("components/search-result/articles"));
+const NoSearchResult = dynamic(() =>
+  import("components/search-result/noSearchResult")
+);
 const Posts = dynamic(() => import("../../components/dashboard/Posts"));
 
 function SearchResult() {
@@ -209,13 +214,14 @@ function SearchResult() {
       setSelectedFilters([]);
       setFilterList(filters);
     } else if (e.target.checked) {
-      list.push(e.target.value);
-      setFilteredList(list);
-      setSelectedFilters(list);
+      let checkedList = [];
+      checkedList.push(e.target.value);
+      setFilteredList(checkedList);
+      setSelectedFilters(checkedList);
       setFilterList(filters);
     } else {
       let temp = list.filter((item) => item !== e.target.value);
-      setFilteredList(temp);
+      setFilteredList([...temp, "All"]);
       setSelectedFilters([]);
       setFilterList(filters);
     }
@@ -253,7 +259,7 @@ function SearchResult() {
       return searchData?.searchResults["institute"]?.count;
     }
     if (i === "articles") {
-      return searchData?.searchResults["blogs"]?.count;
+      return searchData?.searchResults["articles"]?.count;
     }
     if (i === "posts") {
       return searchData?.searchResults["posts"]?.total;
@@ -530,7 +536,7 @@ function SearchResult() {
                 userData={userData}
                 router={router}
               />
-              {(selectedFilters.length === 0 ||
+              {/* {(selectedFilters.length === 0 ||
                 selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.POSTS"))) &&
                 searchData?.searchResults?.posts?.rows.length > 0 && (
                   <Card
@@ -561,37 +567,27 @@ function SearchResult() {
                   </Card>
                 )}
               {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.POSTS")) &&
-                searchData?.searchResults?.posts?.rows.length === 0 && <></>}
-              {searchResults && (
-                <div style={{ height: "200vh" }}>
-                  <Card>
-                    <CardContent className="py-5">
-                      <Grid container>
-                        <Grid item md={8} lg={8} className="mx-auto">
-                          <div className="mb-2 font-weight-normal">
-                            <p className="font-22 mb-0">
-                              {lang("GLOBAL_SEARCH.NO_RESULT")}
-                              <span className="font-italic ">
-                                {lang("COMMON.ABRACADABRA")}
-                              </span>
-                            </p>
-
-                            <p className="font-22">
-                              {lang("GLOBAL_SEARCH.NO_RESULT_DESC")}
-                            </p>
-                          </div>
-
-                          <img
-                            src="/assets/images/no-result-new.svg"
-                            alt={lang("GLOBAL_SEARCH.NO_RESULT")}
-                            className="mb-5"
-                          />
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
+                searchData?.searchResults?.posts?.rows.length === 0 && <></>} */}
+              <PostSec
+                lang={lang}
+                selectedFilters={selectedFilters}
+                searchData={searchData}
+                setShowAll={setShowAll}
+                showAll={showAll}
+                userData={userData}
+                getAllPost={getAllPost}
+                searchText={searchText}
+              />
+              <Article
+                lang={lang}
+                selectedFilters={selectedFilters}
+                searchData={searchData}
+                router={router}
+                setShowAll={setShowAll}
+                showAll={showAll}
+                userData={userData}
+              />
+              {searchResults && <NoSearchResult lang={lang} />}
             </div>
           </Grid>
         </Grid>

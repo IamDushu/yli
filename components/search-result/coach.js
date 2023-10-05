@@ -287,7 +287,9 @@ const Coach = ({
         )}
 
       {selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COACH")) &&
-        searchData?.searchResults?.coach?.rows.length === 0 && <></>}
+        searchData?.searchResults?.coach?.rows.length === 0 && (
+          <NoSearchResult lang={lang} />
+        )}
     </div>
   );
 };
