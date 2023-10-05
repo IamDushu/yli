@@ -1,0 +1,37 @@
+.course-card-wrapper {
+  width: 166px;
+  height: 152px;
+  position: relative;
+  border-radius: 0px;
+
+  .online-tag {
+    width: 104px;
+    height: 16px;
+    background-color: #d9d9d9;
+    position: absolute;
+    top: 4px;
+    left: 7px;
+    font-weight: 500;
+    font-size: 11px;
+    color: #6750a4;
+    z-index: 1;
+    line-height: 16px;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .gm-icon {
+    position: absolute;
+    right: 8px;
+    top: 0px;
+    color: #6750a4;
+    z-index: 1;
+  }
+
+  .course-name {
+    font-weight: 500;
+    color: #6750a4;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+  }
+}

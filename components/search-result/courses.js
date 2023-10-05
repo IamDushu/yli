@@ -13,6 +13,7 @@ import StarRatings from "react-star-ratings";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { GMIcon } from "icons/index";
+import CourseCard from "../CourseCard";
 const MainModal = dynamic(() =>
   import("components/modal").then((mod) => mod.MainModal),
 );
@@ -75,7 +76,7 @@ const Courses = ({
         selectedFilters.includes(lang("GLOBAL_SEARCH.FILTER.COURSES"))) &&
         searchData?.searchResults?.courses?.rows.length > 0 && (
           <Card className="mb-3">
-            <div className="p-2 pb-4">
+            <div className="p-0 p-md-2 p-lg-2 pb-4">
               <h3
                 className="mb-0 px-3 py-3"
                 style={{
@@ -101,201 +102,11 @@ const Courses = ({
                   {searchData?.searchResults?.courses?.rows.map((course, i) => {
                     return (
                       i <= 3 &&
-                      !showAll.courses && (
-                        <Card
-                          className="secondary-card abstract-card-v2"
-                          style={{
-                            width: "166px",
-                            height: "152px",
-                            position: "relative",
-                            borderRadius: "0px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "104px",
-                              height: "16px",
-                              backgroundColor: "#D9D9D9",
-                              position: "absolute",
-                              top: "4px",
-                              left: "7px",
-                              fontWeight: "500",
-                              fontSize: "11px",
-                              color: "#6750A4",
-                              zIndex: "1",
-                              lineHeight: "16px",
-                              textAlign: "center",
-                              opacity: "0.7",
-                            }}
-                          >
-                            ONLINE COURSE
-                          </div>
-
-                          <div
-                            style={{
-                              position: "absolute",
-                              right: "8px",
-                              top: "0px",
-                              color: "#6750A4",
-                              zIndex: "1",
-                            }}
-                          >
-                            <GMIcon />
-                          </div>
-                          <Link route={"/course-detail/" + course.id}>
-                            <div className="position-relative pointer">
-                              <CardMedia
-                                component="img"
-                                height="70px"
-                                className="w-100"
-                                src={
-                                  course?.imageURL ||
-                                  "../assets/images/user-no-img.jpg"
-                                }
-                                alt={course?.title}
-                                onError={({ currentTarget }) => {
-                                  currentTarget.onerror = null;
-                                  currentTarget.src =
-                                    "../assets/images/user-no-img.jpg";
-                                }}
-                              />
-                            </div>
-                          </Link>
-                          <CardContent className="p-1">
-                            <Link route={"/course-detail/" + course.id}>
-                              <div className="title-container">
-                                <h6
-                                  className="text-body-14 pointer ellipsis"
-                                  style={{
-                                    fontWeight: "500",
-                                    color: "#6750A4",
-                                    lineHeight: "20px",
-                                    letterSpacing: "0.1px",
-                                  }}
-                                >
-                                  {course?.title?.charAt(0).toUpperCase() +
-                                    course?.title?.slice(1)}
-                                </h6>
-                              </div>
-                            </Link>
-                            <div className="text-ellipsis d-flex align-items-center justify-content-between">
-                              <small className="font-weight-semi-bold text-card-name text-body-12">
-                                <span style={{ color: "#49454E" }}>
-                                  {`${course?.UserDetails?.firstName || ""} ${
-                                    course?.UserDetails?.lastName || ""
-                                  }`.trim()}
-                                </span>
-                              </small>
-                            </div>
-                            <StarRatings
-                              rating={course?.rating ?? 0}
-                              starDimension="10.44px"
-                              starSpacing="1px"
-                              starRatedColor="#FFC635"
-                            />
-                          </CardContent>
-                        </Card>
-                      )
+                      !showAll.courses && <CourseCard course={course} />
                     );
                   })}
                   {searchData?.searchResults?.courses?.rows.map((course, i) => {
-                    return (
-                      showAll.courses && (
-                        <Card
-                          className="secondary-card abstract-card-v2 mb-2"
-                          style={{
-                            width: "166px",
-                            height: "152px",
-                            position: "relative",
-                            borderRadius: "0px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "104px",
-                              height: "16px",
-                              backgroundColor: "#D9D9D9",
-                              position: "absolute",
-                              top: "4px",
-                              left: "7px",
-                              fontWeight: "500",
-                              fontSize: "11px",
-                              color: "#6750A4",
-                              zIndex: "1",
-                              lineHeight: "16px",
-                              textAlign: "center",
-                              opacity: "0.7",
-                            }}
-                          >
-                            ONLINE COURSE
-                          </div>
-
-                          <div
-                            style={{
-                              position: "absolute",
-                              right: "8px",
-                              top: "0px",
-                              color: "#6750A4",
-                              zIndex: "1",
-                            }}
-                          >
-                            <GMIcon />
-                          </div>
-                          <Link route={"/course-detail/" + course.id}>
-                            <div className="position-relative pointer">
-                              <CardMedia
-                                component="img"
-                                height="70px"
-                                className="w-100"
-                                src={
-                                  course?.imageURL ||
-                                  "../assets/images/user-no-img.jpg"
-                                }
-                                alt={course?.title}
-                                onError={({ currentTarget }) => {
-                                  currentTarget.onerror = null;
-                                  currentTarget.src =
-                                    "../assets/images/user-no-img.jpg";
-                                }}
-                              />
-                            </div>
-                          </Link>
-                          <CardContent className="p-1">
-                            <Link route={"/course-detail/" + course.id}>
-                              <div className="title-container">
-                                <h6
-                                  className="text-body-14 pointer ellipsis"
-                                  style={{
-                                    fontWeight: "500",
-                                    color: "#6750A4",
-                                    lineHeight: "20px",
-                                    letterSpacing: "0.1px",
-                                  }}
-                                >
-                                  {course?.title?.charAt(0).toUpperCase() +
-                                    course?.title?.slice(1)}
-                                </h6>
-                              </div>
-                            </Link>
-                            <div className="text-ellipsis d-flex align-items-center justify-content-between">
-                              <small className="font-weight-semi-bold text-card-name text-body-12">
-                                <span style={{ color: "#49454E" }}>
-                                  {`${course?.UserDetails?.firstName || ""} ${
-                                    course?.UserDetails?.lastName || ""
-                                  }`.trim()}
-                                </span>
-                              </small>
-                            </div>
-                            <StarRatings
-                              rating={course?.rating ?? 0}
-                              starDimension="10.44px"
-                              starSpacing="1px"
-                              starRatedColor="#FFC635"
-                            />
-                          </CardContent>
-                        </Card>
-                      )
-                    );
+                    return showAll.courses && <CourseCard course={course} />;
                   })}
                 </div>
               </div>
